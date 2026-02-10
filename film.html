@@ -1314,4 +1314,11 @@ function updMUI(){
   else{b.textContent='🎵';b.title='Musik an';b.classList.remove('mus-on');}
 }
 var ctrl=document.querySelector('.controls');
-if(ctrl){var b=document.createElement('button');b.id='musicBtn';b.classNam
+if(ctrl){var b=document.createElement('button');b.id='musicBtn';b.className='ctrl mus-btn';b.textContent='🎵';b.title='Musik an';b.onclick=window.toggleMusic;ctrl.insertBefore(b,ctrl.firstChild);}
+var ms=document.createElement('style');
+ms.textContent='.mus-btn{transition:all .3s!important}.mus-btn.mus-on{background:rgba(126,224,160,.2)!important;box-shadow:0 0 8px rgba(126,224,160,.3)!important}';
+document.head.appendChild(ms);
+})();
+</script>
+</body>
+</html>
