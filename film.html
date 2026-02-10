@@ -753,7 +753,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
    SCENE 7: CTA
    ═══════════════════════════════════════ */
 .s7-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,#0a0a2e,#050510)}
-.s7-content{text-align:center;z-index:2;position:relative;padding:20px;padding-bottom:80px}
+.s7-content{text-align:center;z-index:200;position:relative;padding:20px;padding-bottom:80px}
 .s7-title{
   font-family:var(--comic);font-size:clamp(20px,4vw,36px);color:var(--green);
   margin-bottom:clamp(4px,.8vw,8px);
@@ -766,7 +766,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
   opacity:0;transition:opacity .5s ease .6s;
 }
 .scene.active .s7-text{opacity:1}
-.s7-btns{display:flex;gap:clamp(6px,1.2vw,12px);justify-content:center;flex-wrap:wrap;opacity:0;transition:opacity .5s ease .9s}
+.s7-btns{display:flex;gap:clamp(6px,1.2vw,12px);justify-content:center;flex-wrap:wrap;opacity:0;transition:opacity .5s ease .9s;position:relative;z-index:200}
 .scene.active .s7-btns{opacity:1}
 .s7-btn{
   display:inline-flex;align-items:center;gap:6px;
