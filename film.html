@@ -8,9 +8,18 @@
 <style>
 :root{--green:#689246;--blue:#1678A9;--beige:#FAEFD8;--red:#E04040;--yellow:#E5A700;--purple:#8B5CF6;--text:#3D3D3D;--comic:'Bangers',cursive;--body:'DM Sans',sans-serif}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;justify-content:center;height:100vh;overflow:hidden}
+body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;justify-content:center;height:100vh;height:100dvh;overflow:hidden}
 
 .cinema{width:min(96vw,840px);aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 20px 80px rgba(0,0,0,.6)}
+
+/* Landscape mobile fix */
+@media (orientation:landscape) and (max-height:500px){
+  .cinema{width:100vw;height:100vh;border-radius:0;aspect-ratio:auto}
+  .sub{padding:12px 16px 36px}
+  .sub__text{font-size:clamp(10px,1.8vh,14px)}
+  .speech{font-size:clamp(9px,1.5vh,12px);padding:6px 10px;max-width:200px}
+  body{height:100vh;height:100dvh}
+}
 
 /* ─── Scenes ─── */
 .scene{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;will-change:opacity;transform:translateZ(0)}
@@ -877,7 +886,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
 <div class="cinema">
 
   <!-- SCENE 0: Title -->
-  <div class="scene active" data-duration="3500">
+  <div class="scene active" data-duration="5000">
     <div class="s0-bg"><div class="s0-stars" id="stars"></div></div>
     <div class="s0-ufo"><div class="ufo"><div class="ufo__body"><div class="ufo__disc"></div><div class="ufo__dome"></div><div class="ufo__dots"><div class="ufo__dot"></div><div class="ufo__dot"></div><div class="ufo__dot"></div><div class="ufo__dot"></div></div><div class="ufo__rim"></div></div><div class="ufo__crest"><div class="ufo__crest-shield"></div><div class="ufo__crest-wh1"></div><div class="ufo__crest-wh2"></div><div class="ufo__crest-frame"></div><div class="ufo__crest-star">★</div></div><div class="ufo__hitch"><div class="ufo__hitch-bar"></div><div class="ufo__hitch-ball"></div></div><div class="ufo__light"></div></div></div>
     <div class="s0-content">
@@ -889,7 +898,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
   </div>
 
   <!-- SCENE 1: Landing -->
-  <div class="scene" data-duration="5500">
+  <div class="scene" data-duration="8000">
     <div class="s1-bg"></div>
     <div class="s1-stars" id="stars2s1"></div>
     <div class="s1-moon"></div>
@@ -909,7 +918,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
   </div>
 
   <!-- SCENE 2: Chaos -->
-  <div class="scene" data-duration="6000">
+  <div class="scene" data-duration="9000">
     <div class="s2-bg"></div>
     <div class="s2-alien-bike">
       <div class="alien-bike">
@@ -936,7 +945,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
   </div>
 
   <!-- SCENE 3: Discovers app -->
-  <div class="scene" data-duration="5500">
+  <div class="scene" data-duration="8000">
     <div class="s3-bg"></div>
     <div class="s3-alien"><div class="alien"><div class="alien__antenna"></div><div class="alien__head"><div class="alien__eye alien__eye--l"><div class="alien__pupil"></div></div><div class="alien__eye alien__eye--r"><div class="alien__pupil"></div></div><div class="alien__mouth"></div></div><div class="alien__body"></div><div class="alien__arm alien__arm--l"></div><div class="alien__arm alien__arm--r"></div><div class="alien__hand alien__hand--l"></div><div class="alien__hand alien__hand--r"></div><div class="alien__leg alien__leg--l"></div><div class="alien__leg alien__leg--r"></div><div class="alien__shoe alien__shoe--l"></div><div class="alien__shoe alien__shoe--r"></div></div></div>
     <div class="s3-phone">
@@ -956,7 +965,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
   </div>
 
   <!-- SCENE 4: Reporting frenzy -->
-  <div class="scene" data-duration="6000">
+  <div class="scene" data-duration="9000">
     <div class="s4-bg"></div>
     <div class="s4-alien"><div class="alien alien--happy"><div class="alien__antenna"></div><div class="alien__head"><div class="alien__eye alien__eye--l"><div class="alien__pupil"></div></div><div class="alien__eye alien__eye--r"><div class="alien__pupil"></div></div><div class="alien__mouth"></div></div><div class="alien__body"></div><div class="alien__arm alien__arm--l"></div><div class="alien__arm alien__arm--r"></div><div class="alien__hand alien__hand--l"></div><div class="alien__hand alien__hand--r"></div><div class="alien__leg alien__leg--l"></div><div class="alien__leg alien__leg--r"></div><div class="alien__shoe alien__shoe--l"></div><div class="alien__shoe alien__shoe--r"></div></div></div>
     <div class="s4-pings">
@@ -972,7 +981,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
   </div>
 
   <!-- SCENE 5: Municipality sees data -->
-  <div class="scene" data-duration="5500">
+  <div class="scene" data-duration="8000">
     <div class="s5-bg"></div>
     <div class="s5-dash">
       <div class="s5-dhdr"><span>📊 Dashboard</span><span>Lebach</span></div>
@@ -996,7 +1005,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
   </div>
 
   <!-- SCENE 6: Happy ending -->
-  <div class="scene" data-duration="5500">
+  <div class="scene" data-duration="8000">
     <div class="s6-bg"></div>
     <div class="s6-sun"></div>
     <div class="s6-confetti">🎉</div><div class="s6-confetti">⭐</div><div class="s6-confetti">🎊</div><div class="s6-confetti">✨</div><div class="s6-confetti">🛸</div>
@@ -1106,8 +1115,8 @@ function goTo(idx){
 function scheduleNext(){
   clearTimeout(timer);if(!playing)return;
   const dur=parseInt(scenes[cur].dataset.duration);
-  if(dur>0){timer=setTimeout(()=>{if(cur<total-1)goTo(cur+1);else{playing=false;updateUI()}},dur)}
-  else{playing=false;updateUI()}
+  if(dur>0){timer=setTimeout(()=>{if(cur<total-1)goTo(cur+1);else{playing=false;updateUI();if(window.toggleMusic&&document.querySelector('.mus-on'))window.toggleMusic();}},dur)}
+  else{playing=false;updateUI();if(window.toggleMusic&&document.querySelector('.mus-on'))window.toggleMusic();}
 }
 function togglePlay(){playing=!playing;updateUI();if(playing){if(cur>=total-1)goTo(0);else scheduleNext()}else clearTimeout(timer)}
 function nextScene(){if(cur<total-1)goTo(cur+1)}
@@ -1307,10 +1316,4 @@ function updMUI(){
 var ctrl=document.querySelector('.controls');
 if(ctrl){var b=document.createElement('button');b.id='musicBtn';b.className='ctrl mus-btn';b.textContent='🎵';b.title='Musik an';b.onclick=window.toggleMusic;ctrl.insertBefore(b,ctrl.firstChild);}
 var ms=document.createElement('style');
-ms.textContent='.mus-btn{transition:all .3s!important}.mus-btn.mus-on{background:rgba(126,224,160,.2)!important;box-shadow:0 0 12px rgba(126,224,160,.3)!important;animation:musPulse 3s ease-in-out infinite!important}@keyframes musPulse{0%,100%{box-shadow:0 0 8px rgba(126,224,160,.15)}50%{box-shadow:0 0 16px rgba(126,224,160,.35)}}';
-document.head.appendChild(ms);
-})();
-
-</script>
-</body>
-</html>
+ms.textContent='.mus-btn{transition:all .3s!important}.mus-btn.mus-on{background:rgba(126,224,160,.2)!important;box-s
