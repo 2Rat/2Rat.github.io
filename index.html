@@ -137,6 +137,26 @@
     .sw-item--r { background: #FFF3E0; border-left: 3px solid #FF9800; }
     .sw-item--g { background: #E8F5E9; border-left: 3px solid #4CAF50; }
 
+    /* Dashboard Preview */
+    .db-preview { background: #FFFFFF; border: 1px solid #E5E7EB; box-shadow: 0 4px 20px rgba(0,0,0,0.05); font-family: 'DM Sans', sans-serif; }
+    .db-preview::before { background: linear-gradient(90deg, #1A5FA8, #2D8C28); }
+    .db-header { text-align: center; margin-bottom: 14px; }
+    .db-title { font-size: 15px; font-weight: 800; letter-spacing: 2px; font-family: 'DM Sans', sans-serif; }
+    .db-title .t-b { color: #1A5FA8; }
+    .db-title .t-g { color: #2D8C28; }
+    .db-sub { font-size: 10px; color: #8A9BA4; margin-top: 2px; }
+    .db-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 14px; }
+    .db-stat { text-align: center; background: #F8FAFC; border-radius: 8px; padding: 8px 4px; }
+    .db-stat__num { font-size: 20px; font-weight: 800; }
+    .db-stat__label { font-size: 9px; color: #8A9BA4; text-transform: uppercase; letter-spacing: 0.5px; }
+    .db-bars { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+    .db-bar { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+    .db-bar__l { width: 70px; text-align: right; color: #8A9BA4; flex-shrink: 0; font-size: 10px; }
+    .db-bar__f { height: 14px; border-radius: 4px; min-width: 4px; }
+    .db-bar__n { font-weight: 700; font-size: 11px; min-width: 20px; }
+    .db-actions { display: flex; gap: 6px; justify-content: center; }
+    .db-action { font-size: 10px; background: #F0F2F4; padding: 4px 10px; border-radius: 6px; color: #3D4F58; font-weight: 600; }
+
     .produkt__info h3 { font-size: clamp(20px, 2.5vw, 28px); font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
     .produkt__info h3 .bl { color: var(--blue); }
     .produkt__info h3 .gr { color: var(--green); }
@@ -365,6 +385,47 @@
             <div class="sw-item sw-item--r"><span>🌙</span> Zu dunkel</div>
             <div class="sw-item sw-item--g"><span>🚦</span> Gute Ampel</div>
             <div class="sw-item sw-item--g"><span>🐌</span> Tempo 30</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auswertungs-Dashboard -->
+      <div class="produkt reveal">
+        <div class="produkt__info">
+          <h3><span class="bl">Auswertungs-Dashboard</span> –<br><span class="gr">Datenanalyse für Ihre Gremien</span></h3>
+          <p>Alle Bürgermeldungen übersichtlich auf einer Karte – gefiltert, analysiert und aufbereitet für Stadtrat, Ausschüsse und die weitere Planung. Das Dashboard ist exklusiver Bestandteil unserer Beratungsleistung.</p>
+          <div class="feat-list">
+            <div class="feat"><div class="feat__dot" style="background:#1A5FA8;"></div><div><strong>Kartenansicht mit Clustering</strong><br><span>Alle Meldungen auf einen Blick – filtern nach Kategorie, Zeitraum und Kommune.</span></div></div>
+            <div class="feat"><div class="feat__dot" style="background:#2D8C28;"></div><div><strong>PDF-Berichte für den Stadtrat</strong><br><span>Professionelle Auswertungen mit Karte, Statistiken und Einzelmeldungen – druckfertig.</span></div></div>
+            <div class="feat"><div class="feat__dot" style="background:#E5A700;"></div><div><strong>GIS-Export für Fachplaner</strong><br><span>GeoJSON, CSV und QGIS-kompatible Formate für die Weiterverarbeitung in der Planung.</span></div></div>
+            <div class="feat"><div class="feat__dot" style="background:#E00000;"></div><div><strong>Projektverwaltung</strong><br><span>Eigene Aktionszeiträume und Kommunen-Filter – jedes Beteiligungsprojekt separat auswertbar.</span></div></div>
+          </div>
+          <p style="font-size:13px;color:var(--text-light);font-style:italic;margin-top:16px;">Zugang zum Dashboard erhalten Sie im Rahmen eines Beratungsauftrags.</p>
+          <div class="produkt__btns">
+            <a href="mailto:fahr2rat@gmail.com?subject=Anfrage%20Radwegemelder%20Dashboard" class="btn btn--sm" style="background:#1A5FA8;color:white;">✉️ Beratung anfragen</a>
+          </div>
+        </div>
+        <div class="produkt__preview db-preview">
+          <div class="db-header">
+            <div class="db-title"><span class="t-b">RADWEGE</span><span class="t-g">MELDER</span></div>
+            <div class="db-sub">Dashboard · Auswertung</div>
+          </div>
+          <div class="db-stats">
+            <div class="db-stat"><div class="db-stat__num" style="color:#1A5FA8;">47</div><div class="db-stat__label">Gesamt</div></div>
+            <div class="db-stat"><div class="db-stat__num" style="color:#E00000;">28</div><div class="db-stat__label">Probleme</div></div>
+            <div class="db-stat"><div class="db-stat__num" style="color:#E5A700;">12</div><div class="db-stat__label">Wünsche</div></div>
+            <div class="db-stat"><div class="db-stat__num" style="color:#00A836;">7</div><div class="db-stat__label">Positiv</div></div>
+          </div>
+          <div class="db-bars">
+            <div class="db-bar"><span class="db-bar__l">Oberfläche</span><div class="db-bar__f" style="width:80%;background:#E00000;"></div><span class="db-bar__n">11</span></div>
+            <div class="db-bar"><span class="db-bar__l">Engstelle</span><div class="db-bar__f" style="width:50%;background:#E00000;"></div><span class="db-bar__n">7</span></div>
+            <div class="db-bar"><span class="db-bar__l">Radweg gew.</span><div class="db-bar__f" style="width:40%;background:#E5A700;"></div><span class="db-bar__n">6</span></div>
+            <div class="db-bar"><span class="db-bar__l">Gute Infra</span><div class="db-bar__f" style="width:35%;background:#00A836;"></div><span class="db-bar__n">5</span></div>
+          </div>
+          <div class="db-actions">
+            <span class="db-action">📥 GeoJSON</span>
+            <span class="db-action">📥 CSV</span>
+            <span class="db-action">📄 PDF</span>
           </div>
         </div>
       </div>
