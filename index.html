@@ -3,7 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2RAT – Büro für Radverkehrsplanung</title>
+  <title>2RAT – Büro für Radverkehrsplanung | Saarland</title>
+  <meta name="description" content="2Rat – Ihr Planungsbüro für Radverkehr im Saarland. Radverkehrskonzepte, Bürgerbeteiligung, Bestandsaufnahmen und digitale Werkzeuge wie der Radwegemelder für Kommunen.">
+  <meta name="keywords" content="Radverkehr, Radverkehrsplanung, Radverkehrskonzept, Bürgerbeteiligung, Radwegemelder, Saarland, Lebach, Fahrrad, Infrastruktur, Kommune, Radweg, Mängelmelder, Fördermittel">
+  <meta name="author" content="2Rat – Büro für Radverkehrsplanung, Armin Jung">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.2rat.org/">
+  <meta property="og:title" content="2RAT – Büro für Radverkehrsplanung">
+  <meta property="og:description" content="Individuelle Beratung für Kommunen: Radverkehrskonzepte, Bürgerbeteiligung und digitale Werkzeuge für sichere Radinfrastruktur.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.2rat.org/">
+  <meta property="og:image" content="https://www.2rat.org/Logo_2Rat_clean.png">
+  <meta property="og:locale" content="de_DE">
+  <meta name="geo.region" content="DE-SL">
+  <meta name="geo.placename" content="Lebach">
   <link rel="icon" type="image/png" href="Logo_2Rat_clean.png">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -40,6 +53,20 @@
     .nav__links a:hover { color: var(--green); }
     .nav__cta { background: var(--green) !important; color: white !important; padding: 8px 18px !important; border-radius: 8px !important; font-weight: 600 !important; }
     .nav__cta:hover { background: var(--green-dark) !important; }
+
+    /* ─── Hamburger ─── */
+    .hamburger { display: none; background: none; border: none; cursor: pointer; width: 36px; height: 36px; position: relative; z-index: 200; }
+    .hamburger span { display: block; width: 24px; height: 2.5px; background: var(--text); border-radius: 2px; transition: all 0.3s; position: absolute; left: 6px; }
+    .hamburger span:nth-child(1) { top: 9px; }
+    .hamburger span:nth-child(2) { top: 17px; }
+    .hamburger span:nth-child(3) { top: 25px; }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg); top: 17px; }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg); top: 17px; }
+    .mobile-menu { display: none; position: fixed; top: 96px; left: 0; right: 0; bottom: 0; background: rgba(245,230,200,0.98); backdrop-filter: blur(20px); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; color: var(--text); font-size: 20px; font-weight: 600; transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--green); }
 
     /* ─── Hero ─── */
     .hero { padding: 166px 0 80px; }
@@ -166,9 +193,17 @@
     .ticker__bar:hover { background: linear-gradient(90deg, #0f3460, #1a1a2e, #16213e); }
     .ticker__bar:hover .ticker__track { animation-play-state: paused; }
 
+    /* ─── Scroll-Animationen ─── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
     /* ─── Mobile ─── */
     @media (max-width: 768px) {
       .nav__links { display: none; }
+      .hamburger { display: block; }
       .hero { padding: 136px 0 50px; }
       .hero__grid { grid-template-columns: 1fr; text-align: center; }
       .hero__right { order: -1; margin-bottom: 20px; }
@@ -206,8 +241,16 @@
         <li><a href="#kontakt">Kontakt</a></li>
         <li><a href="mailto:fahr2rat@gmail.com" class="nav__cta">Anfrage senden</a></li>
       </ul>
+      <button class="hamburger" id="burger" onclick="toggleMenu()" aria-label="Menü"><span></span><span></span><span></span></button>
     </div>
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#leistungen" onclick="toggleMenu()">Leistungen</a>
+    <a href="#produkte" onclick="toggleMenu()">Produkte</a>
+    <a href="#kontakt" onclick="toggleMenu()">Kontakt</a>
+    <a href="mailto:fahr2rat@gmail.com" class="nav__cta" onclick="toggleMenu()">✉️ Anfrage senden</a>
+  </div>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero">
@@ -239,19 +282,19 @@
       <h2 class="s-title">Was wir für Ihre Kommune tun können</h2>
       <p class="s-text">Von der Bestandsaufnahme über die Fördermittelberatung bis zur fertigen Maßnahme.</p>
       <div class="cards">
-        <div class="card">
+        <div class="card reveal">
           <div class="card__top"><span class="card__icon">📋</span><h3 class="card__title">Radverkehrskonzepte</h3></div>
           <p class="card__text">Erstellung kommunaler Radverkehrskonzepte – von der Analyse bis zum Maßnahmenkatalog. Praxisnah und umsetzbar.</p>
         </div>
-        <div class="card">
+        <div class="card reveal reveal-delay-1">
           <div class="card__top"><span class="card__icon">🔍</span><h3 class="card__title">Bestandsaufnahmen & Netzanalysen</h3></div>
           <p class="card__text">Systematische Erfassung und Bewertung bestehender Radinfrastruktur. Vor Ort und digital.</p>
         </div>
-        <div class="card">
+        <div class="card reveal reveal-delay-2">
           <div class="card__top"><span class="card__icon">📊</span><h3 class="card__title">Fördermittelberatung</h3></div>
           <p class="card__text">Welche Förderprogramme passen? Unterstützung bei Antragsstellung und Kostenplanung für Radverkehrsprojekte.</p>
         </div>
-        <div class="card">
+        <div class="card reveal reveal-delay-3">
           <div class="card__top"><span class="card__icon">👥</span><h3 class="card__title">Bürgerbeteiligung & Workshops</h3></div>
           <p class="card__text">Bürger einbinden, Akzeptanz schaffen. Beteiligungsformate von der Online-Umfrage bis zum Workshop vor Ort.</p>
           <p class="card__text" style="margin-top:10px;">Mit unserem <strong>Radwegemelder</strong> erheben Bürger digital Daten – zugeschnitten auf Ihre Kommune, inklusive Auswertung und Kartenansicht.</p>
@@ -268,7 +311,7 @@
       <p class="s-text">Unsere digitalen Werkzeuge für die Praxis – entwickelt aus der täglichen Planungsarbeit.</p>
 
       <!-- Radwegemelder -->
-      <div class="produkt">
+      <div class="produkt reveal">
         <div class="produkt__info">
           <h3><span class="gr">Radwegemelder</span> –<br><span class="bl">Digitale Bürgerbeteiligung für Ihr Radverkehrskonzept</span></h3>
           <p>Die Radwegemelder-App wurde von uns entwickelt, um Bürger digital bei der Erstellung von Radverkehrskonzepten oder Maßnahmen beteiligen zu können. Probleme, Wünsche und positive Erfahrungen zum Radverkehr können direkt vom Smartphone gemeldet werden – anonym, ohne Installation, ohne Registrierung.</p>
@@ -298,7 +341,7 @@
       </div>
 
       <!-- Schulweg-Detektive -->
-      <div class="produkt">
+      <div class="produkt reveal">
         <div class="produkt__info">
           <h3><span class="bl">Schulweg-Detektive</span> –<br><span class="gr">Sichere Schulwege planen</span></h3>
           <p>Kinder erfassen auf ihrem Schulweg gefährliche und sichere Stellen. Die Ergebnisse helfen Schulen und Kommunen bei der Schulwegplanung.</p>
@@ -310,6 +353,7 @@
           <div class="produkt__btns">
             <a href="https://009aj.github.io/schulweg-check/" class="btn btn--sm" style="background:#FF9800;color:white;" target="_blank">🔍 App öffnen</a>
           </div>
+          <p style="font-size:12px;color:var(--text-light);font-style:italic;margin-top:14px;">Ein Kooperationsprojekt mit der Jugendpflege Kirkel</p>
         </div>
         <div class="produkt__preview sw-preview">
           <div class="sw-header">
@@ -371,6 +415,19 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('burger').classList.toggle('open');
+      document.getElementById('mobileMenu').classList.toggle('open');
+      document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
+    }
+    // Scroll-Animationen
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
 
 </body>
 </html>
