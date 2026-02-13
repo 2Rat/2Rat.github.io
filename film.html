@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meldi & der Radwegemelder – Ein außerirdisch guter Film</title>
+<title>Meldi geht ein Licht auf – Ein außerirdisch guter Film</title>
 <link href="https://fonts.googleapis.com/css2?family=Bangers&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--green:#689246;--blue:#1678A9;--beige:#FAEFD8;--red:#E04040;--yellow:#E5A700;--purple:#8B5CF6;--text:#3D3D3D;--comic:'Bangers',cursive;--body:'DM Sans',sans-serif}
@@ -22,7 +22,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
 }
 
 /* ─── Scenes ─── */
-.scene{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;will-change:opacity;transform:translateZ(0)}
+.scene{position:absolute;inset:0;opacity:0;transition:opacity .8s ease;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;will-change:opacity;transform:translateZ(0)}
 .scene.active{opacity:1;pointer-events:auto}
 
 /* ─── Subtitle ─── */
@@ -906,7 +906,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
     <div class="s0-content">
       <div class="s0-logbook">📡 Logbuch der Veloxflotte · Eintrag 247</div>
       <div class="s0-logo"><span class="gr">Radwege</span><span class="bl">melder</span></div>
-      <div class="s0-tagline">🛸 Meldi besucht die "Fahrradnation"</div>
+      <div class="s0-tagline">🛸 Meldi geht ein Licht auf</div>
       <div class="s0-subtitle">Ein außerirdisch guter Kurzfilm</div>
     </div>
   </div>
@@ -928,7 +928,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
     <div class="s1-alien"><div class="alien alien--excited"><div class="alien__antenna"></div><div class="alien__head"><div class="alien__eye alien__eye--l"><div class="alien__pupil"></div></div><div class="alien__eye alien__eye--r"><div class="alien__pupil"></div></div><div class="alien__mouth"></div></div><div class="alien__body"></div><div class="alien__arm alien__arm--l"></div><div class="alien__arm alien__arm--r"></div><div class="alien__hand alien__hand--l"></div><div class="alien__hand alien__hand--r"></div><div class="alien__leg alien__leg--l"></div><div class="alien__leg alien__leg--r"></div><div class="alien__shoe alien__shoe--l"></div><div class="alien__shoe alien__shoe--r"></div></div></div>
     <div class="s1-sign"><div class="s1-sign__plate">Willkommen im Saarland</div><div class="s1-sign__post"></div></div>
     <div class="speech speech--alien d2" style="top:18%;left:8%;max-width:220px">Endlich! Deutschland – die berühmte Fahrradnation! 🚲✨</div>
-    <div class="sub"><div class="sub__text">Meldi gehört zu den Veloxanern – einem Volk mit der Mission, allen Planeten Fahrradfreundlichkeit beizubringen.</div></div>
+    <div class="sub"><div class="sub__text">Meldi gehört zu den Veloxanern – ein Volk von Velofahrern mit der Mission, allen Planeten Fahrradfreundlichkeit beizubringen.</div></div>
   </div>
 
   <!-- SCENE 2: Chaos -->
@@ -1169,7 +1169,7 @@ function startFilm(){
 function shareFilm(){
   var shareData={
     title:'Meldis Mission – Radwegemelder',
-    text:'Schau dir an wie Meldi das Saarland fahrradfreundlicher macht! 🚲🛸',
+    text:'Schau dir an wie Meldi ein Licht aufgeht! 🚲🛸',
     url:'https://www.2rat.org/film.html'
   };
   if(navigator.share){
@@ -1202,175 +1202,413 @@ goTo=function(idx){
   if(idx===2&&navigator.vibrate)navigator.vibrate([50,30,80]);
 };
 
-// === MELDI SOUNDTRACK: Pixar-Entdecker ===
-// Leicht, beschwingt, neugierig. Wie WALL-E oder Ratatouille.
-// Sanft aber mit Schwung! Leises Pizzicato-Groove, pfeifende Melodie.
+// === MELDI SOUNDTRACK v3: Cinematischer Kurzfilm-Score ===
+// Durchgehend, adaptiv, filmisch. Kein Loop-Gefühl.
 (function(){
-var ax=null,mg=null,mp=false,lt=null;
+var ax=null,mg=null,mp=false,lt=null,curScene=0;
+
 function ini(){
   if(ax&&ax.state!=='closed')return;
   ax=new(window.AudioContext||window.webkitAudioContext)();
   mg=ax.createGain();mg.gain.value=0;mg.connect(ax.destination);
 }
 
-// Pizzicato (zupfender Puls - das Herzstueck)
-function pizz(freq,t,vol){
-  var o=ax.createOscillator(),g=ax.createGain(),fl=ax.createBiquadFilter();
-  o.type='triangle';o.frequency.setValueAtTime(freq,t);
-  fl.type='lowpass';fl.frequency.setValueAtTime(freq*5,t);
-  fl.frequency.exponentialRampToValueAtTime(freq*1.5,t+0.15);
-  g.gain.setValueAtTime(vol*0.05,t);
-  g.gain.exponentialRampToValueAtTime(0.0001,t+0.35);
-  o.connect(fl);fl.connect(g);g.connect(mg);o.start(t);o.stop(t+0.4);
-}
+// === INSTRUMENTE ===
 
-// Pfeifen/Floete (froeliche Melodie)
-function whist(freq,t,d,vol){
-  var o=ax.createOscillator(),g=ax.createGain(),fl=ax.createBiquadFilter();
-  o.type='sine';o.frequency.setValueAtTime(freq,t);
-  fl.type='lowpass';fl.frequency.setValueAtTime(freq*3,t);fl.Q.setValueAtTime(0.5,t);
-  var v=vol*0.03;
-  g.gain.setValueAtTime(0.0001,t);
-  g.gain.linearRampToValueAtTime(v,t+0.06);
-  g.gain.setValueAtTime(v*0.9,t+d-0.08);
-  g.gain.linearRampToValueAtTime(0.0001,t+d);
-  o.connect(fl);fl.connect(g);g.connect(mg);o.start(t);o.stop(t+d+.1);
-  // Hauch dazu
-  var o2=ax.createOscillator(),g2=ax.createGain();
-  o2.type='triangle';o2.frequency.setValueAtTime(freq*2,t);
-  g2.gain.setValueAtTime(0.0001,t);g2.gain.linearRampToValueAtTime(v*0.15,t+0.06);
-  g2.gain.linearRampToValueAtTime(0.0001,t+d);
-  o2.connect(g2);g2.connect(mg);o2.start(t);o2.stop(t+d+.1);
-}
-
-// Glockenspiel (Sternchen)
-function glock(freq,t,vol){
-  [1,2.5,4].forEach(function(h,i){
+// Warmes Pad (Filmfläche, chorisch)
+function pad(freq,t,d,vol){
+  var detune=[0,0.5,-0.5,1.002];
+  detune.forEach(function(dt,i){
     var o=ax.createOscillator(),g=ax.createGain();
-    o.type='sine';o.frequency.setValueAtTime(freq*h,t);
-    g.gain.setValueAtTime(vol*0.012/(i+1),t);
-    g.gain.exponentialRampToValueAtTime(0.0001,t+2);
-    o.connect(g);g.connect(mg);o.start(t);o.stop(t+2.5);
+    var fl=ax.createBiquadFilter();
+    o.type=i<2?'sine':'triangle';
+    o.frequency.setValueAtTime(freq*((i===3)?dt:1),t);
+    if(i<3)o.detune.setValueAtTime(dt*100,t);
+    fl.type='lowpass';fl.frequency.setValueAtTime(freq*3,t);
+    var v=vol*0.06/(i*0.5+1);
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.linearRampToValueAtTime(v,t+d*0.25);
+    g.gain.setValueAtTime(v*0.85,t+d*0.7);
+    g.gain.linearRampToValueAtTime(0.0001,t+d);
+    o.connect(fl);fl.connect(g);g.connect(mg);o.start(t);o.stop(t+d+.1);
   });
 }
 
-// Sanfter Bass (warm, nicht schwer)
-function bass(freq,t,d,vol){
-  var o=ax.createOscillator(),g=ax.createGain();
+// Marimba/Xylophon (warm, holzig - ersetzt das kalte Pizzicato)
+function marimba(freq,t,vol){
+  var o=ax.createOscillator(),o2=ax.createOscillator();
+  var g=ax.createGain(),fl=ax.createBiquadFilter();
   o.type='sine';o.frequency.setValueAtTime(freq,t);
-  var v=vol*0.025;
-  g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(v,t+0.05);
-  g.gain.setValueAtTime(v*0.7,t+d-0.05);g.gain.linearRampToValueAtTime(0.0001,t+d);
-  o.connect(g);g.connect(mg);o.start(t);o.stop(t+d+.1);
+  o2.type='sine';o2.frequency.setValueAtTime(freq*4,t);
+  fl.type='lowpass';fl.frequency.setValueAtTime(freq*6,t);
+  fl.frequency.exponentialRampToValueAtTime(freq*2,t+0.2);
+  g.gain.setValueAtTime(vol*0.14,t);
+  g.gain.exponentialRampToValueAtTime(vol*0.06,t+0.08);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+0.5);
+  o.connect(fl);o2.connect(g);fl.connect(g);g.connect(mg);
+  o.start(t);o2.start(t);o.stop(t+0.6);o2.stop(t+0.6);
 }
 
-// Leichter Brush/Besen (ganz zart)
-function brush(t,vol){
-  var d=0.08;
+// Flöte (weicher, wärmer als vorher)
+function flute(freq,t,d,vol){
+  var o=ax.createOscillator(),g=ax.createGain(),fl=ax.createBiquadFilter();
+  o.type='sine';o.frequency.setValueAtTime(freq,t);
+  // Vibrato
+  var lfo=ax.createOscillator(),lfoG=ax.createGain();
+  lfo.frequency.setValueAtTime(5,t);lfoG.gain.setValueAtTime(3,t);
+  lfo.connect(lfoG);lfoG.connect(o.frequency);lfo.start(t);lfo.stop(t+d+.1);
+  fl.type='lowpass';fl.frequency.setValueAtTime(freq*2.5,t);
+  var v=vol*0.09;
+  g.gain.setValueAtTime(0.0001,t);
+  g.gain.linearRampToValueAtTime(v,t+0.1);
+  g.gain.setValueAtTime(v*0.9,t+d*0.7);
+  g.gain.linearRampToValueAtTime(0.0001,t+d);
+  o.connect(fl);fl.connect(g);g.connect(mg);o.start(t);o.stop(t+d+.1);
+}
+
+// Celesta (magisch, glitzernd)
+function celesta(freq,t,vol){
+  [1,2,3,5].forEach(function(h,i){
+    var o=ax.createOscillator(),g=ax.createGain();
+    o.type='sine';o.frequency.setValueAtTime(freq*h,t);
+    var v=vol*0.035/Math.pow(i+1,0.7);
+    g.gain.setValueAtTime(v,t);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+2.5-i*0.3);
+    o.connect(g);g.connect(mg);o.start(t);o.stop(t+3);
+  });
+}
+
+// Cello (tiefer, warmer Streicherton)
+function cello(freq,t,d,vol){
+  var o=ax.createOscillator(),o2=ax.createOscillator(),g=ax.createGain();
+  o.type='sawtooth';o2.type='sawtooth';
+  o.frequency.setValueAtTime(freq,t);o2.frequency.setValueAtTime(freq*1.003,t);
+  var fl=ax.createBiquadFilter();fl.type='lowpass';fl.frequency.setValueAtTime(freq*3,t);
+  var v=vol*0.04;
+  g.gain.setValueAtTime(0.0001,t);
+  g.gain.linearRampToValueAtTime(v,t+d*0.15);
+  g.gain.setValueAtTime(v*0.8,t+d*0.75);
+  g.gain.linearRampToValueAtTime(0.0001,t+d);
+  o.connect(fl);o2.connect(fl);fl.connect(g);g.connect(mg);
+  o.start(t);o2.start(t);o.stop(t+d+.1);o2.stop(t+d+.1);
+  // Vibrato
+  var lfo=ax.createOscillator(),lfoG=ax.createGain();
+  lfo.frequency.setValueAtTime(5.5,t);lfoG.gain.setValueAtTime(2,t);
+  lfo.connect(lfoG);lfoG.connect(o.frequency);lfo.start(t);lfo.stop(t+d+.1);
+}
+
+// Sanfte Percussion (Shaker statt harter Brush)
+function shaker(t,vol){
+  var d=0.06;
   var buf=ax.createBuffer(1,ax.sampleRate*d,ax.sampleRate);
-  var dat=buf.getChannelData(0);for(var i=0;i<dat.length;i++)dat[i]=Math.random()*2-1;
+  var dat=buf.getChannelData(0);
+  for(var i=0;i<dat.length;i++)dat[i]=(Math.random()*2-1)*Math.pow(1-i/dat.length,0.5);
   var s=ax.createBufferSource(),g=ax.createGain(),fl=ax.createBiquadFilter();
-  s.buffer=buf;fl.type='highpass';fl.frequency.setValueAtTime(4000,t);
-  g.gain.setValueAtTime(vol*0.015,t);g.gain.linearRampToValueAtTime(0.0001,t+d);
+  s.buffer=buf;fl.type='bandpass';fl.frequency.setValueAtTime(6000,t);fl.Q.setValueAtTime(1,t);
+  g.gain.setValueAtTime(vol*0.04,t);g.gain.exponentialRampToValueAtTime(0.0001,t+d);
   s.connect(fl);fl.connect(g);g.connect(mg);s.start(t);s.stop(t+d+.01);
 }
 
+// Trommel (weicher Kick für Höhepunkte)
+function kick(t,vol){
+  var o=ax.createOscillator(),g=ax.createGain();
+  o.type='sine';o.frequency.setValueAtTime(150,t);
+  o.frequency.exponentialRampToValueAtTime(40,t+0.15);
+  g.gain.setValueAtTime(vol*0.12,t);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+0.3);
+  o.connect(g);g.connect(mg);o.start(t);o.stop(t+0.4);
+}
+
+// Drama-Hit (Schock-Stinger)
+function stinger(t,vol){
+  [185,233,277,330].forEach(function(f,i){
+    var o=ax.createOscillator(),g=ax.createGain();
+    o.type=i<2?'sawtooth':'triangle';o.frequency.setValueAtTime(f,t);
+    var fl=ax.createBiquadFilter();fl.type='lowpass';
+    fl.frequency.setValueAtTime(1200,t);fl.frequency.exponentialRampToValueAtTime(150,t+2);
+    g.gain.setValueAtTime(vol*0.06,t);g.gain.exponentialRampToValueAtTime(0.0001,t+2);
+    o.connect(fl);fl.connect(g);g.connect(mg);o.start(t);o.stop(t+2.5);
+  });
+  kick(t,vol*0.8);
+}
+
+// Harfe-Arpeggio (für magische Momente)
+function harp(notes,t,spacing,vol){
+  notes.forEach(function(f,i){
+    var o=ax.createOscillator(),g=ax.createGain();
+    o.type='sine';o.frequency.setValueAtTime(f,t+i*spacing);
+    g.gain.setValueAtTime(vol*0.08,t+i*spacing);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+i*spacing+1.5);
+    o.connect(g);g.connect(mg);o.start(t+i*spacing);o.stop(t+i*spacing+2);
+  });
+}
+
 // Noten
+var C2=65.41,D2=73.42,E2=82.41,F2=87.31,G2=98,A2=110,B2=123.47;
 var C3=130.81,D3=146.83,E3=164.81,F3=174.61,G3=196,A3=220,B3=246.94;
 var C4=261.63,D4=293.66,E4=329.63,F4=349.23,G4=392,A4=440,B4=493.88;
 var C5=523.25,D5=587.33,E5=659.25,F5=698.46,G5=783.99,A5=880;
-var C2=65.41,D2=73.42,E2=82.41,F2=87.31,G2=98,A2=110,B2=123.47;
 
-var BPM=108;
-var BT=60/BPM; // ~0.556s pro Beat
+var BPM=100;
+var BT=60/BPM;
 var BAR=BT*4;
-var DUR=BAR*8; // 8 Takte, ~17.8s
 
-function sched(){
-  if(!ax||!mg)return DUR;
-  var t0=ax.currentTime+0.1;
-
-  // === PIZZICATO-GROOVE: Das Herzstueck! Beschwingt. ===
-  // Durchgehend, leicht, wie Schritte auf Entdeckungstour
-  var pzPat=[
-    // Bar 1-2: C -> Am
-    [C3,0],[E3,1],[G3,2],[E3,3],
-    [A3,4],[C3,5],[E3,6],[A3,7],
-    // Bar 3-4: F -> G
-    [F3,8],[A3,9],[C4,10],[A3,11],
-    [G3,12],[B3,13],[D4,14],[G3,15],
-    // Bar 5-6: C -> Em
-    [C3,16],[G3,17],[E3,18],[C4,19],
-    [E3,20],[G3,21],[B3,22],[E3,23],
-    // Bar 7-8: F -> G -> C
-    [F3,24],[A3,25],[F3,26],[C4,27],
-    [G3,28],[D4,29],[G3,30],[C3,31],
-  ];
-  pzPat.forEach(function(x){pizz(x[0],t0+x[1]*BT,0.5);});
-
-  // === BASS: Grundtoene, rund und warm ===
-  var bl=[[C2,0],[A2,4],[F2,8],[G2,12],[C2,16],[E2,20],[F2,24],[G2,28]];
-  bl.forEach(function(x){bass(x[0],t0+x[1]*BT,BAR*0.9,0.6);});
-
-  // === BESEN-BRUSH: Ganz zartes Tik-Tik ===
-  for(var i=0;i<32;i++){
-    if(i%2===0)brush(t0+i*BT,0.3);
-    if(i%4===2)brush(t0+i*BT+BT*0.5,0.2); // Offbeat
-  }
-
-  // === MELODIE: Pfeifend, beschwingt, neugierig ===
-  // Phrase 1: "Oh! Was ist das?" (aufwaerts, staunend)
-  whist(E5,t0+1*BT,BT*0.8,0.5);
-  whist(G5,t0+2*BT,BT*0.6,0.5);
-  whist(A5,t0+3*BT,BT*1.5,0.55);
-  // Pause... dann:
-  whist(G5,t0+5*BT,BT*0.6,0.5);
-  whist(E5,t0+6*BT,BT*0.8,0.5);
-  whist(D5,t0+7*BT,BT*1.2,0.5);
-
-  // Phrase 2: "Hmm, interessant!" (spielerisch)
-  whist(C5,t0+9*BT,BT*0.5,0.5);
-  whist(D5,t0+9.5*BT,BT*0.5,0.5);
-  whist(E5,t0+10*BT,BT*0.5,0.5);
-  whist(G5,t0+11*BT,BT*1.8,0.55);
-  // Echo runter
-  whist(E5,t0+13*BT,BT*0.6,0.45);
-  whist(C5,t0+14*BT,BT*1.5,0.5);
-
-  // Phrase 3: "Aha!" (Entdeckung)
-  whist(G5,t0+17*BT,BT*0.4,0.5);
-  whist(A5,t0+17.5*BT,BT*0.4,0.55);
-  whist(G5,t0+18*BT,BT*1.2,0.5);
-  whist(E5,t0+19.5*BT,BT*0.8,0.5);
-  whist(F5,t0+20.5*BT,BT*0.6,0.5);
-  whist(E5,t0+21.5*BT,BT*2,0.55);
-
-  // Phrase 4: Zufriedenes Ende, "Schoen hier!"
-  whist(D5,t0+25*BT,BT*0.6,0.45);
-  whist(E5,t0+26*BT,BT*0.6,0.5);
-  whist(G5,t0+27*BT,BT*0.4,0.45);
-  whist(E5,t0+28*BT,BT*1.5,0.5);
-  whist(C5,t0+30*BT,BT*2,0.5);
-
-  // === GLOCKENSPIEL: Vereinzelte Sternchen ===
-  glock(C5*2,t0+2.5*BT,0.3);
-  glock(G5,t0+7.5*BT,0.3);
-  glock(E5*2,t0+12*BT,0.25);
-  glock(A5,t0+17.5*BT,0.3);
-  glock(D5*2,t0+22*BT,0.25);
-  glock(G5,t0+27.5*BT,0.3);
-  glock(C5*2,t0+31*BT,0.25);
-
-  return DUR;
+// ===================================================
+// SZENE 0: Weltraum-Intro (weit, magisch, Sterne)
+// ===================================================
+function scene0(t0){
+  pad(C3,t0,5,0.7);
+  pad(G2,t0+0.5,4.5,0.5);
+  pad(E3,t0+1,4,0.4);
+  harp([C4,E4,G4,C5,E5],t0+1.2,0.25,0.5);
+  celesta(G5,t0+2.5,0.35);
+  celesta(C5*2,t0+3.5,0.3);
+  flute(E4,t0+2.5,BT*2,0.25);
+  flute(G4,t0+2.5+BT*2,BT*2.5,0.3);
+  return 5;
 }
 
-function loop1(){if(!mp)return;var d=sched();lt=setTimeout(function(){if(mp)loop1();},(d-0.5)*1000);}
+// ===================================================
+// SZENE 1: Landung auf der Erde (neugierig, verspielt)
+// ===================================================
+function scene1(t0){
+  // Warmes Marimba-Pattern
+  var m=[C4,E4,G4,E4,C4,G3,A3,C4, D4,F4,A4,F4,D4,A3,G3,E3];
+  m.forEach(function(n,i){marimba(n,t0+i*BT*0.5,0.55);});
+  // Neugierige Flöte
+  flute(G4,t0+BT*0.5,BT*1.2,0.5);
+  flute(A4,t0+BT*2,BT*0.8,0.5);
+  flute(C5,t0+BT*3.5,BT*1.8,0.55);
+  flute(A4,t0+BT*6,BT*0.8,0.45);
+  flute(G4,t0+BT*7,BT*1.5,0.5);
+  // Cello-Fundament
+  cello(C3,t0,BAR,0.5);
+  cello(F3,t0+BAR,BAR,0.5);
+  // Leichter Shaker
+  for(var i=0;i<16;i++){if(i%2===0)shaker(t0+i*BT*0.5,0.35);}
+  celesta(C5*2,t0+BT*3,0.2);
+  celesta(G5,t0+BT*7.5,0.2);
+  return 8;
+}
+
+// ===================================================
+// SZENE 2: Schlagloch-Schock (dramatisch → nachdenklich)
+// ===================================================
+function scene2(t0){
+  // Ahnungslose Marimba... kurz!
+  marimba(E4,t0,0.4);
+  marimba(G4,t0+0.3,0.4);
+  // STINGER sofort bei ~0.7s!
+  stinger(t0+0.7,0.8);
+  // Kurze Stille... dann schnell nachdenklich
+  cello(A2,t0+BT*3,BAR,0.6);
+  cello(E3,t0+BT*3.5,BAR*0.8,0.45);
+  // Traurige Flöte, schneller einsetzend
+  flute(E4,t0+BT*4,BT*1.5,0.4);
+  flute(D4,t0+BT*6,BT*2,0.35);
+  flute(C4,t0+BT*8.5,BT*2.5,0.4);
+  // Moll-Pad
+  pad(A2,t0+BT*3,5,0.5);
+  pad(E3,t0+BT*4,4,0.35);
+  return 9;
+}
+
+// ===================================================
+// SZENE 3: Entdeckung! (FROHLOCKEN! Jubelnd, magisch)
+// ===================================================
+function scene3(t0){
+  // Sofort jubelnde Harfe aufwärts!
+  harp([C4,E4,G4,C5,E5,G5,C5*2],t0,0.1,0.65);
+  // Celesta-Funkeln sofort - Magie!
+  celesta(G5,t0+0.2,0.5);
+  celesta(C5*2,t0+0.5,0.5);
+  celesta(E5*2,t0+0.8,0.45);
+  // Kick für den Wow-Moment
+  kick(t0+0.3,0.4);
+  // Jubelnde aufsteigende Flöte - Frohlocken!
+  flute(C5,t0+BT*1.5,BT*0.5,0.6);
+  flute(E5,t0+BT*2,BT*0.5,0.65);
+  flute(G5,t0+BT*2.5,BT*0.5,0.65);
+  flute(A5,t0+BT*3,BT*2,0.75); // Höhepunkt!
+  // Zweite Jubel-Welle
+  celesta(G5*2,t0+BT*3,0.5);
+  celesta(C5*2,t0+BT*3.5,0.4);
+  harp([G4,C5,E5,G5],t0+BT*3.5,0.12,0.5);
+  // Frohe Marimba-Kaskade
+  var m=[C4,E4,G4,C5,E5,G5,E5,C5,G4,C5,E5,G5];
+  m.forEach(function(n,i){marimba(n,t0+BT*1+i*BT*0.35,0.45+i*0.02);});
+  // Zufriedene Flöte danach
+  flute(G5,t0+BT*5.5,BT*0.8,0.55);
+  flute(E5,t0+BT*6.5,BT*0.8,0.55);
+  flute(C5,t0+BT*7.5,BT*2,0.6);
+  // Warmes Cello darunter
+  cello(C3,t0+BT,BAR*1.5,0.6);
+  cello(G2,t0+BAR*1.5+BT,BAR,0.55);
+  // Shaker kommt fröhlich dazu
+  for(var i=2;i<16;i++){shaker(t0+i*BT*0.5,0.35+i*0.015);}
+  kick(t0+BAR,0.3);kick(t0+BAR*2,0.3);
+  return 8;
+}
+
+// ===================================================
+// SZENE 4: Meldi in Aktion (fröhlich, energetisch)
+// ===================================================
+function scene4(t0){
+  // Volles Marimba-Groove
+  var m=[C4,E4,G4,C5,A3,C4,E4,A4, F3,A3,C4,F4,G3,B3,D4,G4];
+  m.forEach(function(n,i){marimba(n,t0+i*BT*0.55,0.6);});
+  // Fröhliche Flöten-Melodie
+  flute(E5,t0+BT,BT*0.6,0.55);
+  flute(G5,t0+BT*1.8,BT*0.5,0.55);
+  flute(A5,t0+BT*2.5,BT*1.2,0.6);
+  flute(G5,t0+BT*4,BT*0.5,0.5);
+  flute(E5,t0+BT*4.8,BT*0.5,0.5);
+  flute(D5,t0+BT*5.5,BT*1.5,0.55);
+  // Zweite Phrase
+  flute(C5,t0+BT*7.5,BT*0.5,0.5);
+  flute(E5,t0+BT*8.2,BT*0.5,0.55);
+  flute(G5,t0+BT*9,BT*2,0.6);
+  // Volle Cello-Begleitung
+  cello(C3,t0,BAR,0.6);
+  cello(A2,t0+BAR,BAR,0.55);
+  cello(F2,t0+BAR*2,BAR,0.55);
+  cello(G2,t0+BAR*2+BAR,BAR,0.6);
+  // Rhythmus: Shaker + Kicks auf 1 und 3
+  for(var i=0;i<18;i++){shaker(t0+i*BT*0.5,0.4);}
+  kick(t0,0.3);kick(t0+BAR,0.3);kick(t0+BAR*2,0.35);
+  // Celesta-Highlights
+  celesta(C5*2,t0+BT*2.5,0.25);
+  celesta(G5,t0+BT*6,0.25);
+  celesta(E5*2,t0+BT*9.5,0.3);
+  return 9;
+}
+
+// ===================================================
+// SZENE 5: Dashboard/Kommune (professionell, zuversichtlich)
+// ===================================================
+function scene5(t0){
+  // Ruhiges Pad - Vertrauen
+  pad(C3,t0,7.5,0.6);
+  pad(G3,t0+0.5,7,0.45);
+  pad(E3,t0+1,6.5,0.35);
+  // Leise Marimba-Pulse
+  [C3,G3,C4,E4,G3,C4,E4,G4,C4,E4,G4,C5].forEach(function(n,i){
+    marimba(n,t0+i*BT*0.6,0.3);
+  });
+  // Zufriedene Flöte
+  flute(G4,t0+BT*2,BT*1.8,0.45);
+  flute(A4,t0+BT*4.5,BT*1.2,0.45);
+  flute(G4,t0+BT*6.5,BT*2,0.5);
+  flute(E4,t0+BT*9,BT*2.5,0.45);
+  // Cello: stabil
+  cello(C2,t0,BAR*1.5,0.5);
+  cello(G2,t0+BAR*1.5,BAR*1.5,0.5);
+  // Vereinzelte Celesta
+  celesta(C5,t0+BT*3,0.2);
+  celesta(E5,t0+BT*7,0.2);
+  celesta(G5,t0+BT*10,0.2);
+  return 8;
+}
+
+// ===================================================
+// SZENE 6: Mission erfüllt! (triumphant, emotional)
+// ===================================================
+function scene6(t0){
+  // Großer Auftakt: Harpe + Kick
+  harp([C4,E4,G4,C5,E5,G5,C5*2],t0,0.1,0.6);
+  kick(t0+0.1,0.5);
+  // Volles Pad
+  pad(C3,t0+0.5,7,0.7);
+  pad(G3,t0+0.8,6.5,0.5);
+  pad(E3,t0+1,6,0.4);
+  // Triumphale Flöte (das Thema in voller Pracht)
+  flute(C5,t0+BT*2,BT*0.6,0.6);
+  flute(D5,t0+BT*2.8,BT*0.5,0.6);
+  flute(E5,t0+BT*3.5,BT*0.6,0.65);
+  flute(G5,t0+BT*4.3,BT*0.5,0.65);
+  flute(A5,t0+BT*5,BT*2.5,0.7);
+  // Sanft abfallend
+  flute(G5,t0+BT*8,BT*0.8,0.55);
+  flute(E5,t0+BT*9.2,BT*1,0.55);
+  flute(C5,t0+BT*10.5,BT*3,0.6);
+  // Volles Marimba
+  var m=[C4,E4,G4,C5,G4,E4,C4,G3, C4,E4,G4,C5,E5,G4,C5,C4];
+  m.forEach(function(n,i){marimba(n,t0+BT*1.5+i*BT*0.4,0.5);});
+  // Starkes Cello
+  cello(C3,t0,BAR*1.2,0.7);
+  cello(G2,t0+BAR*1.2,BAR,0.65);
+  cello(C3,t0+BAR*2.2,BAR*1.2,0.7);
+  // Celesta-Regen
+  celesta(C5*2,t0+BT*2,0.4);
+  celesta(E5*2,t0+BT*5,0.4);
+  celesta(G5*2,t0+BT*7,0.35);
+  celesta(C5*2,t0+BT*10,0.3);
+  // Rhythmus
+  for(var i=0;i<16;i++){shaker(t0+BT+i*BT*0.45,0.4);}
+  kick(t0+BT*2,0.35);kick(t0+BT*5,0.35);kick(t0+BT*8,0.3);
+  return 8;
+}
+
+// ===================================================
+// SZENE 7: CTA - Warmes Outro
+// ===================================================
+function scene7(t0){
+  // Sanftes Pad ausklingend
+  pad(C3,t0,9,0.55);
+  pad(E3,t0+1,8,0.4);
+  pad(G3,t0+1.5,7,0.3);
+  // Letzte Flöten-Phrase (das Thema, sanft)
+  flute(E5,t0+BT*2,BT*2,0.4);
+  flute(C5,t0+BT*5,BT*2.5,0.4);
+  flute(G4,t0+BT*8,BT*3.5,0.35);
+  // Harfe zum Abschluss
+  harp([C4,E4,G4,C5],t0+BT*6,0.3,0.35);
+  // Cello-Fundament
+  cello(C2,t0,7,0.4);
+  // Letzte Celesta
+  celesta(C5*2,t0+BT*3,0.25);
+  celesta(G5,t0+BT*7,0.2);
+  return 10;
+}
+
+// === PLAYBACK ENGINE ===
+var sceneFns=[scene0,scene1,scene2,scene3,scene4,scene5,scene6,scene7];
+
+function musicLoop(){
+  if(!mp)return;
+  if(!ax||!mg)return;
+  var t0=ax.currentTime+0.05;
+  var s=curScene;
+  var d=8;
+  if(s>=0&&s<sceneFns.length){
+    d=sceneFns[s](t0);
+  }
+  // Loop häufiger als die Szene lang ist → Überlappung, keine Lücken
+  var loopIn=Math.min(d*0.65,5);
+  lt=setTimeout(function(){if(mp)musicLoop();},Math.max(loopIn,2)*1000);
+}
+
+// Observe scene changes
+(function(){
+  setInterval(function(){
+    var active=document.querySelector('.scene.active');
+    if(active){
+      var scenes=document.querySelectorAll('.scene');
+      for(var i=0;i<scenes.length;i++){
+        if(scenes[i]===active&&i!==curScene){
+          curScene=i;break;
+        }
+      }
+    }
+  },250);
+})();
+
 function startM(){
   ini();var go=function(){
     mp=true;mg.gain.cancelScheduledValues(ax.currentTime);
     mg.gain.setValueAtTime(0.0001,ax.currentTime);
-    mg.gain.linearRampToValueAtTime(0.55,ax.currentTime+2);
-    loop1();updMUI();
+    mg.gain.linearRampToValueAtTime(0.9,ax.currentTime+1.5);
+    musicLoop();updMUI();
   };
   if(ax.state==='suspended')ax.resume().then(go);else go();
 }
@@ -1390,6 +1628,160 @@ if(ctrl){var b=document.createElement('button');b.id='musicBtn';b.className='ctr
 var ms=document.createElement('style');
 ms.textContent='.mus-btn{transition:all .3s!important}.mus-btn.mus-on{background:rgba(126,224,160,.2)!important;box-shadow:0 0 8px rgba(126,224,160,.3)!important}';
 document.head.appendChild(ms);
+})();
+
+// === ERZÄHLER: Stimme aus dem Off ===
+// Hans-Paetsch-Style Narration per Web Speech API
+(function(){
+var synth=window.speechSynthesis;
+if(!synth)return;
+
+var narrationTexts=[
+  // Szene 0: Titel (5s)
+  "Dies ist die Geschichte von Meldi. Einem Außerirdischen mit großer Mission.",
+  // Szene 1: Landung (8s)
+  "Meldi gehört zu den Veloxanern. Ein Volk von Velofahrern, das allen Planeten Fahrradfreundlichkeit beibringt. Jetzt ist die Erde dran!",
+  // Szene 2: Schock (9s)
+  "Doch was Meldi hier vorfindet, ist alles andere als fahrradfreundlich. Schlaglöcher! Zugeparkte Radwege!",
+  // Szene 3: Entdeckung (8s)
+  "Da! Meldi entdeckt den Radwegemelder! Kein Account nötig. Einfach Handy raus und melden!",
+  // Szene 4: Meldi meldet (9s)
+  "Meldi meldet fleißig! Schlaglöcher, Wünsche, und sogar eine fahrradfreundliche Einkehr. Die Saarländer lieben das!",
+  // Szene 5: Dashboard (8s)
+  "In der Kommune sind alle Meldungen auf einer Karte. Professionell aufbereitet für den Gemeinderat.",
+  // Szene 6: Mission erfüllt (8s)
+  "Mission erfüllt! Wenn Bürger melden, entstehen bessere Radwege.",
+  // Szene 7: CTA
+  "CTA_SPECIAL"
+];
+
+var narDelay=[400,300,200,200,300,300,300,600];
+var lastNarScene=-1;
+var currentUtterance=null;
+var narEnabled=true;
+
+function getGermanVoice(){
+  var voices=synth.getVoices();
+  // Prefer specific warm-sounding voices
+  var preferred=['Anna','Markus','Hans','Petra','Google Deutsch','Daniel'];
+  for(var p=0;p<preferred.length;p++){
+    for(var v=0;v<voices.length;v++){
+      if(voices[v].name.indexOf(preferred[p])>=0&&voices[v].lang.indexOf('de')>=0)return voices[v];
+    }
+  }
+  // Fallback: any German voice
+  for(var v=0;v<voices.length;v++){
+    if(voices[v].lang.indexOf('de')>=0)return voices[v];
+  }
+  return null;
+}
+
+function speak(text,delay,opts){
+  if(!narEnabled)return;
+  // Cancel previous
+  synth.cancel();
+  setTimeout(function(){
+    if(!narEnabled)return;
+    var utt=new SpeechSynthesisUtterance(text);
+    var voice=getGermanVoice();
+    if(voice)utt.voice=voice;
+    utt.lang='de-DE';
+    utt.rate=(opts&&opts.rate)||1.0;
+    utt.pitch=(opts&&opts.pitch)||0.92;
+    utt.volume=(opts&&opts.volume)||1.0;
+    currentUtterance=utt;
+    synth.speak(utt);
+  },delay||800);
+}
+
+function stopNarration(){
+  synth.cancel();
+  currentUtterance=null;
+}
+
+// Spezial-CTA: "Und jetzt..." [PAUSE] "...sind SIE dran!"
+function speakCTA(delay){
+  if(!narEnabled)return;
+  synth.cancel();
+  setTimeout(function(){
+    if(!narEnabled)return;
+    var voice=getGermanVoice();
+    // Teil 1: "Und jetzt..."
+    var u1=new SpeechSynthesisUtterance("Und jetzt");
+    if(voice)u1.voice=voice;
+    u1.lang='de-DE';u1.rate=0.9;u1.pitch=0.9;u1.volume=1.0;
+    u1.onend=function(){
+      // Dramatische Pause
+      setTimeout(function(){
+        if(!narEnabled)return;
+        // Teil 2: "sind SIE dran!" - langsam, tief, deutlich
+        var u2=new SpeechSynthesisUtterance("machen auch Sie mit!");
+        if(voice)u2.voice=voice;
+        u2.lang='de-DE';u2.rate=0.85;u2.pitch=0.95;u2.volume=1.0;
+        synth.speak(u2);
+      },1200);
+    };
+    synth.speak(u1);
+  },delay||800);
+}
+
+// Beobachte Szenenwechsel
+var narObserver=setInterval(function(){
+  var active=document.querySelector('.scene.active');
+  if(!active)return;
+  var scenes=document.querySelectorAll('.scene');
+  for(var i=0;i<scenes.length;i++){
+    if(scenes[i]===active&&i!==lastNarScene){
+      lastNarScene=i;
+      if(i<narrationTexts.length){
+        // Szene 7 (CTA): Zwei Teile mit dramatischer Pause
+        if(i===7){
+          speakCTA(narDelay[i]);
+        } else {
+          speak(narrationTexts[i],narDelay[i]);
+        }
+      }
+      break;
+    }
+  }
+},250);
+
+// Erzähler-Button in Controls
+window.toggleNarrator=function(){
+  narEnabled=!narEnabled;
+  if(!narEnabled)stopNarration();
+  var btn=document.getElementById('narBtn');
+  if(btn){
+    btn.textContent=narEnabled?'🎙️':'🔇';
+    btn.title=narEnabled?'Erzähler aus':'Erzähler an';
+    btn.classList.toggle('nar-on',narEnabled);
+  }
+};
+
+// Voices laden asynchron - beim Laden nochmal checken
+if(synth.onvoiceschanged!==undefined){
+  synth.onvoiceschanged=function(){getGermanVoice();};
+}
+
+// Button erstellen
+var ctrl=document.querySelector('.controls');
+if(ctrl){
+  var nb=document.createElement('button');
+  nb.id='narBtn';nb.className='ctrl nar-btn nar-on';
+  nb.textContent='🎙️';nb.title='Erzähler aus';
+  nb.onclick=window.toggleNarrator;
+  // Nach dem Musik-Button einfügen
+  var musicBtn=document.getElementById('musicBtn');
+  if(musicBtn&&musicBtn.nextSibling)ctrl.insertBefore(nb,musicBtn.nextSibling);
+  else ctrl.insertBefore(nb,ctrl.firstChild);
+}
+var ns=document.createElement('style');
+ns.textContent='.nar-btn{transition:all .3s!important}.nar-btn.nar-on{background:rgba(255,200,60,.2)!important;box-shadow:0 0 8px rgba(255,200,60,.3)!important}';
+document.head.appendChild(ns);
+
+// Stop narration when film ends or is paused
+var origTogglePlay=window.togglePlay||null;
+// Narration stoppt bei Film-Ende
 })();
 </script>
 <div class="share-toast" id="shareToast">🔗 Link kopiert!</div>
