@@ -12,6 +12,23 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
 
 .cinema{width:min(96vw,840px);aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 20px 80px rgba(0,0,0,.6)}
 
+/* Portrait mobile: Vollbild */
+@media (orientation:portrait) and (max-width:768px){
+  body{height:100vh;height:100dvh}
+  .cinema{width:100vw;height:100vh;height:100dvh;border-radius:0;aspect-ratio:auto;box-shadow:none}
+  .sub{padding:16px 18px 52px}
+  .sub__text{font-size:clamp(12px,3.2vw,16px)}
+  .speech{font-size:clamp(10px,2.8vw,14px);padding:8px 12px;max-width:75vw!important}
+  .controls{bottom:10px}
+  .s7-title{font-size:clamp(18px,5vw,28px)}
+  .s7-text{font-size:clamp(11px,3vw,15px)}
+  .s7-btn{font-size:clamp(11px,3vw,15px);padding:10px 18px}
+  .s7-content{padding:20px 16px 90px}
+  .s7-mission{font-size:clamp(9px,2.5vw,12px)}
+  .s7-credit{font-size:clamp(8px,2.2vw,11px)}
+  .s7-btns{flex-direction:column;align-items:center}
+}
+
 /* Landscape mobile fix */
 @media (orientation:landscape) and (max-height:500px){
   .cinema{width:100vw;height:100vh;border-radius:0;aspect-ratio:auto}
@@ -36,7 +53,8 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
   background:#fff;border:2.5px solid var(--text);border-radius:18px;
   padding:clamp(8px,1.5vw,14px) clamp(12px,2vw,18px);
   font-size:clamp(10px,1.6vw,14px);font-weight:700;line-height:1.4;
-  max-width:clamp(140px,30vw,260px);
+  max-width:clamp(160px,35vw,280px);
+  word-wrap:break-word;overflow-wrap:break-word;
   opacity:0;transform:scale(.7);
   transition:opacity .4s ease,transform .4s ease;
   box-shadow:3px 3px 0 rgba(0,0,0,.1);
