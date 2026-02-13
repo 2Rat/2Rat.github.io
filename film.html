@@ -777,6 +777,15 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
 .s7-btn:hover{transform:translateY(-2px)}
 .s7-btn--g{background:var(--green);color:#fff}
 .s7-btn--b{background:var(--blue);color:#fff}
+.s7-btn--share{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.s7-btn--share:hover{background:rgba(255,255,255,.25)}
+.share-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none}
+.share-toast.show{opacity:1}
+
+/* Tap-to-Start Splash */
+.splash{position:absolute;inset:0;z-index:500;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px)}
+.splash__btn{background:var(--green);color:#fff;border:none;border-radius:50%;width:clamp(60px,14vw,90px);height:clamp(60px,14vw,90px);font-size:clamp(24px,5vw,40px);cursor:pointer;animation:splash-pulse 1.5s ease-in-out infinite;box-shadow:0 0 30px rgba(104,146,70,.5)}
+@keyframes splash-pulse{0%,100%{transform:scale(1);box-shadow:0 0 30px rgba(104,146,70,.4)}50%{transform:scale(1.08);box-shadow:0 0 50px rgba(104,146,70,.6)}}
 .s7-credit{margin-top:clamp(10px,2vw,20px);color:rgba(255,255,255,.3);font-size:clamp(8px,1.2vw,11px)}
 .s7-credit a{color:rgba(255,255,255,.45);text-decoration:none}
 .s7-alien{
@@ -884,6 +893,11 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
 <body>
 
 <div class="cinema">
+
+  <!-- Tap to Start -->
+  <div class="splash" id="splash" onclick="startFilm()">
+    <button class="splash__btn">▶</button>
+  </div>
 
   <!-- SCENE 0: Title -->
   <div class="scene active" data-duration="5000">
@@ -1038,6 +1052,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
       <div class="s7-btns">
         <a href="https://2rat.github.io/velomeld/" class="s7-btn s7-btn--g" target="_blank">📱 Jetzt ausprobieren</a>
         <a href="mailto:fahr2rat@gmail.com" class="s7-btn s7-btn--b">✉️ Beratung anfragen</a>
+        <button class="s7-btn s7-btn--share" onclick="shareFilm()">📤 Teilen</button>
       </div>
       <div class="s7-credit"><a href="https://www.2rat.org">2Rat – Büro für Radverkehrsplanung</a> · Armin Jung · <a href="mailto:fahr2rat@gmail.com">fahr2rat@gmail.com</a></div>
     </div>
@@ -1101,34 +1116,91 @@ function startCounter(){
 }
 function stopCounter(){if(counterInterval){clearInterval(counterInterval);counterInterval=null}}
 
+// Wake Lock: Bildschirm bleibt an während Film läuft
+var wakeLock=null;
+async function requestWake(){
+  try{if('wakeLock' in navigator){wakeLock=await navigator.wakeLock.request('screen');}}catch(e){}
+}
+function releaseWake(){
+  if(wakeLock){wakeLock.release();wakeLock=null;}
+}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&playing)requestWake();});
+
 function goTo(idx){
   stopCounter();
-  scenes.forEach(s=>s.classList.remove('active'));
+  var prev=cur;
   cur=idx;
-  // Small delay to let previous scene fully fade before activating new one
-  requestAnimationFrame(()=>{
-    scenes[cur].classList.add('active');
-    if(cur===4)setTimeout(startCounter,600);
-    updateUI();scheduleNext();
-  });
+  scenes[cur].classList.add('active');
+  // Remove old scene after new one is visible (cross-fade)
+  setTimeout(()=>{
+    scenes.forEach((s,i)=>{if(i!==cur)s.classList.remove('active');});
+  },50);
+  if(cur===4)setTimeout(startCounter,600);
+  updateUI();scheduleNext();
 }
 function scheduleNext(){
   clearTimeout(timer);if(!playing)return;
   const dur=parseInt(scenes[cur].dataset.duration);
-  if(dur>0){timer=setTimeout(()=>{if(cur<total-1)goTo(cur+1);else{playing=false;updateUI();if(window.toggleMusic&&document.querySelector('.mus-on'))window.toggleMusic();}},dur)}
-  else{playing=false;updateUI();if(window.toggleMusic&&document.querySelector('.mus-on'))window.toggleMusic();}
+  if(dur>0){timer=setTimeout(()=>{if(cur<total-1)goTo(cur+1);else{playing=false;releaseWake();updateUI();if(window.toggleMusic&&document.querySelector('.mus-on'))window.toggleMusic();}},dur)}
+  else{playing=false;releaseWake();updateUI();if(window.toggleMusic&&document.querySelector('.mus-on'))window.toggleMusic();}
 }
-function togglePlay(){playing=!playing;updateUI();if(playing){if(cur>=total-1)goTo(0);else scheduleNext()}else clearTimeout(timer)}
+function togglePlay(){playing=!playing;updateUI();if(playing){requestWake();if(cur>=total-1)goTo(0);else scheduleNext()}else{clearTimeout(timer);releaseWake();}}
 function nextScene(){if(cur<total-1)goTo(cur+1)}
 function prevScene(){if(cur>0)goTo(cur-1)}
-function replay(){playing=true;goTo(0)}
+function replay(){playing=true;requestWake();goTo(0)}
 function updateUI(){
   document.getElementById('playBtn').textContent=playing?'⏸':'▶';
   document.getElementById('scNum').textContent=(cur+1)+'/'+total;
   document.getElementById('progBar').style.width=((cur+1)/total*100)+'%';
   document.getElementById('replayBtn').classList.toggle('show',cur>=total-1&&!playing);
 }
+// Film startet pausiert auf Szene 0, wartet auf Tap
+playing=false;
 goTo(0);
+
+function startFilm(){
+  var sp=document.getElementById('splash');
+  sp.style.opacity='0';sp.style.pointerEvents='none';
+  setTimeout(()=>sp.remove(),500);
+  playing=true;requestWake();updateUI();scheduleNext();
+}
+
+// === TEILEN ===
+function shareFilm(){
+  var shareData={
+    title:'Meldis Mission – Radwegemelder',
+    text:'Schau dir an wie Meldi das Saarland fahrradfreundlicher macht! 🚲🛸',
+    url:'https://www.2rat.org/film.html'
+  };
+  if(navigator.share){
+    navigator.share(shareData).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(shareData.url).then(()=>{
+      var t=document.getElementById('shareToast');
+      t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);
+    });
+  }
+}
+
+// === SWIPE-GESTEN ===
+(function(){
+  var sx=0,sy=0,cinema=document.querySelector('.cinema');
+  cinema.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  cinema.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-sx;
+    var dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5){
+      if(dx<0)nextScene(); else prevScene();
+    }
+  },{passive:true});
+})();
+
+// === VIBRATION bei Szene 2 (Bordstein-Schock) ===
+var origGoTo=goTo;
+goTo=function(idx){
+  origGoTo(idx);
+  if(idx===2&&navigator.vibrate)navigator.vibrate([50,30,80]);
+};
 
 // === MELDI SOUNDTRACK: Pixar-Entdecker ===
 // Leicht, beschwingt, neugierig. Wie WALL-E oder Ratatouille.
@@ -1320,5 +1392,6 @@ ms.textContent='.mus-btn{transition:all .3s!important}.mus-btn.mus-on{background
 document.head.appendChild(ms);
 })();
 </script>
+<div class="share-toast" id="shareToast">🔗 Link kopiert!</div>
 </body>
 </html>
