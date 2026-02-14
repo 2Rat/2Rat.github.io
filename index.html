@@ -73,7 +73,7 @@
     .hero__grid { display: grid; grid-template-columns: 61.8fr 38.2fr; gap: 40px; align-items: center; }
     .hero__left {}
     .hero__right { display: flex; justify-content: center; align-items: center; }
-    .hero__logo { width: 200px; }
+    .hero__logo { width: 200px; mix-blend-mode: multiply; }
     .hero__sub { font-size: 18px; font-weight: 600; color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
     .hero__title { font-size: clamp(26px, 3.5vw, 38px); font-weight: 800; line-height: 1.15; margin-bottom: 18px; color: var(--text); }
     .hero__title .gr { color: var(--green); }
@@ -360,39 +360,6 @@
         </div>
       </div>
 
-      <!-- Schulweg-Detektive -->
-      <div class="produkt reveal">
-        <div class="produkt__info">
-          <h3><span class="bl">Schulweg-Detektive</span> –<br><span class="gr">Kostenlose App für sichere Schulwege</span></h3>
-          <p>Wer weiß am besten, wo es auf dem Schulweg gefährlich ist? Die Kinder selbst! Mit der Schulweg-Detektive App erfassen Grundschulkinder gefährliche und sichere Stellen auf ihrem Schulweg – mit zwei Klicks, GPS macht den Rest. Die Ergebnisse helfen Schulen und Kommunen bei der Schulwegplanung.</p>
-          <div class="feat-list">
-            <div class="feat"><div class="feat__dot" style="background:#FF9800;"></div><div><strong>Gefahren</strong><br><span>Schnelle Autos, fehlende Gehwege, schlechte Sicht</span></div></div>
-            <div class="feat"><div class="feat__dot" style="background:#4CAF50;"></div><div><strong>Positiv</strong><br><span>Zebrastreifen, Schülerlotsen, verkehrsberuhigte Zonen</span></div></div>
-            <div class="feat"><div class="feat__dot" style="background:#2196F3;"></div><div><strong>QR-Code</strong><br><span>Ergebnisse per QR-Code an den Lehrer senden</span></div></div>
-            <div class="feat"><div class="feat__dot" style="background:#9C27B0;"></div><div><strong>Kostenlos & datenschutzfreundlich</strong><br><span>Keine Registrierung, keine versteckten Kosten – alle Daten bleiben lokal auf dem Gerät</span></div></div>
-          </div>
-          <div class="produkt__btns">
-            <a href="https://009aj.github.io/schulweg-check/" class="btn btn--sm" style="background:#FF9800;color:white;" target="_blank">🔍 Web-App öffnen</a>
-          </div>
-          <div style="margin-top:18px;font-size:12px;line-height:1.6;color:var(--text-light);border-top:1px solid rgba(0,0,0,0.08);padding-top:14px;">
-            <div style="margin-bottom:6px;"><strong style="color:var(--text);">Idee & Konzept:</strong> Jugendpflege der Gemeinde Kirkel – entstanden im Rahmen eines Schülerpraktikums</div>
-            <div><strong style="color:var(--text);">Technische Umsetzung:</strong> 2Rat – Planungsbüro für Radverkehr</div>
-          </div>
-        </div>
-        <div class="produkt__preview sw-preview">
-          <div class="sw-header">
-            <div class="sw-title">🔍 Schulweg-Detektive</div>
-            <div class="sw-sub">Schulwegsicherheit mit Kinderaugen</div>
-          </div>
-          <div class="sw-items">
-            <div class="sw-item sw-item--r"><span>🚗</span> Zu schnelle Autos</div>
-            <div class="sw-item sw-item--r"><span>🌙</span> Zu dunkel</div>
-            <div class="sw-item sw-item--g"><span>🚦</span> Gute Ampel</div>
-            <div class="sw-item sw-item--g"><span>🐌</span> Tempo 30</div>
-          </div>
-        </div>
-      </div>
-
       <!-- Auswertungs-Dashboard -->
       <div class="produkt reveal">
         <div class="produkt__info">
@@ -430,6 +397,40 @@
             <span class="db-action">📥 GeoJSON</span>
             <span class="db-action">📥 CSV</span>
             <span class="db-action">📄 PDF</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schulweg-Detektive -->
+      <div class="produkt reveal">
+        <div class="produkt__info">
+          <div style="display:inline-block;background:#FF9800;color:white;font-size:14px;font-weight:700;letter-spacing:1px;padding:10px 18px;border-radius:8px;margin-bottom:14px;white-space:nowrap;">🆓 umsonst · free · gratuit · gratis · 無料 · 免费 · مجاني 🎓</div>
+          <h3><span class="bl">Schulweg-Detektive</span> –<br><span class="gr">Schulwegsicherheit selber machen</span></h3>
+          <p>Die Schulweg-Detektive App ist ein kostenloses Gemeinschaftsprojekt – offen für alle Schulen und Kommunen. Kinder erfassen gefährliche und sichere Stellen auf ihrem Schulweg, die Ergebnisse unterstützen direkt die Schulwegplanung vor Ort.</p>
+          <div class="feat-list">
+            <div class="feat"><div class="feat__dot" style="background:#FF9800;"></div><div><strong>Gefahren</strong><br><span>Schnelle Autos, fehlende Gehwege, schlechte Sicht</span></div></div>
+            <div class="feat"><div class="feat__dot" style="background:#4CAF50;"></div><div><strong>Positiv</strong><br><span>Zebrastreifen, Schülerlotsen, verkehrsberuhigte Zonen</span></div></div>
+            <div class="feat"><div class="feat__dot" style="background:#2196F3;"></div><div><strong>QR-Code</strong><br><span>Ergebnisse per QR-Code an den Lehrer senden</span></div></div>
+            <div class="feat"><div class="feat__dot" style="background:#9C27B0;"></div><div><strong>Kostenlos & datenschutzfreundlich</strong><br><span>Keine Registrierung, keine versteckten Kosten – alle Daten bleiben lokal auf dem Gerät</span></div></div>
+          </div>
+          <div class="produkt__btns">
+            <a href="https://009aj.github.io/schulweg-check/" class="btn btn--sm" style="background:#FF9800;color:white;" target="_blank">🔍 Web-App öffnen</a>
+          </div>
+          <div style="margin-top:18px;font-size:12px;line-height:1.6;color:var(--text-light);border-top:1px solid rgba(0,0,0,0.08);padding-top:14px;">
+            <div style="margin-bottom:6px;"><strong style="color:var(--text);">Idee & Konzept:</strong> Jugendpflege der Gemeinde Kirkel – entstanden im Rahmen eines Schülerpraktikums</div>
+            <div><strong style="color:var(--text);">Technische Umsetzung:</strong> 2Rat – Planungsbüro für Radverkehr</div>
+          </div>
+        </div>
+        <div class="produkt__preview sw-preview">
+          <div class="sw-header">
+            <div class="sw-title">🔍 Schulweg-Detektive</div>
+            <div class="sw-sub">Schulwegsicherheit mit Kinderaugen</div>
+          </div>
+          <div class="sw-items">
+            <div class="sw-item sw-item--r"><span>🚗</span> Zu schnelle Autos</div>
+            <div class="sw-item sw-item--r"><span>🌙</span> Zu dunkel</div>
+            <div class="sw-item sw-item--g"><span>🚦</span> Gute Ampel</div>
+            <div class="sw-item sw-item--g"><span>🐌</span> Tempo 30</div>
           </div>
         </div>
       </div>
