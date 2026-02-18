@@ -930,7 +930,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
   </div>
 
   <!-- SCENE 1: Landing -->
-  <div class="scene" data-duration="8000">
+  <div class="scene" data-duration="13000">
     <div class="s1-bg"></div>
     <div class="s1-stars" id="stars2s1"></div>
     <div class="s1-moon"></div>
@@ -997,7 +997,7 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
   </div>
 
   <!-- SCENE 4: Reporting frenzy -->
-  <div class="scene" data-duration="9000">
+  <div class="scene" data-duration="13000">
     <div class="s4-bg"></div>
     <div class="s4-alien"><div class="alien alien--happy"><div class="alien__antenna"></div><div class="alien__head"><div class="alien__eye alien__eye--l"><div class="alien__pupil"></div></div><div class="alien__eye alien__eye--r"><div class="alien__pupil"></div></div><div class="alien__mouth"></div></div><div class="alien__body"></div><div class="alien__arm alien__arm--l"></div><div class="alien__arm alien__arm--r"></div><div class="alien__hand alien__hand--l"></div><div class="alien__hand alien__hand--r"></div><div class="alien__leg alien__leg--l"></div><div class="alien__leg alien__leg--r"></div><div class="alien__shoe alien__shoe--l"></div><div class="alien__shoe alien__shoe--r"></div></div></div>
     <div class="s4-pings">
@@ -1069,10 +1069,10 @@ body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;
       <div class="s7-text">Machen Sie es wie Meldi – nutzen Sie den Radwegemelder!<br>Kostenlos · Anonym · Keine Installation nötig</div>
       <div class="s7-btns">
         <a href="https://2rat.github.io/velomeld/" class="s7-btn s7-btn--g" target="_blank">📱 Jetzt ausprobieren</a>
-        <a href="mailto:fahr2rat@gmail.com" class="s7-btn s7-btn--b">✉️ Beratung anfragen</a>
+        <a href="/cdn-cgi/l/email-protection#cbadaaa3b9f9b9aabf8baca6aaa2a7e5a8a4a6" class="s7-btn s7-btn--b">✉️ Beratung anfragen</a>
         <button class="s7-btn s7-btn--share" onclick="shareFilm()">📤 Teilen</button>
       </div>
-      <div class="s7-credit"><a href="https://www.2rat.org">2Rat – Büro für Radverkehrsplanung</a> · Armin Jung · <a href="mailto:fahr2rat@gmail.com">fahr2rat@gmail.com</a></div>
+      <div class="s7-credit"><a href="https://www.2rat.org">2Rat – Büro für Radverkehrsplanung</a> · Armin Jung · <a href="/cdn-cgi/l/email-protection#e88e89809ada9a899ca88f85898184c68b8785"><span class="__cf_email__" data-cfemail="61070009135313001521060c00080d4f020e0c">[email&#160;protected]</span></a></div>
     </div>
     <!-- Easter Egg Dossier -->
     <div class="dossier" id="dossier">
@@ -1717,29 +1717,17 @@ function stopNarration(){
   currentUtterance=null;
 }
 
-// Spezial-CTA: "Und jetzt..." [PAUSE] "...sind SIE dran!"
+// Spezial-CTA: "Und jetzt machen auch Sie mit!"
 function speakCTA(delay){
   if(!narEnabled)return;
   synth.cancel();
   setTimeout(function(){
     if(!narEnabled)return;
     var voice=getGermanVoice();
-    // Teil 1: "Und jetzt..."
-    var u1=new SpeechSynthesisUtterance("Und jetzt");
-    if(voice)u1.voice=voice;
-    u1.lang='de-DE';u1.rate=0.9;u1.pitch=0.9;u1.volume=1.0;
-    u1.onend=function(){
-      // Dramatische Pause
-      setTimeout(function(){
-        if(!narEnabled)return;
-        // Teil 2: "sind SIE dran!" - langsam, tief, deutlich
-        var u2=new SpeechSynthesisUtterance("machen auch Sie mit!");
-        if(voice)u2.voice=voice;
-        u2.lang='de-DE';u2.rate=0.85;u2.pitch=0.95;u2.volume=1.0;
-        synth.speak(u2);
-      },1200);
-    };
-    synth.speak(u1);
+    var utt=new SpeechSynthesisUtterance("Und jetzt,  machen auch Sie mit!");
+    if(voice)utt.voice=voice;
+    utt.lang='de-DE';utt.rate=0.88;utt.pitch=0.92;utt.volume=1.0;
+    synth.speak(utt);
   },delay||800);
 }
 
@@ -1796,12 +1784,7 @@ if(ctrl){
 var ns=document.createElement('style');
 ns.textContent='.nar-btn{transition:all .3s!important}.nar-btn.nar-on{background:rgba(255,200,60,.2)!important;box-shadow:0 0 8px rgba(255,200,60,.3)!important}';
 document.head.appendChild(ns);
-
-// Stop narration when film ends or is paused
-var origTogglePlay=window.togglePlay||null;
-// Narration stoppt bei Film-Ende
 })();
 </script>
-<div class="share-toast" id="shareToast">🔗 Link kopiert!</div>
 </body>
 </html>
