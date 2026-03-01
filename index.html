@@ -157,6 +157,27 @@
     .db-actions { display: flex; gap: 6px; justify-content: center; }
     .db-action { font-size: 10px; background: #F0F2F4; padding: 4px 10px; border-radius: 6px; color: #3D4F58; font-weight: 600; }
 
+    /* Konzept-Check Preview */
+    .kc-preview { background: #FFFFFF; border: 1px solid #E5E7EB; box-shadow: 0 4px 20px rgba(0,0,0,0.05); font-family: 'DM Sans', sans-serif; }
+    .kc-preview::before { background: linear-gradient(90deg, #2D8C28, #1678A9); }
+    .kc-header { text-align: center; margin-bottom: 14px; }
+    .kc-title { font-size: 15px; font-weight: 800; letter-spacing: 2px; font-family: 'DM Sans', sans-serif; }
+    .kc-title .t-b { color: #1A5FA8; }
+    .kc-title .t-g { color: #2D8C28; }
+    .kc-sub { font-size: 10px; color: #8A9BA4; margin-top: 2px; }
+    .kc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 14px; }
+    .kc-stat { text-align: center; background: #F8FAFC; border-radius: 8px; padding: 8px 4px; }
+    .kc-stat__num { font-size: 22px; font-weight: 800; }
+    .kc-stat__label { font-size: 9px; color: #8A9BA4; text-transform: uppercase; letter-spacing: 0.5px; }
+    .kc-bars { display: flex; flex-direction: column; gap: 7px; margin-bottom: 12px; }
+    .kc-bar { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+    .kc-bar__l { width: 44px; text-align: right; color: #8A9BA4; flex-shrink: 0; font-size: 10px; }
+    .kc-bar__track { flex: 1; height: 14px; background: #F0F2F4; border-radius: 4px; overflow: hidden; }
+    .kc-bar__f { height: 100%; border-radius: 4px; min-width: 4px; }
+    .kc-bar__n { font-weight: 700; font-size: 11px; min-width: 18px; }
+    .kc-actions { display: flex; gap: 6px; justify-content: center; }
+    .kc-action { font-size: 10px; background: #F0F2F4; padding: 4px 10px; border-radius: 6px; color: #3D4F58; font-weight: 600; }
+
     .produkt__info h3 { font-size: clamp(20px, 2.5vw, 28px); font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
     .produkt__info h3 .bl { color: var(--blue); }
     .produkt__info h3 .gr { color: var(--green); }
@@ -373,7 +394,7 @@
           </div>
           <p style="font-size:13px;color:var(--text-light);font-style:italic;margin-top:16px;">Zugang zum Dashboard erhalten Sie im Rahmen eines Beratungsauftrags.</p>
           <div class="produkt__btns">
-            <a href="mailto:fahr2rat@gmail.com?subject=Anfrage%20Radwegemelder%20Dashboard" class="btn btn--sm" style="background:#1A5FA8;color:white;">✉️ Beratung anfragen</a>
+            <a href="mailto:fahr2rat@gmail.com" class="btn btn--sm" style="background:#1A5FA8;color:white;">✉️ Beratung anfragen</a>
           </div>
         </div>
         <div class="produkt__preview db-preview">
@@ -397,6 +418,43 @@
             <span class="db-action">📥 GeoJSON</span>
             <span class="db-action">📥 CSV</span>
             <span class="db-action">📄 PDF</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Konzept-Check -->
+      <div class="produkt reveal">
+        <div class="produkt__info">
+          <h3><span class="gr">Radverkehrskonzept-Check</span> –<br><span class="bl">Bürgermeldungen und Konzept im Abgleich</span></h3>
+          <p>Viele Kommunen haben bereits ein Radverkehrskonzept – aber wie gut deckt es sich mit den tatsächlichen Bedürfnissen der Bürger? Wir gleichen die Ergebnisse einer Radwegemelder-Aktion systematisch mit den geplanten Maßnahmen Ihres bestehenden Konzepts ab.</p>
+          <div class="feat-list">
+            <div class="feat"><div class="feat__dot" style="background:#2D8C28;"></div><div><strong>Match: Hohe Priorität</strong><br><span>Maßnahmen die sowohl im Konzept stehen als auch von Bürgern gemeldet wurden – diese sollten zuerst umgesetzt werden.</span></div></div>
+            <div class="feat"><div class="feat__dot" style="background:#E07800;"></div><div><strong>Lücke: Konzept prüfen</strong><br><span>Bürgermeldungen ohne entsprechende Konzept-Maßnahme – möglicherweise fehlt etwas im Konzept.</span></div></div>
+            <div class="feat"><div class="feat__dot" style="background:#7B8A9A;"></div><div><strong>Geringere Priorität</strong><br><span>Geplante Maßnahmen ohne Bürgermeldungen – sachlich wichtig, aber aktuell weniger drängend.</span></div></div>
+          </div>
+          <p style="font-size:13px;color:var(--text-light);font-style:italic;margin-top:16px;">Den Konzept-Check führen wir im Rahmen eines Beratungsauftrags für Ihre Kommune durch.</p>
+          <div class="produkt__btns">
+            <a href="mailto:fahr2rat@gmail.com?subject=Anfrage%20Konzept-Check" class="btn btn--sm" style="background:#1678A9;color:white;">✉ Anfrage senden</a>
+          </div>
+        </div>
+        <div class="produkt__preview kc-preview">
+          <div class="kc-header">
+            <div class="kc-title"><span class="t-b">KONZEPT</span><span class="t-g">CHECK</span></div>
+            <div class="kc-sub">by 2Rat · Abgleich Konzept ↔ Bürger</div>
+          </div>
+          <div class="kc-stats">
+            <div class="kc-stat"><div class="kc-stat__num" style="color:#2D8C28;">12</div><div class="kc-stat__label">Match</div></div>
+            <div class="kc-stat"><div class="kc-stat__num" style="color:#E07800;">5</div><div class="kc-stat__label">Lücken</div></div>
+            <div class="kc-stat"><div class="kc-stat__num" style="color:#7B8A9A;">8</div><div class="kc-stat__label">Gering</div></div>
+          </div>
+          <div class="kc-bars">
+            <div class="kc-bar"><span class="kc-bar__l">Match</span><div class="kc-bar__track"><div class="kc-bar__f" style="width:48%;background:#2D8C28;"></div></div><span class="kc-bar__n">12</span></div>
+            <div class="kc-bar"><span class="kc-bar__l">Lücke</span><div class="kc-bar__track"><div class="kc-bar__f" style="width:20%;background:#E07800;"></div></div><span class="kc-bar__n">5</span></div>
+            <div class="kc-bar"><span class="kc-bar__l">Gering</span><div class="kc-bar__track"><div class="kc-bar__f" style="width:32%;background:#7B8A9A;"></div></div><span class="kc-bar__n">8</span></div>
+          </div>
+          <div class="kc-actions">
+            <span class="kc-action">📄 PDF-Bericht</span>
+            <span class="kc-action">🗺️ Karte</span>
           </div>
         </div>
       </div>
@@ -485,14 +543,13 @@
     function toggleMenu() {
       document.getElementById('burger').classList.toggle('open');
       document.getElementById('mobileMenu').classList.toggle('open');
-      document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
     }
-    // Scroll-Animationen
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  </script>
 
+    // Scroll-Reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
