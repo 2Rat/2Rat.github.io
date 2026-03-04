@@ -71,7 +71,6 @@
     /* ─── Hero ─── */
     .hero { padding: 166px 0 80px; }
     .hero__grid { display: grid; grid-template-columns: 61.8fr 38.2fr; gap: 40px; align-items: center; }
-    .hero__left {}
     .hero__right { display: flex; justify-content: center; align-items: center; }
     .hero__logo { width: 200px; mix-blend-mode: multiply; }
     .hero__sub { font-size: 18px; font-weight: 600; color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
@@ -104,16 +103,18 @@
     .card__title { font-size: 16px; font-weight: 700; }
     .card__text { font-size: 13px; color: var(--text-light); line-height: 1.6; }
 
-    /* ─── Produkte (Radmelder + Schulweg) ─── */
-    .produkt { display: flex; flex-direction: column; gap: 24px; margin-bottom: 56px; }
+    /* ─── Produkte (Radmelder + Dashboard + Konzept-Check + Schulweg) ─── */
+    .produkt { display: flex; flex-direction: column; gap: 24px; margin-bottom: 0; background: var(--white); border-radius: 16px; padding: 32px 28px; border: 1px solid rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; }
+    .produkt:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.06); }
     .produkt:last-child { margin-bottom: 0; }
     .produkt--flip { direction: ltr; }
+    .produkt-divider { width: 60px; height: 3px; background: var(--green); border-radius: 2px; margin: 36px auto; }
 
     .produkt__preview { border-radius: 16px; padding: 28px 22px; position: relative; overflow: hidden; max-width: 400px; }
     .produkt__preview::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
 
     /* Radmelder Preview */
-    .rm-preview { background: #FFFFFF; border: 1px solid #E5E7EB; box-shadow: 0 4px 20px rgba(0,0,0,0.05); font-family: 'DM Sans', sans-serif; }
+    .rm-preview { background: #F8FAFC; border: 1px solid #E5E7EB; box-shadow: 0 4px 20px rgba(0,0,0,0.05); font-family: 'DM Sans', sans-serif; }
     .rm-preview::before { background: linear-gradient(90deg, #1A5FA8, #2D8C28); }
     .rm-header { text-align: center; margin-bottom: 18px; }
     .rm-title { font-size: 17px; font-weight: 800; letter-spacing: 3px; font-family: 'DM Sans', sans-serif; }
@@ -138,7 +139,7 @@
     .sw-item--g { background: #E8F5E9; border-left: 3px solid #4CAF50; }
 
     /* Dashboard Preview */
-    .db-preview { background: #FFFFFF; border: 1px solid #E5E7EB; box-shadow: 0 4px 20px rgba(0,0,0,0.05); font-family: 'DM Sans', sans-serif; }
+    .db-preview { background: #F8FAFC; border: 1px solid #E5E7EB; box-shadow: 0 4px 20px rgba(0,0,0,0.05); font-family: 'DM Sans', sans-serif; }
     .db-preview::before { background: linear-gradient(90deg, #1A5FA8, #2D8C28); }
     .db-header { text-align: center; margin-bottom: 14px; }
     .db-title { font-size: 15px; font-weight: 800; letter-spacing: 2px; font-family: 'DM Sans', sans-serif; }
@@ -146,7 +147,7 @@
     .db-title .t-g { color: #2D8C28; }
     .db-sub { font-size: 10px; color: #8A9BA4; margin-top: 2px; }
     .db-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 14px; }
-    .db-stat { text-align: center; background: #F8FAFC; border-radius: 8px; padding: 8px 4px; }
+    .db-stat { text-align: center; background: #F0F2F4; border-radius: 8px; padding: 8px 4px; }
     .db-stat__num { font-size: 20px; font-weight: 800; }
     .db-stat__label { font-size: 9px; color: #8A9BA4; text-transform: uppercase; letter-spacing: 0.5px; }
     .db-bars { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
@@ -155,10 +156,10 @@
     .db-bar__f { height: 14px; border-radius: 4px; min-width: 4px; }
     .db-bar__n { font-weight: 700; font-size: 11px; min-width: 20px; }
     .db-actions { display: flex; gap: 6px; justify-content: center; }
-    .db-action { font-size: 10px; background: #F0F2F4; padding: 4px 10px; border-radius: 6px; color: #3D4F58; font-weight: 600; }
+    .db-action { font-size: 10px; background: #E8ECF0; padding: 4px 10px; border-radius: 6px; color: #3D4F58; font-weight: 600; }
 
     /* Konzept-Check Preview */
-    .kc-preview { background: #FFFFFF; border: 1px solid #E5E7EB; box-shadow: 0 4px 20px rgba(0,0,0,0.05); font-family: 'DM Sans', sans-serif; }
+    .kc-preview { background: #F8FAFC; border: 1px solid #E5E7EB; box-shadow: 0 4px 20px rgba(0,0,0,0.05); font-family: 'DM Sans', sans-serif; }
     .kc-preview::before { background: linear-gradient(90deg, #2D8C28, #1678A9); }
     .kc-header { text-align: center; margin-bottom: 14px; }
     .kc-title { font-size: 15px; font-weight: 800; letter-spacing: 2px; font-family: 'DM Sans', sans-serif; }
@@ -166,17 +167,17 @@
     .kc-title .t-g { color: #2D8C28; }
     .kc-sub { font-size: 10px; color: #8A9BA4; margin-top: 2px; }
     .kc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 14px; }
-    .kc-stat { text-align: center; background: #F8FAFC; border-radius: 8px; padding: 8px 4px; }
+    .kc-stat { text-align: center; background: #F0F2F4; border-radius: 8px; padding: 8px 4px; }
     .kc-stat__num { font-size: 22px; font-weight: 800; }
     .kc-stat__label { font-size: 9px; color: #8A9BA4; text-transform: uppercase; letter-spacing: 0.5px; }
     .kc-bars { display: flex; flex-direction: column; gap: 7px; margin-bottom: 12px; }
     .kc-bar { display: flex; align-items: center; gap: 6px; font-size: 11px; }
     .kc-bar__l { width: 44px; text-align: right; color: #8A9BA4; flex-shrink: 0; font-size: 10px; }
-    .kc-bar__track { flex: 1; height: 14px; background: #F0F2F4; border-radius: 4px; overflow: hidden; }
+    .kc-bar__track { flex: 1; height: 14px; background: #E8ECF0; border-radius: 4px; overflow: hidden; }
     .kc-bar__f { height: 100%; border-radius: 4px; min-width: 4px; }
     .kc-bar__n { font-weight: 700; font-size: 11px; min-width: 18px; }
     .kc-actions { display: flex; gap: 6px; justify-content: center; }
-    .kc-action { font-size: 10px; background: #F0F2F4; padding: 4px 10px; border-radius: 6px; color: #3D4F58; font-weight: 600; }
+    .kc-action { font-size: 10px; background: #E8ECF0; padding: 4px 10px; border-radius: 6px; color: #3D4F58; font-weight: 600; }
 
     .produkt__info h3 { font-size: clamp(20px, 2.5vw, 28px); font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
     .produkt__info h3 .bl { color: var(--blue); }
@@ -254,7 +255,7 @@
       .cards { grid-template-columns: 1fr; }
       .produkt, .produkt--flip { flex-direction: column; }
       .produkt__preview { max-width: 100%; }
-      .produkt__preview { margin-bottom: 0; }
+      .produkt { padding: 24px 20px; }
       .kontakt__grid { grid-template-columns: 1fr; }
       .footer__inner { flex-direction: column; gap: 8px; text-align: center; }
       .s-title { font-size: 24px; }
@@ -364,7 +365,7 @@
           <p style="font-size:13px;color:var(--text-light);font-style:italic;margin-top:16px;">Die fachliche Auswertung und Einbindung in Ihre Planung ist Teil unserer Beratungsleistung.</p>
           <div class="produkt__btns">
             <a href="https://2rat.github.io/velomeld/" class="btn btn--sm" style="background:#1A5FA8;color:white;" target="_blank">📱 App öffnen</a>
-            <a href="https://2rat.github.io/velomeld/karte.html" class="btn btn--sm" style="background:transparent;color:#2D8C28;border:2px solid #2D8C28;" target="_blank">🗺️ Karte ansehen</a>
+            <a href="https://2rat.github.io/velomeld/karte.html?kommune=Wadgassen" class="btn btn--sm" style="background:transparent;color:#2D8C28;border:2px solid #2D8C28;" target="_blank">🗺️ Demo-Karte (Wadgassen)</a>
             <a href="film.html" class="btn btn--sm" style="background:#1a1a2e;color:#FFD93D;border:2px solid #FFD93D;" target="_blank">🛸 Meldi-Film</a>
           </div>
         </div>
@@ -380,6 +381,8 @@
           </div>
         </div>
       </div>
+
+      <div class="produkt-divider"></div>
 
       <!-- Auswertungs-Dashboard -->
       <div class="produkt reveal">
@@ -422,6 +425,8 @@
         </div>
       </div>
 
+      <div class="produkt-divider"></div>
+
       <!-- Konzept-Check -->
       <div class="produkt reveal">
         <div class="produkt__info">
@@ -458,6 +463,8 @@
           </div>
         </div>
       </div>
+
+      <div class="produkt-divider"></div>
 
       <!-- Schulweg-Detektive -->
       <div class="produkt reveal">
@@ -534,6 +541,8 @@
         <div class="footer__links">
           <a href="https://2rat.github.io/velomeld/datenschutz.html">Impressum & Datenschutz</a>
           <a href="Flyer2Rat.pdf">Flyer</a>
+          <a href="https://2rat.github.io/velomeld/pro/dashboard.html" style="opacity:0.3;font-size:10px">Dashboard</a>
+          <a href="https://2rat.github.io/velomeld/pro/konzept-check.html" style="opacity:0.3;font-size:10px">Konzept-Check</a>
         </div>
       </div>
     </div>
