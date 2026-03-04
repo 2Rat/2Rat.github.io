@@ -280,6 +280,7 @@
       <ul class="nav__links">
         <li><a href="#leistungen">Leistungen</a></li>
         <li><a href="#produkte">Produkte</a></li>
+        <li><a href="#testen">Testen</a></li>
         <li><a href="#kontakt">Kontakt</a></li>
         <li><a href="mailto:fahr2rat@gmail.com" class="nav__cta">Anfrage senden</a></li>
       </ul>
@@ -290,6 +291,7 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="#leistungen" onclick="toggleMenu()">Leistungen</a>
     <a href="#produkte" onclick="toggleMenu()">Produkte</a>
+    <a href="#testen" onclick="toggleMenu()">Testen</a>
     <a href="#kontakt" onclick="toggleMenu()">Kontakt</a>
     <a href="mailto:fahr2rat@gmail.com" class="nav__cta" onclick="toggleMenu()">✉️ Anfrage senden</a>
   </div>
@@ -364,9 +366,26 @@
           </div>
           <p style="font-size:13px;color:var(--text-light);font-style:italic;margin-top:16px;">Die fachliche Auswertung und Einbindung in Ihre Planung ist Teil unserer Beratungsleistung.</p>
           <div class="produkt__btns">
-            <a href="https://2rat.github.io/velomeld/" class="btn btn--sm" style="background:#1A5FA8;color:white;" target="_blank">📱 App öffnen</a>
-            <a href="https://2rat.github.io/velomeld/karte.html?kommune=Wadgassen" class="btn btn--sm" style="background:transparent;color:#2D8C28;border:2px solid #2D8C28;" target="_blank">🗺️ Demo-Karte (Wadgassen)</a>
+            <a href="https://2rat.github.io/velomeld/" class="btn btn--sm" style="background:#1A5FA8;color:white;" target="_blank">📱 App testen</a>
             <a href="film.html" class="btn btn--sm" style="background:#1a1a2e;color:#FFD93D;border:2px solid #FFD93D;" target="_blank">🛸 Meldi-Film</a>
+          </div>
+
+          <!-- Live-Beispiel -->
+          <div style="margin-top:24px;padding:16px 20px;background:linear-gradient(135deg,#F0F7EC,#E8F4FD);border-radius:12px;border-left:4px solid #689246;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#689246;font-weight:700;margin-bottom:4px;">📍 Aktuelle Pilotkommune: Wadgassen</div>
+            <div style="font-size:14px;color:#3D3D3D;margin-bottom:10px;">So sieht die Bürgerkarte im Echtbetrieb aus – mit echten Meldungen aus dem laufenden Projekt.</div>
+            <a href="https://2rat.github.io/velomeld/karte.html?kommune=Wadgassen&titel=Radwegecheck+Wadgassen" target="_blank" style="display:inline-block;padding:8px 16px;background:#689246;color:white;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;">🗺️ Karte Wadgassen ansehen →</a>
+          </div>
+
+          <!-- Kostenlos testen -->
+          <div style="margin-top:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #1678A9;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#1678A9;font-weight:700;margin-bottom:4px;">🆓 Kostenlos ausprobieren</div>
+            <div style="font-size:14px;color:#3D3D3D;margin-bottom:10px;">Geben Sie Ihren Gemeindenamen ein und sehen Sie, wie die Karte für Ihre Kommune aussehen würde:</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <input type="text" id="komTest" placeholder="z.B. Merzig, Homburg, Blieskastel…" style="flex:1;min-width:180px;padding:10px 14px;border:2px solid #E2E8F0;border-radius:8px;font-family:inherit;font-size:14px;color:#3D3D3D;" onkeydown="if(event.key==='Enter')testKom()">
+              <button onclick="testKom()" style="padding:10px 20px;background:#1678A9;color:white;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;">Karte anzeigen →</button>
+            </div>
+            <div style="margin-top:8px;font-size:12px;color:#6B6B6B;">Keine Installation, keine Registrierung – einfach ausprobieren.</div>
           </div>
         </div>
         <div class="produkt__preview rm-preview">
@@ -439,7 +458,7 @@
           </div>
           <p style="font-size:13px;color:var(--text-light);font-style:italic;margin-top:16px;">Den Konzept-Check führen wir im Rahmen eines Beratungsauftrags für Ihre Kommune durch.</p>
           <div class="produkt__btns">
-            <a href="mailto:fahr2rat@gmail.com?subject=Anfrage%20Konzept-Check" class="btn btn--sm" style="background:#1678A9;color:white;">✉ Anfrage senden</a>
+            <a href="mailto:fahr2rat@gmail.com" class="btn btn--sm" style="background:#1678A9;color:white;">✉ Anfrage senden</a>
           </div>
         </div>
         <div class="produkt__preview kc-preview">
@@ -503,6 +522,46 @@
     </div>
   </section>
 
+  <!-- ═══ KOSTENLOS TESTEN ═══ -->
+  <section class="section section--white" id="testen">
+    <div class="wrap">
+      <div class="s-label">Für ADFC, Schulen & Bürgerinitiativen</div>
+      <h2 class="s-title">Radwegemelder kostenlos nutzen</h2>
+      <div style="max-width:700px;">
+        <p style="font-size:15px;color:#6B6B6B;line-height:1.7;margin-bottom:20px;">Sie engagieren sich ehrenamtlich für besseren Radverkehr? Dann können Sie den Radwegemelder kostenlos für Ihre Gruppe nutzen – ohne Vertrag, ohne Laufzeit.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px;">
+          <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid rgba(0,0,0,0.06);">
+            <div style="font-size:22px;margin-bottom:6px;">🚴</div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:4px;">ADFC-Ortsgruppen</div>
+            <div style="font-size:13px;color:#6B6B6B;line-height:1.5;">Sammeln Sie Meldungen bei gemeinsamen Radtouren und übergeben Sie die Ergebnisse an Ihre Kommune.</div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid rgba(0,0,0,0.06);">
+            <div style="font-size:22px;margin-bottom:6px;">🏫</div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Schulen & Elternbeiräte</div>
+            <div style="font-size:13px;color:#6B6B6B;line-height:1.5;">Lassen Sie Schüler und Eltern Gefahrenstellen auf dem Schulweg dokumentieren – als Grundlage für Gespräche mit der Verwaltung.</div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid rgba(0,0,0,0.06);">
+            <div style="font-size:22px;margin-bottom:6px;">🏘️</div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Bürgerinitiativen</div>
+            <div style="font-size:13px;color:#6B6B6B;line-height:1.5;">Dokumentieren Sie Radverkehrsprobleme in Ihrem Ort und zeigen Sie der Politik, wo Handlungsbedarf besteht.</div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,#F0F7EC,#E8F4FD);border-radius:12px;padding:20px;border-left:4px solid #689246;">
+          <div style="font-size:14px;font-weight:700;color:#3D3D3D;margin-bottom:8px;">So funktioniert's:</div>
+          <div style="font-size:13px;color:#6B6B6B;line-height:1.8;">
+            1. Schreiben Sie mir eine kurze Nachricht mit dem Namen Ihrer Gruppe und Gemeinde.<br>
+            2. Ich richte Ihnen die Aktionskarte kostenlos ein.<br>
+            3. Sie verteilen den Link – Ihre Mitglieder melden direkt vom Smartphone.<br>
+            4. Die Ergebnisse sehen Sie live auf der Karte und können sie an die Kommune weitergeben.
+          </div>
+        </div>
+        <div style="margin-top:20px;">
+          <a href="mailto:fahr2rat@gmail.com?subject=Kostenlos%20testen%20%E2%80%93%20Radwegemelder&body=Hallo%20Herr%20Jung%2C%0A%0Aich%20interessiere%20mich%20f%C3%BCr%20den%20kostenlosen%20Einsatz%20des%20Radwegemelders.%0A%0AGruppe%2FOrganisation%3A%20%0AGemeinde%3A%20%0A%0AMit%20freundlichen%20Gr%C3%BC%C3%9Fen" class="btn btn--g" style="font-size:15px;">✉️ Kostenlos anfragen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ KONTAKT ═══ -->
   <section class="section section--white" id="kontakt">
     <div class="wrap">
@@ -554,11 +613,17 @@
       document.getElementById('mobileMenu').classList.toggle('open');
     }
 
+    function testKom() {
+      var k = document.getElementById('komTest').value.trim();
+      if (!k) return;
+      window.open('https://2rat.github.io/velomeld/karte.html?kommune=' + encodeURIComponent(k) + '&titel=Radwegecheck+' + encodeURIComponent(k), '_blank');
+    }
+
     // Scroll-Reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
   </script>
 </body>
 </html>
