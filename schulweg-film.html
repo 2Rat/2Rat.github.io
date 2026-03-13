@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Schulweg-Detektive</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ac:#f59e0b;--bl:#60a5fa;--gn:#34d399;--rd:#ef4444;--pk:#ec4899;--or:#f97316;--bg:#0f172a;--tx:#f1f5f9;--mt:#94a3b8}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:'Nunito',sans-serif;-webkit-text-size-adjust:100%;touch-action:manipulation}
+
+/* EVERYTHING fixed to viewport edges */
+.player,.scene,.ov{position:fixed;top:0;left:0;right:0;bottom:0}
+.scene{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 14px 58px;text-align:center;visibility:hidden;z-index:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.scene.active{visibility:visible;z-index:2}
+.scene.prev{visibility:visible;z-index:1}
+
+.s1{background:radial-gradient(ellipse at 30% 20%,#1e40af,var(--bg) 60%)}
+.s2{background:radial-gradient(ellipse at 70% 80%,#065f46,var(--bg) 60%)}
+.s3{background:radial-gradient(ellipse at 50% 30%,#7c2d12,var(--bg) 60%)}
+.s4{background:radial-gradient(ellipse at 30% 70%,#4c1d95,var(--bg) 60%)}
+.s5{background:radial-gradient(ellipse at 60% 40%,#164e63,var(--bg) 60%)}
+.s6{background:radial-gradient(ellipse at 40% 30%,#1e3a5f,var(--bg) 60%)}
+.s7{background:radial-gradient(ellipse at 55% 55%,#0c4a3e,var(--bg) 60%)}
+.s8{background:radial-gradient(ellipse at 35% 65%,#4a1942,var(--bg) 60%)}
+.s9{background:radial-gradient(ellipse at 40% 60%,#14532d,var(--bg) 60%)}
+
+.t{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4.5vw,2.6rem);font-weight:800;line-height:1.2;margin-bottom:8px;opacity:0;transform:translateY(14px)}
+.tx{font-size:clamp(0.78rem,1.6vw,1rem);color:var(--mt);max-width:560px;line-height:1.55;opacity:0;transform:translateY(14px)}
+.ico{font-size:clamp(2.5rem,8vw,4.5rem);margin-bottom:8px;opacity:0;transform:translateY(14px)}
+.rv{opacity:1!important;transform:translateY(0)!important;transition:opacity .4s,transform .4s}
+.hi{color:var(--ac)}.hg{color:var(--gn)}.hb{color:var(--bl)}.ho{color:var(--or)}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.dofl{animation:fl 3s ease-in-out infinite}
+
+.steps{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:4px}
+.sc{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 7px;width:clamp(90px,18vw,150px);text-align:center;opacity:0;transform:translateY(14px)}
+.sc .si{font-size:1.6rem;margin-bottom:2px}
+.sc .sn{font-family:'Baloo 2',cursive;font-size:.62rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.5px}
+.sc .sl{font-size:.72rem;font-weight:600;line-height:1.3}
+
+.badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:5px}
+.b{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);border-radius:50px;padding:5px 12px;font-size:.78rem;font-weight:600;opacity:0;transform:translateY(14px);white-space:nowrap}
+.b.r{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3)}
+
+.flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.fi{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.72rem;font-weight:600;opacity:0;transform:translateY(14px)}
+.fi .fic{font-size:1.6rem;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.07);border-radius:50%;border:2px solid rgba(255,255,255,.12)}
+.fa{font-size:1rem;color:var(--ac);opacity:0;transform:translateY(14px)}
+
+.mm{width:clamp(200px,50vw,360px);height:clamp(100px,22vw,180px);background:#1a2332;border-radius:10px;border:2px solid rgba(255,255,255,.1);position:relative;overflow:hidden;margin-bottom:8px;opacity:0;transform:translateY(14px)}
+.mg{position:absolute;inset:0;opacity:.1;background-image:linear-gradient(rgba(255,255,255,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.3) 1px,transparent 1px);background-size:30px 30px}
+.mr{position:absolute;background:rgba(148,163,184,.2);border-radius:2px}
+.mp{position:absolute;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;opacity:0;box-shadow:0 0 6px rgba(0,0,0,.3);z-index:2;transform:translateY(-10px)}
+.mp.ps{opacity:1;transform:translateY(0);transition:opacity .3s,transform .3s}
+.mp.d{background:var(--rd)}.mp.sf{background:#10b981}.mp.sk{background:#2563eb;font-size:12px;width:24px;height:24px}
+.ml{position:absolute;bottom:4px;left:6px;display:flex;gap:8px;font-size:.55rem;font-weight:600;z-index:3}
+.mli{display:flex;align-items:center;gap:2px}
+.mld{width:7px;height:7px;border-radius:50%}
+
+.pf{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.pc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 8px;width:clamp(120px,24vw,180px);text-align:center;opacity:0;transform:translateY(14px)}
+.pc .pi{font-size:1.8rem;margin-bottom:4px}
+.pc .pl{font-size:.78rem;font-weight:700;margin-bottom:2px}
+.pc .pd{font-size:.62rem;color:var(--mt);line-height:1.3}
+
+.br{font-size:.65rem;color:var(--mt);margin-top:12px;opacity:.5;line-height:1.4}
+
+/* CONTROLS */
+.ctrl{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(15,23,42,.93);border-top:1px solid rgba(255,255,255,.08);padding:5px 10px 8px;display:flex;align-items:center;gap:7px}
+.bp{width:34px;height:34px;border-radius:50%;border:2px solid var(--bl);background:rgba(37,99,235,.2);color:var(--bl);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.bn{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:var(--mt);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.pw{flex:1;display:flex;flex-direction:column;gap:2px}
+.pb{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden;cursor:pointer}
+.pfl{height:100%;background:linear-gradient(90deg,var(--bl),var(--ac));border-radius:10px;transition:width .2s;width:0%}
+.plb{font-size:.58rem;color:var(--mt);display:flex;justify-content:space-between}
+.dots{display:flex;gap:3px}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer}
+.dot.a{background:var(--ac);width:14px;border-radius:7px}
+
+/* FULLSCREEN BUTTON */
+.fs{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:var(--mt);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+
+/* START OVERLAY */
+.ov{z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(15,23,42,.94);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ov.gone{display:none}
+.ov-i{width:66px;height:66px;border-radius:50%;background:linear-gradient(135deg,#2563eb,var(--ac));display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:14px;animation:fl 2s ease-in-out infinite;box-shadow:0 0 25px rgba(37,99,235,.3)}
+.ov-t{font-family:'Baloo 2',cursive;font-size:clamp(1.2rem,3.5vw,1.8rem);font-weight:800;margin-bottom:3px}
+.ov-s{color:var(--mt);font-size:.85rem;margin-bottom:16px}
+.ov-h{color:var(--mt);font-size:.75rem}
+.ov-tip{color:var(--ac);font-size:.72rem;margin-top:18px;padding:10px 16px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:10px;line-height:1.5;max-width:340px;text-align:center}
+.ov-tip small{color:var(--mt);font-size:.62rem}
+
+/* LANDSCAPE */
+@media (orientation:landscape){
+  .scene{padding:8px 16px 48px}
+  .t{font-size:clamp(1rem,3vh,1.6rem);margin-bottom:4px}
+  .tx{font-size:clamp(.68rem,1.6vh,.85rem);line-height:1.35}
+  .ico{font-size:clamp(1.8rem,7vh,3rem);margin-bottom:4px}
+  .steps{gap:4px;margin-top:2px}
+  .sc{width:clamp(80px,13vw,130px);padding:5px 4px}
+  .sc .si{font-size:1.1rem;margin-bottom:0}
+  .sc .sn{font-size:.52rem}
+  .sc .sl{font-size:.6rem}
+  .badges{gap:4px;margin-top:2px}
+  .b{padding:3px 8px;font-size:.65rem}
+  .flow{margin:5px 0;gap:4px}
+  .fi .fic{width:34px;height:34px;font-size:1.1rem}
+  .fi{font-size:.6rem}
+  .fa{font-size:.8rem}
+  .mm{height:clamp(70px,28vh,140px);width:clamp(180px,45vw,340px);margin-bottom:4px}
+  .pf{gap:4px;margin-top:4px}
+  .pc{width:clamp(105px,20vw,160px);padding:5px 5px}
+  .pc .pi{font-size:1.2rem;margin-bottom:1px}
+  .pc .pl{font-size:.65rem}
+  .pc .pd{font-size:.52rem}
+  .ctrl{padding:3px 8px 5px}
+  .bp{width:28px;height:28px;font-size:11px}
+  .bn,.fs{width:24px;height:24px;font-size:10px}
+  .br{margin-top:4px;font-size:.55rem}
+  .ov-i{width:44px;height:44px;font-size:1.2rem;margin-bottom:8px}
+  .ov-t{font-size:clamp(.9rem,3vh,1.3rem)}
+  .ov-s{font-size:.7rem;margin-bottom:8px}
+  .ov-tip{font-size:.6rem;margin-top:10px;padding:6px 12px;max-width:400px}
+  .ov-tip small{font-size:.5rem}
+}
+
+/* SMALL PORTRAIT */
+@media (max-width:380px) and (orientation:portrait){
+  .sc{width:85px;padding:7px 4px}
+  .sc .si{font-size:1.2rem}
+  .sc .sl{font-size:.65rem}
+  .b{padding:4px 8px;font-size:.68rem}
+}
+</style>
+</head>
+<body>
+
+<div class="ov" id="ov" role="button" tabindex="0" onclick="window.S()">
+  <div class="ov-i">&#9654;</div>
+  <div class="ov-t">Schulweg-Detektive</div>
+  <div class="ov-s">So funktioniert die App</div>
+  <div class="ov-h">&#9654; Antippen zum Starten</div>
+  <div class="ov-tip">&#128161; Tipp: Bildschirm-Timeout auf 10 Minuten stellen,<br>damit der Film nicht unterbrochen wird.<br><small>Einstellungen &#10132; Display &#10132; Bildschirm-Timeout</small></div>
+</div>
+
+<div class="player">
+
+<div class="scene s1" data-dur="5500">
+  <div class="ico" data-d="0">&#128373;</div>
+  <div class="t" data-d="200"><span class="hi">Schulweg</span>-Detektive</div>
+  <div class="tx" data-d="500" style="margin-bottom:12px">Die kostenlose App f&#252;r sichere Schulwege</div>
+  <div class="tx" data-d="800">Kinder melden gef&#228;hrliche und sichere Stellen auf ihrem Schulweg.<br><strong>Ganz einfach. Ganz sicher. Ganz ohne Datensammlung.</strong></div>
+</div>
+
+<div class="scene s2" data-dur="6000">
+  <div class="ico" data-d="0">&#127979;</div>
+  <div class="t" data-d="200">Was ist das?</div>
+  <div class="tx" data-d="500" style="margin-bottom:12px">Eine App f&#252;r <span class="hi">Grundschulkinder</span> (6&#8211;10 Jahre),<br>mit der sie zeigen k&#246;nnen, wo es auf ihrem Schulweg<br><span class="hg">sicher</span> oder <span style="color:var(--rd)">gef&#228;hrlich</span> ist.</div>
+  <div class="badges">
+    <div class="b" data-d="800">&#9989; Kostenlos</div>
+    <div class="b" data-d="1000">&#9989; Keine Werbung</div>
+    <div class="b" data-d="1200">&#9989; Keine Registrierung</div>
+  </div>
+</div>
+
+<div class="scene s3" data-dur="7000">
+  <div class="t" data-d="0">&#129333; So geht&#8217;s f&#252;r <span class="hi">Kinder</span></div>
+  <div class="steps">
+    <div class="sc" data-d="300"><div class="si">&#128241;</div><div class="sn">Schritt 1</div><div class="sl">App &#246;ffnen</div></div>
+    <div class="sc" data-d="600"><div class="si">&#128065;</div><div class="sn">Schritt 2</div><div class="sl">Stelle auf dem Schulweg finden</div></div>
+    <div class="sc" data-d="900"><div class="si">&#9888;&#65039;</div><div class="sn">Schritt 3</div><div class="sl">Melden: Sicher oder Gef&#228;hrlich?</div></div>
+    <div class="sc" data-d="1200"><div class="si">&#128274;</div><div class="sn">Fertig!</div><div class="sl">Daten bleiben auf deinem Handy</div></div>
+  </div>
+</div>
+
+<div class="scene s4" data-dur="6500">
+  <div class="t" data-d="0">&#128244; Der <span class="hi">QR-Code</span>-Trick</div>
+  <div class="tx" data-d="200" style="margin-bottom:10px">Will das Kind seine Meldung teilen, erstellt die App einen <strong>QR-Code</strong>.</div>
+  <div class="flow">
+    <div class="fi" data-d="500"><div class="fic">&#129333;</div><span>Kind zeigt<br>QR-Code</span></div>
+    <div class="fa" data-d="800">&#10132;</div>
+    <div class="fi" data-d="800"><div class="fic">&#128248;</div><span>Lehrer<br>scannt</span></div>
+    <div class="fa" data-d="1100">&#10132;</div>
+    <div class="fi" data-d="1100"><div class="fic">&#128202;</div><span>Daten lokal<br>beim Lehrer</span></div>
+  </div>
+  <div class="tx" data-d="1400" style="font-size:.78rem"><span class="hg">&#10003; Freiwillige Weitergabe</span> &#8211; das Kind entscheidet selbst!</div>
+</div>
+
+<div class="scene s5" data-dur="6000">
+  <div class="ico" data-d="0">&#128737;</div>
+  <div class="t" data-d="200"><span class="hg">Datenschutz?</span> Kein Problem!</div>
+  <div class="badges" style="margin-top:4px">
+    <div class="b r" data-d="500">&#10060; Kein Server</div>
+    <div class="b r" data-d="650">&#10060; Kein Tracking</div>
+    <div class="b r" data-d="800">&#10060; Keine Cloud</div>
+    <div class="b r" data-d="950">&#10060; Keine E-Mail n&#246;tig</div>
+  </div>
+  <div class="tx" data-d="1200" style="margin-top:12px">Alle Daten bleiben <strong>lokal auf dem Ger&#228;t</strong>.<br>Nichts wird gesendet. Nichts wird gespeichert.<br><span class="hg">100% DSGVO-konform.</span></div>
+</div>
+
+<div class="scene s6" data-dur="8500">
+  <div class="t" data-d="0" style="font-size:clamp(1rem,3.5vw,1.8rem)">&#128105;&#8205;&#127979; So arbeiten <span class="hb">Lehrkr&#228;fte</span> mit der App</div>
+  <div class="tx" data-d="200" style="margin-bottom:8px">Eigener <span class="hb">Lehrer-Zugang</span> &#8211; passwortgesch&#252;tzt:</div>
+  <div class="steps">
+    <div class="sc" data-d="500"><div class="si">&#128272;</div><div class="sn">Schritt 1</div><div class="sl">Lehrer-Zugang mit Passwort &#246;ffnen</div></div>
+    <div class="sc" data-d="800"><div class="si">&#128248;</div><div class="sn">Schritt 2</div><div class="sl">QR-Codes der Kinder scannen</div></div>
+    <div class="sc" data-d="1100"><div class="si">&#128203;</div><div class="sn">Schritt 3</div><div class="sl">Meldungen automatisch gesammelt</div></div>
+    <div class="sc" data-d="1400"><div class="si">&#128506;</div><div class="sn">Schritt 4</div><div class="sl">Alle Punkte auf einer Karte</div></div>
+    <div class="sc" data-d="1700"><div class="si">&#128228;</div><div class="sn">Schritt 5</div><div class="sl">Ergebnisse exportieren</div></div>
+  </div>
+</div>
+
+<div class="scene s7" data-dur="7500">
+  <div class="t" data-d="0" style="font-size:clamp(1rem,3.5vw,1.8rem)">&#128506; Alle Meldungen <span class="hg">auf einer Karte</span></div>
+  <div class="tx" data-d="200" style="margin-bottom:8px"><span class="hg">Sichere Stellen</span> und <span style="color:var(--rd)">Gefahrenstellen</span> auf einen Blick.</div>
+  <div class="mm" data-d="500">
+    <div class="mg"></div>
+    <div class="mr" style="top:45%;left:5%;width:90%;height:6px"></div>
+    <div class="mr" style="top:70%;left:10%;width:55%;height:5px"></div>
+    <div class="mr" style="top:10%;left:30%;width:5px;height:80%"></div>
+    <div class="mr" style="top:20%;left:65%;width:5px;height:60%"></div>
+    <div class="mr" style="top:5%;left:48%;width:5px;height:85%"></div>
+    <div class="mp sk" style="top:38%;left:44%">&#127979;</div>
+    <div class="mp d" style="top:42%;left:18%">!</div>
+    <div class="mp d" style="top:25%;left:62%">!</div>
+    <div class="mp d" style="top:68%;left:35%">!</div>
+    <div class="mp d" style="top:55%;left:73%">!</div>
+    <div class="mp sf" style="top:30%;left:30%">&#10003;</div>
+    <div class="mp sf" style="top:60%;left:52%">&#10003;</div>
+    <div class="mp sf" style="top:48%;left:80%">&#10003;</div>
+    <div class="ml">
+      <div class="mli"><div class="mld" style="background:var(--rd)"></div> Gef&#228;hrlich</div>
+      <div class="mli"><div class="mld" style="background:#10b981"></div> Sicher</div>
+      <div class="mli"><div class="mld" style="background:#2563eb"></div> Schule</div>
+    </div>
+  </div>
+  <div class="tx" data-d="1400" style="font-size:.78rem">So erkennen Lehrkr&#228;fte und Eltern sofort, <strong>wo Handlungsbedarf besteht</strong>.</div>
+</div>
+
+<div class="scene s8" data-dur="7500">
+  <div class="t" data-d="0" style="font-size:clamp(1rem,3.5vw,1.8rem)">&#128640; Von der Karte <span class="ho">in die Planung</span></div>
+  <div class="tx" data-d="200" style="margin-bottom:8px">Die Ergebnisse lassen sich exportieren &#8211;<br>an alle, die Schulwege <strong>wirklich verbessern</strong> k&#246;nnen:</div>
+  <div class="pf">
+    <div class="pc" data-d="500"><div class="pi">&#127963;</div><div class="pl">Gemeinde</div><div class="pd">Gefahrenstellen melden, Ma&#223;nahmen ansto&#223;en</div></div>
+    <div class="pc" data-d="800"><div class="pi">&#128209;</div><div class="pl">Verkehrsplanung</div><div class="pd">Grundlage f&#252;r Schulwegpl&#228;ne &amp; Infrastruktur</div></div>
+    <div class="pc" data-d="1100"><div class="pi">&#129309;</div><div class="pl">Eltern &amp; Schule</div><div class="pd">Sichere Routen empfehlen</div></div>
+  </div>
+  <div class="tx" data-d="1400" style="margin-top:8px;font-size:.78rem"><span class="ho">&#10132;</span> Kinderperspektive flie&#223;t direkt in echte Planungsprozesse ein.</div>
+</div>
+
+<div class="scene s9" data-dur="7000">
+  <div class="ico" data-d="0" style="font-size:clamp(2rem,6vw,3rem)">&#128373;&#128154;</div>
+  <div class="t" data-d="200">Jetzt <span class="hi">ausprobieren</span>!</div>
+  <div class="tx" data-d="400" style="margin-bottom:5px">Kostenlos im Browser oder als Android-App:</div>
+  <div class="badges" style="margin-bottom:10px">
+    <div class="b" data-d="600" style="background:rgba(37,99,235,.15);border-color:rgba(96,165,250,.3)">&#127760; 009aj.github.io/schulweg-check</div>
+    <div class="b" data-d="700" style="background:rgba(37,99,235,.15);border-color:rgba(96,165,250,.3)">&#128241; Google Play Store</div>
+  </div>
+  <div class="tx" data-d="900" style="font-size:.78rem"><strong>Kontakt:</strong><br>Armin Jung &#183; Jugendpflege der Gemeinde Kirkel<br>a.jung@kirkel.de &#183; 06841-809860</div>
+  <div class="br" data-d="1100">Gemeinschaftsprojekt von <strong>Jugendpflege der Gemeinde Kirkel</strong> und <strong>2Rat &#8211; B&#252;ro f&#252;r Radverkehrsplanung</strong></div>
+</div>
+
+</div>
+
+<div class="ctrl">
+  <button class="bn" onclick="window.P()">&#9664;</button>
+  <button class="bp" id="bp" onclick="window.T()">&#9654;</button>
+  <button class="bn" onclick="window.N()">&#9654;</button>
+  <div class="pw">
+    <div class="pb" id="pb" onclick="window.K(event)"><div class="pfl" id="pfl"></div></div>
+    <div class="plb"><span id="sl">1 / 9</span><div class="dots" id="dots"></div></div>
+  </div>
+  <button class="fs" id="mt" onclick="window.M()">&#128266;</button>
+  <button class="fs" id="fs" onclick="window.F()">&#9974;</button>
+</div>
+
+<!-- Invisible video for keeping screen on -->
+<video id="nslp" playsinline loop muted style="position:fixed;top:-1px;left:-1px;width:1px;height:1px;opacity:0.01">
+  <source src="data:video/mp4;base64,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" type="video/mp4">
+</video>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+<script>
+// ===== BACKGROUND MUSIC (Tone.js) =====
+var musicPlaying = false, musicLoop = null, toneReady = false;
+var marimba = null, pad = null, masterVol = null;
+var muted = false;
+
+// Warm pentatonic melodies per scene
+var MELODIES = [
+  ['C4','E4','G4','A4','G4','E4','D4','C4'],       // S1: intro
+  ['C4','D4','E4','G4','A4','G4','E4','C4'],        // S2: what is it
+  ['E4','G4','A4','C5','A4','G4','E4','D4'],        // S3: kids
+  ['G4','A4','C5','D5','C5','A4','G4','E4'],        // S4: QR code
+  ['C4','D4','E4','G4','E4','D4','C4','D4'],        // S5: privacy
+  ['D4','E4','G4','A4','G4','C5','A4','G4'],        // S6: teacher
+  ['C4','E4','G4','C5','D5','C5','A4','G4'],        // S7: map
+  ['E4','G4','A4','C5','D5','E5','D5','C5'],        // S8: planning
+  ['C4','E4','G4','A4','C5','A4','G4','C4']         // S9: outro
+];
+
+function initTone() {
+  if (toneReady) return;
+  try {
+    Tone.start();
+
+    masterVol = new Tone.Volume(-14).toDestination();
+
+    // Marimba-like synth: short attack, warm decay
+    marimba = new Tone.PolySynth(Tone.Synth, {
+      oscillator: { type: 'sine' },
+      envelope: {
+        attack: 0.005,
+        decay: 0.8,
+        sustain: 0.05,
+        release: 1.2
+      },
+      volume: -6
+    }).connect(masterVol);
+
+    // Add warmth with a subtle chorus/reverb
+    var reverb = new Tone.Reverb({ decay: 2.5, wet: 0.35 }).connect(masterVol);
+    marimba.connect(reverb);
+
+    // Soft background pad
+    pad = new Tone.PolySynth(Tone.Synth, {
+      oscillator: { type: 'triangle' },
+      envelope: {
+        attack: 1.5,
+        decay: 2,
+        sustain: 0.3,
+        release: 3
+      },
+      volume: -28
+    }).connect(masterVol);
+
+    toneReady = true;
+  } catch(e) { console.log('Tone init failed:', e); }
+}
+
+function playMelodyForScene(sceneIdx) {
+  if (!toneReady || !musicPlaying) return;
+  clearTimeout(musicLoop);
+
+  var mel = MELODIES[sceneIdx] || MELODIES[0];
+  var now = Tone.now();
+  var noteLen = '8n';
+  var gap = 0.65;
+
+  // Play melody notes with slight velocity variation
+  for (var i = 0; i < mel.length; i++) {
+    var vel = 0.35 + Math.random() * 0.15;
+    marimba.triggerAttackRelease(mel[i], noteLen, now + i * gap, vel);
+
+    // Add octave-up ghost note on every 3rd note for sparkle
+    if (i % 3 === 0) {
+      var hi = Tone.Frequency(mel[i]).transpose(12).toFrequency();
+      marimba.triggerAttackRelease(hi, '16n', now + i * gap + 0.03, vel * 0.25);
+    }
+  }
+
+  // Loop
+  var loopTime = mel.length * gap * 1000 + 600;
+  musicLoop = setTimeout(function() {
+    if (musicPlaying) playMelodyForScene(sceneIdx);
+  }, loopTime);
+}
+
+function startPad() {
+  if (!toneReady || !pad) return;
+  try {
+    pad.triggerAttack(['C3', 'G3'], Tone.now(), 0.15);
+  } catch(e) {}
+}
+
+function stopPad() {
+  if (!pad) return;
+  try { pad.releaseAll(); } catch(e) {}
+}
+
+function musicOn(sceneIdx) {
+  initTone();
+  if (!toneReady) return;
+  if (Tone.context.state !== 'running') Tone.start();
+  musicPlaying = true;
+  startPad();
+  playMelodyForScene(sceneIdx || 0);
+}
+
+function musicOff() {
+  musicPlaying = false;
+  clearTimeout(musicLoop);
+  stopPad();
+  // Fade out via volume
+  if (masterVol && !muted) {
+    try {
+      masterVol.volume.rampTo(-60, 0.4);
+      setTimeout(function() {
+        if (!musicPlaying && masterVol) masterVol.volume.value = -14;
+      }, 500);
+    } catch(e) {}
+  }
+}
+
+function musicScene(idx) {
+  if (musicPlaying) {
+    // Refresh pad chord based on scene mood
+    if (pad) {
+      try {
+        pad.releaseAll();
+        var chords = [
+          ['C3','G3'], ['C3','E3'], ['E3','G3'], ['G3','D4'],
+          ['C3','G3'], ['D3','A3'], ['C3','E3'], ['E3','G3'], ['C3','G3']
+        ];
+        pad.triggerAttack(chords[idx] || ['C3','G3'], Tone.now(), 0.15);
+      } catch(e) {}
+    }
+    playMelodyForScene(idx);
+  }
+}
+
+// ===== END MUSIC =====
+
+var vid = document.getElementById('nslp');
+var wakeInterval = null;
+function wakeOn() {
+  // Play video immediately
+  try { vid.play().catch(function(){}); } catch(e) {}
+  // Re-trigger every 25 seconds to be safe
+  if (!wakeInterval) {
+    wakeInterval = setInterval(function() {
+      if (playing) {
+        try {
+          if (vid.paused) vid.play().catch(function(){});
+        } catch(e) {}
+      }
+    }, 25000);
+  }
+}
+function wakeOff() {
+  try { vid.pause(); } catch(e) {}
+  if (wakeInterval) { clearInterval(wakeInterval); wakeInterval = null; }
+}
+
+// Also try Wake Lock API as bonus
+var wl = null;
+function wlOn() {
+  if ('wakeLock' in navigator) {
+    try { navigator.wakeLock.request('screen').then(function(l){wl=l}).catch(function(){}); } catch(e) {}
+  }
+}
+function wlOff() { if(wl){try{wl.release()}catch(e){}wl=null;} }
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible' && playing) { wakeOn(); wlOn(); }
+});
+
+// Fullscreen
+window.F = function() {
+  var el = document.documentElement;
+  try {
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement) {
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+    } else {
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+    }
+  } catch(e) {}
+};
+
+var scenes = document.querySelectorAll('.scene');
+var Z = scenes.length;
+var cur = 0, playing = false, tmr = null, rvl = [], raf = null, t0 = 0, el = 0, go_flag = false;
+
+// Dots
+var de = document.getElementById('dots');
+for (var i = 0; i < Z; i++) {
+  var d = document.createElement('div');
+  d.className = 'dot' + (i===0?' a':'');
+  (function(x){d.onclick=function(){go(x)}})(i);
+  de.appendChild(d);
+}
+
+function dur(i) { return parseInt(scenes[i].getAttribute('data-dur'))||5000; }
+function clr() {
+  clearTimeout(tmr); cancelAnimationFrame(raf);
+  for(var i=0;i<rvl.length;i++) clearTimeout(rvl[i]);
+  rvl=[];
+}
+
+function show() {
+  for(var i=0;i<Z;i++){
+    if(i===cur){
+      scenes[i].classList.add('active');
+      scenes[i].classList.remove('prev');
+    } else {
+      scenes[i].classList.remove('active');
+      var r=scenes[i].querySelectorAll('.rv,.ps,.dofl');
+      for(var j=0;j<r.length;j++) r[j].classList.remove('rv','ps','dofl');
+      // keep previous visible behind
+      scenes[i].classList.toggle('prev', i===cur-1||(cur===0&&i===Z-1));
+    }
+  }
+  var items=scenes[cur].querySelectorAll('[data-d]');
+  for(var k=0;k<items.length;k++){
+    (function(e){
+      var delay=parseInt(e.getAttribute('data-d'))||0;
+      rvl.push(setTimeout(function(){
+        e.classList.add('rv');
+        if(e.classList.contains('ico')) setTimeout(function(){e.classList.add('dofl')},300);
+      },delay));
+    })(items[k]);
+  }
+  var pins=scenes[cur].querySelectorAll('.mp');
+  for(var p=0;p<pins.length;p++){
+    (function(pin,idx){rvl.push(setTimeout(function(){pin.classList.add('ps')},600+idx*200))})(pins[p],p);
+  }
+  var dd=document.querySelectorAll('.dot');
+  for(var d=0;d<dd.length;d++) dd[d].className=d===cur?'dot a':'dot';
+  document.getElementById('sl').textContent=(cur+1)+' / '+Z;
+  document.getElementById('bp').innerHTML=playing?'&#10074;&#10074;':'&#9654;';
+  musicScene(cur);
+}
+
+function prog(){
+  if(!playing) return;
+  el=Date.now()-t0;
+  document.getElementById('pfl').style.width=((cur+Math.min(el/dur(cur),1))/Z*100)+'%';
+  raf=requestAnimationFrame(prog);
+}
+
+function nxt(){
+  t0=Date.now()-el;
+  tmr=setTimeout(function(){
+    if(cur<Z-1){cur++;el=0;clr();show();nxt()}
+    else{playing=false;el=0;document.getElementById('bp').innerHTML='&#9654;';document.getElementById('pfl').style.width='100%';wakeOff();wlOff();musicOff();}
+  },dur(cur)-el);
+  raf=requestAnimationFrame(prog);
+}
+
+function toggle(){
+  if(playing){playing=false;clr();el=Date.now()-t0;document.getElementById('bp').innerHTML='&#9654;';wakeOff();wlOff();musicOff()}
+  else{playing=true;if(cur>=Z-1&&el>=dur(cur)){cur=0;el=0}wakeOn();wlOn();musicOn(cur);show();nxt()}
+}
+
+function go(idx){clr();cur=idx;el=0;show();document.getElementById('pfl').style.width=(cur/Z*100)+'%';if(playing)nxt()}
+
+window.M = function(){
+  if(!masterVol) return;
+  var btn = document.getElementById('mt');
+  if(!muted){
+    masterVol.volume.value = -100;
+    muted = true;
+    btn.innerHTML = '&#128263;';
+  } else {
+    masterVol.volume.value = -14;
+    muted = false;
+    btn.innerHTML = '&#128266;';
+  }
+};
+window.S = function(){ if(go_flag)return; go_flag=true; document.getElementById('ov').classList.add('gone'); cur=0;el=0;playing=true; wakeOn();wlOn();musicOn(0); show();nxt(); window.F(); };
+window.T = toggle;
+window.P = function(){ if(cur>0) go(cur-1); };
+window.N = function(){ if(cur<Z-1) go(cur+1); };
+window.K = function(e){ var r=document.getElementById('pb').getBoundingClientRect(); var x=(e.touches?e.touches[0].clientX:e.clientX)-r.left; var idx=Math.min(Math.floor(x/r.width*Z),Z-1); if(idx>=0)go(idx); };
+
+show();
+</script>
+</body>
+</html>
