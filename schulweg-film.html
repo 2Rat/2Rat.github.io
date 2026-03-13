@@ -567,4 +567,14 @@ window.S = function(){ if(go_flag)return; go_flag=true; document.getElementById(
 window.T = toggle;
 window.P = function(){ if(cur>0) go(cur-1); };
 window.N = function(){ if(cur<Z-1) go(cur+1); };
-window.K = function
+window.K = function(e){
+  var rect = document.getElementById('pb').getBoundingClientRect();
+  var pct = (e.clientX - rect.left) / rect.width;
+  var idx = Math.floor(pct * Z);
+  if(idx < 0) idx = 0;
+  if(idx >= Z) idx = Z - 1;
+  go(idx);
+};
+</script>
+</body>
+</html>
