@@ -255,8 +255,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   <div class="t" data-d="200">Jetzt <span class="hi">ausprobieren</span>!</div>
   <div class="tx" data-d="400" style="margin-bottom:5px">Kostenlos im Browser oder als Android-App:</div>
   <div class="badges" style="margin-bottom:10px">
-    <div class="b" data-d="600" style="background:rgba(37,99,235,.15);border-color:rgba(96,165,250,.3)">&#127760; 009aj.github.io/schulweg-check</div>
-    <div class="b" data-d="700" style="background:rgba(37,99,235,.15);border-color:rgba(96,165,250,.3)">&#128241; Google Play Store</div>
+    <a href="https://009aj.github.io/schulweg-check/" target="_blank" class="b" data-d="600" style="background:rgba(37,99,235,.15);border-color:rgba(96,165,250,.3);text-decoration:none;color:var(--tx);cursor:pointer">&#127760; 009aj.github.io/schulweg-check</a>
+    <div class="b" data-d="700" style="background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.15);opacity:0.7">&#128241; Google Play Store – demnächst</div>
   </div>
   <div class="tx" data-d="900" style="font-size:.78rem"><strong>Kontakt:</strong><br>Armin Jung &#183; Jugendpflege der Gemeinde Kirkel<br>a.jung@kirkel.de &#183; 06841-809860</div>
   <div class="br" data-d="1100">Gemeinschaftsprojekt von <strong>Jugendpflege der Gemeinde Kirkel</strong> und <strong>2Rat &#8211; B&#252;ro f&#252;r Radverkehrsplanung</strong></div>
@@ -567,9 +567,4 @@ window.S = function(){ if(go_flag)return; go_flag=true; document.getElementById(
 window.T = toggle;
 window.P = function(){ if(cur>0) go(cur-1); };
 window.N = function(){ if(cur<Z-1) go(cur+1); };
-window.K = function(e){ var r=document.getElementById('pb').getBoundingClientRect(); var x=(e.touches?e.touches[0].clientX:e.clientX)-r.left; var idx=Math.min(Math.floor(x/r.width*Z),Z-1); if(idx>=0)go(idx); };
-
-show();
-</script>
-</body>
-</html>
+window.K = function
