@@ -39,7 +39,6 @@
 
     .wrap { max-width: 1060px; margin: 0 auto; padding: 0 28px; }
 
-    /* Nav */
     nav {
       position: fixed; top: 0; width: 100%; z-index: 100;
       background: rgba(245,230,200,0.92); backdrop-filter: blur(14px);
@@ -54,7 +53,6 @@
     .nav__cta { background: var(--green) !important; color: white !important; padding: 8px 18px !important; border-radius: 8px !important; font-weight: 600 !important; }
     .nav__cta:hover { background: var(--green-dark) !important; }
 
-    /* Hamburger */
     .hamburger { display: none; background: none; border: none; cursor: pointer; width: 36px; height: 36px; position: relative; z-index: 200; }
     .hamburger span { display: block; width: 24px; height: 2.5px; background: var(--text); border-radius: 2px; transition: all 0.3s; position: absolute; left: 6px; }
     .hamburger span:nth-child(1) { top: 9px; }
@@ -68,7 +66,6 @@
     .mobile-menu a { text-decoration: none; color: var(--text); font-size: 20px; font-weight: 600; transition: color 0.2s; }
     .mobile-menu a:hover { color: var(--green); }
 
-    /* Hero */
     .hero { padding: 166px 0 80px; }
     .hero__grid { display: grid; grid-template-columns: 61.8fr 38.2fr; gap: 40px; align-items: center; }
     .hero__right { display: flex; justify-content: center; align-items: center; }
@@ -86,7 +83,6 @@
     .btn--b-o { background: transparent; color: var(--blue); border: 2px solid var(--blue); }
     .btn--b-o:hover { background: var(--blue); color: white; transform: translateY(-1px); }
 
-    /* Sections */
     .section { padding: 70px 0; }
     .section--white { background: var(--beige-light); }
     .section--beige { background: var(--beige); }
@@ -94,7 +90,6 @@
     .s-title { font-size: clamp(24px, 3vw, 34px); font-weight: 800; line-height: 1.2; margin-bottom: 14px; color: var(--green); }
     .s-text { font-size: 15px; color: var(--text-light); line-height: 1.7; max-width: 520px; margin-bottom: 36px; }
 
-    /* Leistungen */
     .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
     .card { background: var(--white); border-radius: 14px; padding: 24px 20px; border: 1px solid rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; }
     .card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.06); }
@@ -103,7 +98,6 @@
     .card__title { font-size: 16px; font-weight: 700; }
     .card__text { font-size: 13px; color: var(--text-light); line-height: 1.6; }
 
-    /* Produkte */
     .produkt { display: flex; flex-direction: column; gap: 24px; margin-bottom: 0; background: var(--white); border-radius: 16px; padding: 32px 28px; border: 1px solid rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; }
     .produkt:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.06); }
     .produkt:last-child { margin-bottom: 0; }
@@ -187,7 +181,6 @@
     .produkt__btns { display: flex; gap: 10px; flex-wrap: wrap; }
     .btn--sm { padding: 10px 18px; font-size: 13px; border-radius: 8px; }
 
-    /* Kontakt */
     .kontakt__grid { display: grid; grid-template-columns: 7fr 5fr; gap: 40px; margin-top: 28px; align-items: start; }
     .kontakt__text { font-size: 15px; color: var(--text-light); line-height: 1.8; }
     .kontakt__text p + p { margin-top: 12px; }
@@ -201,7 +194,6 @@
     .kontakt__cta { margin-top: 20px; }
     .kontakt__cta .btn { width: 100%; justify-content: center; }
 
-    /* Footer */
     footer { background: var(--blue-dark); padding: 24px 0; font-size: 12px; }
     .footer__inner { display: flex; justify-content: space-between; align-items: center; }
     .footer__links { display: flex; gap: 18px; }
@@ -209,36 +201,33 @@
     footer a:hover { color: white; }
     footer span { color: rgba(255,255,255,0.4); }
 
-    /* Newsticker */
     .ticker__bar {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 200;
-      background: linear-gradient(90deg, #1a1a2e, #16213e, #0f3460);
+      background: linear-gradient(90deg, #1a3a1e, #2d5a22, #1a4a28);
       height: 36px; overflow: hidden; display: flex; align-items: center;
-      border-bottom: 2px solid #FFD93D;
+      border-bottom: 2px solid #7CDB7C;
     }
     .ticker__track {
       display: flex; white-space: nowrap;
-      animation: tickerScroll 20s linear infinite;
+      animation: tickerScroll 22s linear infinite;
     }
     .ticker__text {
       font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
-      color: #FFD93D; letter-spacing: 0.5px; padding: 0 40px;
+      color: #7CDB7C; letter-spacing: 0.5px; padding: 0 40px;
     }
     @keyframes tickerScroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
-    .ticker__bar:hover { background: linear-gradient(90deg, #0f3460, #1a1a2e, #16213e); }
+    .ticker__bar:hover { background: linear-gradient(90deg, #1a4a28, #1a3a1e, #2d5a22); }
     .ticker__bar:hover .ticker__track { animation-play-state: paused; }
 
-    /* Scroll-Animationen */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
 
-    /* Mobile */
     @media (max-width: 768px) {
       .nav__links { display: none; }
       .hamburger { display: block; }
@@ -262,10 +251,10 @@
 <body>
 
   <!-- Newsticker -->
-  <a href="film.html" class="ticker" style="text-decoration:none;">
+  <a href="fahrradfruehling.html" class="ticker" style="text-decoration:none;">
     <div class="ticker__bar">
       <div class="ticker__track">
-        <span class="ticker__text">🛸 +++ BREAKING: Die Veloxaner sind im Saarland gelandet! +++ Meldi sucht Radwege-Helden +++ Jetzt Film ansehen ▶️ +++ 🛸 +++ BREAKING: Die Veloxaner sind im Saarland gelandet! +++ Meldi sucht Radwege-Helden +++ Jetzt Film ansehen ▶️ +++</span>
+        <span class="ticker__text">🚲🌸 +++ NEU: Meldi im deutschen Fahrradfrühling – Jetzt ansehen ▶️ +++ Das Speichenerwachen hat begonnen! +++ 🚲🌸 +++ NEU: Meldi im deutschen Fahrradfrühling – Jetzt ansehen ▶️ +++ Das Speichenerwachen hat begonnen! +++</span>
       </div>
     </div>
   </a>
@@ -364,6 +353,7 @@
           <div class="produkt__btns">
             <a href="https://2rat.github.io/velomeld/" class="btn btn--sm" style="background:#1A5FA8;color:white;" target="_blank">📱 App testen</a>
             <a href="film.html" class="btn btn--sm" style="background:#1a1a2e;color:#FFD93D;border:2px solid #FFD93D;" target="_blank">🛸 Meldi-Film</a>
+            <a href="fahrradfruehling.html" class="btn btn--sm" style="background:#1a3a1e;color:#7CDB7C;border:2px solid #7CDB7C;" target="_blank">🚲🌸 Fahrradfrühling</a>
           </div>
 
           <!-- Live-Beispiel -->
@@ -617,7 +607,6 @@
       window.open('https://2rat.github.io/velomeld/karte.html?kommune=' + encodeURIComponent(k) + '&titel=Radwegecheck+' + encodeURIComponent(k), '_blank');
     }
 
-    // Scroll-Reveal
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.15 });
