@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meldi im deutschen Fahrradfrühling – Eine 2Rat Produktion</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--green:#689246;--blue:#1678A9;--beige:#FAEFD8;--red:#E04040;--yellow:#E5A700;--purple:#8B5CF6;--text:#3D3D3D;--comic:'Bangers',cursive;--body:'DM Sans',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--body);background:#0a0a1a;display:flex;align-items:center;justify-content:center;height:100vh;height:100dvh;overflow:hidden}
+.cinema{width:min(96vw,840px);aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 20px 80px rgba(0,0,0,.6)}
+
+@media(orientation:portrait)and(max-width:768px){body{height:100dvh}.cinema{width:100vw;height:100dvh;border-radius:0;aspect-ratio:auto}.sub{padding:16px 18px 52px}.sub__text{font-size:clamp(12px,3.2vw,16px)}.speech{font-size:clamp(10px,2.8vw,14px);padding:8px 12px;max-width:75vw!important}.controls{bottom:10px}.s7-title{font-size:clamp(18px,5vw,28px)}.s7-text{font-size:clamp(11px,3vw,15px)}.s7-btn{font-size:clamp(11px,3vw,15px);padding:10px 18px}.s7-content{padding:20px 16px 90px}.s7-btns{flex-direction:column;align-items:center}}
+@media(orientation:landscape)and(max-height:500px){.cinema{width:100vw;height:100vh;border-radius:0;aspect-ratio:auto}.sub{padding:12px 16px 36px}.sub__text{font-size:clamp(10px,1.8vh,14px)}.speech{font-size:clamp(9px,1.5vh,12px);padding:6px 10px;max-width:200px}}
+
+.scene{position:absolute;inset:0;opacity:0;transition:opacity .8s ease;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;will-change:opacity}
+.scene.active{opacity:1;pointer-events:auto}
+
+/* Subtitle bar */
+.sub{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.88));padding:28px 24px 46px;z-index:50}
+.sub__text{color:#fff;font-size:clamp(12px,2vw,17px);font-weight:600;line-height:1.5;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,.5);opacity:0;transition:opacity .4s ease}
+.sub__text.show{opacity:1}
+
+/* Speech bubbles - hidden by default, shown via JS */
+.speech{position:absolute;z-index:40;background:#fff;border:2.5px solid var(--text);border-radius:18px;padding:clamp(8px,1.5vw,14px) clamp(12px,2vw,18px);font-size:clamp(10px,1.6vw,14px);font-weight:700;line-height:1.4;max-width:clamp(160px,35vw,280px);word-wrap:break-word;opacity:0;transform:scale(.7);transition:opacity .4s ease,transform .4s ease;box-shadow:3px 3px 0 rgba(0,0,0,.1)}
+.speech.show{opacity:1;transform:scale(1)}
+.speech::after{content:'';position:absolute;bottom:-10px;left:25px;width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:10px solid var(--text)}
+.speech::before{content:'';position:absolute;bottom:-7px;left:27px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid #fff;z-index:1}
+.speech--alien{background:#E8F0FF;border-color:var(--purple)}.speech--alien::after{border-top-color:var(--purple)}.speech--alien::before{border-top-color:#E8F0FF}
+.speech--red{background:#FFF0F0;border-color:var(--red)}.speech--red::after{border-top-color:var(--red)}.speech--red::before{border-top-color:#FFF0F0}
+
+/* Timed elements - hidden until JS triggers them */
+.timed{opacity:0;transition:opacity .4s ease}
+.timed.show{opacity:1}
+
+/* ═══ MELDI ═══ */
+.alien{position:relative;display:inline-block}
+.alien__head{width:clamp(32px,6.5vw,54px);height:clamp(30px,6vw,50px);background:linear-gradient(180deg,#7CDB7C,#4CAF50);border-radius:50%;position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:2;border:2px solid #3a9a3a}
+.alien__body{width:clamp(28px,5.5vw,46px);height:clamp(26px,5vw,42px);background:linear-gradient(180deg,var(--blue),#0F5C84);border-radius:8px 8px 6px 6px;position:relative;margin-top:clamp(26px,5.2vw,44px);margin-left:auto;margin-right:auto;border:1.5px solid #0a4a6e}
+.alien__body::after{content:'';position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:clamp(10px,2vw,16px);height:clamp(10px,2vw,16px);background:radial-gradient(circle at 40% 35%,#2E7D32,#1B5E20);border-radius:50% 50% 50% 50%/40% 40% 60% 60%;border:1px solid rgba(255,255,255,.35)}
+.alien__body::before{content:'★';position:absolute;top:34%;left:50%;transform:translate(-50%,-50%);font-size:clamp(5px,1vw,7px);color:#FFD93D;z-index:1;line-height:1}
+.alien__eye{position:absolute;top:25%;width:clamp(11px,2.2vw,18px);height:clamp(13px,2.6vw,22px);background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid #2a7a2a}
+.alien__eye--l{left:12%}.alien__eye--r{right:12%}
+.alien__pupil{width:50%;height:50%;background:#222;border-radius:50%;position:relative;animation:look 3s ease-in-out infinite}
+.alien__pupil::after{content:'';position:absolute;top:1px;right:1px;width:35%;height:35%;background:#fff;border-radius:50%}
+@keyframes look{0%,100%{transform:translateX(0)}30%{transform:translateX(2px)}70%{transform:translateX(-2px)}}
+.alien__mouth{position:absolute;bottom:18%;left:50%;transform:translateX(-50%);width:clamp(12px,2.4vw,20px);height:clamp(6px,1.2vw,10px);border-bottom:clamp(2px,.4vw,3px) solid #2E7D32;border-radius:0 0 50% 50%}
+.alien__antenna{position:absolute;top:calc(-1*clamp(14px,2.8vw,24px));left:50%;transform:translateX(-50%);width:2px;height:clamp(12px,2.4vw,20px);background:#4CAF50;z-index:3}
+.alien__antenna::after{content:'';position:absolute;top:calc(-1*clamp(5px,1vw,8px));left:50%;transform:translateX(-50%);width:clamp(7px,1.4vw,12px);height:clamp(7px,1.4vw,12px);background:#FFD93D;border-radius:50%;animation:glow 1.5s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 4px #FFD93D}50%{box-shadow:0 0 14px #FFD93D,0 0 24px rgba(255,217,61,.4)}}
+.alien__arm{position:absolute;top:clamp(30px,6vw,50px);width:clamp(14px,2.8vw,24px);height:clamp(5px,1vw,8px);background:#4CAF50;border-radius:4px;border:1px solid #3a9a3a}
+.alien__arm--l{left:calc(-1*clamp(12px,2.4vw,20px));transform:rotate(-20deg);transform-origin:right center}
+.alien__arm--r{right:calc(-1*clamp(12px,2.4vw,20px));transform:rotate(20deg);transform-origin:left center}
+.alien__hand{position:absolute;top:clamp(28px,5.6vw,47px);width:clamp(8px,1.6vw,14px);height:clamp(8px,1.6vw,14px);background:#7CDB7C;border-radius:50%;border:1px solid #3a9a3a}
+.alien__hand--l{left:calc(-1*clamp(16px,3.2vw,28px))}.alien__hand--r{right:calc(-1*clamp(16px,3.2vw,28px))}
+.alien__leg{position:absolute;bottom:calc(-1*clamp(14px,2.8vw,24px));width:clamp(7px,1.4vw,12px);height:clamp(12px,2.4vw,20px);background:#4CAF50;border-radius:0 0 3px 3px;border:1px solid #3a9a3a}
+.alien__leg--l{left:18%}.alien__leg--r{right:18%}
+.alien__shoe{position:absolute;bottom:calc(-1*clamp(20px,4vw,34px));width:clamp(11px,2.2vw,18px);height:clamp(6px,1.2vw,10px);background:#FF5252;border-radius:3px 6px 3px 3px;border:1px solid #c33}
+.alien__shoe--l{left:14%}.alien__shoe--r{right:14%}
+.alien-bike{position:relative;display:inline-block}
+.alien-bike .alien{position:absolute;bottom:clamp(22px,4.4vw,38px);left:50%;transform:translateX(-50%)}
+.alien-bike__wheels{display:flex;gap:clamp(20px,4vw,34px)}
+.alien-bike__wh{width:clamp(22px,4.4vw,36px);height:clamp(22px,4.4vw,36px);border:clamp(2px,.4vw,3px) solid #444;border-radius:50%;animation:spin .6s linear infinite;position:relative;background:rgba(255,255,255,.1)}
+.alien-bike__wh::after{content:'';position:absolute;inset:30%;background:#444;border-radius:50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.alien-bike__frame{position:absolute;bottom:clamp(14px,2.8vw,24px);left:50%;transform:translateX(-50%);width:clamp(26px,5.2vw,44px);height:clamp(3px,.6vw,4px);background:var(--green);border-radius:2px}
+.alien--happy .alien__arm--r{animation:wave .4s ease-in-out infinite}
+.alien--happy .alien__hand--r{animation:wave .4s ease-in-out infinite}
+@keyframes wave{0%,100%{transform:rotate(20deg)}50%{transform:rotate(-50deg)}}
+.alien--shocked .alien__mouth{width:clamp(10px,2vw,16px)!important;height:clamp(10px,2vw,16px)!important;border:none!important;background:#2E7D32;border-radius:50%!important;bottom:15%!important}
+.alien--shocked .alien__eye{transform:scale(1.2)}
+.alien--sad .alien__mouth{border-bottom:none!important;border-top:clamp(2px,.4vw,3px) solid #2E7D32;border-radius:50% 50% 0 0!important;bottom:16%!important}
+@keyframes shake-hard{0%,100%{transform:translateX(0)}10%{transform:translateX(-6px) rotate(-1deg)}30%{transform:translateX(6px) rotate(1deg)}50%{transform:translateX(-4px)}70%{transform:translateX(4px)}90%{transform:translateX(-2px)}}
+
+/* ═══ UFO ═══ */
+.ufo{position:relative;display:inline-block;width:clamp(80px,16vw,130px);height:clamp(50px,10vw,85px)}
+.ufo__disc{position:absolute;bottom:20%;left:50%;transform:translateX(-50%);width:100%;height:clamp(18px,3.6vw,30px);background:linear-gradient(180deg,#CFD8DC,#90A4AE 40%,#78909C);border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.ufo__dome{position:absolute;bottom:42%;left:50%;transform:translateX(-50%);width:clamp(30px,6vw,50px);height:clamp(20px,4vw,34px);background:linear-gradient(180deg,rgba(130,210,255,.55),rgba(100,200,255,.15));border-radius:50% 50% 30% 30%;border:1.5px solid rgba(255,255,255,.35);z-index:3}
+.ufo__dots{position:absolute;bottom:22%;left:50%;transform:translateX(-50%);display:flex;gap:clamp(8px,1.6vw,14px);z-index:3}
+.ufo__dot{width:clamp(5px,1vw,8px);height:clamp(5px,1vw,8px);border-radius:50%;animation:ublink .8s ease-in-out infinite alternate}
+.ufo__dot:nth-child(1){background:#FF5252;animation-delay:0s}.ufo__dot:nth-child(2){background:#FFD93D;animation-delay:.2s}.ufo__dot:nth-child(3){background:#4CAF50;animation-delay:.4s}.ufo__dot:nth-child(4){background:#42A5F5;animation-delay:.6s}
+@keyframes ublink{0%{opacity:.3;transform:scale(.8)}100%{opacity:1;transform:scale(1)}}
+.ufo__light{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60%;height:clamp(6px,1.2vw,10px);background:radial-gradient(ellipse,rgba(100,200,255,.35),transparent 70%);border-radius:50%;animation:thruster 1s ease-in-out infinite alternate}
+@keyframes thruster{0%{opacity:.3;transform:translateX(-50%) scaleX(.7)}100%{opacity:.9;transform:translateX(-50%) scaleX(1.2)}}
+.ufo__crest{position:absolute;bottom:24%;left:50%;transform:translateX(-50%);width:clamp(22px,4.4vw,36px);height:clamp(22px,4.4vw,36px);z-index:5}
+.ufo__crest-shield{position:absolute;inset:0;background:radial-gradient(circle at 40% 35%,#2E7D32,#1B5E20);border-radius:50% 50% 50% 50%/40% 40% 60% 60%;border:1.5px solid rgba(255,255,255,.35)}
+
+/* Generic bike/person */
+.gbike{display:flex;align-items:flex-end;gap:2px}
+.gbike__wh{width:clamp(16px,3.2vw,26px);height:clamp(16px,3.2vw,26px);border:2px solid #555;border-radius:50%;animation:spin .5s linear infinite}
+.gbike__person{width:clamp(8px,1.6vw,14px);height:clamp(16px,3.2vw,26px);border-radius:4px 4px 0 0;position:relative}
+.gbike__person::after{content:'';position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:clamp(7px,1.4vw,12px);height:clamp(7px,1.4vw,12px);background:#e8b88a;border-radius:50%}
+
+/* Warnblinker */
+@keyframes bwarn{0%,100%{opacity:1}50%{opacity:0}}
+.wblink{width:clamp(6px,1.2vw,10px);height:clamp(4px,.8vw,7px);background:orange;border-radius:2px;animation:bwarn .5s ease-in-out infinite;position:absolute}
+
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle 2s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes hover{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+@keyframes flybird{0%{transform:translate(0,0)}25%{transform:translate(20px,-10px)}50%{transform:translate(40px,0)}75%{transform:translate(20px,10px)}100%{transform:translate(0,0)}}
+
+/* ═══ SCENE SPECIFICS ═══ */
+
+/* S0 Title */
+.s0-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,#0a0a2e,#050510)}
+.s0-cnt{text-align:center;z-index:2;position:relative}
+.s0-log{font-size:clamp(9px,1.5vw,13px);color:rgba(100,200,255,.6);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;opacity:0;transition:opacity .5s ease .1s,transform .5s ease .1s;transform:translateY(-8px)}
+.scene.active .s0-log{opacity:1;transform:translateY(0)}
+.s0-logo{font-family:var(--comic);font-size:clamp(24px,4.5vw,42px);letter-spacing:2px;margin-bottom:2px;opacity:0;transform:scale(.7);transition:opacity .6s ease .3s,transform .6s ease .3s}
+.scene.active .s0-logo{opacity:1;transform:scale(1)}
+.s0-tag{font-family:var(--comic);font-size:clamp(14px,2.8vw,24px);color:var(--yellow);letter-spacing:1px;opacity:0;transition:opacity .5s ease .7s}
+.scene.active .s0-tag{opacity:1}
+.s0-sub{color:rgba(255,255,255,.4);font-size:clamp(10px,1.6vw,14px);margin-top:8px;opacity:0;transition:opacity .5s ease 1s}
+.scene.active .s0-sub{opacity:1}
+.s0-ufo{position:absolute;top:18%;right:8%;opacity:0;transform:translate(60px,-30px);transition:opacity .6s ease .5s,transform 1s ease .5s}
+.scene.active .s0-ufo{opacity:1;transform:translate(0,0)}
+.s0-ufo .ufo{animation:hover 3s ease-in-out infinite}
+
+/* S1 Spring */
+.s1-bg{position:absolute;inset:0;background:linear-gradient(180deg,#6CB4EE 0%,#9DD1F5 30%,#78A856 30%,#6B9A4A 50%,#888 50%,#777 100%)}
+.s1-sun{position:absolute;top:4%;left:8%;width:clamp(32px,6.5vw,54px);height:clamp(32px,6.5vw,54px);background:#FFD93D;border-radius:50%;box-shadow:0 0 50px rgba(255,217,61,.5)}
+.s1-meldi{position:absolute;bottom:34%;opacity:0}
+.scene.active .s1-meldi{animation:ridein 2s ease .3s forwards}
+@keyframes ridein{0%{left:-15%;opacity:0}30%{opacity:1}100%{left:35%;opacity:1}}
+.s1-cyc{position:absolute;bottom:36%;opacity:0}
+.scene.active .s1-cyc{opacity:1}
+.s1-cyc--1{animation:rideleft 4s linear .8s infinite}
+.s1-cyc--2{animation:rideleft 4s linear 2.5s infinite}
+@keyframes rideleft{0%{transform:translateX(200px);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateX(-200px);opacity:0}}
+
+/* S2 Ghost + Gehweg */
+.s2-bg{position:absolute;inset:0;background:linear-gradient(180deg,#6CB4EE 0%,#9DD1F5 28%,#78A856 28%,#6B9A4A 36%,#bbb 36%,#aaa 44%,#888 44%,#777 100%)}
+.s2-label{position:absolute;font-size:clamp(7px,1.2vw,10px);font-weight:800;padding:2px 6px;border-radius:3px}
+.s2-meldi{position:absolute;bottom:36%;left:22%}
+/* Ghost - starts offscreen right, animated by JS adding .go class */
+.s2-ghost{position:absolute;bottom:38%;right:-15%;transition:right 2s ease,transform 2s ease,opacity .5s ease;opacity:0;transform:scale(.4)}
+.s2-ghost.go{right:25%;opacity:1;transform:scale(1)}
+.s2-ghost .gbike{transform:scaleX(-1)}
+.s2-ghost .gbike__wh{border-color:#c0392b;animation:spin .4s linear infinite reverse}
+.s2-ghost .gbike__person{background:#c0392b}
+/* Racer - zooms across sidewalk */
+.s2-racer{position:absolute;top:37%;right:-15%;transition:right 1.5s linear;opacity:0}
+.s2-racer.go{right:110%;opacity:1}
+.s2-racer .gbike{transform:scaleX(-1)}
+.s2-racer .gbike__wh{border-color:#e74c3c}
+.s2-racer .gbike__person{background:#e74c3c}
+.s2-speedlines{position:absolute;right:-25px;top:30%;display:flex;flex-direction:column;gap:3px}
+.s2-speedlines span{display:block;height:2px;background:var(--red);border-radius:1px}
+/* Pedestrians fleeing */
+.s2-ped{position:absolute;top:36%;font-size:clamp(16px,3.2vw,28px);transition:transform .6s ease,opacity .3s ease;opacity:0}
+.s2-ped.flee{opacity:1;transform:translateX(-30px) rotate(-15deg)}
+.s2-fx{position:absolute;font-family:var(--comic);color:var(--red);font-size:clamp(16px,3.2vw,28px);opacity:0;transition:opacity .3s ease}
+.s2-fx.show{opacity:1}
+/* Extra cyclists crowding narrow path */
+.s2-crowd{position:absolute;bottom:38%;opacity:0;transition:opacity .5s ease,transform 1.5s ease}
+.s2-crowd.show{opacity:1}
+.s2-crowd--1{left:40%;transform:translateX(80px)}.s2-crowd--1.show{transform:translateX(0)}
+.s2-crowd--2{left:52%;transform:translateX(80px)}.s2-crowd--2.show{transform:translateX(0)}
+.s2-crowd--3{left:46%;transform:translateX(-80px)}.s2-crowd--3.show{transform:translateX(0)}
+.s2-crowd .gbike__person{background:#555}
+
+/* S3 Close pass + Dooring */
+.s3-bg{position:absolute;inset:0;background:linear-gradient(180deg,#6CB4EE 0%,#9DD1F5 28%,#78A856 28%,#6B9A4A 38%,#888 38%,#777 100%)}
+.s3-meldi{position:absolute;bottom:34%;left:18%}
+/* Red car - starts off right, rushes past */
+.s3-car{position:absolute;bottom:28%;right:-20%;width:clamp(70px,14vw,120px);height:clamp(35px,7vw,58px);background:linear-gradient(180deg,#c0392b,#a93226);border-radius:8px 8px 4px 4px;border:1.5px solid #8e2420;transition:right 1.8s ease;opacity:0}
+.s3-car.go{right:22%;opacity:1}
+.s3-car__win{position:absolute;top:-35%;left:15%;right:15%;height:50%;background:linear-gradient(180deg,#85c1e9,#aed6f1);border-radius:6px 6px 0 0}
+.s3-car__wh{position:absolute;bottom:-20%;width:clamp(10px,2vw,16px);height:clamp(10px,2vw,16px);background:#333;border-radius:50%;border:2px solid #555}
+/* Parked car for dooring */
+.s3-parked{position:absolute;bottom:30%;right:8%;width:clamp(60px,12vw,100px);height:clamp(30px,6vw,50px);background:linear-gradient(180deg,#5b5b5b,#444);border-radius:6px;border:1.5px solid #333}
+.s3-parked__win{position:absolute;top:-30%;left:18%;right:18%;height:45%;background:linear-gradient(180deg,#85c1e9,#aed6f1);border-radius:5px 5px 0 0}
+/* Door */
+.s3-door{position:absolute;bottom:35%;right:22%;width:clamp(4px,.8vw,7px);height:clamp(25px,5vw,40px);background:linear-gradient(90deg,#85c1e9,#aed6f1);border:1.5px solid #7fb3d3;border-radius:2px;transform-origin:bottom right;opacity:0;transform:rotate(0)}
+.s3-door.open{opacity:1;transform:rotate(-65deg);transition:transform .5s ease}
+.s3-bang{position:absolute;bottom:44%;right:18%;font-size:clamp(24px,5vw,40px);opacity:0;transform:scale(0);transition:opacity .3s ease,transform .3s ease}
+.s3-bang.show{opacity:1;transform:scale(1) rotate(-10deg)}
+.s3-dist{position:absolute;bottom:44%;left:27%;opacity:0;transition:opacity .3s ease}
+.s3-dist.show{opacity:1}
+.s3-dist span{font-size:clamp(10px,2vw,16px);font-weight:800;color:var(--red);background:rgba(255,255,255,.9);padding:2px 8px;border-radius:10px;white-space:nowrap}
+
+/* S4 Falschparker */
+.s4-bg{position:absolute;inset:0;background:linear-gradient(180deg,#6CB4EE 0%,#9DD1F5 28%,#78A856 28%,#6B9A4A 38%,#888 38%,#777 100%)}
+.s4-lane{position:absolute;bottom:30%;left:15%;width:65%;height:clamp(28px,5.6vw,46px);background:rgba(22,120,169,.1);border-left:2.5px dashed var(--blue);border-right:2.5px dashed var(--blue)}
+.s4-bsym{position:absolute;bottom:34%;left:18%;font-size:clamp(16px,3.2vw,28px);opacity:.25}
+.s4-meldi{position:absolute;bottom:34%;left:-10%;opacity:0;transition:left 2s ease,opacity .5s ease}
+.s4-meldi.go{left:10%;opacity:1}
+.s4-car{position:absolute;bottom:30%;opacity:0;transition:opacity .4s ease}
+.s4-car.show{opacity:1}
+.s4-car__body{position:relative;border-radius:8px 8px 4px 4px;border:1.5px solid}
+.s4-car__win{position:absolute;top:-30%;left:18%;right:18%;height:45%;background:linear-gradient(180deg,#85c1e9,#aed6f1);border-radius:5px 5px 0 0}
+.s4-car__wh{position:absolute;bottom:-18%;width:clamp(9px,1.8vw,14px);height:clamp(9px,1.8vw,14px);background:#333;border-radius:50%}
+
+/* S5 Elterntaxi */
+.s5-bg{position:absolute;inset:0;background:linear-gradient(180deg,#6CB4EE 0%,#9DD1F5 25%,#78A856 25%,#6B9A4A 35%,#999 35%,#888 100%)}
+.s5-school{position:absolute;top:8%;right:5%;width:clamp(100px,20vw,170px);height:clamp(60px,12vw,100px);background:linear-gradient(180deg,#e67e22,#d35400);border-radius:4px 4px 0 0;border:2px solid #c0392b}
+.s5-school::before{content:'🏫 SCHULE';position:absolute;top:20%;left:50%;transform:translateX(-50%);font-size:clamp(8px,1.5vw,13px);font-weight:800;color:#fff}
+.s5-school::after{content:'';position:absolute;top:-22%;left:50%;transform:translateX(-50%);width:0;height:0;border-left:clamp(25px,5vw,42px) solid transparent;border-right:clamp(25px,5vw,42px) solid transparent;border-bottom:clamp(14px,2.8vw,24px) solid #c0392b}
+.s5-suv{position:absolute;bottom:30%;opacity:0}
+.s5-suv.go1{animation:suvin1 1.5s ease forwards}
+.s5-suv.go2{animation:suvin2 1.5s ease forwards}
+.s5-suv.go3{animation:suvin3 1.5s ease forwards}
+@keyframes suvin1{0%{left:-15%;opacity:0}100%{left:10%;opacity:1}}
+@keyframes suvin2{0%{left:-15%;opacity:0}100%{left:32%;opacity:1}}
+@keyframes suvin3{0%{right:-15%;opacity:0}100%{right:20%;opacity:1}}
+.s5-suv__body{width:clamp(58px,11.6vw,96px);height:clamp(30px,6vw,50px);background:linear-gradient(180deg,#2c3e50,#1a252f);border-radius:6px;border:1.5px solid #111;position:relative}
+.s5-suv__win{position:absolute;top:-35%;left:15%;right:15%;height:50%;background:linear-gradient(180deg,#34495e,#2c3e50);border-radius:5px 5px 0 0}
+.s5-suv__wh{position:absolute;bottom:-18%;width:clamp(11px,2.2vw,18px);height:clamp(11px,2.2vw,18px);background:#333;border-radius:50%}
+.s5-kids{position:absolute;bottom:38%;right:10%;font-size:clamp(16px,3.2vw,28px);opacity:0;transition:opacity .3s ease}
+.s5-kids.show{opacity:1}
+.s5-phonebiker{position:absolute;bottom:38%;left:-10%;opacity:0;transition:left 2.5s ease,opacity .5s ease}
+.s5-phonebiker.go{left:45%;opacity:1}
+.s5-phone{position:absolute;top:-8px;right:-10px;width:clamp(8px,1.6vw,12px);height:clamp(14px,2.8vw,20px);background:#4FC3F7;border-radius:2px;box-shadow:0 0 10px rgba(79,195,247,.6);animation:pblink 1.5s ease-in-out infinite}
+@keyframes pblink{0%,100%{box-shadow:0 0 8px rgba(79,195,247,.5)}50%{box-shadow:0 0 18px rgba(79,195,247,.9)}}
+.s5-meldi{position:absolute;bottom:36%;left:55%}
+
+/* S6 Infra */
+.s6-bg{position:absolute;inset:0;background:linear-gradient(180deg,#94a8b8 0%,#b0bec5 22%,#78A856 22%,#6B9A4A 36%,#888 36%,#777 100%)}
+.s6-cloud{position:absolute;background:rgba(255,255,255,.35);border-radius:50%}
+.s6-path{position:absolute;bottom:32%;left:3%;width:30%;height:clamp(12px,2.4vw,20px);background:var(--green);border-radius:3px;transform:scaleX(0);transform-origin:left;transition:transform .8s ease}
+.s6-path.go{transform:scaleX(1)}
+.s6-path__label{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:clamp(7px,1.2vw,10px);font-weight:700;color:var(--green);white-space:nowrap;background:rgba(255,255,255,.8);padding:1px 6px;border-radius:8px}
+.s6-end{position:absolute;bottom:30%;left:33%;width:clamp(6px,1.2vw,10px);height:clamp(24px,4.8vw,40px);background:repeating-linear-gradient(0deg,var(--red),var(--red) 4px,#fff 4px,#fff 8px);border-radius:2px;opacity:0;transition:opacity .3s ease}
+.s6-end.show{opacity:1}
+.s6-broken{position:absolute;bottom:32%;left:36%;width:35%;height:clamp(12px,2.4vw,20px);background:#666;border-radius:2px;opacity:0;transition:opacity .4s ease}
+.s6-broken.show{opacity:1}
+.s6-crack{position:absolute;bottom:33%;background:rgba(0,0,0,.3);height:clamp(8px,1.6vw,14px);width:2px;border-radius:1px;opacity:0;transition:opacity .3s ease}
+.s6-crack.show{opacity:1}
+.s6-sign{position:absolute;bottom:40%;right:22%;display:flex;flex-direction:column;align-items:center;opacity:0;transition:opacity .4s ease}
+.s6-sign.show{opacity:1}
+.s6-sign__plate{background:var(--blue);color:#fff;border:2px solid #0d5a8a;padding:clamp(4px,.8vw,7px) clamp(8px,1.6vw,14px);border-radius:50%;font-size:clamp(10px,2vw,16px);font-weight:800}
+.s6-sign__post{width:3px;height:clamp(20px,4vw,34px);background:#888}
+.s6-meldi{position:absolute;bottom:30%;left:28%}
+.s6-x{position:absolute;bottom:26%;left:45%;font-size:clamp(28px,5.6vw,46px);color:var(--red);font-family:var(--comic);opacity:0;transform:scale(0);transition:opacity .3s ease,transform .3s ease}
+.s6-x.show{opacity:.5;transform:scale(1)}
+
+/* S7 CTA */
+.s7-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,#0a0a2e,#050510)}
+.s7-cnt{text-align:center;z-index:200;position:relative;padding:20px;padding-bottom:80px}
+.s7-crest{width:clamp(40px,8vw,64px);height:clamp(40px,8vw,64px);margin:0 auto clamp(6px,1.2vw,12px);position:relative;cursor:pointer;opacity:0;transform:scale(.5);transition:opacity .4s ease .1s,transform .4s ease .1s}
+.scene.active .s7-crest{opacity:1;transform:scale(1)}
+.s7-crest:hover{transform:scale(1.15) rotate(5deg)!important}
+.s7-crest__shield{position:absolute;inset:0;background:radial-gradient(circle at 40% 30%,#2E7D32,#1B5E20);border-radius:50% 50% 50% 50%/40% 40% 60% 60%;border:2px solid rgba(255,255,255,.3);box-shadow:0 0 16px rgba(76,175,80,.3)}
+.s7-crest__star{position:absolute;top:14%;left:50%;transform:translateX(-50%);font-size:clamp(8px,1.6vw,14px);color:#FFD93D;line-height:1}
+.s7-crest__wh{position:absolute;bottom:22%;width:clamp(10px,2vw,16px);height:clamp(10px,2vw,16px);border:2px solid #FFD93D;border-radius:50%}
+.s7-crest__wh::after{content:'';position:absolute;inset:28%;background:#FFD93D;border-radius:50%}
+.s7-crest__wh--l{left:16%}.s7-crest__wh--r{right:16%}
+.s7-mission{font-size:clamp(9px,1.4vw,12px);color:rgba(100,200,255,.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:clamp(6px,1.2vw,10px);opacity:0;transition:opacity .5s ease .2s}
+.scene.active .s7-mission{opacity:1}
+.s7-title{font-family:var(--comic);font-size:clamp(20px,4vw,36px);color:var(--green);margin-bottom:clamp(4px,.8vw,8px);opacity:0;transform:translateY(12px);transition:opacity .5s ease .3s,transform .5s ease .3s}
+.scene.active .s7-title{opacity:1;transform:translateY(0)}
+.s7-text{color:rgba(255,255,255,.6);font-size:clamp(10px,1.6vw,14px);margin-bottom:clamp(10px,2vw,20px);line-height:1.6;opacity:0;transition:opacity .5s ease .6s}
+.scene.active .s7-text{opacity:1}
+.s7-btns{display:flex;gap:clamp(6px,1.2vw,12px);justify-content:center;flex-wrap:wrap;opacity:0;transition:opacity .5s ease .9s;z-index:200}
+.scene.active .s7-btns{opacity:1}
+.s7-btn{display:inline-flex;align-items:center;gap:6px;padding:clamp(8px,1.4vw,12px) clamp(14px,2.8vw,24px);border-radius:10px;font-family:var(--body);font-size:clamp(10px,1.6vw,14px);font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:transform .2s}
+.s7-btn:hover{transform:translateY(-2px)}
+.s7-btn--g{background:var(--green);color:#fff}.s7-btn--b{background:var(--blue);color:#fff}
+.s7-btn--share{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.share-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none}
+.share-toast.show{opacity:1}
+.s7-credit{margin-top:clamp(10px,2vw,20px);color:rgba(255,255,255,.3);font-size:clamp(8px,1.2vw,11px)}
+.s7-credit a{color:rgba(255,255,255,.45);text-decoration:none}
+.s7-alien{position:absolute;bottom:clamp(10px,3vw,30px);right:clamp(10px,3vw,30px);opacity:0;transition:opacity .5s ease 1.2s}
+.scene.active .s7-alien{opacity:.7;animation:s7ride 6s linear 1.5s infinite}
+@keyframes s7ride{0%{transform:translateX(0)}50%{transform:translateX(-30px)}100%{transform:translateX(0)}}
+/* Easter Egg */
+.dossier{display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:300;width:clamp(260px,60vw,380px);background:linear-gradient(135deg,#1a0a28,#280d40);border:1px solid rgba(200,100,255,.2);border-radius:14px;padding:clamp(14px,2.8vw,24px);box-shadow:0 0 40px rgba(200,100,255,.15);color:#fff}
+.dossier.open{display:block;animation:dossin .3s ease}
+@keyframes dossin{from{opacity:0;transform:translate(-50%,-50%) scale(.8)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.dossier__close{position:absolute;top:8px;right:12px;background:none;border:none;color:rgba(255,255,255,.4);font-size:16px;cursor:pointer}
+.dossier__title{font-size:clamp(13px,2.2vw,18px);font-weight:800;color:rgba(255,150,100,.8);letter-spacing:2px;text-align:center;margin-bottom:clamp(10px,2vw,16px)}
+.dossier__line{display:flex;justify-content:space-between;padding:clamp(4px,.8vw,7px) 0;border-bottom:1px solid rgba(255,150,100,.08);font-size:clamp(10px,1.6vw,13px)}
+.dossier__label{color:rgba(255,150,100,.5);font-weight:600;min-width:40%}
+.dossier__stamp{text-align:center;margin-top:clamp(10px,2vw,16px);font-size:clamp(14px,2.4vw,20px);font-weight:800;color:rgba(224,64,64,.6);letter-spacing:3px;transform:rotate(-5deg)}
+
+.splash{position:absolute;inset:0;z-index:500;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px)}
+.splash__btn{background:var(--red);color:#fff;border:none;border-radius:50%;width:clamp(60px,14vw,90px);height:clamp(60px,14vw,90px);font-size:clamp(24px,5vw,40px);cursor:pointer;animation:pulse 1.5s ease-in-out infinite;box-shadow:0 0 30px rgba(224,64,64,.5)}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.controls{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);z-index:100;display:flex;align-items:center;gap:10px}
+.ctrl{background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:14px;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center}
+.ctrl:hover{background:rgba(255,255,255,.25)}
+.prog{width:clamp(100px,26vw,260px);height:3px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.prog__bar{height:100%;background:var(--green);border-radius:2px;width:0;transition:width .3s linear}
+.sc-num{color:rgba(255,255,255,.4);font-size:10px;font-weight:600;min-width:32px;text-align:center}
+.replay{position:absolute;top:10px;right:10px;z-index:100;background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.5);padding:5px 12px;border-radius:16px;font-family:var(--body);font-size:10px;font-weight:600;cursor:pointer;opacity:0;transition:opacity .3s}
+.replay.show{opacity:1}
+.mus-on{background:rgba(126,224,160,.2)!important}
+.nar-on{background:rgba(255,200,60,.2)!important}
+</style>
+</head>
+<body>
+<div class="cinema">
+<div class="splash" id="splash" onclick="startFilm()"><button class="splash__btn">▶</button></div>
+<div id="shareToast" class="share-toast">Link kopiert! 📋</div>
+
+<!-- S0 TITLE -->
+<div class="scene active">
+<div class="s0-bg"><div id="st0" class="s0-bg"></div></div>
+<div class="s0-ufo"><div class="ufo"><div class="ufo__disc"></div><div class="ufo__dome"></div><div class="ufo__dots"><div class="ufo__dot"></div><div class="ufo__dot"></div><div class="ufo__dot"></div><div class="ufo__dot"></div></div><div class="ufo__crest"><div class="ufo__crest-shield"></div></div><div class="ufo__light"></div></div></div>
+<div class="s0-cnt">
+<div class="s0-log">📡 Logbuch der Veloxflotte · Eintrag 248</div>
+<div class="s0-logo"><span style="color:#fff">Meldi im </span><span style="color:var(--green)">deutschen</span> <span style="color:var(--yellow)">Fahrradfrühling</span></div>
+<div class="s0-tag">🚗💥🚲 Regeln? Welche Regeln?!</div>
+<div class="s0-sub">Eine 2Rat Produktion</div>
+</div>
+<div class="sub"><div class="sub__text" id="sub0"></div></div>
+</div>
+
+<!-- S1 SPRING -->
+<div class="scene">
+<div class="s1-bg"></div>
+<div class="s1-sun"></div>
+<div style="position:absolute;bottom:32%;left:10%;font-size:clamp(12px,2.4vw,20px);animation:sway 2s ease-in-out infinite">🌷</div>
+<div style="position:absolute;bottom:34%;left:22%;font-size:clamp(12px,2.4vw,20px);animation:sway 2s ease-in-out .3s infinite">🌻</div>
+<div style="position:absolute;bottom:31%;right:18%;font-size:clamp(12px,2.4vw,20px);animation:sway 2s ease-in-out .6s infinite">🌼</div>
+<div style="position:absolute;top:10%;left:25%;font-size:clamp(10px,2vw,16px);animation:flybird 4s ease-in-out infinite">🐦</div>
+<div style="position:absolute;top:15%;left:60%;font-size:clamp(10px,2vw,16px);animation:flybird 4s ease-in-out 1.5s infinite">🐦</div>
+<div class="s1-cyc s1-cyc--1" style="right:15%"><div class="gbike"><div class="gbike__wh"></div><div class="gbike__person" style="background:var(--blue)"></div><div class="gbike__wh"></div></div></div>
+<div class="s1-cyc s1-cyc--2" style="right:35%"><div class="gbike"><div class="gbike__wh"></div><div class="gbike__person" style="background:#e67e22"></div><div class="gbike__wh"></div></div></div>
+<div class="s1-meldi"><div class="alien-bike"><div class="alien alien--happy"><div class="alien__antenna"></div><div class="alien__head"><div class="alien__eye alien__eye--l"><div class="alien__pupil"></div></div><div class="alien__eye alien__eye--r"><div class="alien__pupil"></div></div><div class="alien__mouth"></div></div><div class="alien__body"></div><div class="alien__arm alien__arm--l"></div><div class="alien__arm alien__arm--r"></div><div class="alien__hand alien__hand--l"></div><div class="alien__hand alien__hand--r"></div></div><div class="alien-bike__frame"></div><div class="alien-bike__wheels"><div class="alien-bike__wh"></div><div class="alien-bike__wh"></div></div></div></div>
+<div class="speech speech--alien" id="sp1a" style="top:14%;left:8%;max-width:260px">Die Erdlinge nennen es "Fahrradfrühling"... 🌸☀️</div>
+<div class="speech speech--alien" id="sp1b" style="top:12%;right:5%;max-width:260px">Wir Veloxaner kennen es als das Speichenerwachen! 🛸✨</div>
+<div class="sub"><div class="sub__text" id="sub1"></div></div>
+</div>
+
+<!-- S2 GHOST + GEHWEG -->
+<div class="scene">
+<div class="s2-bg"></div>
+<div class="s2-label" style="top:36.5%;left:5%;background:rgba(255,255,255,.5);color:#666">👟 Gehweg – Radfahrer frei</div>
+<div class="s2-label" style="top:44.5%;left:5%;color:var(--blue)">🚲 Radweg →</div>
+<div class="s2-meldi"><div class="alien-bike"><div class="alien alien--shocked"><div class="alien__antenna"></div><div class="alien__head"><div class="alien__eye alien__eye--l"><div class="alien__pupil"></div></div><div class="alien__eye alien__eye--r"><div class="alien__pupil"></div></div><div class="alien__mouth"></div></div><div class="alien__body"></div><div class="alien__arm alien__arm--l"></div><div class="alien__arm alien__arm--r"></div><div class="alien__hand alien__hand--l"></div><div class="alien__hand alien__hand--r"></div></div><div class="alien-bike__frame"></div><div class="alien-bike__wheels"><div class="alien-bike__wh"></div><div class="alien-bike__wh"></div></div></div></div>
+<div class="s2-ghost" id="s2ghost"><div class="gbike"><div class="gbike__wh"></div><div class="gbike__person" style="background:#c0392b"></div><div class="gbike__wh"></div></div></div>
+<div class="s2-racer" id="s2racer"><div class="gbike"><div class="gbike__wh" style="border-color:#e74c3c"></div><div class="gbike__person" style="background:#e74c3c"></div><div class="gbike__wh" style="border-color:#e74c3c"></div></div><div class="s2-speedlines"><span style="width:18px"></span><span style="width:12px"></span><span style="width:15px"></span></div></div>
+<div class="s2-ped" id="s2ped1" style="left:58%">🚶</div>
+<div class="s2-ped" id="s2ped2" style="left:65%">🚶‍♀️</div>
+<div class="s2-fx" id="s2fx1" style="top:8%;right:8%">FALSCHRUM!</div>
+<div class="s2-fx" id="s2fx2" style="top:12%;left:40%">VOLLGAS!</div>
+<!-- Extra cyclists crowding the narrow path -->
+<div class="s2-crowd s2-crowd--1" id="s2cx1"><div class="gbike"><div class="gbike__wh"></div><div class="gbike__person" style="background:#2980b9"></div><div class="gbike__wh"></div></div></div>
+<div class="s2-crowd s2-crowd--2" id="s2cx2"><div class="gbike"><div class="gbike__wh"></div><div class="gbike__person" style="background:#8e44ad"></div><div class="gbike__wh"></div></div></div>
+<div class="s2-crowd s2-crowd--3" id="s2cx3"><div class="gbike" style="transform:scaleX(-1)"><div class="gbike__wh"></div><div class="gbike__person" style="background:#d35400"></div><div class="gbike__wh"></div></div></div>
+<div class="s2-fx" id="s2fx3" style="top:16%;right:15%;font-size:clamp(12px,2.4vw,20px)">ZU ENG!</div>
+<div class="speech speech--alien" id="sp2a" style="top:8%;left:3%;max-width:260px">Der kommt mir entgegen! Falsche Richtung! 😱</div>
+<div class="speech speech--red" id="sp2b" style="top:10%;right:5%;max-width:240px">Und "frei" heißt nicht Vollgas auf dem Gehweg! 🏃💨</div>
+<div class="sub"><div class="sub__text" id="sub2"></div></div>
+</div>
+
+<!-- S3 CLOSE PASS + DOORING -->
+<div class="scene">
+<div class="s3-bg"></div>
+<div class="s3-meldi" id="s3meldi"><div class="alien-bike"><div class="alien alien--shocked"><div class="alien__antenna"></div><div class="alien__head"><div class="alien__eye alien__eye--l"><div class="alien__pupil"></div></div><div class="alien__eye alien__eye--r"><div class="alien__pupil"></div></div><div class="alien__mouth"></div></div><div class="alien__body"></div><div class="alien__arm alien__arm--l"></div><div class="alien__arm alien__arm--r"></div><div class="alien__hand alien__hand--l"></div><div class="alien__hand alien__hand--r"></div></div><div class="alien-bike__frame"></div><div class="alien-bike__wheels"><div class="alien-bike__wh"></div><div class="alien-bike__wh"></div></div></div></div>
+<div class="s3-car" id="s3car"><div class="s3-car__win"></div><div class="s3-car__wh" style="left:12%"></div><div class="s3-car__wh" style="right:12%"></div></div>
+<div class="s3-dist" id="s3dist"><span>↔️ 30 cm!</span></div>
+<div class="s3-parked"><div class="s3-parked__win"></div></div>
+<div class="s3-door" id="s3door"></div>
+<div class="s3-bang" id="s3bang">💥</div>
+<div class="speech speech--red" id="sp3a" style="top:6%;left:5%;max-width:250px">1,50 Meter? Hier reicht offenbar eine Handbreit! 😰</div>
+<div class="speech speech--alien" id="sp3b" style="top:8%;right:3%;max-width:240px">Und dann fliegt auch noch die Tür auf! Dooring! 💥</div>
+<div class="sub"><div class="sub__text" id="sub3"></div></div>
+</div>
+
+<!-- S4 FALSCHPARKER -->
+<div class="scene">
+<div class="s4-bg"></div>
+<div class="s4-lane"></div>
+<div class="s4-bsym">🚲</div>
+<div class="s4-meldi" id="s4meldi"><div class="alien-bike"><div class="alien alien--shocked"><div class="alien__antenna"></div><div class="alien__head"><div class="alien__eye alien__eye--l"><div class="alien__pupil"></div></div><div class="alien__eye alien__eye--r"><div class="alien__pupil"></div></div><div class="alien__mouth"></div></div><div class="alien__body"></div><div class="alien__arm alien__arm--l"></div><div class="alien__arm alien__arm--r"></div><div class="alien__hand alien__hand--l"></div><div class="alien__hand alien__hand--r"></div></div><div class="alien-bike__frame"></div><div class="alien-bike__wheels"><div class="alien-bike__wh"></div><div class="alien-bike__wh"></div></div></div></div>
+<div class="s4-car" id="s4c1" style="left:35%"><div class="s4-car__body" style="width:clamp(60px,12vw,100px);height:clamp(30px,6vw,50px);background:linear-gradient(180deg,#ecf0f1,#bdc3c7);border-color:#95a5a6"><div class="s4-car__win"></div><div class="s4-car__wh" style="left:12%"></div><div class="s4-car__wh" style="right:12%"></div></div><div class="wblink" style="left:2%;top:2px"></div><div class="wblink" style="right:2%;top:2px"></div></div>
+<div class="s4-car" id="s4c2" style="right:12%"><div class="s4-car__body" style="width:clamp(65px,13vw,108px);height:clamp(34px,6.8vw,56px);background:linear-gradient(180deg,#2c3e50,#1a252f);border-color:#111;border-radius:6px"><div class="s4-car__win"></div><div class="s4-car__wh" style="left:10%"></div><div class="s4-car__wh" style="right:10%"></div></div><div class="wblink" style="left:2%;top:2px"></div><div class="wblink" style="right:2%;top:2px"></div></div>
+<div class="speech speech--alien" id="sp4" style="top:6%;left:3%;max-width:280px">Der Warnblinker – die universelle Parkerlaubnis! "Bin nur kurz weg!" 🅿️😤</div>
+<div class="sub"><div class="sub__text" id="sub4"></div></div>
+</div>
+
+<!-- S5 ELTERNTAXI -->
+<div class="scene">
+<div class="s5-bg"></div>
+<div class="s5-school"></div>
+<div class="s5-suv" id="s5s1"><div class="s5-suv__body"><div class="s5-suv__win"></div><div class="s5-suv__wh" style="left:10%"></div><div class="s5-suv__wh" style="right:10%"></div></div></div>
+<div class="s5-suv" id="s5s2"><div class="s5-suv__body"><div class="s5-suv__win"></div><div class="s5-suv__wh" style="left:10%"></div><div class="s5-suv__wh" style="right:10%"></div></div></div>
+<div class="s5-suv" id="s5s3"><div class="s5-suv__body"><div class="s5-suv__win"></div><div class="s5-suv__wh" style="left:10%"></div><div class="s5-suv__wh" style="right:10%"></div></div></div>
+<div class="s5-kids" id="s5kids">👧🧒👦</div>
+<div class="s5-meldi"><div class="alien alien--shocked"><div class="alien__antenna"></div><div class="alien__head"><div class="alien__eye alien__eye--l"><div class="alien__pupil"></div></div><div class="alien__eye alien__eye--r"><div class="alien__pupil"></div></div><div class="alien__mouth"></div></div><div class="alien__body"></div><div class="alien__arm alien__arm--l"></div><div class="alien__arm alien__arm--r"></div><div class="alien__hand alien__hand--l"></div><div class="alien__hand alien__hand--r"></div><div class="alien__leg alien__leg--l"></div><div class="alien__leg alien__leg--r"></div><div class="alien__shoe alien__shoe--l"></div><div class="alien__shoe alien__shoe--r"></div></div></div>
+<div class="speech speech--red" id="sp5a" style="top:6%;left:3%;max-width:280px">Sie blockieren alles... damit das Kind sicher ankommt?! Die Ironie! 🚙🚙🚙</div>
+<div class="sub"><div class="sub__text" id="sub5"></div></div>
+</div>
+
+<!-- S6 INFRA -->
+<div class="scene">
+<div class="s6-bg"></div>
+<div class="s6-cloud" style="top:3%;left:15%;width:60px;height:25px"></div>
+<div class="s6-cloud" style="top:6%;left:45%;width:80px;height:30px"></div>
+<div class="s6-cloud" style="top:2%;right:15%;width:50px;height:20px"></div>
+<div class="s6-path" id="s6path"><div class="s6-path__label">✅ Radweg</div></div>
+<div class="s6-end" id="s6end"></div>
+<div class="s6-broken" id="s6broken"></div>
+<div class="s6-crack" id="s6cr1" style="left:40%;transform:rotate(15deg)"></div>
+<div class="s6-crack" id="s6cr2" style="left:48%;transform:rotate(-20deg)"></div>
+<div class="s6-crack" id="s6cr3" style="left:55%;transform:rotate(30deg)"></div>
+<div class="s6-crack" id="s6cr4" style="left:62%;transform:rotate(-10deg)"></div>
+<div class="s6-sign" id="s6sign"><div class="s6-sign__plate">🚲</div><div class="s6-sign__post"></div></div>
+<div class="s6-meldi"><div class="alien-bike"><div class="alien alien--sad"><div class="alien__antenna"></div><div class="alien__head"><div class="alien__eye alien__eye--l"><div class="alien__pupil"></div></div><div class="alien__eye alien__eye--r"><div class="alien__pupil"></div></div><div class="alien__mouth"></div></div><div class="alien__body"></div><div class="alien__arm alien__arm--l"></div><div class="alien__arm alien__arm--r"></div><div class="alien__hand alien__hand--l"></div><div class="alien__hand alien__hand--r"></div></div><div class="alien-bike__frame"></div><div class="alien-bike__wheels"><div class="alien-bike__wh" style="animation:none"></div><div class="alien-bike__wh" style="animation:none"></div></div></div></div>
+<div class="s6-x" id="s6x">✖</div>
+<div class="speech speech--alien" id="sp6a" style="top:10%;left:3%;max-width:260px">Der Radweg hört einfach auf?!</div>
+<div class="speech speech--alien" id="sp6b" style="top:12%;right:3%;max-width:270px">Benutzungspflicht für DIESE Buckelpiste?! Kein Wunder! 😔</div>
+<div class="sub"><div class="sub__text" id="sub6"></div></div>
+</div>
+
+<!-- S7 CTA -->
+<div class="scene">
+<div class="s7-bg"><div id="st7"></div></div>
+<div class="s7-cnt">
+<div class="s7-crest" id="eeCrest" title="🥚"><div class="s7-crest__shield"></div><div class="s7-crest__star">★</div><div class="s7-crest__wh s7-crest__wh--l"></div><div class="s7-crest__wh s7-crest__wh--r"></div></div>
+<div class="s7-mission">Mission Fahrradfrühling · Status: ⚠️ kritisch</div>
+<div class="s7-title">🚲 Gute Infrastruktur + Respekt = sichere Straßen!</div>
+<div class="s7-text">Es braucht beides: bessere Radwege UND mehr Rücksicht.<br>Melden Sie Probleme – damit sich etwas ändert!</div>
+<div class="s7-btns">
+<a href="https://2rat.github.io/velomeld/" class="s7-btn s7-btn--g" target="_blank">📱 Radwegemelder öffnen</a>
+<a href="mailto:fahr2rat@gmail.com" class="s7-btn s7-btn--b">✉️ Beratung anfragen</a>
+<button class="s7-btn s7-btn--share" onclick="shareFilm()">📤 Teilen</button>
+</div>
+<div class="s7-credit"><a href="https://www.2rat.org">2Rat – Büro für Radverkehrsplanung</a> · Armin Jung · <a href="mailto:fahr2rat@gmail.com">fahr2rat@gmail.com</a></div>
+</div>
+<div class="dossier" id="dossier"><div class="dossier__close" onclick="document.getElementById('dossier').classList.remove('open')">✕</div><div class="dossier__title">🚨 VERKEHRSSÜNDER-AKTE</div><div class="dossier__line"><span class="dossier__label">Nr. 1</span><span>Geisterradeln 👻🚲</span></div><div class="dossier__line"><span class="dossier__label">Nr. 2</span><span>Überholen mit 30cm</span></div><div class="dossier__line"><span class="dossier__label">Nr. 3</span><span>Dooring</span></div><div class="dossier__line"><span class="dossier__label">Nr. 4</span><span>Radweg zuparken + Warnblinker</span></div><div class="dossier__line"><span class="dossier__label">Nr. 5</span><span>SUV-Chaos vorm Schultor</span></div><div class="dossier__line"><span class="dossier__label">Nr. 6</span><span>Gedränge auf zu engen Wegen</span></div><div class="dossier__line"><span class="dossier__label">Nr. 7</span><span>Gehweg-Rasen</span></div><div class="dossier__line"><span class="dossier__label">Hauptursache</span><span>Fehlende Infrastruktur!</span></div><div class="dossier__stamp">HANDLUNGSBEDARF ⚠️</div></div>
+<div class="s7-alien"><div class="alien-bike"><div class="alien alien--happy"><div class="alien__antenna"></div><div class="alien__head"><div class="alien__eye alien__eye--l"><div class="alien__pupil"></div></div><div class="alien__eye alien__eye--r"><div class="alien__pupil"></div></div><div class="alien__mouth"></div></div><div class="alien__body"></div><div class="alien__arm alien__arm--l"></div><div class="alien__arm alien__arm--r"></div><div class="alien__hand alien__hand--l"></div><div class="alien__hand alien__hand--r"></div></div><div class="alien-bike__frame"></div><div class="alien-bike__wheels"><div class="alien-bike__wh"></div><div class="alien-bike__wh"></div></div></div></div>
+</div>
+
+<div class="controls"><button class="ctrl" id="playBtn" onclick="togglePlay()">⏸</button><div class="prog"><div class="prog__bar" id="progBar"></div></div><div class="sc-num" id="scNum">1/8</div><button class="ctrl" onclick="prevScene()">⏮</button><button class="ctrl" onclick="nextScene()">⏭</button></div>
+<button class="replay" id="replayBtn" onclick="replay()">↻ Nochmal</button>
+</div>
+
+<script>
+function mkStars(id){var c=document.getElementById(id);if(!c)return;for(var i=0;i<40;i++){var s=document.createElement('div');s.className='star';var z=Math.random()*2.5+.5;s.style.cssText='width:'+z+'px;height:'+z+'px;top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;animation-delay:'+Math.random()*3+'s;animation-duration:'+(Math.random()*2+1.5)+'s';c.appendChild(s)}}
+mkStars('st0');mkStars('st7');
+document.getElementById('eeCrest').addEventListener('click',function(){document.getElementById('dossier').classList.add('open')});
+
+function $(id){return document.getElementById(id)}
+function show(id){var e=$(id);if(e)e.classList.add('show')}
+function hide(id){var e=$(id);if(e)e.classList.remove('show')}
+function cls(id,c){var e=$(id);if(e)e.classList.add(c)}
+function setSub(idx,t){var e=$('sub'+idx);if(e){e.textContent=t;e.classList.add('show')}}
+
+// ═══ NARRATOR ═══
+var synth=window.speechSynthesis;
+var narEnabled=true,currentUtt=null,stepTimer=null;
+function getVoice(){if(!synth)return null;var v=synth.getVoices(),p=['Anna','Markus','Hans','Google Deutsch'];for(var i=0;i<p.length;i++)for(var j=0;j<v.length;j++)if(v[j].name.indexOf(p[i])>=0&&v[j].lang.indexOf('de')>=0)return v[j];for(var j=0;j<v.length;j++)if(v[j].lang.indexOf('de')>=0)return v[j];return null}
+if(synth&&synth.onvoiceschanged!==undefined)synth.onvoiceschanged=getVoice;
+function speak(text,onDone){
+  if(!narEnabled||!synth||!text){if(onDone)onDone();return}
+  var u=new SpeechSynthesisUtterance(text),v=getVoice();
+  if(v)u.voice=v;u.lang='de-DE';u.rate=0.95;u.pitch=0.92;
+  u.onend=function(){currentUtt=null;if(onDone)onDone()};
+  u.onerror=function(){currentUtt=null;if(onDone)onDone()};
+  currentUtt=u;synth.speak(u);
+}
+function stopSpeech(){if(synth)synth.cancel();currentUtt=null;if(stepTimer)clearTimeout(stepTimer)}
+
+// ═══ SCENE STEPS (onend-driven) ═══
+var scenes=document.querySelectorAll('.scene'),total=scenes.length,cur=0,playing=false,curStep=0;
+
+var STEPS=[
+  // S0: Title
+  [{text:'Meldi im deutschen Fahrradfrühling. Logbuch der Veloxflotte. Eintrag zweihundertachtundvierzig.',wait:4000}],
+  // S1: Spring
+  [
+    {text:'Die Erdlinge nennen es Fahrradfrühling.',sub:'Die Erdlinge nennen es "Fahrradfrühling"...',act:function(){show('sp1a')},wait:3000},
+    {text:'Wir Veloxaner kennen es als, das Speichenerwachen!',sub:'Wir Veloxaner kennen es als das Speichenerwachen!',act:function(){hide('sp1a');show('sp1b')},wait:3500},
+    {text:'Doch was Meldi im deutschen Straßenverkehr erlebt, ist alles andere als harmonisch.',sub:'Doch was Meldi im Straßenverkehr erlebt...',act:function(){hide('sp1b')},wait:3500}
+  ],
+  // S2: Ghost + Gehweg + Gedränge
+  [
+    {text:'Meldi fährt auf dem Radweg.',sub:'Meldi fährt gemütlich auf dem Radweg...',wait:2500},
+    {text:'Plötzlich! Ein Radfahrer kommt ihm entgegen. Falsche Richtung!',sub:'Geisterradler! Falsche Richtung!',act:function(){cls('s2ghost','go');show('s2fx1');show('sp2a');var m=document.querySelector('.s2-meldi');if(m)m.style.animation='shake-hard .4s ease'},wait:4000},
+    {text:'Und auf dem Gehweg rast einer mit Vollgas an den Fußgängern vorbei.',sub:'Raser auf dem Gehweg!',act:function(){hide('sp2a');cls('s2racer','go');show('s2fx2');cls('s2ped1','flee');cls('s2ped2','flee');show('sp2b')},wait:4000},
+    {text:'Dazu noch viel zu viele Radfahrer auf einem viel zu engen Weg.',sub:'Gedränge auf dem schmalen Radweg!',act:function(){hide('sp2b');show('s2cx1');show('s2cx2');show('s2cx3');show('s2fx3');show('sp2c')},wait:3500}
+  ],
+  // S3: Close pass + Dooring
+  [
+    {text:'Meldi radelt weiter.',sub:'Meldi radelt weiter...',wait:2000},
+    {text:'Da nähert sich von hinten ein Auto. Es überholt. Mit dreißig Zentimeter Abstand!',sub:'30 cm Abstand! Vorgeschrieben: 1,50 Meter.',act:function(){cls('s3car','go');setTimeout(function(){show('s3dist');show('sp3a');var m=document.querySelector('.s3-meldi');if(m)m.style.animation='shake-hard .5s ease'},1800)},wait:5000},
+    {text:'Und dann, am geparkten Auto, fliegt auch noch eine Tür auf. Dooring!',sub:'Dooring! Der Albtraum jedes Radfahrers.',act:function(){hide('sp3a');cls('s3door','open');setTimeout(function(){show('s3bang');show('sp3b');if(navigator.vibrate)navigator.vibrate([80,40,120])},500)},wait:4500}
+  ],
+  // S4: Falschparker
+  [
+    {text:'Meldi will weiter auf dem Radweg fahren.',sub:'Meldi will weiter auf dem Radweg...',act:function(){cls('s4meldi','go')},wait:2500},
+    {text:'Doch da steht ein Auto. Warnblinker an.',sub:'Ein Auto blockiert den Radweg. Warnblinker an.',act:function(){show('s4c1')},wait:3000},
+    {text:'Und noch eins! Der Warnblinker, die universelle Parkerlaubnis. Bin nur kurz weg!',sub:'"Bin nur kurz weg!" Warnblinker als Universalerlaubnis.',act:function(){show('s4c2');show('sp4')},wait:5000},
+    {text:'Meldi muss auf die Fahrbahn ausweichen. Lebensgefährlich.',sub:'Meldi muss auf die Fahrbahn ausweichen – lebensgefährlich.',wait:3000}
+  ],
+  // S5: Elterntaxi
+  [
+    {text:'Vor der Schule wird es richtig wild.',sub:'Vor der Schule...',wait:2500},
+    {text:'Ein SUV.',sub:'Ein SUV fährt vor...',act:function(){cls('s5s1','go1')},wait:2000},
+    {text:'Noch einer!',sub:'Noch einer!',act:function(){cls('s5s2','go2')},wait:1500},
+    {text:'Und noch einer! Drei SUVs blockieren alles. Damit die Kinder sicher ankommen.',sub:'Drei SUVs blockieren alles.',act:function(){cls('s5s3','go3');show('s5kids');show('sp5a')},wait:5000},
+    {text:'Die Ironie. Genau diese Autos machen den Schulweg für alle anderen gefährlich.',sub:'Genau diese Autos machen den Schulweg gefährlich.',wait:4000}
+  ],
+  // S6: Fehlende Infrastruktur
+  [
+    {text:'Und dann der Moment, wo Meldi versteht.',sub:'Und dann versteht Meldi...',wait:2500},
+    {text:'Ein schöner grüner Radweg.',sub:'Ein schöner grüner Radweg...',act:function(){cls('s6path','go')},wait:2500},
+    {text:'Der einfach aufhört.',sub:'...der einfach aufhört.',act:function(){show('s6end');show('sp6a')},wait:2500},
+    {text:'Danach. Eine kaputte Buckelpiste.',sub:'Danach: eine kaputte Buckelpiste.',act:function(){show('s6broken');show('s6cr1');show('s6cr2');show('s6cr3');show('s6cr4')},wait:3000},
+    {text:'Und daneben steht ein blaues Schild. Benutzungspflicht! Für diese Ruine!',sub:'Benutzungspflicht – für DAS?!',act:function(){hide('sp6a');show('s6sign');show('sp6b')},wait:4000},
+    {text:'Da liegt das wahre Problem. Fehlende Infrastruktur. Hier braucht es einen Plan!',sub:'Fehlende Infrastruktur. Hier braucht es einen Plan!',act:function(){show('s6x')},wait:4000}
+  ],
+  // S7: CTA
+  [{text:'Gute Infrastruktur und gegenseitiger Respekt. Dafür braucht es einen Plan. Melden Sie mit!',wait:5000}]
+];
+
+function runStep(si,stepIdx){
+  if(si!==cur||!playing)return;
+  var steps=STEPS[si];
+  if(!steps||stepIdx>=steps.length){
+    stepTimer=setTimeout(function(){if(si===cur&&playing){if(cur<total-1)goTo(cur+1);else endFilm()}},1500);
+    return;
+  }
+  curStep=stepIdx;var step=steps[stepIdx];
+  if(step.act)step.act();
+  if(step.sub)setSub(si,step.sub);
+  if(step.text&&narEnabled&&synth){
+    speak(step.text,function(){stepTimer=setTimeout(function(){runStep(si,stepIdx+1)},400)});
+  } else {
+    stepTimer=setTimeout(function(){runStep(si,stepIdx+1)},step.wait||2500);
+  }
+}
+
+function resetScene(idx){
+  var sc=scenes[idx];if(!sc)return;
+  sc.querySelectorAll('.show,.go,.go1,.go2,.go3,.open,.flee').forEach(function(el){el.classList.remove('show','go','go1','go2','go3','open','flee')});
+  var s=sc.querySelector('.sub__text');if(s){s.textContent='';s.classList.remove('show')}
+  var m3=sc.querySelector('.s3-meldi');if(m3)m3.style.animation='';
+  var m2=sc.querySelector('.s2-meldi');if(m2)m2.style.animation='';
+  if(idx===4){var m=$('s4meldi');if(m)m.classList.remove('go')}
+  if(idx===6){var p=$('s6path');if(p)p.classList.remove('go')}
+}
+
+var wakeLock=null;
+async function requestWake(){try{if('wakeLock' in navigator)wakeLock=await navigator.wakeLock.request('screen')}catch(e){}}
+function releaseWake(){if(wakeLock){wakeLock.release();wakeLock=null}}
+
+function goTo(idx){
+  stopSpeech();if(stepTimer)clearTimeout(stepTimer);
+  resetScene(cur);cur=idx;
+  scenes[cur].classList.add('active');
+  setTimeout(function(){scenes.forEach(function(s,i){if(i!==cur)s.classList.remove('active')})},50);
+  updateUI();if(playing)runStep(cur,0);
+}
+function endFilm(){playing=false;stopSpeech();releaseWake();updateUI();if(window.stopMusic)window.stopMusic()}
+function togglePlay(){playing=!playing;updateUI();if(playing){requestWake();if(cur>=total-1)goTo(0);else runStep(cur,curStep)}else{stopSpeech();if(stepTimer)clearTimeout(stepTimer);releaseWake()}}
+function nextScene(){if(cur<total-1){stopSpeech();goTo(cur+1)}}
+function prevScene(){if(cur>0){stopSpeech();goTo(cur-1)}}
+function replay(){playing=true;narEnabled=true;var b=$('narBtn');if(b){b.textContent='🎙️';b.classList.add('nar-on')}requestWake();goTo(0)}
+function updateUI(){$('playBtn').textContent=playing?'⏸':'▶';$('scNum').textContent=(cur+1)+'/'+total;$('progBar').style.width=((cur+1)/total*100)+'%';$('replayBtn').classList.toggle('show',cur>=total-1&&!playing)}
+playing=false;goTo(0);
+
+function startFilm(){var sp=$('splash');sp.style.opacity='0';sp.style.pointerEvents='none';setTimeout(function(){sp.remove()},500);playing=true;requestWake();updateUI();runStep(0,0)}
+function shareFilm(){var d={title:'Meldi im deutschen Fahrradfrühling',text:'Regeln? Welche Regeln?! 🚗💥🚲',url:'https://www.2rat.org/fahrradfruehling.html'};if(navigator.share)navigator.share(d).catch(function(){});else navigator.clipboard.writeText(d.url).then(function(){var t=$('shareToast');t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2000)})}
+window.toggleNarrator=function(){narEnabled=!narEnabled;if(!narEnabled)stopSpeech();var b=$('narBtn');if(b){b.textContent=narEnabled?'🎙️':'🔇';b.classList.toggle('nar-on',narEnabled)}};
+(function(){var sx=0,c=document.querySelector('.cinema');c.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});c.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50){if(dx<0)nextScene();else prevScene()}},{passive:true})})();
+
+// ═══ SOUNDTRACK ═══
+(function(){
+var ax=null,mg=null,mp=false,lt=null,cS=0;
+function ini(){if(ax&&ax.state!=='closed')return;ax=new(window.AudioContext||window.webkitAudioContext)();mg=ax.createGain();mg.gain.value=0;mg.connect(ax.destination)}
+function pad(f,t,d,v){[0,.5,-.5].forEach(function(dt,i){var o=ax.createOscillator(),g=ax.createGain();o.type=i<2?'sine':'triangle';o.frequency.setValueAtTime(f,t);o.detune.setValueAtTime(dt*100,t);var vol=v*.06/(i*.5+1);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(vol,t+d*.25);g.gain.linearRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(mg);o.start(t);o.stop(t+d+.1)})}
+function marimba(f,t,v){var o=ax.createOscillator(),g=ax.createGain();o.type='sine';o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(v*.14,t);g.gain.exponentialRampToValueAtTime(.0001,t+.5);o.connect(g);g.connect(mg);o.start(t);o.stop(t+.6)}
+function flute(f,t,d,v){var o=ax.createOscillator(),g=ax.createGain();o.type='sine';o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(v*.09,t+.1);g.gain.linearRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(mg);o.start(t);o.stop(t+d+.1)}
+function cello(f,t,d,v){var o=ax.createOscillator(),g=ax.createGain();o.type='sawtooth';o.frequency.setValueAtTime(f,t);var fl=ax.createBiquadFilter();fl.type='lowpass';fl.frequency.setValueAtTime(f*3,t);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(v*.04,t+d*.15);g.gain.linearRampToValueAtTime(.0001,t+d);o.connect(fl);fl.connect(g);g.connect(mg);o.start(t);o.stop(t+d+.1)}
+function kick(t,v){var o=ax.createOscillator(),g=ax.createGain();o.type='sine';o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(40,t+.15);g.gain.setValueAtTime(v*.12,t);g.gain.exponentialRampToValueAtTime(.0001,t+.3);o.connect(g);g.connect(mg);o.start(t);o.stop(t+.4)}
+function stinger(t,v){[185,233,277].forEach(function(f){var o=ax.createOscillator(),g=ax.createGain();o.type='sawtooth';o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(v*.06,t);g.gain.exponentialRampToValueAtTime(.0001,t+2);o.connect(g);g.connect(mg);o.start(t);o.stop(t+2.5)});kick(t,v*.8)}
+function honk(t,v){var o=ax.createOscillator(),g=ax.createGain();o.type='square';o.frequency.setValueAtTime(380,t);g.gain.setValueAtTime(v*.03,t);g.gain.exponentialRampToValueAtTime(.0001,t+.6);o.connect(g);g.connect(mg);o.start(t);o.stop(t+.8)}
+function harp(ns,t,sp,v){ns.forEach(function(f,i){var o=ax.createOscillator(),g=ax.createGain();o.type='sine';o.frequency.setValueAtTime(f,t+i*sp);g.gain.setValueAtTime(v*.08,t+i*sp);g.gain.exponentialRampToValueAtTime(.0001,t+i*sp+1.5);o.connect(g);g.connect(mg);o.start(t+i*sp);o.stop(t+i*sp+2)})}
+function celesta(f,t,v){[1,2,3].forEach(function(h,i){var o=ax.createOscillator(),g=ax.createGain();o.type='sine';o.frequency.setValueAtTime(f*h,t);g.gain.setValueAtTime(v*.035/(i+1),t);g.gain.exponentialRampToValueAtTime(.0001,t+2);o.connect(g);g.connect(mg);o.start(t);o.stop(t+2.5)})}
+var C3=130.81,E3=164.81,G3=196,A3=220,C4=261.63,E4=329.63,G4=392,A4=440,C5=523.25,E5=659.25,G5=783.99,C2=65.41,A2=110,E2=82.41,BT=.6,BAR=BT*4;
+var sfn=[
+function(t){pad(C3,t,5,.6);celesta(G5,t+1.5,.3);cello(C2,t+.5,4,.4);return 5},
+function(t){[C4,E4,G4,C5,A3,C4,E4,A4].forEach(function(n,i){marimba(n,t+i*.3,.6)});flute(G4,t+.6,1,.55);flute(C5,t+2.4,1.5,.6);cello(C3,t,BAR,.5);harp([C4,E4,G4,C5],t+3,.2,.4);return 8},
+function(t){marimba(E4,t,.4);stinger(t+.6,.7);honk(t+1.5,.5);cello(A2,t+3,BAR,.5);pad(A2,t+3,5,.4);return 10},
+function(t){cello(E2,t,3,.5);pad(E3,t,3,.4);stinger(t+4,.8);honk(t+5,.4);pad(A2,t+5,4,.5);return 10},
+function(t){[C4,G3,C4,E4].forEach(function(n,i){marimba(n,t+i*.5,.5)});honk(t+1,.4);honk(t+3,.3);cello(C3,t,BAR,.5);pad(C3,t+2,6,.35);return 10},
+function(t){[E4,G4,C5,E5].forEach(function(n,i){marimba(n,t+i*.4,.45)});honk(t+.5,.35);honk(t+2,.3);honk(t+4,.25);cello(E2,t,BAR*1.5,.5);return 10},
+function(t){pad(A2,t,5,.55);cello(A2,t,4,.55);flute(E4,t+1.2,2,.4);flute(C4,t+5,2.5,.4);harp([C4,E4,G4,C5],t+7,.25,.4);celesta(G5,t+8,.3);return 10},
+function(t){pad(C3,t,9,.55);harp([C4,E4,G4,C5,E5],t+.5,.2,.5);flute(E5,t+1.2,2,.45);cello(C2,t,7,.4);return 10}
+];
+function mLoop(){if(!mp)return;var t=ax.currentTime+.05,d=8;if(cS>=0&&cS<sfn.length)d=sfn[cS](t);lt=setTimeout(function(){if(mp)mLoop()},Math.max(Math.min(d*.65,5),2)*1000)}
+setInterval(function(){var a=document.querySelector('.scene.active');if(!a)return;scenes.forEach(function(s,i){if(s===a&&i!==cS)cS=i})},250);
+function startM(){ini();var go=function(){mp=true;mg.gain.setValueAtTime(.0001,ax.currentTime);mg.gain.linearRampToValueAtTime(.9,ax.currentTime+1.5);mLoop();updM()};if(ax.state==='suspended')ax.resume().then(go);else go()}
+function stopM(){mp=false;if(lt){clearTimeout(lt);lt=null}if(mg&&ax){try{mg.gain.linearRampToValueAtTime(.0001,ax.currentTime+1)}catch(e){}}updM()}
+window.toggleMusic=function(){if(mp)stopM();else startM()};window.stopMusic=stopM;
+function updM(){var b=$('musicBtn');if(!b)return;b.textContent=mp?'🔊':'🎵';b.classList.toggle('mus-on',mp)}
+var ctrl=document.querySelector('.controls');
+if(ctrl){var b=document.createElement('button');b.id='musicBtn';b.className='ctrl';b.textContent='🎵';b.onclick=window.toggleMusic;ctrl.insertBefore(b,ctrl.firstChild);
+var nb=document.createElement('button');nb.id='narBtn';nb.className='ctrl nar-on';nb.textContent='🎙️';nb.onclick=window.toggleNarrator;ctrl.insertBefore(nb,b.nextSibling)}
+})();
+</script>
+</body>
+</html>
