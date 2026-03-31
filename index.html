@@ -369,7 +369,7 @@
             <div style="font-size:14px;color:#3D3D3D;margin-bottom:10px;">Geben Sie Ihren Gemeindenamen ein und sehen Sie, wie die Karte für Ihre Kommune aussehen würde:</div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               <input type="text" id="komTest" placeholder="z.B. Merzig, Homburg, Blieskastel…" style="flex:1;min-width:180px;padding:10px 14px;border:2px solid #E2E8F0;border-radius:8px;font-family:inherit;font-size:14px;color:#3D3D3D;" onkeydown="if(event.key==='Enter')testKom()">
-              <button onclick="testKom()" style="padding:10px 20px;background:#1678A9;color:white;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;">Karte anzeigen →</button>
+              <button onclick="testKom()" style="padding:10px 20px;background:#1678A9;color:white;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;">App testen →</button>
             </div>
             <div style="margin-top:8px;font-size:12px;color:#6B6B6B;">Keine Installation, keine Registrierung – einfach ausprobieren.</div>
           </div>
@@ -474,7 +474,7 @@
       <!-- Schulweg-Detektive -->
       <div class="produkt reveal">
         <div class="produkt__info">
-          <div style="display:inline-block;background:#FF9800;color:white;font-size:14px;font-weight:700;letter-spacing:1px;padding:10px 18px;border-radius:8px;margin-bottom:14px;white-space:nowrap;">🆓 umsonst · free · gratuit · gratis · 無料 · 免费 · مجاني 🎓</div>
+          <div style="display:inline-block;background:#FF9800;color:white;font-size:14px;font-weight:700;letter-spacing:1px;padding:10px 18px;border-radius:8px;margin-bottom:14px;">🆓 umsonst · free · gratuit · gratis · 無料 · 免费 · مجاني 🎓</div>
           <h3><span class="bl">Schulweg-Detektive</span> –<br><span class="gr">Schulwegsicherheit selber machen</span></h3>
           <p>Die Schulweg-Detektive App ist ein kostenloses Gemeinschaftsprojekt – offen für alle Schulen und Kommunen. Kinder erfassen gefährliche und sichere Stellen auf ihrem Schulweg, die Ergebnisse unterstützen direkt die Schulwegplanung vor Ort.</p>
           <div class="feat-list">
@@ -544,7 +544,7 @@
           </div>
         </div>
         <div style="margin-top:20px;">
-          <a href="mailto:fahr2rat@gmail.com?subject=Kostenlos%20testen%20%E2%80%93%20Radwegemelder&body=Hallo%20Herr%20Jung%2C%0A%0Aich%20interessiere%20mich%20f%C3%BCr%20den%20kostenlosen%20Einsatz%20des%20Radwegemelders.%0A%0AGruppe%2FOrganisation%3A%20%0AGemeinde%3A%20%0A%0AMit%20freundlichen%20Gr%C3%BC%C3%9Fen" class="btn btn--g" style="font-size:15px;">✉️ Kostenlos anfragen</a>
+          <a href="mailto:fahr2rat@gmail.com" class="btn btn--g" style="font-size:15px;">✉️ Kostenlos anfragen</a>
         </div>
       </div>
     </div>
@@ -588,29 +588,35 @@
         <div class="footer__links">
           <a href="https://2rat.github.io/velomeld/datenschutz.html">Impressum & Datenschutz</a>
           <a href="Flyer2Rat.pdf">Flyer</a>
-          <a href="https://2rat.github.io/velomeld/pro/dashboard.html" style="opacity:0.3;font-size:10px">Dashboard</a>
-          <a href="https://2rat.github.io/velomeld/pro/konzept-check.html" style="opacity:0.3;font-size:10px">Konzept-Check</a>
+          <a href="https://velomeld-pro.netlify.app/dashboard.html" style="opacity:0.3;font-size:10px">Dashboard</a>
+          <a href="https://velomeld-pro.netlify.app/konzept-check.html" style="opacity:0.3;font-size:10px">Konzept-Check</a>
         </div>
       </div>
     </div>
   </footer>
 
   <script>
-    function toggleMenu() {
-      document.getElementById('burger').classList.toggle('open');
-      document.getElementById('mobileMenu').classList.toggle('open');
-    }
-
     function testKom() {
-      var k = document.getElementById('komTest').value.trim();
-      if (!k) return;
-      window.open('https://2rat.github.io/velomeld/karte.html?kommune=' + encodeURIComponent(k) + '&titel=Radwegecheck+' + encodeURIComponent(k), '_blank');
+      var name = document.getElementById('komTest').value.trim();
+      if (!name) return;
+      window.open('https://2rat.github.io/velomeld/?kommune=' + encodeURIComponent(name) + '&titel=Radwegecheck+' + encodeURIComponent(name), '_blank');
     }
 
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+    function toggleMenu() {
+      document.querySelector('.hamburger').classList.toggle('open');
+      document.querySelector('.mobile-menu').classList.toggle('open');
+    }
+
+    // Scroll Reveal
+    var reveals = document.querySelectorAll('.reveal');
+    function checkReveal() {
+      reveals.forEach(function(el) {
+        var top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight - 60) el.style.opacity = '1';
+      });
+    }
+    window.addEventListener('scroll', checkReveal);
+    checkReveal();
   </script>
 </body>
 </html>
