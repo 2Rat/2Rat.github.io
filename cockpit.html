@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2Rat – Cockpit</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #FAEFD8;
+    color: #3D3D3D;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    background: #fff;
+    border-bottom: 3px solid #689246;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .header svg { flex-shrink: 0; }
+  .header h1 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #3D3D3D;
+  }
+  .header h1 span { color: #689246; }
+  .header-sub {
+    font-size: 0.8rem;
+    color: #888;
+    margin-left: auto;
+  }
+
+  /* Main */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  /* Status */
+  .status {
+    text-align: center;
+    padding: 40px 16px;
+    color: #888;
+    font-size: 0.95rem;
+  }
+  .status.error { color: #c0392b; }
+
+  /* Projekt-Karte */
+  .projekt {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .projekt-header {
+    background: linear-gradient(135deg, #1678A9, #1a8bc4);
+    color: #fff;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .projekt-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .projekt-zeit {
+    font-size: 0.8rem;
+    opacity: 0.85;
+    background: rgba(255,255,255,0.15);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .projekt-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    padding: 16px 20px;
+  }
+
+  /* Link-Kachel */
+  .link-tile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #3D3D3D;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: transform 0.15s, box-shadow 0.15s;
+    border: 1px solid #eee;
+  }
+  .link-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .link-tile .icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .link-tile .label small {
+    display: block;
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  /* Farben pro Link-Typ */
+  .tile-app .icon { background: #e8f5e9; }
+  .tile-karte .icon { background: #e3f2fd; }
+  .tile-dashboard .icon { background: #fff3e0; }
+  .tile-konzept .icon { background: #f3e5f5; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.75rem;
+    color: #aaa;
+  }
+  .footer a { color: #1678A9; text-decoration: none; }
+
+  /* Kein-Projekt-Hinweis */
+  .empty-hint {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+  }
+  .empty-hint p { margin-top: 8px; font-size: 0.9rem; }
+
+  @media (max-width: 500px) {
+    .projekt-links { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <svg width="36" height="36" viewBox="0 0 36 36">
+    <circle cx="18" cy="18" r="17" fill="#689246"/>
+    <text x="18" y="23" text-anchor="middle" fill="#fff" font-size="14" font-weight="700" font-family="sans-serif">2R</text>
+  </svg>
+  <h1><span>2Rat</span> Cockpit</h1>
+  <span class="header-sub" id="dateInfo"></span>
+</div>
+
+<div class="main" id="container">
+  <div class="status" id="loading">Projekte werden geladen …</div>
+</div>
+
+<div class="footer">
+  <a href="https://2rat.org">2rat.org</a> · 2Rat – Büro für Radverkehrsplanung
+</div>
+
+<script>
+const SUPABASE_URL = 'https://vimsikjyoupihogmquul.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZpbXNpa2p5b3VwaWhvZ21xdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NTIyMjYsImV4cCI6MjA4NjAyODIyNn0._Foa5ZVr4nwoOlZ4T-ORX0U4sNUjgRJJRyBDHvHV2vo';
+
+// Datum anzeigen
+document.getElementById('dateInfo').textContent = new Date().toLocaleDateString('de-DE', {
+  weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+});
+
+// Projekte laden
+async function loadProjects() {
+  const container = document.getElementById('container');
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/projects?select=*&order=created_at.desc`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }}
+    );
+    if (!res.ok) throw new Error('Fehler ' + res.status);
+    const projects = await res.json();
+
+    if (!projects.length) {
+      container.innerHTML = `
+        <div class="empty-hint">
+          <div style="font-size:2.5rem">📋</div>
+          <p>Noch keine Projekte angelegt.<br>Erstelle ein Projekt im <a href="https://velomeld-pro.netlify.app/dashboard.html" style="color:#1678A9">Dashboard</a>.</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = projects.map(p => renderProject(p)).join('');
+  } catch (err) {
+    container.innerHTML = `<div class="status error">Fehler beim Laden: ${err.message}</div>`;
+  }
+}
+
+function formatDate(d) {
+  if (!d) return '–';
+  return new Date(d).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+function renderProject(p) {
+  const kommune = p.kommune || p.name || 'Unbekannt';
+  const kommuneParam = encodeURIComponent(kommune);
+  const zeitraum = (p.date_from || p.date_to)
+    ? `${formatDate(p.date_from)} – ${formatDate(p.date_to)}`
+    : '';
+
+  // Prüfe ob Projekt aktiv ist
+  const now = new Date();
+  const end = p.date_to ? new Date(p.date_to) : null;
+  const isActive = !end || end >= now;
+  const badge = isActive ? '' : ' (abgeschlossen)';
+
+  return `
+    <div class="projekt">
+      <div class="projekt-header" ${!isActive ? 'style="background:linear-gradient(135deg,#7f8c8d,#95a5a6)"' : ''}>
+        <div class="projekt-name">🚲 ${kommune}${badge}</div>
+        ${zeitraum ? `<div class="projekt-zeit">${zeitraum}</div>` : ''}
+      </div>
+      <div class="projekt-links">
+        <a class="link-tile tile-app" href="https://2rat.github.io/velomeld/?kommune=${kommuneParam}" target="_blank">
+          <div class="icon">📱</div>
+          <div class="label">Melde-App<small>Bürger-Eingabe</small></div>
+        </a>
+        <a class="link-tile tile-karte" href="https://2rat.github.io/velomeld/karte.html?kommune=${kommuneParam}" target="_blank">
+          <div class="icon">🗺️</div>
+          <div class="label">Ergebnis-Karte<small>Öffentliche Ansicht</small></div>
+        </a>
+        <a class="link-tile tile-dashboard" href="https://velomeld-pro.netlify.app/dashboard.html" target="_blank">
+          <div class="icon">📊</div>
+          <div class="label">Dashboard<small>Auswertung & Export</small></div>
+        </a>
+        <a class="link-tile tile-konzept" href="https://velomeld-pro.netlify.app/konzept-check.html" target="_blank">
+          <div class="icon">✅</div>
+          <div class="label">Konzept-Check<small>Maßnahmen-Abgleich</small></div>
+        </a>
+      </div>
+    </div>`;
+}
+
+loadProjects();
+</script>
+</body>
+</html>
