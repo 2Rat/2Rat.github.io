@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fördermittel-Finder Radverkehr Saarland – 2RAT</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#1678A9;--blue-dark:#115d85;--blue-light:#e8f4fa;
+  --green:#659444;--green-dark:#4a7332;--green-light:#eef5e6;
+  --gray:#3E403F;--gray-light:#8a8a8a;--gray-border:#d9d9d9;
+  --bg:#f9fafb;--white:#ffffff;
+  --warn:#d4930a;--warn-bg:#fef9ec;--warn-border:#f0dca0;
+}
+body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);background:var(--bg);min-height:100vh}
+.header{background:var(--white);border-bottom:3px solid var(--green);padding:18px 20px}
+.header-inner{max-width:680px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.header-left{display:flex;align-items:center;gap:14px}
+.header-logo{height:38px}
+.header-sub{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-light)}
+.header-title{font-size:17px;font-weight:700;color:var(--gray);line-height:1.3}
+.header-title span{color:var(--blue)}
+.header-right{text-align:right;font-size:11px;color:var(--gray-light);line-height:1.5}
+.main{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.steps{display:flex;gap:6px;align-items:center;margin-bottom:24px}
+.step-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;transition:all .2s}
+.step-dot.done{background:var(--green);color:#fff}
+.step-dot.active{background:var(--blue);color:#fff}
+.step-dot.pending{background:#e5e7eb;color:#9ca3af}
+.step-line{width:32px;height:2px;transition:all .2s}
+.step-line.done{background:var(--green)}
+.step-line.pending{background:#e5e7eb}
+h2{font-size:17px;font-weight:700;margin:0 0 4px}
+h3{font-size:14px;font-weight:700;margin:0 0 8px}
+.subtitle{font-size:13px;color:var(--gray-light);margin:0 0 14px}
+.hint{font-size:11px;color:var(--gray-light);margin:0 0 14px}
+.cards{display:flex;flex-direction:column;gap:8px}
+.cards.sub{gap:6px}
+.card{padding:14px 18px;border-radius:8px;border:1.5px solid var(--gray-border);background:var(--white);cursor:pointer;transition:all .15s}
+.card:hover{border-color:#bbb}
+.card.active{border:2px solid var(--blue);background:var(--blue-light)}
+.card-row{display:flex;align-items:center;gap:12px}
+.card-icon{font-size:18px;width:26px;text-align:center;color:var(--green)}
+.card-label{font-weight:600;font-size:14px}
+.card-label.sm{font-size:13px}
+.card-desc{font-size:12px;color:var(--gray-light);margin-top:2px}
+.card-count{font-size:12px;color:var(--gray-light);margin-top:1px}
+.btn{margin-top:18px;width:100%;padding:13px;border-radius:8px;border:none;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue)}
+.btn-back{background:none;border:none;color:var(--blue);cursor:pointer;font-size:13px;font-weight:600;padding:0;margin-bottom:12px}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+.badge{display:inline-block;padding:3px 10px;border-radius:5px;font-size:11px;font-weight:600;letter-spacing:.02em}
+.result-card{background:var(--white);border-radius:10px;border:1.5px solid var(--gray-border);overflow:hidden}
+.result-header{background:var(--green);padding:14px 18px;color:#fff}
+.result-header .label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.8;margin-bottom:2px}
+.result-header .value{font-size:17px;font-weight:700}
+.result-header .detail{font-size:12px;opacity:.85;margin-top:2px}
+.result-body{padding:16px 18px}
+.field{margin-bottom:14px}
+.field-label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-light);margin-bottom:3px}
+.field-value{font-size:14px;font-weight:600}
+.field-detail{font-size:12px;color:var(--gray-light)}
+.field-highlight{font-size:22px;font-weight:700;color:var(--green)}
+.notes{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:7px;padding:12px 14px}
+.notes-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--warn);margin-bottom:5px}
+.notes-item{font-size:12px;color:#6b5900;line-height:1.5;margin-bottom:5px}
+.notes-item:last-child{margin-bottom:0}
+.info-box{margin-top:16px;background:var(--blue-light);border-radius:8px;border:1px solid rgba(22,120,169,.19);padding:14px 16px}
+.info-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.info-body{font-size:12px;color:var(--gray);line-height:1.7}
+.eligible-yes{color:var(--green);font-weight:700}
+.eligible-no{color:#dc2626;font-weight:700}
+.quota-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.quota-card{background:var(--green-light);border-radius:7px;padding:10px 12px;text-align:center}
+.quota-card.alt{background:var(--blue-light)}
+.quota-label{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--gray-light);margin-bottom:3px}
+.quota-value{font-size:20px;font-weight:700;color:var(--green-dark)}
+.quota-card.alt .quota-value{color:var(--blue-dark)}
+.quota-sub{font-size:10px;color:var(--gray-light);margin-top:1px}
+.section{margin-top:18px}
+.footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--gray-border);font-size:11px;color:var(--gray-light);line-height:1.6}
+.footer a{color:var(--blue);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <img class="header-logo" id="logo" alt="2RAT" src="">
+      <div>
+        <div class="header-sub">Büro für Radverkehrsplanung</div>
+        <div class="header-title">Fördermittel-Finder <span>Radverkehr Saarland</span></div>
+      </div>
+    </div>
+    <div class="header-right">Saarland<br>FRL-NMOB-Rad-Fuß<br>Stand 03/2026</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="steps" id="steps"></div>
+  <div id="content"></div>
+  <div class="footer">
+    Dieses Tool dient als Orientierungshilfe und ersetzt keine Fördermittelberatung.
+    Grundlage: Förderrichtlinie Rad- und Fußverkehr Saarland (FRL-NMOB-Rad-Fuß), gültig 17.11.2025 – 17.11.2030.
+    Verbindlich ist ausschließlich der Richtlinientext der Bewilligungsbehörde.
+    <br>
+    <strong style="color:var(--gray)">© 2RAT</strong> · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
+  </div>
+</div>
+
+<script>
+const LOGO='data:image/png;base64,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';
+document.getElementById('logo').src=LOGO;
+
+/* ── Fördergegenstände nach FRL-NMOB-Rad-Fuß (17.11.2025) ── */
+const CATEGORIES=[
+  {id:"infra_bau",label:"Infrastruktur & Bau",icon:"🏗",items:["2_1","2_4"]},
+  {id:"abstell_ausstattung",label:"Abstellanlagen & Ausstattung",icon:"🅿",items:["2_2_1","2_2_2","2_7","2_8"]},
+  {id:"konzepte",label:"Konzepte & Planung",icon:"📋",items:["2_5"]},
+  {id:"fahrzeuge",label:"Fahrzeuge",icon:"🚲",items:["2_6"]},
+  {id:"kommunikation",label:"Kommunikation & Bildung",icon:"📣",items:["2_11","2_12"]},
+  {id:"betrieb_innovation",label:"Betriebliches & Innovation",icon:"💡",items:["2_3","2_9","2_10"]}
+];
+
+const FOERDER={
+  "2_1":{nr:"2.1",label:"Infrastruktur",desc:"Radwege, Brücken, Beleuchtung, Radverkehrsanlagen",quote:"75%",quoteAGFK:"90%",maxFoerder:null,mindest:"15.000 €",berechtigte:["gemeinde","landkreis","schule"],zweckbindung:"12 Jahre",beispiele:"Radwege, Radfahrstreifen, Fahrbahnanhebungen, Beleuchtung, Brückenbauwerke",hinweise:["Technische Standards: StVO, VwV-StVO, ERA 2010, EFA, H BVA (FGSV)","Vorhabenbeginn erst nach Zuwendungsbescheid","Radschnellwege sind über diesen Fördergegenstand nicht förderfähig"]},
+  "2_4":{nr:"2.4",label:"Querungshilfen",desc:"Querungshilfen für Rad- und Fußverkehr",quote:"75%",quoteAGFK:"90%",maxFoerder:"60.000 €",mindest:"10.000 €",berechtigte:["gemeinde","landkreis","schule"],zweckbindung:"12 Jahre",beispiele:"Mittelinseln, Gehwegnasen, Aufpflasterungen im Querungsbereich",hinweise:["Abstimmung mit Baulastträger erforderlich"]},
+  "2_2_1":{nr:"2.2.1",label:"Abstellanlagen öffentl. Einrichtungen",desc:"Fahrradabstellanlagen an öffentlichen Einrichtungen",quote:"75%",quoteAGFK:"90% / 95%",maxFoerder:null,mindest:"5.000 €",berechtigte:["gemeinde","landkreis","schule"],zweckbindung:"5 Jahre",beispiele:"Fahrradbügel, überdachte Stellplätze, Fahrradboxen an Rathäusern, Schulen, Sportstätten",hinweise:["Bis zu 95% bei Schulen und Kitas"]},
+  "2_2_2":{nr:"2.2.2",label:"Abstellanlagen öffentl. Raum",desc:"Fahrradabstellanlagen im öffentlichen Raum",quote:"75%",quoteAGFK:"90% / 95%",maxFoerder:null,mindest:"5.000 €",berechtigte:["gemeinde","landkreis","schule","ggmbh"],zweckbindung:"5 Jahre",beispiele:"Fahrradparkhaus, B+R-Anlagen, Abstellanlagen an ÖPNV-Haltestellen",hinweise:["Auch gemeinnützige Organisationen und gGmbH antragsberechtigt"]},
+  "2_7":{nr:"2.7",label:"Reparatur- und Servicestationen",desc:"Öffentlich zugängliche Reparatur- und Servicestationen",quote:"40%",quoteAGFK:"90%",maxFoerder:"15.000 €",mindest:"500 €",berechtigte:["gemeinde","landkreis","schule","ggmbh","verein","unternehmen"],zweckbindung:"5 Jahre",beispiele:"Luftpumpen, Werkzeugsäulen, Reparaturstationen im öffentlichen Raum",hinweise:["Auch Vereine und Unternehmen antragsberechtigt","Niedrige Mindestsumme: 500 €"]},
+  "2_8":{nr:"2.8",label:"Ladeeinrichtungen für Pedelecs",desc:"Öffentlich zugängliche Ladeinfrastruktur",quote:"40%",quoteAGFK:"90%",maxFoerder:"15.000 €",mindest:"2.000 €",berechtigte:["gemeinde","landkreis","schule","ggmbh"],zweckbindung:"5 Jahre",beispiele:"Ladeschließfächer, Ladestationen an ÖPNV-Knotenpunkten",hinweise:[]},
+  "2_5":{nr:"2.5",label:"Rad-/Fußverkehrskonzepte",desc:"Konzeptionelle Planungen für Rad- und Fußverkehr",quote:"80%",quoteAGFK:null,maxFoerder:"50.000 €",mindest:"2.000 €",berechtigte:["gemeinde","landkreis"],zweckbindung:null,beispiele:"Radverkehrskonzepte, Fußverkehrsaudits, Schulwegeplanungen, Nahmobilitätskonzepte",hinweise:["Höchste Regelförderquote (80%)","Keine Zweckbindungsfrist"]},
+  "2_6":{nr:"2.6",label:"Lastenfahrräder / Lastenpedelecs",desc:"Anschaffung von Lastenrädern und Lastenpedelecs",quote:"25%",quoteAGFK:null,maxFoerder:"500 € / 1.000 €",mindest:"500 €",berechtigte:["gemeinde","landkreis","schule","ggmbh","verein","unternehmen"],zweckbindung:"3 Jahre",beispiele:"Lastenräder (max. 500 €), Lastenpedelecs (max. 1.000 €)",hinweise:["Breiteste Antragsberechtigung – auch Unternehmen und Vereine","Zweckbindung nur 3 Jahre"]},
+  "2_11":{nr:"2.11",label:"Öffentlichkeitskampagnen",desc:"Kampagnen zur Förderung des Rad- und Fußverkehrs",quote:"60%",quoteAGFK:"90%",maxFoerder:"25.000 €",mindest:"2.000 €",berechtigte:["gemeinde","landkreis","schule","ggmbh"],zweckbindung:null,beispiele:"Aktionstage, Informationskampagnen, Werbematerialien, Stadtradeln",hinweise:[]},
+  "2_12":{nr:"2.12",label:"Schulprojekte",desc:"Projekte zur Radverkehrsförderung an Schulen und Kitas",quote:"90%",quoteAGFK:null,maxFoerder:"50.000 €",mindest:"2.000 €",berechtigte:["schule"],zweckbindung:null,beispiele:"Radfahrtraining, Schulradeln, Verkehrserziehungsprojekte, Schulweg-Checks",hinweise:["Höchste Regelförderquote (90%) – nur Schulen/Kitas antragsberechtigt"]},
+  "2_3":{nr:"2.3",label:"Betriebliche Maßnahmen",desc:"Betriebliches Mobilitätsmanagement für Radverkehr",quote:"75%",quoteAGFK:"90%",maxFoerder:null,mindest:"5.000 €",berechtigte:["gemeinde","landkreis"],zweckbindung:"5 Jahre",beispiele:"Dienstrad-Infrastruktur, Umkleiden/Duschen, Fahrradflotten für Kommunalverwaltungen",hinweise:[]},
+  "2_9":{nr:"2.9",label:"Zählstellen",desc:"Dauerzählstellen für den Rad- und Fußverkehr",quote:"60%",quoteAGFK:"90%",maxFoerder:"25.000 €",mindest:"2.000 €",berechtigte:["gemeinde","landkreis","schule","ggmbh"],zweckbindung:"5 Jahre",beispiele:"Automatische Dauerzählstellen, Anzeigetafeln (Barometer)",hinweise:["Gute Datengrundlage für Radverkehrsplanung und Evaluation"]},
+  "2_10":{nr:"2.10",label:"Innovative Projekte",desc:"Innovative Maßnahmen zur Rad- und Fußverkehrsförderung",quote:"75%",quoteAGFK:"90%",maxFoerder:"50.000 €",mindest:"2.000 €",berechtigte:["gemeinde","landkreis","schule","ggmbh","verein"],zweckbindung:"5 Jahre",beispiele:"Modellprojekte, digitale Lösungen, neue Mobilitätskonzepte",hinweise:["Auch Vereine antragsberechtigt","Für neuartige Ansätze ohne bestehenden Fördergegenstand"]}
+};
+
+const APPLICANTS=[
+  {id:"gemeinde",label:"Gemeinde / Stadt",icon:"🏛"},
+  {id:"landkreis",label:"Landkreis",icon:"🗺"},
+  {id:"schule",label:"Schule / Kita",icon:"🏫"},
+  {id:"ggmbh",label:"Gemeinnützige Organisation / gGmbH",icon:"🤝"},
+  {id:"verein",label:"Verein",icon:"👥"},
+  {id:"unternehmen",label:"Unternehmen",icon:"🏢"}
+];
+
+let state={step:0,category:null,foerder:null,applicant:null};
+
+function isEligible(fid,aid){
+  const f=FOERDER[fid];
+  return f&&f.berechtigte.includes(aid);
+}
+
+function getEligibleItems(catId,appId){
+  const cat=CATEGORIES.find(c=>c.id===catId);
+  if(!cat)return[];
+  return cat.items.map(id=>FOERDER[id]).filter(f=>!appId||f.berechtigte.includes(appId));
+}
+
+function renderSteps(){
+  const el=document.getElementById('steps');
+  const total=3;
+  const t=state.step>=3?3:state.step;
+  let h='';
+  for(let i=0;i<total;i++){
+    const cls=i<t?'done':i===t?'active':'pending';
+    h+=`<div class="step-dot ${cls}">${i<t?'✓':i+1}</div>`;
+    if(i<total-1)h+=`<div class="step-line ${i<t?'done':'pending'}"></div>`;
+  }
+  el.innerHTML=h;
+}
+
+function renderCards(items,activeId,onClick,sub){
+  return `<div class="cards${sub?' sub':''}">${items.map(item=>{
+    const active=item.id===activeId?'active':'';
+    const disabled=item.disabled?' style="opacity:0.4;pointer-events:none"':'';
+    return `<div class="card ${active}"${disabled} onclick="${onClick}('${item.id}')">${item.html}</div>`;
+  }).join('')}</div>`;
+}
+
+function render(){
+  renderSteps();
+  const el=document.getElementById('content');
+
+  if(state.step===0){
+    let h=`<h2>Wer stellt den Antrag?</h2>
+    <p class="subtitle">Wählen Sie den Antragsteller-Typ – die Fördergegenstände werden dann nach Berechtigung gefiltert.</p>`;
+    h+=renderCards(APPLICANTS.map(a=>({id:a.id,html:`<div class="card-row"><span class="card-icon">${a.icon}</span><span class="card-label">${a.label}</span></div>`})),state.applicant,'selectApplicant');
+    if(state.applicant)h+=`<button class="btn btn-primary" onclick="goStep(1)">Weiter → Maßnahme wählen</button>`;
+    el.innerHTML=h;
+  }
+  else if(state.step===1){
+    const app=APPLICANTS.find(a=>a.id===state.applicant);
+    let h=`<button class="btn-back" onclick="goStep(0)">← Zurück</button>
+    <h2>In welchem Bereich liegt Ihre Maßnahme?</h2>
+    <p class="subtitle">Antragsteller: <strong>${app.label}</strong></p>`;
+
+    const catCards=CATEGORIES.map(c=>{
+      const eligible=getEligibleItems(c.id,state.applicant);
+      const total=c.items.length;
+      return {id:c.id,disabled:eligible.length===0,html:`<div class="card-row"><span class="card-icon">${c.icon}</span><div><div class="card-label">${c.label}</div><div class="card-count">${eligible.length} von ${total} Fördergegenständen verfügbar</div></div></div>`};
+    });
+    h+=renderCards(catCards,state.category,'selectCategory');
+
+    if(state.category){
+      const eligible=getEligibleItems(state.category,state.applicant);
+      if(eligible.length){
+        h+=`<div class="section"><h3>Fördergegenstand auswählen:</h3>`;
+        h+=renderCards(eligible.map(f=>({id:f.nr.replace(/\./g,'_'),html:`<div class="card-label sm">Nr. ${f.nr} – ${f.label}</div><div class="card-desc">${f.desc}</div>`})),state.foerder,'selectFoerder',true);
+        h+=`</div>`;
+      }
+    }
+    if(state.foerder)h+=`<button class="btn btn-primary" onclick="goStep(2)">Ergebnis anzeigen</button>`;
+    el.innerHTML=h;
+  }
+  else if(state.step===2){
+    const f=FOERDER[state.foerder];
+    const app=APPLICANTS.find(a=>a.id===state.applicant);
+    if(!f){el.innerHTML='';return;}
+
+    let h=`<button class="btn-back" onclick="goStep(1)">← Zurück</button>
+    <div class="badges">
+      <span class="badge" style="background:rgba(101,148,68,.09);color:#659444">${app.label}</span>
+      <span class="badge" style="background:rgba(22,120,169,.09);color:#1678A9">Nr. ${f.nr} – ${f.label}</span>
+    </div>
+    <div class="result-card">
+      <div class="result-header">
+        <div class="label">Fördergegenstand Nr. ${f.nr}</div>
+        <div class="value">${f.label}</div>
+        <div class="detail">${f.desc}</div>
+      </div>
+      <div class="result-body">
+        <div class="quota-grid">
+          <div class="quota-card">
+            <div class="quota-label">Regelförderquote</div>
+            <div class="quota-value">${f.quote}</div>
+          </div>`;
+    if(f.quoteAGFK){
+      h+=`<div class="quota-card alt">
+            <div class="quota-label">Finanzschwache Kommunen</div>
+            <div class="quota-value">${f.quoteAGFK}</div>
+            <div class="quota-sub">lt. Richtlinie</div>
+          </div>`;
+    } else {
+      h+=`<div class="quota-card alt">
+            <div class="quota-label">Finanzschwache Kommunen</div>
+            <div class="quota-value">—</div>
+            <div class="quota-sub">keine erhöhte Quote</div>
+          </div>`;
+    }
+    h+=`</div>`;
+
+    h+=`<div class="field"><div class="field-label">Mindestinvestition</div><div class="field-value">${f.mindest}</div></div>`;
+    h+=`<div class="field"><div class="field-label">Maximale Fördersumme</div><div class="field-value">${f.maxFoerder||'Keine Obergrenze'}</div></div>`;
+    if(f.zweckbindung) h+=`<div class="field"><div class="field-label">Zweckbindungsfrist</div><div class="field-value">${f.zweckbindung}</div></div>`;
+    h+=`<div class="field"><div class="field-label">Antragsfrist</div><div class="field-value">30. September des jeweiligen Jahres</div></div>`;
+    h+=`<div class="field"><div class="field-label">Beispielhafte Maßnahmen</div><div class="field-detail">${f.beispiele}</div></div>`;
+
+    /* Antragsberechtigung */
+    h+=`<div class="field"><div class="field-label">Antragsberechtigt</div><div class="field-detail">`;
+    APPLICANTS.forEach(a=>{
+      const ok=f.berechtigte.includes(a.id);
+      h+=`<span class="${ok?'eligible-yes':'eligible-no'}" style="margin-right:10px;font-size:12px">${ok?'✓':'✗'} ${a.label}</span> `;
+    });
+    h+=`</div></div>`;
+
+    /* Hinweise */
+    let allNotes=[
+      "Eigenanteil: mindestens 10% der förderfähigen Kosten",
+      "Nicht förderfähig: Eigenleistungen, laufende Betriebskosten, Grundstückskäufe",
+      "Vorhabenbeginn: Schriftlicher Zuwendungsantrag vor Vorhabenbeginn erforderlich",
+      "Bei besonderem Landesinteresse: Förderung bis zu 100% möglich (Kriterien nicht näher definiert in der FRL)"
+    ];
+    if(f.hinweise.length)allNotes=[...f.hinweise,...allNotes];
+
+    h+=`<div class="notes"><div class="notes-title">⚠ Wichtige Hinweise</div>${allNotes.map(n=>`<div class="notes-item">• ${n}</div>`).join('')}</div>`;
+    h+=`</div></div>`;
+
+    /* Bewilligungsbehörde */
+    h+=`<div class="info-box"><div class="info-title">Bewilligungsbehörde & Kontakt</div><div class="info-body">
+      <strong>Ministerium für Umwelt, Klima, Mobilität, Agrar und Verbraucherschutz</strong><br>
+      Referat A/4<br>
+      Keplerstraße 18, 66117 Saarbrücken<br>
+      E-Mail: poststelle@umwelt.saarland.de<br><br>
+      <strong>Richtlinie:</strong> FRL-NMOB-Rad-Fuß · gültig 17.11.2025 – 17.11.2030
+    </div></div>`;
+
+    h+=`<button class="btn btn-outline" onclick="resetAll()">Neue Abfrage starten</button>`;
+    el.innerHTML=h;
+  }
+}
+
+function selectApplicant(id){state.applicant=id;render();}
+function selectCategory(id){state.category=id;state.foerder=null;render();}
+function selectFoerder(id){state.foerder=id;render();}
+function goStep(n){state.step=n;render();}
+function resetAll(){state={step:0,category:null,foerder:null,applicant:null};render();}
+
+render();
+</script>
+</body>
+</html>
