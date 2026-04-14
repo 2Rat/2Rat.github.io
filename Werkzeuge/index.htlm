@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2RAT Tools – Zugang</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#1678A9;--blue-dark:#115d85;--blue-light:#e8f4fa;
+  --green:#669B3B;--green-dark:#4a7332;--green-light:#eef5e6;
+  --gray:#525353;--gray-light:#8a8a8a;--gray-border:#d9d9d9;
+  --bg:#f5f7f9;--white:#ffffff;
+  --red:#c0392b;--red-light:#fdecea;
+}
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap');
+body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:var(--gray);background:var(--bg);min-height:100vh;display:flex;flex-direction:column}
+.header{background:var(--white);border-bottom:3px solid var(--green);padding:18px 24px}
+.header-inner{max-width:800px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.header-left{display:flex;align-items:center;gap:14px}
+.header-logo{height:38px}
+.header-sub{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-light)}
+.header-title{font-size:17px;font-weight:700;color:var(--gray);line-height:1.3}
+.header-right{text-align:right;font-size:11px;color:var(--gray-light);line-height:1.5}
+.center-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.login-card{background:var(--white);border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,.08);padding:44px 40px;max-width:420px;width:100%}
+.login-card h2{font-size:22px;font-weight:700;margin-bottom:6px;color:var(--gray)}
+.login-card .subtitle{font-size:14px;color:var(--gray-light);margin-bottom:28px;line-height:1.5}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--gray-light);margin-bottom:6px}
+.form-group input{width:100%;padding:12px 14px;border:1.5px solid var(--gray-border);border-radius:8px;font-size:15px;font-family:inherit;color:var(--gray);transition:border-color .2s}
+.form-group input:focus{outline:none;border-color:var(--blue)}
+.login-btn{width:100%;padding:13px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .2s;margin-top:6px}
+.login-btn:hover{background:var(--blue-dark)}
+.error-msg{background:var(--red-light);color:var(--red);padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:16px;display:none}
+.error-msg.show{display:block}
+.dashboard{display:none;max-width:800px;margin:0 auto;padding:32px 20px 60px;width:100%}
+.dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.dash-header h2{font-size:22px;font-weight:700}
+.logout-btn{background:none;border:1.5px solid var(--gray-border);border-radius:8px;padding:8px 16px;font-size:13px;font-family:inherit;color:var(--gray-light);cursor:pointer;transition:all .2s}
+.logout-btn:hover{border-color:var(--red);color:var(--red)}
+.license-info{font-size:13px;color:var(--gray-light);margin-bottom:28px}
+.license-info strong{color:var(--green-dark)}
+.license-info .expired{color:var(--red);font-weight:700}
+.tool-card{background:var(--white);border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:28px;margin-bottom:20px;border-left:4px solid var(--blue);transition:transform .15s,box-shadow .15s}
+.tool-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.tool-card h3{font-size:18px;font-weight:700;margin-bottom:4px;color:var(--gray)}
+.tool-card .tool-desc{font-size:14px;color:var(--gray-light);margin-bottom:16px;line-height:1.5}
+.tool-card .tool-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tag{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--blue-light);color:var(--blue-dark)}
+.tag.green{background:var(--green-light);color:var(--green-dark)}
+.open-btn{display:inline-block;padding:10px 22px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;text-decoration:none;transition:background .2s}
+.open-btn:hover{background:var(--green-dark)}
+.tool-card:nth-child(2){border-left-color:var(--green)}
+.footer{padding:20px;text-align:center;font-size:11px;color:var(--gray-light)}
+.footer a{color:var(--blue);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <img class="header-logo" id="logo" alt="2RAT" src="">
+      <div>
+        <div class="header-sub">Büro für Radverkehrsplanung</div>
+        <div class="header-title">Tool-Portal</div>
+      </div>
+    </div>
+    <div class="header-right">Lizenzierter Zugang<br>Radverkehrs-Tools Saarland</div>
+  </div>
+</div>
+
+<div class="center-wrap" id="loginView">
+  <div class="login-card">
+    <h2>Anmelden</h2>
+    <p class="subtitle">Geben Sie Ihren Zugangscode ein, um die 2RAT Radverkehrs-Tools zu nutzen.</p>
+    <div class="error-msg" id="errorMsg"></div>
+    <div class="form-group">
+      <label>Organisation</label>
+      <input type="text" id="orgInput" placeholder="z.B. Gemeinde Kleinblittersdorf">
+    </div>
+    <div class="form-group">
+      <label>Zugangscode</label>
+      <input type="password" id="codeInput" placeholder="Ihr Zugangscode">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Zugang freischalten</button>
+  </div>
+</div>
+
+<div class="dashboard" id="dashView">
+  <div class="dash-header">
+    <h2 id="welcomeMsg">Willkommen</h2>
+    <button class="logout-btn" onclick="doLogout()">Abmelden</button>
+  </div>
+  <p class="license-info" id="licenseInfo"></p>
+  <div class="tool-card">
+    <h3>Fördermittel-Finder</h3>
+    <p class="tool-desc">Interaktiver Wegweiser durch die Förderrichtlinie Rad- und Fußverkehr Saarland (FRL-NMOB-Rad-Fuß). Findet passende Fördergegenstände, Quoten und Antragsberechtigungen.</p>
+    <div class="tool-tags">
+      <span class="tag">FRL-NMOB-Rad-Fuß</span>
+      <span class="tag green">Stand 03/2026</span>
+      <span class="tag">Vollversion</span>
+    </div>
+    <a class="open-btn" href="foerdermittel-finder.html" target="_blank">Tool öffnen →</a>
+  </div>
+  <div class="tool-card">
+    <h3>Zuständigkeiten Radverkehr</h3>
+    <p class="tool-desc">Entscheidungshilfe zur Bestimmung der zuständigen Behörde für Radverkehrsmaßnahmen im Saarland. Mit Praxis-Hinweisen und Rechtsgrundlagen.</p>
+    <div class="tool-tags">
+      <span class="tag">StVO · VwV-StVO 2025</span>
+      <span class="tag green">Praxis-Boxen</span>
+      <span class="tag">Vollversion</span>
+    </div>
+    <a class="open-btn" href="zustaendigkeiten.html" target="_blank">Tool öffnen →</a>
+  </div>
+</div>
+
+<div class="footer">
+  <strong style="color:var(--gray)">© 2RAT</strong> · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
+</div>
+
+<script>
+document.getElementById('logo').src='data:image/png;base64,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';
+
+/* ══════════════════════════════════════════════════════════════════
+   LIZENZEN VERWALTEN
+   ─────────────────
+   Codes sind als SHA-256-Hash gespeichert → nicht im Klartext sichtbar!
+   Neue Hashes erzeugen: hash-generator.html öffnen, Code eingeben,
+   Hash kopieren und hier eintragen.
+   ══════════════════════════════════════════════════════════════════ */
+const LICENSES = [
+  // DEMO2026
+  { hash:"4aa05c62bc51969c5466a0bd884105fa76e806b034362effd5439368446aacba", org:"Demo-Zugang", expires:"2026-12-31" },
+  // Weitere Lizenzen hier eintragen:
+  // { hash:"...", org:"Gemeinde XY", expires:"2027-12-31" },
+];
+
+/* ── SHA-256 ── */
+async function sha256(text) {
+  const data = new TextEncoder().encode(text.trim().toUpperCase());
+  const buf = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function findLicense(code) {
+  const h = await sha256(code);
+  return LICENSES.find(l => l.hash === h);
+}
+
+function isExpired(d){ return new Date(d) < new Date() }
+function fmtDate(d){ return new Date(d).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'}) }
+
+async function doLogin() {
+  const code = document.getElementById('codeInput').value;
+  const orgIn = document.getElementById('orgInput').value.trim();
+  const err = document.getElementById('errorMsg');
+
+  if (!code.trim()) { err.textContent='Bitte Zugangscode eingeben.'; err.classList.add('show'); return; }
+
+  const lic = await findLicense(code);
+  if (!lic) { err.textContent='Ungültiger Zugangscode.'; err.classList.add('show'); return; }
+  if (isExpired(lic.expires)) { err.textContent='Zugangscode abgelaufen – bitte 2RAT kontaktieren.'; err.classList.add('show'); return; }
+
+  err.classList.remove('show');
+  sessionStorage.setItem('2rat_s', JSON.stringify({ hash:lic.hash, org:orgIn||lic.org }));
+  showDash(lic, orgIn);
+}
+
+function showDash(lic, orgName) {
+  document.getElementById('loginView').style.display='none';
+  document.getElementById('dashView').style.display='block';
+  document.getElementById('welcomeMsg').textContent=`Willkommen, ${orgName||lic.org}`;
+  const days = Math.ceil((new Date(lic.expires)-new Date())/(864e5));
+  const el = document.getElementById('licenseInfo');
+  if (days<=30) el.innerHTML=`Lizenz bis: <span class="expired">${fmtDate(lic.expires)}</span> – <span class="expired">Läuft in ${days} Tagen ab!</span> → <a href="mailto:info@2rat.org" style="color:var(--blue)">info@2rat.org</a>`;
+  else el.innerHTML=`Lizenz gültig bis: <strong>${fmtDate(lic.expires)}</strong> · Vollversion`;
+}
+
+function doLogout() {
+  sessionStorage.removeItem('2rat_s');
+  document.getElementById('dashView').style.display='none';
+  document.getElementById('loginView').style.display='flex';
+  document.getElementById('codeInput').value='';
+  document.getElementById('orgInput').value='';
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const s = sessionStorage.getItem('2rat_s');
+  if (s) { try { const d=JSON.parse(s); const l=LICENSES.find(x=>x.hash===d.hash); if(l&&!isExpired(l.expires)) showDash(l,d.org); } catch(e){} }
+});
+document.getElementById('codeInput')?.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+</script>
+</body>
+</html>
