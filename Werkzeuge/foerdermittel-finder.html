@@ -82,6 +82,10 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .section{margin-top:18px}
 .footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--gray-border);font-size:11px;color:var(--gray-light);line-height:1.6}
 .footer a{color:var(--blue);text-decoration:none}
+.praxis-box{margin-top:16px;background:var(--green-light);border:1.5px solid var(--green);border-radius:8px;padding:14px 16px}
+.praxis-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-dark);margin-bottom:6px}
+.praxis-item{font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:5px;padding-left:16px;position:relative}
+.praxis-item::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:700}
 </style>
 </head>
 <body>
@@ -139,6 +143,88 @@ const FOERDER={
   "2_3":{nr:"2.3",label:"Betriebliche Maßnahmen",desc:"Betriebliches Mobilitätsmanagement für Radverkehr",quote:"75%",quoteAGFK:"90%",maxFoerder:null,mindest:"5.000 €",berechtigte:["gemeinde","landkreis"],zweckbindung:"5 Jahre",beispiele:"Dienstrad-Infrastruktur, Umkleiden/Duschen, Fahrradflotten für Kommunalverwaltungen",hinweise:[]},
   "2_9":{nr:"2.9",label:"Zählstellen",desc:"Dauerzählstellen für den Rad- und Fußverkehr",quote:"60%",quoteAGFK:"90%",maxFoerder:"25.000 €",mindest:"2.000 €",berechtigte:["gemeinde","landkreis","schule","ggmbh"],zweckbindung:"5 Jahre",beispiele:"Automatische Dauerzählstellen, Anzeigetafeln (Barometer)",hinweise:["Gute Datengrundlage für Radverkehrsplanung und Evaluation"]},
   "2_10":{nr:"2.10",label:"Innovative Projekte",desc:"Innovative Maßnahmen zur Rad- und Fußverkehrsförderung",quote:"75%",quoteAGFK:"90%",maxFoerder:"50.000 €",mindest:"2.000 €",berechtigte:["gemeinde","landkreis","schule","ggmbh","verein"],zweckbindung:"5 Jahre",beispiele:"Modellprojekte, digitale Lösungen, neue Mobilitätskonzepte",hinweise:["Auch Vereine antragsberechtigt","Für neuartige Ansätze ohne bestehenden Fördergegenstand"]}
+};
+
+/* ── Praxis-Hinweise (nur in der Vollversion) ── */
+const PRAXIS={
+  "2_1":[
+    "Kostenberechnung frühzeitig mit dem LfS abstimmen, wenn Landesstraßen betroffen sind",
+    "Planungskosten (Entwurfsplanung, Bauüberwachung) sind förderfähig – unbedingt einkalkulieren",
+    "Bei Beleuchtung: Nachweis der Notwendigkeit gem. H BVA beifügen, erhöht Genehmigungschance",
+    "Baubeginn ohne Zuwendungsbescheid = Förderausschluss – im Zweifel vorzeitigen Maßnahmenbeginn beantragen"
+  ],
+  "2_4":[
+    "Ab ca. 5.000 Kfz/Tag ist eine Mittelinsel empfehlenswert, ab 15.000 Kfz/Tag eine LSA-Querung (ERA 2010)",
+    "Querungsinsel-Mindestbreite: 2,50 m für Radverkehr (MuLöS BW)",
+    "Kombination mit Fahrbahnanhebung prüfen – erhöht Wirksamkeit und kann als ein Förderantrag laufen",
+    "Abstimmung mit Baulastträger dokumentieren und dem Antrag beilegen"
+  ],
+  "2_2_1":[
+    "Anlehnbügel (Kreuzberger Bügel) als Standard verwenden – Vorderrad-Klemmen sind nicht förderfähig",
+    "Bei Schulen und Kitas: 95%-Quote nutzen – fast vollständige Finanzierung möglich",
+    "Überdachung mitbeantragen – wird als Gesamtmaßnahme gefördert und steigert die Nutzung deutlich",
+    "Bedarfsnachweis durch Zählung der abgestellten Räder beifügen (Foto + Datum reicht)"
+  ],
+  "2_2_2":[
+    "B+R-Anlagen an ÖPNV-Haltestellen: Abstimmung mit dem Saar-VV und Aufgabenträger empfehlenswert",
+    "Auch gGmbH antragsberechtigt – z.B. für Fahrradparkhäuser in Kooperation mit der Kommune",
+    "Fahrradboxen: Mietmodell für den Betrieb vorbereiten, da Betriebskosten nicht förderfähig sind",
+    "Standortwahl: Sichtbarkeit und soziale Kontrolle beachten – schlecht einsehbare Anlagen werden weniger genutzt"
+  ],
+  "2_7":[
+    "Niedrigste Mindestsumme aller Fördergegenstände (500 €) – ideal als Einstiegsmaßnahme",
+    "Breiteste Antragsberechtigung: auch Vereine und Unternehmen können beantragen",
+    "Kombination mit Abstellanlage in einem Antrag möglich, wenn Gesamtkonzept nachvollziehbar ist",
+    "Wartungskonzept beilegen – zeigt Nachhaltigkeit und stärkt den Antrag"
+  ],
+  "2_8":[
+    "Standortwahl: ÖPNV-Knotenpunkte und Radrouten mit langen Steigungen bevorzugen",
+    "Vandalismussichere Bauweise einplanen – Erfahrungen anderer Kommunen einholen",
+    "Ladeinfrastruktur mit Solarpanel kombinieren: innovative Komponente kann Bewertung verbessern",
+    "Betriebsstromkosten sind nicht förderfähig – Finanzierungsmodell für den laufenden Betrieb vorbereiten"
+  ],
+  "2_5":[
+    "Höchste Regelförderquote (80%) – finanziell attraktivster Einstieg für Kommunen",
+    "Radverkehrskonzept als Grundlage für alle weiteren Förderanträge nutzen – spart langfristig Begründungsaufwand",
+    "Bürgerbeteiligung einplanen: erhöht Akzeptanz und wird im Antrag positiv bewertet",
+    "Keine Zweckbindungsfrist – Konzept kann sofort nach Fertigstellung umgesetzt werden"
+  ],
+  "2_6":[
+    "Lastenpedelecs (max. 1.000 €) vs. Lastenräder ohne Motor (max. 500 €) – Pedelec-Variante meist sinnvoller",
+    "Nutzungskonzept beilegen: Wer nutzt das Rad wofür? Erhöht die Bewilligungschance",
+    "Zweckbindung nur 3 Jahre – kürzeste Frist aller Fördergegenstände",
+    "Für Vereine: Sharing-Modell aufsetzen, um Nutzungsbreite nachzuweisen"
+  ],
+  "2_11":[
+    "Stadtradeln-Teilnahme ist förderfähig – Anmeldegebühr und Materialkosten einreichen",
+    "Kampagne mit konkretem Radverkehrsprojekt verknüpfen: zeigt Gesamtstrategie",
+    "Professionelle Gestaltung beauftragen: erhöht Wirksamkeit und ist als Dienstleistung förderfähig",
+    "Evaluation einplanen (Vorher-/Nachher-Befragung) – stärkt Folge-Förderanträge"
+  ],
+  "2_12":[
+    "Höchste Regelförderquote (90%) – fast vollständige Finanzierung für Schulprojekte",
+    "Schulweg-Checks: Kombination mit Radverkehrskonzept (Nr. 2.5) möglich",
+    "Eltern und Lehrkräfte frühzeitig einbinden – Projektbeschreibung im Antrag konkret formulieren",
+    "Projektzeitraum auf Schuljahr abstimmen, nicht auf Kalenderjahr"
+  ],
+  "2_3":[
+    "Dienstrad-Stellplätze mit Duschen/Umkleiden kombinieren: stärkt den Antrag als Gesamtkonzept",
+    "Kommunale Fahrradflotte: Wirtschaftlichkeitsvergleich gegenüber Dienst-Kfz beilegen",
+    "Mobilitätskonzept für die Verwaltung als Rahmen nutzen (ggf. über Nr. 2.5 vorfinanzieren)",
+    "Mitarbeiterbefragung zur Radnutzung als Bedarfsnachweis beifügen"
+  ],
+  "2_9":[
+    "Dauerzählstellen liefern Daten für Evaluation und stärken jeden zukünftigen Förderantrag",
+    "Anzeigetafeln (Barometer) erhöhen die Sichtbarkeit des Radverkehrs – PR-Effekt nutzen",
+    "Standortwahl: Hauptrouten und Stellen mit erwartetem Radverkehrszuwachs bevorzugen",
+    "Datenfreigabe: Open-Data-Konzept zeigt Transparenz und wird positiv bewertet"
+  ],
+  "2_10":[
+    "Ideal für Pilotprojekte, die in keinen anderen Fördergegenstand passen",
+    "Innovationscharakter im Antrag klar herausarbeiten: Was ist neu im Saarland-Kontext?",
+    "Evaluation und Übertragbarkeit auf andere Kommunen beschreiben – wichtiges Bewertungskriterium",
+    "Auch Vereine antragsberechtigt – niedrige Einstiegshürde für zivilgesellschaftliche Projekte"
+  ]
 };
 
 const APPLICANTS=[
@@ -281,6 +367,12 @@ function render(){
 
     h+=`<div class="notes"><div class="notes-title">⚠ Wichtige Hinweise</div>${allNotes.map(n=>`<div class="notes-item">• ${n}</div>`).join('')}</div>`;
     h+=`</div></div>`;
+
+    /* Praxis-Box */
+    const praxisTips = PRAXIS[state.foerder];
+    if(praxisTips && praxisTips.length){
+      h+=`<div class="praxis-box"><div class="praxis-title">💡 Praxis-Hinweise</div>${praxisTips.map(t=>`<div class="praxis-item">${t}</div>`).join('')}</div>`;
+    }
 
     /* Bewilligungsbehörde */
     h+=`<div class="info-box"><div class="info-title">Bewilligungsbehörde & Kontakt</div><div class="info-body">
