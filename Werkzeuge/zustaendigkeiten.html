@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zuständigkeiten Radverkehr Saarland – 2RAT</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#1678A9;--blue-dark:#115d85;--blue-light:#e8f4fa;
+  --green:#659444;--green-dark:#4a7332;--green-light:#eef5e6;
+  --gray:#3E403F;--gray-light:#8a8a8a;--gray-border:#d9d9d9;
+  --bg:#f9fafb;--white:#ffffff;
+  --warn:#d4930a;--warn-bg:#fef9ec;--warn-border:#f0dca0;
+  --info:#1678A9;--info-bg:#e8f4fa;--info-border:#b3d7ea;
+}
+body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);background:var(--bg);min-height:100vh}
+.header{background:var(--white);border-bottom:3px solid var(--green);padding:18px 20px}
+.header-inner{max-width:680px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.header-left{display:flex;align-items:center;gap:14px}
+.header-logo{height:38px}
+.header-sub{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-light)}
+.header-title{font-size:17px;font-weight:700;color:var(--gray);line-height:1.3}
+.header-title span{color:var(--blue)}
+.header-right{text-align:right;font-size:11px;color:var(--gray-light);line-height:1.5}
+.main{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.steps{display:flex;gap:6px;align-items:center;margin-bottom:24px}
+.step-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;transition:all .2s}
+.step-dot.done{background:var(--green);color:#fff}
+.step-dot.active{background:var(--blue);color:#fff}
+.step-dot.pending{background:#e5e7eb;color:#9ca3af}
+.step-line{width:32px;height:2px;transition:all .2s}
+.step-line.done{background:var(--green)}
+.step-line.pending{background:#e5e7eb}
+h2{font-size:17px;font-weight:700;margin:0 0 4px}
+h3{font-size:14px;font-weight:700;margin:0 0 8px}
+.subtitle{font-size:13px;color:var(--gray-light);margin:0 0 14px}
+.hint{font-size:11px;color:var(--gray-light);margin:0 0 14px}
+.cards{display:flex;flex-direction:column;gap:8px}
+.cards.sub{gap:6px}
+.card{padding:14px 18px;border-radius:8px;border:1.5px solid var(--gray-border);background:var(--white);cursor:pointer;transition:all .15s}
+.card:hover{border-color:#bbb}
+.card.active{border:2px solid var(--blue);background:var(--blue-light)}
+.card-row{display:flex;align-items:center;gap:12px}
+.card-icon{font-size:18px;width:26px;text-align:center;color:var(--green)}
+.card-label{font-weight:600;font-size:14px}
+.card-label.sm{font-size:13px}
+.card-desc{font-size:12px;color:var(--gray-light);margin-top:2px}
+.card-count{font-size:12px;color:var(--gray-light);margin-top:1px}
+.street-badge{display:inline-flex;align-items:center;justify-content:center;width:32px;height:22px;border-radius:4px;color:#fff;font-size:11px;font-weight:700}
+.btn{margin-top:18px;width:100%;padding:13px;border-radius:8px;border:none;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue)}
+.btn-back{background:none;border:none;color:var(--blue);cursor:pointer;font-size:13px;font-weight:600;padding:0;margin-bottom:12px}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+.badge{display:inline-block;padding:3px 10px;border-radius:5px;font-size:11px;font-weight:600;letter-spacing:.02em}
+.result-card{background:var(--white);border-radius:10px;border:1.5px solid var(--gray-border);overflow:hidden}
+.result-header{background:var(--blue);padding:14px 18px;color:#fff}
+.result-header .label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:2px}
+.result-header .value{font-size:17px;font-weight:700}
+.result-header .detail{font-size:12px;opacity:.8;margin-top:2px}
+.result-body{padding:16px 18px}
+.field{margin-bottom:14px}
+.field-label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-light);margin-bottom:3px}
+.field-value{font-size:14px;font-weight:600}
+.field-detail{font-size:12px;color:var(--gray-light)}
+.notes{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:7px;padding:12px 14px}
+.notes-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--warn);margin-bottom:5px}
+.notes-item{font-size:12px;color:#6b5900;line-height:1.5;margin-bottom:5px}
+.notes-item:last-child{margin-bottom:0}
+.praxis-box{margin-top:12px;background:var(--green-light);border:1px solid rgba(101,148,68,.25);border-radius:7px;padding:12px 14px}
+.praxis-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-dark);margin-bottom:5px}
+.praxis-item{font-size:12px;color:#3a5a1f;line-height:1.5;margin-bottom:5px}
+.praxis-item:last-child{margin-bottom:0}
+.info-box{margin-top:16px;background:var(--blue-light);border-radius:8px;border:1px solid rgba(22,120,169,.19);padding:14px 16px}
+.info-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.info-body{font-size:12px;color:var(--gray);line-height:1.7}
+.footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--gray-border);font-size:11px;color:var(--gray-light);line-height:1.6}
+.footer a{color:var(--blue);text-decoration:none}
+.section{margin-top:18px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <img class="header-logo" id="logo" alt="2RAT" src="">
+      <div>
+        <div class="header-sub">Büro für Radverkehrsplanung</div>
+        <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
+      </div>
+    </div>
+    <div class="header-right">Saarland<br>Stand 03/2026</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="steps" id="steps"></div>
+  <div id="content"></div>
+  <div class="footer">
+    Dieses Tool dient als Orientierungshilfe und ersetzt keine Rechtsberatung.
+    Grundlagen: StVZustG Saarland, StVO, VwV-StVO 2025, SaarlStrG, FStrG, ERA 2010, Musterlösungen BW (Okt. 2025).
+    Im Einzelfall bitte Zuständigkeit mit der jeweiligen Behörde prüfen.
+    <br>
+    <strong style="color:var(--gray)">© 2RAT</strong> · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
+  </div>
+</div>
+
+<script>
+const LOGO='data:image/png;base64,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';
+document.getElementById('logo').src=LOGO;
+
+const MEASURES=[
+{id:"markierung",label:"Markierung",icon:"━",items:[
+{id:"schutzstreifen",label:"Schutzstreifen",desc:"Markierung mit Z 340 (unterbrochene Linie) + Fahrradsymbol",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu § 2 Abs. 4",type:"anordnung"},
+{id:"radfahrstreifen",label:"Radfahrstreifen",desc:"Markierung mit Z 237 + Z 295 (durchgezogene Linie)",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu § 2 Abs. 4",type:"anordnung"},
+{id:"radfahrstreifen_schutz",label:"Geschützter Radfahrstreifen",desc:"Radfahrstreifen mit baulicher Trennung (Poller, Borde)",legal:"§ 45 Abs. 1 StVO + bauliche Umsetzung",type:"anordnung_bau"},
+{id:"aras",label:"Aufgeweiteter Radaufstellstreifen (ARAS)",desc:"Vorgezogener Aufstellbereich an Lichtsignalanlagen",legal:"§ 37 Abs. 2 StVO, VwV-StVO zu § 37",type:"anordnung"},
+{id:"rotmarkierung",label:"Rotmarkierung / Radwegfurt",desc:"Farbliche Hervorhebung von Radverkehrsfurten",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu § 2",type:"anordnung"}]},
+{id:"beschilderung",label:"Beschilderung & Anordnung",icon:"◆",items:[
+{id:"fahrradstrasse",label:"Fahrradstraße",desc:"Anordnung Z 244.1/244.2, ggf. mit Zusatzzeichen Kfz frei",legal:"§ 45 Abs. 1d StVO, VwV-StVO zu Z 244.1",type:"anordnung"},
+{id:"fahrradzone",label:"Fahrradzone",desc:"Zusammenhängender Bereich mehrerer Fahrradstraßen (Z 244.3)",legal:"§ 45 Abs. 1d / Abs. 1i StVO",type:"anordnung"},
+{id:"tempo30_zone",label:"Tempo-30-Zone",desc:"Zonale Geschwindigkeitsbeschränkung (Z 274.1/274.2)",legal:"§ 45 Abs. 1c StVO",type:"anordnung"},
+{id:"tempo30_strecke",label:"Tempo 30 (streckenbezogen)",desc:"Geschwindigkeitsbeschränkung auf einzelner Strecke (Z 274)",legal:"§ 45 Abs. 1 / Abs. 9 StVO",type:"anordnung"},
+{id:"einbahn_oeffnung",label:"Einbahnstraßenöffnung für Radverkehr",desc:"Zusatzzeichen Z 1000-32 »Radfahrer frei« an Einbahnstraße",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu Z 220",type:"anordnung"},
+{id:"gehweg_frei",label:"Gehweg – Radfahrer frei",desc:"Z 239 + Zusatzzeichen 1022-10 »Radfahrer frei«",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu Z 239",type:"anordnung"},
+{id:"benutzungspflicht_aufheben",label:"Benutzungspflicht aufheben",desc:"Entfernung Z 237/240/241 (benutzungspflichtiger Radweg)",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu § 2 Abs. 4",type:"anordnung"},
+{id:"radweg_beschilderung",label:"Radweg beschildern (Z 237/240/241)",desc:"Anordnung benutzungspflichtiger Radweg",legal:"§ 45 Abs. 9 StVO, VwV-StVO zu § 2 Abs. 4",type:"anordnung"},
+{id:"modale_filter",label:"Modale Filter / Durchfahrtssperre",desc:"Durchfahrtsbeschränkung für Kfz, Radverkehr frei (Z 250 + 1022-10)",legal:"§ 45 Abs. 1 StVO",type:"anordnung"},
+{id:"wegweisung",label:"Radverkehrswegweisung",desc:"Wegweisende Beschilderung nach FGSV-Richtlinien",legal:"§ 45 Abs. 1 StVO, HBR",type:"anordnung"}]},
+{id:"baulich",label:"Bauliche Maßnahmen",icon:"▮",items:[
+{id:"radweg_bau",label:"Radweg (baulich getrennt)",desc:"Selbständig geführter oder straßenbegleitender Radweg",legal:"SaarlStrG, ggf. Planfeststellung",type:"bau"},
+{id:"gemeinsamer_geh_radweg",label:"Gemeinsamer Geh-/Radweg (baulich)",desc:"Bauliche Anlage eines gemeinsamen Weges",legal:"SaarlStrG, § 45 StVO für Beschilderung",type:"bau"},
+{id:"querungshilfe",label:"Querungshilfe / Mittelinsel",desc:"Bauliche Querungshilfe für Rad- und Fußverkehr",legal:"SaarlStrG, ggf. § 45 StVO",type:"bau"},
+{id:"fahrbahnanhebung",label:"Fahrbahnanhebung / Plateau",desc:"Aufpflasterung zur Geschwindigkeitsreduzierung",legal:"SaarlStrG + § 45 Abs. 1 StVO",type:"bau"},
+{id:"abstellanlage",label:"Fahrradabstellanlage",desc:"Fahrradständer, Fahrradboxen, Radstationen",legal:"SaarlStrG / BauGB",type:"bau"},
+{id:"radschnellweg",label:"Radschnellverbindung",desc:"Qualitativ hochwertige Radwegeverbindung über größere Distanz",legal:"SaarlStrG, Planfeststellung, BFSG",type:"bau"}]}
+];
+
+const STREETS=[
+{id:"autobahn",label:"Bundesautobahn",icon:"A",color:"#1a56db"},
+{id:"bundesstrasse",label:"Bundesstraße",icon:"B",color:"#dc2626"},
+{id:"landesstrasse1",label:"Landesstraße I. Ordnung",icon:"L1",color:"#d97706"},
+{id:"landesstrasse2",label:"Landesstraße II. Ordnung",icon:"L2",color:"#d97706"},
+{id:"gemeindestrasse",label:"Gemeindestraße",icon:"G",color:"#659444"},
+{id:"sonstige",label:"Sonstige öffentliche Straße",icon:"S",color:"#8a8a8a"}
+];
+
+const LOCATIONS=[
+{id:"innerorts",label:"Innerorts (geschlossene Ortschaft)"},
+{id:"ortsdurchfahrt",label:"Ortsdurchfahrt (OD) einer übergeordneten Straße"},
+{id:"ausserorts",label:"Außerorts (freie Strecke)"}
+];
+
+/* Praxishinweise nach ERA 2010 und Musterlösungen BW (Okt. 2025) */
+const PRAXIS={
+  schutzstreifen:[
+    "Regelbreite: 1,50 m inkl. Markierung (ERA 2010)",
+    "Mindestbreite: 1,25 m in Engstellen (ERA 2010)",
+    "Schutzstreifen sind Fahrbahnmarkierungen – sie erhöhen nicht die Gesamtfahrbahnbreite",
+    "Verbleibende Kernfahrbahn: ≥ 4,50 m bei Gegenverkehr (ohne Parken) (MuLöS BW)",
+    "Kein Einsatz bei Vzul > 50 km/h oder DTV > 15.000 Kfz/24h"
+  ],
+  radfahrstreifen:[
+    "Regelbreite: 1,85 m inkl. Breitstrich (ERA 2010)",
+    "Mindestbreite: 1,50 m (ERA 2010, nur bei beengten Verhältnissen)",
+    "Sicherheitstrennstreifen zum Parken: ≥ 0,75 m (MuLöS BW)",
+    "Roteinfärbung an Konfliktpunkten empfohlen"
+  ],
+  radfahrstreifen_schutz:[
+    "Gesamtbreite Radfahrstreifen + Trennelement: ≥ 2,50 m (MuLöS BW)",
+    "Sicherheitstrennstreifen (Poller/Borde): ≥ 0,75 m (MuLöS BW)",
+    "Nutzbare Radstreifenbreite: ≥ 1,85 m (ERA 2010)",
+    "Kombiniert bauliche Trennung mit verkehrsrechtlicher Anordnung"
+  ],
+  fahrradstrasse:[
+    "Fahrbahnbreite: ≥ 4,10 m bei ≤ 1.500 Kfz/24h (MuLöS BW)",
+    "Fahrbahnbreite: ≥ 4,60 m bei ≤ 2.500 Kfz/24h (MuLöS BW)",
+    "Sicherheitstrennstreifen zum Parken: ≥ 0,75 m",
+    "Bevorrechtigung an Knotenpunkten empfohlen (Beschilderung + ggf. Gehweganhebung)",
+    "Bei Kfz-Freigabe: Diagonalsperren zur Unterbindung von Durchgangsverkehr prüfen (MuLöS BW RVR 3a-4)"
+  ],
+  fahrradzone:[
+    "Es gelten die Maßgaben der Fahrradstraße für alle Straßen im Zonenbereich",
+    "VwV-StVO zu Z 274.1/274.2 gilt entsprechend (insb. Vorfahrtregelung)"
+  ],
+  radweg_bau:[
+    "Regelbreite Einrichtungsradweg: 2,00 m (ERA 2010), Mindestbreite 1,60 m",
+    "Regelbreite Zweirichtungsradweg: 2,50 m (ERA 2010), Mindestbreite 2,00 m",
+    "Sicherheitstrennstreifen zur Fahrbahn: ≥ 0,75 m"
+  ],
+  gemeinsamer_geh_radweg:[
+    "Regelbreite: 2,50 m (ERA 2010)",
+    "Mindestbreite: 2,00 m (nur bei geringem Fußgänger- und Radverkehr)",
+    "Nur bei geringem Fußgängeraufkommen zulässig (VwV-StVO zu Z 240)"
+  ],
+  einbahn_oeffnung:[
+    "Mindestbreite Fahrgasse: 3,50 m (bei Gegenverkehr Rad/Kfz)",
+    "Empfohlen bei Vzul ≤ 30 km/h",
+    "Schutzstreifen in Gegenrichtung bei Breite ≥ 4,50 m prüfen"
+  ],
+  querungshilfe:[
+    "Mittelinselbreite: ≥ 2,50 m (Aufstellfläche für Radverkehr)",
+    "Ab 5.000 Kfz/24h Mittelinsel erforderlich (MuLöS BW)",
+    "Ab 15.000 Kfz/24h LSA oder Über-/Unterführung prüfen"
+  ]
+};
+
+let state={step:0,category:null,measure:null,street:null,location:null};
+
+function getResult(){
+  const m=MEASURES.flatMap(c=>c.items).find(i=>i.id===state.measure);
+  if(!m)return null;
+  const s=state.street,loc=state.location||(s==="gemeindestrasse"||s==="sonstige"?"innerorts":"ausserorts");
+  let authority="",authorityDetail="",baulast="",baulastDetail="",notes=[],praxis=[],legal=m.legal;
+
+  /* Baulastträger */
+  if(s==="autobahn"){baulast="Autobahn GmbH des Bundes";baulastDetail="§ 5 Abs. 1 FStrG";}
+  else if(s==="bundesstrasse"){
+    if(loc==="ortsdurchfahrt"||loc==="innerorts"){
+      baulast="Bund (Fahrbahn) / Gemeinde (Gehwege, Radwege, Parkstreifen)";
+      baulastDetail="§ 5 Abs. 2 und 3 FStrG – Gemeinden < 80.000 EW: geteilte Baulast; Saarbrücken (> 80.000 EW): volle Baulast für OD";
+      notes.push("Die Landeshauptstadt Saarbrücken trägt als einzige saarländische Gemeinde (> 80.000 EW) die volle Straßenbaulast für Ortsdurchfahrten im Zuge von Bundesstraßen.");
+    }else{baulast="Bund (Landesbetrieb für Straßenbau)";baulastDetail="§ 5 Abs. 1 FStrG";}
+  }else if(s==="landesstrasse1"||s==="landesstrasse2"){
+    if(loc==="ausserorts"){baulast="Land Saarland (Landesbetrieb für Straßenbau)";baulastDetail="§ 46 SaarlStrG";}
+    else{baulast="Land Saarland (LfS) / Gemeinde (Gehwege, Radwege)";baulastDetail="§ 46 SaarlStrG – geteilte Baulast in Ortsdurchfahrten";
+    notes.push("Im Saarland gibt es keine Kreisstraßen – Landesstraßen beider Ordnungen liegen in der Baulast des Landes.");}
+  }else{baulast="Gemeinde";baulastDetail="§ 47 SaarlStrG";}
+
+  /* Zuständige Behörde (verkehrsrechtliche Anordnung) */
+  if(m.type==="anordnung"||m.type==="anordnung_bau"){
+    if(s==="autobahn"){authority="Landesbetrieb für Straßenbau (LfS)";authorityDetail="§ 7 Abs. 2 StVZustG Saarland";notes.push("Radverkehrsmaßnahmen auf Autobahnen sind in der Praxis nicht relevant.");}
+    else if(s==="gemeindestrasse"||s==="sonstige"){authority="Gemeinde (als untere Straßenverkehrsbehörde)";authorityDetail="§ 12 Abs. 1 StVZustG Saarland";notes.push("Gemeinden sind für alle Verkehrsbeschränkungen und -anordnungen auf Gemeindestraßen und sonstigen öffentlichen Straßen zuständig.");}
+    else{authority="Straßenverkehrsbehörde (Landkreis / Regionalverband Saarbrücken)";authorityDetail="§ 7 Abs. 1 StVZustG Saarland";notes.push("Im Bereich des Regionalverbands Saarbrücken haben die Landeshauptstadt Saarbrücken und die Stadt Völklingen eigene Straßenverkehrsbehörden.");
+    if(loc==="innerorts"||loc==="ortsdurchfahrt")notes.push("Bei Maßnahmen in Ortsdurchfahrten ist Einvernehmen mit der Gemeinde und dem Baulastträger herzustellen (§ 45 Abs. 1b StVO).");}
+
+    /* VwV-StVO 2025: Tempo 30 */
+    if(m.id==="tempo30_strecke"&&(s==="bundesstrasse"||s.startsWith("landesstrasse")))
+      notes.push("Tempo 30 auf Bundes-/Landesstraßen: erleichterte Anordnung vor sozialen Einrichtungen (§ 45 Abs. 9 S. 4 Nr. 6 StVO – Schulen, Kitas, Pflegeheime, Krankenhäuser). Im Übrigen besondere Gefahrenlage erforderlich (§ 45 Abs. 9 S. 4 StVO).");
+    if(m.id==="tempo30_zone"&&(s==="bundesstrasse"||s.startsWith("landesstrasse"))){notes.push("Tempo-30-Zonen auf Straßen des überörtlichen Verkehrs nur mit Zurückhaltung.");notes.push("Auf Vorfahrtstraßen (Z 306) ausgeschlossen (VwV-StVO zu Z 274.1).");}
+
+    /* VwV-StVO 2025: Fahrradstraße / Fahrradzone – zwei Anordnungswege */
+    if(m.id==="fahrradstrasse"||m.id==="fahrradzone"){
+      notes.push("Anordnungsweg 1 (§ 45 Abs. 1d StVO): Hohe oder zu erwartende hohe Radverkehrsdichte, hohe Netzbedeutung für den Radverkehr oder lediglich untergeordnete Kfz-Bedeutung. »Vorherrschend« ist nicht Voraussetzung (VwV-StVO 2025 zu Z 244.1, Rn. I).");
+      notes.push("Anordnungsweg 2 (§ 45 Abs. 1 S. 2 Nr. 7, Rn. 14a–14e): Auf Basis eines Gesamtkonzepts (z. B. Radverkehrsplan) zur Förderung von Klimaschutz, Gesundheitsschutz oder städtebaulicher Entwicklung. Es genügt, wenn sich der Beitrag aus der perspektivischen Umsetzung des Gesamtkonzepts ergibt (Rn. 14b). Auch ohne Konzept im Einzelfall möglich (Rn. 14d).");
+    }
+
+    if(m.id==="einbahn_oeffnung")notes.push("VwV-StVO zu Z 220: Öffnung nur bei ausreichender Breite und Sichtbeziehungen, Tempo ≤ 30 km/h empfohlen.");
+    if(m.id==="benutzungspflicht_aufheben")notes.push("Benutzungspflicht (Z 237/240/241) nur bei qualifizierter Gefahrenlage zulässig. Ohne diese ist die Benutzungspflicht aufzuheben (BVerwG, 18.11.2010 – 3 C 42.09).");
+    if(m.id==="radweg_beschilderung")notes.push("Radwegebenutzungspflicht setzt qualifizierte Gefahrenlage voraus (§ 45 Abs. 9 Satz 4 Nr. 1 StVO). Radweg muss ERA-Anforderungen erfüllen.");
+  }
+
+  /* Bauliche Maßnahmen */
+  if(m.type==="bau"||m.type==="anordnung_bau"){
+    let ba=baulast;
+    if(m.id==="abstellanlage"){ba="Gemeinde (oder privater Grundstückseigentümer)";notes.push("Auf öffentlichem Straßengrund: Sondernutzungserlaubnis erforderlich.");}
+    else if(m.id==="radschnellweg"){ba="Land Saarland / ggf. interkommunale Zusammenarbeit";notes.push("Fördermöglichkeiten über Bundes- und Landesprogramme prüfen (u. a. FRL-NMOB-Rad-Fuß).");}
+    if(m.type==="bau"){authority=ba+" (als Baulastträger)";authorityDetail=baulastDetail;}
+    if(m.type==="anordnung_bau")notes.push("Erfordert sowohl bauliche Umsetzung (Baulastträger) als auch verkehrsrechtliche Anordnung (Straßenverkehrsbehörde).");
+    if(m.id!=="abstellanlage"&&m.id!=="radschnellweg")notes.push("Abstimmung zwischen Baulastträger und Straßenverkehrsbehörde erforderlich.");
+  }
+
+  if(s==="gemeindestrasse"||s==="sonstige")notes.push("Gemeinden müssen Maßnahmen der Aufsichtsbehörde (Landkreis/Regionalverband) mitteilen (§ 12 Abs. 3 StVZustG).");
+
+  /* Praxishinweise aus ERA/MuLöS */
+  if(PRAXIS[m.id])praxis=PRAXIS[m.id];
+
+  return{measure:m,authority,authorityDetail,baulast,baulastDetail,
+    aufsicht:"Ministerium für Wirtschaft, Innovation, Digitales und Energie (MWIDE)",
+    aufsichtDetail:"§ 6 StVZustG Saarland – oberste Landesstraßenverkehrsbehörde",
+    legal,notes:[...new Set(notes)],praxis};
+}
+
+function needsLocation(){return state.street&&state.street!=="gemeindestrasse"&&state.street!=="sonstige"&&state.street!=="autobahn";}
+function totalSteps(){return needsLocation()?4:3;}
+
+function renderSteps(){
+  const el=document.getElementById('steps');
+  const t=state.step>=3&&getResult()?totalSteps():Math.max(state.step,0);
+  const total=state.street?totalSteps():3;
+  let h='';
+  for(let i=0;i<total;i++){
+    const cls=i<t?'done':i===t?'active':'pending';
+    h+=`<div class="step-dot ${cls}">${i<t?'✓':i+1}</div>`;
+    if(i<total-1)h+=`<div class="step-line ${i<t?'done':'pending'}"></div>`;
+  }
+  el.innerHTML=h;
+}
+
+function renderCards(items,activeId,onClick,sub){
+  return `<div class="cards${sub?' sub':''}">${items.map(item=>{
+    const active=item.id===activeId?'active':'';
+    return `<div class="card ${active}" onclick="${onClick}('${item.id}')">${item.html}</div>`;
+  }).join('')}</div>`;
+}
+
+function render(){
+  renderSteps();
+  const el=document.getElementById('content');
+
+  if(state.step===0){
+    let h=`<h2>Welche Art von Maßnahme planen Sie?</h2>
+    <p class="subtitle">Wählen Sie zunächst die Kategorie, dann die konkrete Maßnahme.</p>`;
+    h+=renderCards(MEASURES.map(c=>({id:c.id,html:`<div class="card-row"><span class="card-icon">${c.icon}</span><div><div class="card-label">${c.label}</div><div class="card-count">${c.items.length} Maßnahmen</div></div></div>`})),state.category,'selectCategory');
+    if(state.category){
+      const cat=MEASURES.find(c=>c.id===state.category);
+      h+=`<div class="section"><h3>Maßnahme auswählen:</h3>`;
+      h+=renderCards(cat.items.map(i=>({id:i.id,html:`<div class="card-label sm">${i.label}</div><div class="card-desc">${i.desc}</div>`})),state.measure,'selectMeasure',true);
+      h+=`</div>`;
+    }
+    if(state.measure)h+=`<button class="btn btn-primary" onclick="goStep(1)">Weiter → Straßenkategorie</button>`;
+    el.innerHTML=h;
+  }
+  else if(state.step===1){
+    const m=MEASURES.flatMap(c=>c.items).find(i=>i.id===state.measure);
+    let h=`<button class="btn-back" onclick="goStep(0)">← Zurück</button>
+    <h2>Auf welcher Straße?</h2>
+    <p class="subtitle">Maßnahme: <strong>${m.label}</strong></p>
+    <p class="hint">Hinweis: Im Saarland gibt es keine Kreisstraßen.</p>`;
+    h+=renderCards(STREETS.map(s=>({id:s.id,html:`<div class="card-row"><span class="street-badge" style="background:${s.color}">${s.icon}</span><span class="card-label">${s.label}</span></div>`})),state.street,'selectStreet');
+    if(state.street){
+      const label=needsLocation()?'Weiter → Lage':'Weiter → Ergebnis';
+      const next=needsLocation()?2:3;
+      h+=`<button class="btn btn-primary" onclick="goStep(${next})">${label}</button>`;
+    }
+    el.innerHTML=h;
+  }
+  else if(state.step===2){
+    const m=MEASURES.flatMap(c=>c.items).find(i=>i.id===state.measure);
+    const s=STREETS.find(x=>x.id===state.street);
+    let h=`<button class="btn-back" onclick="goStep(1)">← Zurück</button>
+    <h2>Wo liegt die Maßnahme?</h2>
+    <p class="subtitle">${m.label} auf ${s.label}</p>`;
+    h+=renderCards(LOCATIONS.map(l=>({id:l.id,html:`<span class="card-label">${l.label}</span>`})),state.location,'selectLocation');
+    if(state.location)h+=`<button class="btn btn-primary" onclick="goStep(3)">Ergebnis anzeigen</button>`;
+    el.innerHTML=h;
+  }
+  else if(state.step===3){
+    const r=getResult();if(!r){el.innerHTML='';return;}
+    const s=STREETS.find(x=>x.id===state.street);
+    const loc=LOCATIONS.find(l=>l.id===state.location);
+    const back=needsLocation()?2:1;
+
+    let h=`<button class="btn-back" onclick="goStep(${back})">← Zurück</button>
+    <div class="badges">
+      <span class="badge" style="background:rgba(22,120,169,.09);color:#1678A9">${r.measure.label}</span>
+      <span class="badge" style="background:${s.color}15;color:${s.color}">${s.label}</span>
+      ${loc?`<span class="badge" style="background:rgba(101,148,68,.09);color:#659444">${loc.label}</span>`:''}
+    </div>
+    <div class="result-card">
+      <div class="result-header">
+        <div class="label">${r.measure.type==='bau'?'Zuständiger Baulastträger':'Zuständige Behörde (verkehrsrechtl. Anordnung)'}</div>
+        <div class="value">${r.authority}</div>
+        <div class="detail">${r.authorityDetail}</div>
+      </div>
+      <div class="result-body">`;
+    if(r.measure.type!=='bau'){
+      h+=`<div class="field"><div class="field-label">Straßenbaulastträger</div><div class="field-value">${r.baulast}</div><div class="field-detail">${r.baulastDetail}</div></div>`;
+    }
+    h+=`<div class="field"><div class="field-label">Rechtsgrundlage</div><div class="field-value">${r.legal}</div></div>`;
+    h+=`<div class="field" style="margin-bottom:${(r.notes.length||r.praxis.length)?'14px':'0'}"><div class="field-label">Aufsichtsbehörde</div><div class="field-value">${r.aufsicht}</div><div class="field-detail">${r.aufsichtDetail}</div></div>`;
+    if(r.notes.length){
+      h+=`<div class="notes"><div class="notes-title">⚖ Rechtliche Hinweise & Praxistipps</div>${r.notes.map(n=>`<div class="notes-item">• ${n}</div>`).join('')}</div>`;
+    }
+    if(r.praxis.length){
+      h+=`<div class="praxis-box"><div class="praxis-title">📐 Maße & Planungshinweise (ERA 2010 / MuLöS BW)</div>${r.praxis.map(p=>`<div class="praxis-item">• ${p}</div>`).join('')}</div>`;
+    }
+    h+=`</div></div>`;
+    h+=`<div class="info-box"><div class="info-title">Straßenverkehrsbehörden im Saarland</div><div class="info-body">
+      <strong>Landkreise:</strong> Merzig-Wadern, Neunkirchen, Saarlouis, Saarpfalz-Kreis, St. Wendel<br>
+      <strong>Regionalverband:</strong> Regionalverband Saarbrücken (ohne LH Saarbrücken & Völklingen)<br>
+      <strong>Eigene Behörden:</strong> Landeshauptstadt Saarbrücken, Stadt Völklingen<br>
+      <strong>Autobahnen:</strong> Landesbetrieb für Straßenbau (LfS)<br>
+      <strong>Oberste Behörde:</strong> Ministerium für Wirtschaft, Innovation, Digitales und Energie
+    </div></div>`;
+    h+=`<button class="btn btn-outline" onclick="resetAll()">Neue Abfrage starten</button>`;
+    el.innerHTML=h;
+  }
+}
+
+function selectCategory(id){state.category=id;state.measure=null;render();}
+function selectMeasure(id){state.measure=id;render();}
+function selectStreet(id){state.street=id;state.location=null;render();}
+function selectLocation(id){state.location=id;render();}
+function goStep(n){state.step=n;render();}
+function resetAll(){state={step:0,category:null,measure:null,street:null,location:null};render();}
+
+render();
+</script>
+</body>
+</html>
