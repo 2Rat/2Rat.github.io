@@ -127,6 +127,7 @@
   /* Farben pro Link-Typ */
   .tile-app .icon { background: #e8f5e9; }
   .tile-karte .icon { background: #e3f2fd; }
+  .tile-gemeinde .icon { background: #fce4ec; }
   .tile-dashboard .icon { background: #fff3e0; }
   .tile-konzept .icon { background: #f3e5f5; }
 
@@ -236,9 +237,13 @@ function renderProject(p) {
           <div class="icon">📱</div>
           <div class="label">Melde-App<small>Bürger-Eingabe</small></div>
         </a>
-        <a class="link-tile tile-karte" href="https://2rat.github.io/velomeld/karte.html?kommune=${kommuneParam}" target="_blank">
+        <a class="link-tile tile-karte" href="https://2rat.github.io/velomeld/karte.html?kommune=${kommuneParam}${p.map_mode ? '&modus=karte' : ''}" target="_blank">
           <div class="icon">🗺️</div>
           <div class="label">Ergebnis-Karte<small>Öffentliche Ansicht</small></div>
+        </a>
+        <a class="link-tile tile-gemeinde" href="https://2rat.github.io/velomeld/gemeinde.html?kommune=${kommuneParam}" target="_blank">
+          <div class="icon">🔒</div>
+          <div class="label">Gemeinde-Karte<small>Passwort: radcheck2026</small></div>
         </a>
         <a class="link-tile tile-dashboard" href="https://velomeld-pro.netlify.app/dashboard.html" target="_blank">
           <div class="icon">📊</div>
