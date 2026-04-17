@@ -243,7 +243,7 @@ function renderProject(p) {
         </a>
         <a class="link-tile tile-gemeinde" href="https://2rat.github.io/velomeld/gemeinde.html?kommune=${kommuneParam}" target="_blank">
           <div class="icon">🔒</div>
-          <div class="label">Gemeinde-Karte<small>Passwort: radcheck2026</small></div>
+          <div class="label">Gemeinde-Karte<small>Verwaltungszugang</small></div>
         </a>
         <a class="link-tile tile-dashboard" href="https://velomeld-pro.netlify.app/dashboard.html" target="_blank">
           <div class="icon">📊</div>
@@ -258,6 +258,19 @@ function renderProject(p) {
 }
 
 loadProjects();
+</script>
+<script>
+// Passwort-Schutz
+(function(){
+  var ok = sessionStorage.getItem('cockpit_auth');
+  if(ok) return;
+  var pw = prompt('Cockpit-Passwort:');
+  if(pw !== '2rat2026'){
+    document.body.innerHTML = '<div style="text-align:center;padding:80px 20px;color:#888;font-family:sans-serif"><h2>Zugang verweigert</h2><p>Falsches Passwort.</p></div>';
+    return;
+  }
+  sessionStorage.setItem('cockpit_auth','1');
+})();
 </script>
 </body>
 </html>
