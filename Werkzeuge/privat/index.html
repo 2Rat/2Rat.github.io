@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2RAT Kommandozentrale · Privat</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F1E8; --paper-dark: #EBE5D4; --card: #FAF7EE;
+    --ink: #1A1A1A; --ink-soft: #3A3A37; --muted: #8A857A;
+    --line: #D5CEBF; --line-soft: #E5DFCE;
+    --accent: #1E4D4A; --accent-dim: #2E6A66;
+    --warn: #C4532C; --warn-dim: #E07A50;
+    --ok: #4A7A3E;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    background: var(--paper); color: var(--ink);
+    font-size: 15px; line-height: 1.5; min-height: 100vh;
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(30,77,74,0.03) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(196,83,44,0.025) 0%, transparent 40%);
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ═══════════ Login-Schirm ═══════════ */
+  #login-screen {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .login-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 44px 40px 36px;
+    max-width: 440px;
+    width: 100%;
+    position: relative;
+  }
+  .login-card::before {
+    content: "";
+    position: absolute; top: -1px; left: -1px;
+    width: 32px; height: 32px;
+    border-top: 2px solid var(--accent);
+    border-left: 2px solid var(--accent);
+  }
+  .login-brand {
+    font-family: 'Fraunces', serif;
+    font-size: 34px; font-weight: 600; letter-spacing: -0.02em;
+    color: var(--accent);
+    margin: 0 0 4px;
+  }
+  .login-brand-sub {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12.5px; color: var(--ink-soft);
+    margin-bottom: 32px; letter-spacing: 0.01em;
+  }
+  .login-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+  .login-hint {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+  .login-row { margin-bottom: 14px; }
+  .login-row label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .login-row input {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .login-row input:focus { border-color: var(--accent); }
+  .login-submit {
+    width: 100%;
+    padding: 13px;
+    background: var(--accent);
+    color: var(--paper);
+    border: 1px solid var(--accent);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-top: 6px;
+  }
+  .login-submit:hover { background: var(--ink); border-color: var(--ink); }
+  .login-remember {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12.5px; color: var(--ink-soft);
+    margin: 14px 0 6px;
+  }
+  .login-remember input { margin: 0; accent-color: var(--accent); }
+  .login-error {
+    background: #F8D7BF;
+    border: 1px solid var(--warn-dim);
+    color: var(--warn);
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    display: none;
+  }
+  .login-error.show { display: block; }
+  .login-footer {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--line);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* ═══════════ Cockpit ═══════════ */
+  #cockpit-screen { display: none; }
+  #cockpit-screen.active { display: block; }
+
+  /* Header */
+  header.briefkopf {
+    border-bottom: 1px solid var(--line);
+    padding: 28px 40px 24px;
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 40px;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-dark) 100%);
+  }
+  .brand-block { font-family: 'Fraunces', serif; }
+  .brand-block h1 {
+    font-size: 30px; font-weight: 600; letter-spacing: -0.02em;
+    margin: 0; color: var(--accent);
+  }
+  .brand-block .subline {
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 13px;
+    color: var(--ink-soft); margin-top: 4px;
+  }
+  .brand-block .eipos { font-style: italic; color: var(--muted); }
+  .meta-block { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); line-height: 1.7; }
+  .meta-block .titel {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 22px;
+    color: var(--ink); letter-spacing: -0.01em; margin-bottom: 2px;
+  }
+  .meta-block .datum { color: var(--ink); font-size: 13px; letter-spacing: 0.02em; }
+  .meta-block .logout-btn {
+    display: inline-block;
+    margin-top: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    cursor: pointer;
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    background: var(--paper);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .meta-block .logout-btn:hover { color: var(--warn); border-color: var(--warn-dim); }
+
+  /* Ablauf-Banner */
+  .ablauf-banner {
+    background: #F8D7BF;
+    border-bottom: 1px solid var(--warn-dim);
+    padding: 10px 40px;
+    font-size: 13px;
+    color: var(--warn);
+    text-align: center;
+    display: none;
+  }
+  .ablauf-banner.show { display: block; }
+
+  /* Control bar */
+  .control-bar {
+    padding: 18px 40px; border-bottom: 1px solid var(--line);
+    display: flex; gap: 16px; align-items: center;
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(8px);
+    background-color: rgba(245,241,232,0.92);
+  }
+  .search-wrap { flex: 1; max-width: 460px; position: relative; }
+  .search-wrap input {
+    width: 100%; padding: 10px 14px 10px 38px;
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 14px;
+    border: 1px solid var(--line); background: var(--card);
+    border-radius: 2px; color: var(--ink); outline: none;
+  }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-wrap::before {
+    content: "⌕"; position: absolute; left: 14px; top: 50%;
+    transform: translateY(-50%); color: var(--muted); font-size: 16px;
+  }
+  .search-wrap .kbd {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted);
+    border: 1px solid var(--line); padding: 1px 6px; border-radius: 2px;
+    background: var(--paper);
+  }
+  .filter-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filter-pills button {
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 11.5px;
+    padding: 7px 12px; border: 1px solid var(--line); background: transparent;
+    color: var(--ink-soft); cursor: pointer;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .filter-pills button:hover { border-color: var(--accent-dim); color: var(--accent); }
+  .filter-pills button.active {
+    background: var(--ink); color: var(--paper); border-color: var(--ink);
+  }
+
+  /* Main */
+  main { padding: 32px 40px 80px; max-width: 1400px; margin: 0 auto; }
+  .section-title {
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+    letter-spacing: -0.01em; color: var(--ink);
+    margin: 40px 0 18px;
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  .section-title:first-child { margin-top: 0; }
+  .section-title .count {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    color: var(--muted); font-weight: 400;
+  }
+  .section-title .rule {
+    flex: 1; height: 1px; background: var(--line); margin-left: 8px;
+  }
+
+  /* Akut-Panel */
+  .akut-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .panel {
+    background: var(--card); border: 1px solid var(--line);
+    padding: 22px 24px; position: relative;
+  }
+  .panel::before {
+    content: ""; position: absolute; top: -1px; left: -1px;
+    width: 24px; height: 24px;
+    border-top: 2px solid var(--accent); border-left: 2px solid var(--accent);
+  }
+  .panel.warn::before { border-color: var(--warn); }
+  .panel h3 {
+    font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600;
+    margin: 0 0 14px; color: var(--ink);
+  }
+  .panel h3 .icon {
+    display: inline-block; width: 6px; height: 6px; background: var(--accent);
+    margin-right: 10px; vertical-align: middle; transform: rotate(45deg);
+  }
+  .panel.warn h3 .icon { background: var(--warn); }
+  .fristen-liste, .wartet-liste { list-style: none; padding: 0; margin: 0; }
+  .fristen-liste li, .wartet-liste li {
+    padding: 9px 0; border-bottom: 1px dashed var(--line-soft);
+    font-size: 13.5px; display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 12px;
+  }
+  .fristen-liste li:last-child, .wartet-liste li:last-child { border-bottom: none; }
+  .frist-datum {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    color: var(--ink); white-space: nowrap;
+  }
+  .frist-text { flex: 1; color: var(--ink-soft); }
+  .frist-badge {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+    padding: 2px 6px; border: 1px solid var(--line); color: var(--muted);
+    white-space: nowrap; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .frist-badge.days-critical { background: var(--warn); color: #fff; border-color: var(--warn); }
+  .frist-badge.days-soon     { background: #F8D7BF; color: var(--warn); border-color: var(--warn-dim); }
+  .wartet-liste .who {
+    font-size: 11px; color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    display: block; margin-top: 2px;
+  }
+
+  /* Kachel-Grid */
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 16px;
+  }
+  .kachel {
+    background: var(--card); border: 1px solid var(--line);
+    padding: 20px 22px 18px;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    position: relative; min-height: 150px;
+  }
+  .kachel:hover {
+    border-color: var(--accent); transform: translateY(-1px);
+    box-shadow: 0 1px 0 rgba(26,26,26,.04), 0 6px 18px -12px rgba(26,26,26,.18);
+  }
+  .kachel.hidden { display: none; }
+  .kachel-head {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 10px;
+  }
+  .kachel-titel {
+    font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600;
+    letter-spacing: -0.005em; color: var(--ink); line-height: 1.25;
+  }
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    margin-top: 7px; flex-shrink: 0;
+  }
+  .status-dot.aktiv  { background: var(--ok);     box-shadow: 0 0 0 3px rgba(74,122,62,0.15); }
+  .status-dot.wartet { background: var(--warn);   box-shadow: 0 0 0 3px rgba(196,83,44,0.15); }
+  .status-dot.ruht   { background: var(--muted); }
+  .status-dot.hub    { background: var(--accent); box-shadow: 0 0 0 3px rgba(30,77,74,0.18); }
+  .kachel-beschreibung {
+    font-size: 12.5px; color: var(--ink-soft); flex: 1; line-height: 1.45;
+  }
+  .kachel-meta {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+    color: var(--muted); letter-spacing: 0.03em; text-transform: uppercase;
+    padding-top: 4px; border-top: 1px dashed var(--line-soft);
+  }
+  .kachel-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; font-weight: 500;
+    padding: 7px 12px; border: 1px solid var(--line); background: transparent;
+    color: var(--ink); cursor: pointer; transition: all 0.12s;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn.primary { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+  .btn.primary:hover { background: var(--ink); border-color: var(--ink); }
+
+  footer {
+    padding: 24px 40px; border-top: 1px solid var(--line);
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--muted); text-align: center;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+
+  @media (max-width: 820px) {
+    .akut-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    header.briefkopf { flex-direction: column; align-items: flex-start; padding: 20px; gap: 14px; }
+    .control-bar { flex-direction: column; align-items: stretch; padding: 14px 20px; }
+    .search-wrap { max-width: 100%; }
+    main { padding: 24px 20px 60px; }
+    footer { padding: 20px; }
+    .ablauf-banner { padding: 10px 20px; }
+    .login-card { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ LOGIN ═══════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-brand">2RAT</div>
+    <div class="login-brand-sub">Büro für Radverkehrsplanung · Armin Jung</div>
+
+    <div class="login-title">Kommandozentrale</div>
+    <div class="login-hint">Persönlicher Schnellzugriff. Zugangscode erforderlich.</div>
+
+    <div class="login-error" id="loginError"></div>
+
+    <form id="loginForm" autocomplete="off">
+      <div class="login-row">
+        <label for="code-input">Zugangscode</label>
+        <input type="password" id="code-input" autocomplete="off" autofocus
+               placeholder="2RAT-XXXX-XXXX-XXXX">
+      </div>
+      <label class="login-remember">
+        <input type="checkbox" id="remember" checked>
+        Auf diesem Gerät 30 Tage angemeldet bleiben
+      </label>
+      <button type="submit" class="login-submit">Entsperren</button>
+    </form>
+
+    <div class="login-footer">Nur für den internen Gebrauch · 2rat.org</div>
+  </div>
+</div>
+
+<!-- ═══════════ COCKPIT ═══════════ -->
+<div id="cockpit-screen">
+
+  <div class="ablauf-banner" id="ablaufBanner"></div>
+
+  <header class="briefkopf">
+    <div class="brand-block">
+      <h1>2RAT</h1>
+      <div class="subline">
+        Büro für Radverkehrsplanung · Armin Jung · <span class="eipos">Radverkehrsplaner EIPOS</span> · www.2rat.org
+      </div>
+    </div>
+    <div class="meta-block">
+      <div class="titel">Kommandozentrale</div>
+      <div class="datum" id="heute"></div>
+      <div>Persönlicher Schnellzugriff</div>
+      <div class="logout-btn" id="logoutBtn" title="Abmelden">⎋ Abmelden</div>
+    </div>
+  </header>
+
+  <div class="control-bar">
+    <div class="search-wrap">
+      <input id="suche" type="text" placeholder="Projekt, Tool, Stichwort…" autocomplete="off">
+      <span class="kbd">/</span>
+    </div>
+    <div class="filter-pills" id="filter">
+      <button data-f="alle" class="active">Alle</button>
+      <button data-f="aktiv">Aktiv</button>
+      <button data-f="wartet">Wartet</button>
+      <button data-f="ruht">Ruht</button>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- Akut-Panel -->
+    <div class="akut-grid">
+      <div class="panel warn">
+        <h3><span class="icon"></span>Fristen</h3>
+        <ul class="fristen-liste" id="fristen"></ul>
+      </div>
+      <div class="panel">
+        <h3><span class="icon"></span>Wartet auf Dritte</h3>
+        <ul class="wartet-liste">
+          <li>
+            <div>
+              Werkzeuge/AGFK – Logo
+              <span class="who">Dann: Portal-Refactoring</span>
+            </div>
+            <span class="frist-badge">Merker</span>
+          </li>
+          <li>
+            <div>
+              Hostenbach LP1 – Geldeingang prüfen
+              <span class="who">Gemeinde Wadgassen · 4.714 €</span>
+            </div>
+            <span class="frist-badge">Zahlung</span>
+          </li>
+          <li>
+            <div>
+              Hostenbach LP2 – Beauftragung
+              <span class="who">Gemeinde Wadgassen · 5.214 €</span>
+            </div>
+            <span class="frist-badge">Offen</span>
+          </li>
+          <li>
+            <div>
+              AGFK-SL – Rückmeldung Angebot
+              <span class="who">Irene &amp; Nicole · Code bis 15.05.</span>
+            </div>
+            <span class="frist-badge">Pilot</span>
+          </li>
+          <li>
+            <div>
+              Finanzamt – Freiberufler-Bestätigung
+              <span class="who">§ 18 EStG</span>
+            </div>
+            <span class="frist-badge">Behörde</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Claude-Projekte -->
+    <h2 class="section-title">
+      Claude-Projekte <span class="count" id="claudeCount"></span>
+      <span class="rule"></span>
+    </h2>
+    <div class="grid" id="claudeGrid"></div>
+
+    <!-- Web-Tools -->
+    <h2 class="section-title">
+      Web-Tools &amp; Portale <span class="count" id="webCount"></span>
+      <span class="rule"></span>
+    </h2>
+    <div class="grid" id="webGrid"></div>
+
+    <!-- Code -->
+    <h2 class="section-title">
+      Code &amp; Repos <span class="count" id="codeCount"></span>
+      <span class="rule"></span>
+    </h2>
+    <div class="grid" id="codeGrid"></div>
+
+  </main>
+
+  <footer>
+    2RAT – Büro für Radverkehrsplanung · Stand 20.04.2026 · Privates Arbeitscockpit
+  </footer>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// LIZENZEN / ZUGANGSCODES
+// ═══════════════════════════════════════════════
+// Codes werden clientseitig als SHA-256-Hash abgeglichen.
+// Normalisierung: trim() + toUpperCase() (wie im Hauptportal).
+//
+// Aktive Codes:
+//   2RAT-PRIV-CGSB-5VPT    (Armin Jung, persönlich, gültig bis 31.12.2028)
+//
+const LIZENZEN = [
+  {
+    hash:    "67da04b8a0bbd356ff33a8725639dce4492a347598589068feecf71f5c9240b3",
+    label:   "Armin Jung · Persönlich",
+    ablauf:  "2028-12-31"
+  }
+];
+
+const SESSION_KEY = "2rat-cockpit-session";
+const SESSION_TAGE = 30;
+
+// ═══════════════════════════════════════════════
+// DATEN
+// ═══════════════════════════════════════════════
+const PROJEKTE_CLAUDE = [
+  { titel: "2RAT Büro",                    id: "019da73b-3f99-7256-bc07-8146aafe6ce8", status: "hub",    beschreibung: "Stammdaten, Projekt-Register, Büroverwaltung – der Hub.",                 meta: "HUB · Büro-intern" },
+  { titel: "Hostenbach",                   id: "019a354c-9396-7392-aa0b-a7ec1441c77d", status: "aktiv",  beschreibung: "Gemeinde Wadgassen · LP1 abgeschlossen · LP2 offen · Rechnung läuft.",     meta: "Kundenprojekt · Vorhaben 1.1" },
+  { titel: "Radwegemelder & 2rat.org",     id: "019c3406-a87e-712a-930c-d77a77f4f18a", status: "aktiv",  beschreibung: "Kernprodukt Velomeld + Website-Pflege + Wadgassen-Pilot (Supabase).",      meta: "Produkt-Hauptprojekt · 4.1 + 5.1" },
+  { titel: "Schulweg-Detektive",           id: "019c0046-90d5-7589-b7f2-f54934994ddb", status: "aktiv",  beschreibung: "PWA v1.2.1.0 live · Karte · Erklärfilm · Info-Doku Kirkel.",              meta: "Kooperation Kirkel · 4.3" },
+  { titel: "Plugin-Entwicklung ANALYSE",   id: "019a8712-7831-7731-8343-41ab5a1fe922", status: "aktiv",  beschreibung: "QGIS-Plugin · VwV-StVO-2025-Update wird integriert.",                      meta: "Werkzeug · Vorhaben 3.1" },
+  { titel: "Werkzeuge / Tool-Portal",      id: "019d20bc-9416-74f9-9b13-db13011995f5", status: "aktiv",  beschreibung: "Zuständigkeiten · Fördermittel-Finder · AGFK-Lizenz · Refactoring offen.", meta: "Tool-Vertrieb · 2.1–2.8" },
+  { titel: "Mobilitätsstationen Wadgassen",id: "019a5ac4-65ac-707d-806a-8564b59b88a7", status: "aktiv",  beschreibung: "Planungsprojekt Gemeinde Wadgassen.",                                      meta: "Kundenprojekt" },
+  { titel: "Bauhof-Inventarisierungstool", id: "019c5231-0d6a-7024-9a1f-eae5a66e5476", status: "ruht",   beschreibung: "Gemeinde Kirkel · Standalone-PWA · funktional ruhend.",                   meta: "Nebenprodukt · 4.4" },
+  { titel: "Castle Race",                  id: "019da970-aa9f-7223-be89-220bf848823c", status: "aktiv",  beschreibung: "Arbeit Gemeinde Kirkel.",                                                  meta: "Kooperation Kirkel" },
+  { titel: "Bike and Ride",                id: "019c46b0-69e5-76e1-b252-f8b50b109cf5", status: "aktiv",  beschreibung: "Arbeit Gemeinde Kirkel.",                                                  meta: "Kooperation Kirkel" }
+];
+
+const WEB_TOOLS = [
+  { titel: "Tool-Portal (Login)",       url: "https://2rat.org/Werkzeuge/",              status: "aktiv",  beschreibung: "Werkzeuge-Portal mit Zuständigkeiten + Fördermittel-Finder.", meta: "Produktiv · GitHub Pages" },
+  { titel: "Cockpit (öffentlich)",      url: "https://www.2rat.org/cockpit.html",        status: "aktiv",  beschreibung: "Bestehendes Cockpit auf 2rat.org.",                          meta: "Büro-intern" },
+  { titel: "2RAT Website",              url: "https://www.2rat.org",                      status: "aktiv",  beschreibung: "Hauptseite der Außendarstellung.",                          meta: "Marketing · 5.1" },
+  { titel: "Schulweg-Erklärfilm",       url: "https://www.2rat.org/schulweg-film.html",  status: "aktiv",  beschreibung: "9-Szenen-Erklärfilm zum Schulweg-Projekt.",                 meta: "Marketing-Asset" },
+  { titel: "Rundfunkbeitrag anmelden",  url: "https://antworten.rundfunkbeitrag.de",     status: "wartet", beschreibung: "Online-Anmeldung Betriebsstätte Az 651 028 117 5 bis 30.04.",meta: "Behörde · 7.3" }
+];
+
+const CODE_REPOS = [
+  { titel: "Werkzeuge-Ordner",          url: "https://github.com/2Rat/2Rat.github.io/tree/main/Werkzeuge", status: "aktiv", beschreibung: "Zuständigkeiten, Fördermittel-Finder, AGFK-Varianten.", meta: "GitHub · 2Rat/2Rat.github.io" },
+  { titel: "Haupt-Repo 2Rat.github.io", url: "https://github.com/2Rat/2Rat.github.io",                      status: "aktiv", beschreibung: "Gesamt-Infrastruktur Website + Tools.",                meta: "GitHub Pages" }
+];
+
+const FRISTEN = [
+  { datum: "2026-04-30", text: "Rundfunkbeitrag – Online-Anmeldung Az 651 028 117 5" },
+  { datum: "2026-05-15", text: "AGFK-2026 Code läuft ab" },
+  { datum: "2026-05-31", text: "Wadgassen-Pilot: date_to in Supabase aktualisieren" },
+  { datum: "2026-05-31", text: "Wadern – nach Rats-Sitzung nachhaken" },
+  { datum: "2026-09-30", text: "Schulweg: Android-Entwicklerbestätigung prüfen" }
+];
+
+// ═══════════════════════════════════════════════
+// LOGIN-LOGIK
+// ═══════════════════════════════════════════════
+async function sha256(text) {
+  const buf = new TextEncoder().encode(text);
+  const hashBuf = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hashBuf))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+function istCockpitAktiv() { return document.getElementById("cockpit-screen").classList.contains("active"); }
+
+function zeigeCockpit(lizenz) {
+  document.getElementById("login-screen").style.display = "none";
+  document.getElementById("cockpit-screen").classList.add("active");
+
+  // Ablaufwarnung prüfen
+  const ablauf = new Date(lizenz.ablauf);
+  const jetzt = new Date();
+  const tageBis = Math.round((ablauf - jetzt) / 86400000);
+  const banner = document.getElementById("ablaufBanner");
+  if (tageBis < 0) {
+    banner.textContent = `⚠ Der Zugangscode ist seit ${-tageBis} Tagen abgelaufen. Neuen Code erstellen!`;
+    banner.classList.add("show");
+  } else if (tageBis < 60) {
+    banner.textContent = `⚠ Der Zugangscode läuft in ${tageBis} Tagen ab (${ablauf.toLocaleDateString("de-DE")}). Rechtzeitig erneuern.`;
+    banner.classList.add("show");
+  }
+
+  renderFristen();
+  renderKacheln();
+  initTastatur();
+  initNotizen();  // leer, aber nichts passiert ohne Feld
+}
+
+function sessionPruefen() {
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const sess = JSON.parse(raw);
+    if (!sess.hash || !sess.sessionEnde) return null;
+
+    // Session abgelaufen?
+    if (new Date(sess.sessionEnde) < new Date()) {
+      localStorage.removeItem(SESSION_KEY);
+      return null;
+    }
+    // Hash in Lizenzen finden
+    const lizenz = LIZENZEN.find(l => l.hash === sess.hash);
+    if (!lizenz) { localStorage.removeItem(SESSION_KEY); return null; }
+
+    // Code selbst abgelaufen?
+    if (new Date(lizenz.ablauf) < new Date()) {
+      // Ablauf zeigen, aber nicht automatisch abmelden
+      return lizenz;
+    }
+    return lizenz;
+  } catch (e) { return null; }
+}
+
+function sessionSpeichern(lizenz, tage) {
+  const ende = new Date(Date.now() + tage * 86400000);
+  localStorage.setItem(SESSION_KEY, JSON.stringify({
+    hash: lizenz.hash,
+    sessionEnde: ende.toISOString(),
+    label: lizenz.label
+  }));
+}
+
+async function loginVersuch(e) {
+  e.preventDefault();
+  const input = document.getElementById("code-input");
+  const err = document.getElementById("loginError");
+  const remember = document.getElementById("remember").checked;
+
+  const code = input.value.trim().toUpperCase();
+  if (!code) return;
+
+  const hash = await sha256(code);
+  const lizenz = LIZENZEN.find(l => l.hash === hash);
+
+  if (!lizenz) {
+    err.textContent = "Code nicht erkannt. Großschreibung und Bindestriche beachten.";
+    err.classList.add("show");
+    input.value = "";
+    input.focus();
+    return;
+  }
+
+  if (new Date(lizenz.ablauf) < new Date()) {
+    err.textContent = `Code ist am ${new Date(lizenz.ablauf).toLocaleDateString("de-DE")} abgelaufen.`;
+    err.classList.add("show");
+    return;
+  }
+
+  err.classList.remove("show");
+  if (remember) sessionSpeichern(lizenz, SESSION_TAGE);
+  zeigeCockpit(lizenz);
+}
+
+function logout() {
+  localStorage.removeItem(SESSION_KEY);
+  document.getElementById("cockpit-screen").classList.remove("active");
+  document.getElementById("login-screen").style.display = "flex";
+  document.getElementById("code-input").value = "";
+  document.getElementById("code-input").focus();
+}
+
+// ═══════════════════════════════════════════════
+// RENDERING COCKPIT
+// ═══════════════════════════════════════════════
+function claudeUrl(id) { return `https://claude.ai/project/${id}`; }
+
+function fristBadge(daysLeft) {
+  if (daysLeft < 0)  return `<span class="frist-badge days-critical">überfällig</span>`;
+  if (daysLeft <= 7) return `<span class="frist-badge days-critical">${daysLeft} T</span>`;
+  if (daysLeft <= 30) return `<span class="frist-badge days-soon">${daysLeft} T</span>`;
+  return `<span class="frist-badge">${daysLeft} T</span>`;
+}
+
+function renderFristen() {
+  const heute = new Date(); heute.setHours(0,0,0,0);
+  const ul = document.getElementById("fristen");
+  ul.innerHTML = FRISTEN
+    .map(f => {
+      const d = new Date(f.datum);
+      const days = Math.round((d - heute) / 86400000);
+      const datumStr = d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
+      return { ...f, days, datumStr };
+    })
+    .sort((a,b) => a.days - b.days)
+    .map(f => `
+      <li>
+        <span class="frist-datum">${f.datumStr}</span>
+        <span class="frist-text">${f.text}</span>
+        ${fristBadge(f.days)}
+      </li>
+    `).join("");
+}
+
+function kachelClaude(p) {
+  return `
+    <article class="kachel" data-status="${p.status}" data-text="${(p.titel + " " + p.beschreibung + " " + p.meta).toLowerCase()}">
+      <div class="kachel-head">
+        <div class="kachel-titel">${p.titel}</div>
+        <div class="status-dot ${p.status}" title="${p.status}"></div>
+      </div>
+      <div class="kachel-beschreibung">${p.beschreibung}</div>
+      <div class="kachel-links">
+        <a class="btn primary" href="${claudeUrl(p.id)}" target="_blank" rel="noopener">
+          Claude-Projekt →
+        </a>
+      </div>
+      <div class="kachel-meta">${p.meta}</div>
+    </article>
+  `;
+}
+
+function kachelWeb(p) {
+  return `
+    <article class="kachel" data-status="${p.status}" data-text="${(p.titel + " " + p.beschreibung + " " + p.meta).toLowerCase()}">
+      <div class="kachel-head">
+        <div class="kachel-titel">${p.titel}</div>
+        <div class="status-dot ${p.status}" title="${p.status}"></div>
+      </div>
+      <div class="kachel-beschreibung">${p.beschreibung}</div>
+      <div class="kachel-links">
+        <a class="btn primary" href="${p.url}" target="_blank" rel="noopener">
+          Öffnen →
+        </a>
+      </div>
+      <div class="kachel-meta">${p.meta}</div>
+    </article>
+  `;
+}
+
+function renderKacheln() {
+  document.getElementById("claudeGrid").innerHTML = PROJEKTE_CLAUDE.map(kachelClaude).join("");
+  document.getElementById("webGrid").innerHTML    = WEB_TOOLS.map(kachelWeb).join("");
+  document.getElementById("codeGrid").innerHTML   = CODE_REPOS.map(kachelWeb).join("");
+  document.getElementById("claudeCount").textContent = `${PROJEKTE_CLAUDE.length} Projekte`;
+  document.getElementById("webCount").textContent    = `${WEB_TOOLS.length} Adressen`;
+  document.getElementById("codeCount").textContent   = `${CODE_REPOS.length} Repos`;
+}
+
+// ═══════════════════════════════════════════════
+// SUCHE / FILTER / TASTATUR
+// ═══════════════════════════════════════════════
+let aktiverFilter = "alle";
+
+function anwenden() {
+  const q = document.getElementById("suche").value.trim().toLowerCase();
+  document.querySelectorAll(".kachel").forEach(k => {
+    const text = k.dataset.text || "";
+    const status = k.dataset.status || "";
+    const matchSuche = !q || text.includes(q);
+    const matchFilter = aktiverFilter === "alle"
+      || status === aktiverFilter
+      || (aktiverFilter === "aktiv" && status === "hub");
+    k.classList.toggle("hidden", !(matchSuche && matchFilter));
+  });
+}
+
+function initTastatur() {
+  document.getElementById("suche").addEventListener("input", anwenden);
+  document.querySelectorAll("#filter button").forEach(b => {
+    b.addEventListener("click", () => {
+      document.querySelectorAll("#filter button").forEach(x => x.classList.remove("active"));
+      b.classList.add("active");
+      aktiverFilter = b.dataset.f;
+      anwenden();
+    });
+  });
+  document.addEventListener("keydown", e => {
+    if (!istCockpitAktiv()) return;
+    if (e.key === "/" && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA") {
+      e.preventDefault();
+      document.getElementById("suche").focus();
+    }
+    if (e.key === "Escape" && document.activeElement.id === "suche") {
+      document.getElementById("suche").value = "";
+      anwenden();
+      document.activeElement.blur();
+    }
+  });
+  document.getElementById("heute").textContent = new Date().toLocaleDateString("de-DE", {
+    weekday: "long", day: "2-digit", month: "long", year: "numeric"
+  });
+  document.getElementById("logoutBtn").addEventListener("click", logout);
+}
+
+function initNotizen() { /* Platzhalter – kein Notizfeld in dieser Variante */ }
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+document.getElementById("loginForm").addEventListener("submit", loginVersuch);
+
+(function start() {
+  const lizenz = sessionPruefen();
+  if (lizenz) {
+    zeigeCockpit(lizenz);
+  } else {
+    document.getElementById("login-screen").style.display = "flex";
+    document.getElementById("code-input").focus();
+  }
+})();
+</script>
+
+</body>
+</html>
