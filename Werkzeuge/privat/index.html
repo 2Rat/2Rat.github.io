@@ -349,6 +349,74 @@
   .btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .btn.primary { background: var(--accent); color: var(--paper); border-color: var(--accent); }
   .btn.primary:hover { background: var(--ink); border-color: var(--ink); }
+  .btn.qr {
+    padding: 7px 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  .btn.qr svg { width: 14px; height: 14px; }
+
+  /* ═══════════ QR-Modal ═══════════ */
+  .qr-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,26,26,0.55);
+    backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100; padding: 20px;
+  }
+  .qr-overlay.show { display: flex; }
+  .qr-dialog {
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 32px 32px 28px;
+    max-width: 380px; width: 100%;
+    position: relative;
+    text-align: center;
+  }
+  .qr-dialog::before {
+    content: ""; position: absolute; top: -1px; left: -1px;
+    width: 28px; height: 28px;
+    border-top: 2px solid var(--accent);
+    border-left: 2px solid var(--accent);
+  }
+  .qr-close {
+    position: absolute; top: 10px; right: 12px;
+    background: transparent; border: none;
+    font-size: 22px; line-height: 1; color: var(--muted);
+    cursor: pointer; padding: 6px 10px;
+  }
+  .qr-close:hover { color: var(--warn); }
+  .qr-dialog h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 20px; font-weight: 600;
+    margin: 0 0 6px; color: var(--ink);
+    padding-right: 24px;
+  }
+  .qr-dialog .qr-hint {
+    font-size: 12.5px; color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+  .qr-canvas {
+    display: inline-block;
+    padding: 16px;
+    background: #fff;
+    border: 1px solid var(--line);
+    margin-bottom: 18px;
+  }
+  .qr-canvas img { display: block; }
+  .qr-url {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    word-break: break-all;
+    padding: 10px 12px;
+    background: var(--paper);
+    border: 1px dashed var(--line);
+    margin-bottom: 14px;
+    user-select: all;
+  }
+  .qr-actions { display: flex; gap: 8px; justify-content: center; }
 
   footer {
     padding: 24px 40px; border-top: 1px solid var(--line);
@@ -520,6 +588,22 @@
 
 </div>
 
+<!-- ═══════════ QR-MODAL ═══════════ -->
+<div class="qr-overlay" id="qrOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="qr-dialog">
+    <button class="qr-close" id="qrClose" aria-label="Schließen">×</button>
+    <h3 id="qrTitle">QR-Code</h3>
+    <div class="qr-hint">Mit der Handy-Kamera scannen</div>
+    <div class="qr-canvas" id="qrCanvas"></div>
+    <div class="qr-url" id="qrUrl"></div>
+    <div class="qr-actions">
+      <button class="btn" id="qrCopy">Link kopieren</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <script>
 // ═══════════════════════════════════════════════
 // LIZENZEN / ZUGANGSCODES
@@ -558,6 +642,7 @@ const PROJEKTE_CLAUDE = [
 ];
 
 const WEB_TOOLS = [
+  { titel: "RadPlan Pro (Feld-App)",    url: "https://radplan-pro.netlify.app",          status: "aktiv",  beschreibung: "GPS-Felderfassung mit ERA-Konformitätscheck. PWA – auf Handy-Homescreen legen für Offline-Nutzung im Feld.", meta: "Vorhaben 4.2 · PWA mobil" },
   { titel: "Tool-Portal (Login)",       url: "https://2rat.org/Werkzeuge/",              status: "aktiv",  beschreibung: "Werkzeuge-Portal mit Zuständigkeiten + Fördermittel-Finder.", meta: "Produktiv · GitHub Pages" },
   { titel: "Radwegemelder-Ergebnisse",  url: "https://www.2rat.org/cockpit.html",        status: "aktiv",  beschreibung: "Öffentliche Ergebnis-Ansicht · Kacheln pro Kommune aus dem Dashboard.", meta: "Dashboard-Cockpit · 4.1" },
   { titel: "2RAT Website",              url: "https://www.2rat.org",                      status: "aktiv",  beschreibung: "Hauptseite der Außendarstellung.",                          meta: "Marketing · 5.1" },
@@ -570,7 +655,7 @@ const CODE_REPOS = [
   { titel: "Werkzeuge-Ordner",          url: "https://github.com/2Rat/2Rat.github.io/tree/main/Werkzeuge",    status: "aktiv",  beschreibung: "Zuständigkeiten, Fördermittel-Finder, AGFK-Varianten, Hash-Generator.",        meta: "Tools 2.1–2.3, 2.7" },
   { titel: "Velomeld",                  url: "https://github.com/2Rat/velomeld",                              status: "aktiv",  beschreibung: "Bürger-App für Radwege-Meldungen (Kernprodukt).",                              meta: "Vorhaben 4.1" },
   { titel: "Velomeld Pro",              url: "https://github.com/2Rat/velomeld-pro",                          status: "aktiv",  beschreibung: "Profi-Variante / Repo-Split von Velomeld.",                                    meta: "Vorhaben 4.1" },
-  { titel: "RadPlan Pro",               url: "https://github.com/2Rat/radplan-pro",                           status: "wartet", beschreibung: "Profi-Erhebungs-PWA mit ERA-Konformitätscheck. Privates Repo.",                meta: "Vorhaben 4.2 · privat" },
+  { titel: "RadPlan Pro",               url: "https://github.com/2Rat/radplan-pro",                           status: "aktiv",  beschreibung: "Profi-Erhebungs-PWA mit ERA-Konformitätscheck. Repo privat, Deployment live auf Netlify.", meta: "Vorhaben 4.2 · privat" },
   { titel: "Schulweg-Check",            url: "https://github.com/2Rat/schulweg-check",                        status: "aktiv",  beschreibung: "Repo der Schulweg-Detektive (PWA + Auswertung).",                              meta: "Vorhaben 4.3" },
   { titel: "Bauhof-Inventar",           url: "https://github.com/2Rat/bauhof-inventar",                       status: "ruht",   beschreibung: "Standalone-PWA für Inventar/Aufgabenverwaltung im Bauhof.",                    meta: "Vorhaben 4.4" }
 ];
@@ -615,6 +700,7 @@ function zeigeCockpit(lizenz) {
   renderFristen();
   renderKacheln();
   initTastatur();
+  initQrModal();
   initNotizen();  // leer, aber nichts passiert ohne Feld
 }
 
@@ -753,6 +839,9 @@ function kachelWeb(p) {
         <a class="btn primary" href="${p.url}" target="_blank" rel="noopener">
           Öffnen →
         </a>
+        <button class="btn qr" type="button" data-qr-url="${p.url}" data-qr-titel="${p.titel}" title="QR-Code für Handy">
+          ▦ QR
+        </button>
       </div>
       <div class="kachel-meta">${p.meta}</div>
     </article>
@@ -766,6 +855,71 @@ function renderKacheln() {
   document.getElementById("claudeCount").textContent = `${PROJEKTE_CLAUDE.length} Projekte`;
   document.getElementById("webCount").textContent    = `${WEB_TOOLS.length} Adressen`;
   document.getElementById("codeCount").textContent   = `${CODE_REPOS.length} Repos`;
+
+  // QR-Buttons aktivieren (Event-Delegation auf alle .btn.qr)
+  document.querySelectorAll(".btn.qr").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      qrZeigen(btn.dataset.qrTitel, btn.dataset.qrUrl);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════
+// QR-MODAL
+// ═══════════════════════════════════════════════
+let qrInstance = null;
+
+function qrZeigen(titel, url) {
+  document.getElementById("qrTitle").textContent = titel;
+  document.getElementById("qrUrl").textContent = url;
+  const canvas = document.getElementById("qrCanvas");
+  canvas.innerHTML = "";  // alten QR entfernen
+
+  if (typeof QRCode === "undefined") {
+    canvas.innerHTML = '<div style="color:#C4532C;font-size:12px;padding:40px;">QR-Bibliothek nicht geladen.<br>Internetverbindung prüfen.</div>';
+  } else {
+    qrInstance = new QRCode(canvas, {
+      text: url,
+      width: 240,
+      height: 240,
+      colorDark: "#1A1A1A",
+      colorLight: "#FFFFFF",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+
+  document.getElementById("qrOverlay").classList.add("show");
+  document.getElementById("qrOverlay").setAttribute("aria-hidden", "false");
+}
+
+function qrSchliessen() {
+  document.getElementById("qrOverlay").classList.remove("show");
+  document.getElementById("qrOverlay").setAttribute("aria-hidden", "true");
+}
+
+function initQrModal() {
+  document.getElementById("qrClose").addEventListener("click", qrSchliessen);
+  document.getElementById("qrOverlay").addEventListener("click", e => {
+    if (e.target.id === "qrOverlay") qrSchliessen();
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && document.getElementById("qrOverlay").classList.contains("show")) {
+      qrSchliessen();
+    }
+  });
+  document.getElementById("qrCopy").addEventListener("click", async () => {
+    const url = document.getElementById("qrUrl").textContent;
+    try {
+      await navigator.clipboard.writeText(url);
+      const btn = document.getElementById("qrCopy");
+      const orig = btn.textContent;
+      btn.textContent = "✓ Kopiert";
+      setTimeout(() => { btn.textContent = orig; }, 1500);
+    } catch (err) {
+      alert("Kopieren nicht möglich – bitte URL manuell markieren.");
+    }
+  });
 }
 
 // ═══════════════════════════════════════════════
