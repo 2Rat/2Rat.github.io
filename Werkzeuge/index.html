@@ -176,7 +176,7 @@ function showDash(lic, orgName) {
   document.getElementById('welcomeMsg').textContent=`Willkommen, ${orgName||lic.org}`;
   const days = Math.ceil((new Date(lic.expires)-new Date())/(864e5));
   const el = document.getElementById('licenseInfo');
-  if (days<=30) el.innerHTML=`Lizenz bis: <span class="expired">${fmtDate(lic.expires)}</span> – <span class="expired">Läuft in ${days} Tagen ab!</span> → <a href="mailto:info@2rat.org" style="color:var(--blue)">info@2rat.org</a>`;
+  if (days<=30) el.innerHTML=`Lizenz bis: <span class="expired">${fmtDate(lic.expires)}</span> – <span class="expired">Läuft in ${days} Tagen ab!</span> → <a href="mailto:fahr2rat@gmail.com" style="color:var(--blue)">fahr2rat@gmail.com</a>`;
   else el.innerHTML=`Lizenz gültig bis: <strong>${fmtDate(lic.expires)}</strong> · Vollversion`;
 }
 
