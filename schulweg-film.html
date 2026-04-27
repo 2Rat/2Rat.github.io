@@ -26,30 +26,30 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .s8{background:radial-gradient(ellipse at 35% 65%,#4a1942,var(--bg) 60%)}
 .s9{background:radial-gradient(ellipse at 40% 60%,#14532d,var(--bg) 60%)}
 
-.t{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4.5vw,2.6rem);font-weight:800;line-height:1.2;margin-bottom:8px;opacity:0;transform:translateY(14px)}
-.tx{font-size:clamp(0.78rem,1.6vw,1rem);color:var(--mt);max-width:560px;line-height:1.55;opacity:0;transform:translateY(14px)}
-.ico{font-size:clamp(2.5rem,8vw,4.5rem);margin-bottom:8px;opacity:0;transform:translateY(14px)}
+.t{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4.5vw,4.5rem);font-weight:800;line-height:1.2;margin-bottom:8px;opacity:0;transform:translateY(14px)}
+.tx{font-size:clamp(0.78rem,1.6vw,1.6rem);color:var(--mt);max-width:min(900px,90vw);line-height:1.55;opacity:0;transform:translateY(14px)}
+.ico{font-size:clamp(2.5rem,8vw,7rem);margin-bottom:8px;opacity:0;transform:translateY(14px)}
 .rv{opacity:1!important;transform:translateY(0)!important;transition:opacity .4s,transform .4s}
 .hi{color:var(--ac)}.hg{color:var(--gn)}.hb{color:var(--bl)}.ho{color:var(--or)}
 @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 .dofl{animation:fl 3s ease-in-out infinite}
 
 .steps{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:4px}
-.sc{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 7px;width:clamp(90px,18vw,150px);text-align:center;opacity:0;transform:translateY(14px)}
-.sc .si{font-size:1.6rem;margin-bottom:2px}
-.sc .sn{font-family:'Baloo 2',cursive;font-size:.62rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.5px}
-.sc .sl{font-size:.72rem;font-weight:600;line-height:1.3}
+.sc{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 7px;width:clamp(90px,18vw,240px);text-align:center;opacity:0;transform:translateY(14px)}
+.sc .si{font-size:clamp(1.6rem,3vw,2.6rem);margin-bottom:2px}
+.sc .sn{font-family:'Baloo 2',cursive;font-size:clamp(.62rem,1vw,1rem);font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.5px}
+.sc .sl{font-size:clamp(.72rem,1.2vw,1.15rem);font-weight:600;line-height:1.3}
 
 .badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:5px}
-.b{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);border-radius:50px;padding:5px 12px;font-size:.78rem;font-weight:600;opacity:0;transform:translateY(14px);white-space:nowrap}
+.b{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);border-radius:50px;padding:5px 12px;font-size:clamp(.78rem,1.3vw,1.2rem);font-weight:600;opacity:0;transform:translateY(14px);white-space:nowrap}
 .b.r{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3)}
 
 .flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0}
-.fi{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.72rem;font-weight:600;opacity:0;transform:translateY(14px)}
-.fi .fic{font-size:1.6rem;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.07);border-radius:50%;border:2px solid rgba(255,255,255,.12)}
-.fa{font-size:1rem;color:var(--ac);opacity:0;transform:translateY(14px)}
+.fi{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:clamp(.72rem,1.2vw,1.1rem);font-weight:600;opacity:0;transform:translateY(14px)}
+.fi .fic{font-size:clamp(1.6rem,2.8vw,2.6rem);width:clamp(46px,5vw,80px);height:clamp(46px,5vw,80px);display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.07);border-radius:50%;border:2px solid rgba(255,255,255,.12)}
+.fa{font-size:clamp(1rem,1.6vw,1.6rem);color:var(--ac);opacity:0;transform:translateY(14px)}
 
-.mm{width:clamp(200px,50vw,360px);height:clamp(100px,22vw,180px);background:#1a2332;border-radius:10px;border:2px solid rgba(255,255,255,.1);position:relative;overflow:hidden;margin-bottom:8px;opacity:0;transform:translateY(14px)}
+.mm{width:clamp(200px,50vw,600px);height:clamp(100px,22vw,300px);background:#1a2332;border-radius:10px;border:2px solid rgba(255,255,255,.1);position:relative;overflow:hidden;margin-bottom:8px;opacity:0;transform:translateY(14px)}
 .mg{position:absolute;inset:0;opacity:.1;background-image:linear-gradient(rgba(255,255,255,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.3) 1px,transparent 1px);background-size:30px 30px}
 .mr{position:absolute;background:rgba(148,163,184,.2);border-radius:2px}
 .mp{position:absolute;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;opacity:0;box-shadow:0 0 6px rgba(0,0,0,.3);z-index:2;transform:translateY(-10px)}
@@ -60,10 +60,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .mld{width:7px;height:7px;border-radius:50%}
 
 .pf{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:8px}
-.pc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 8px;width:clamp(120px,24vw,180px);text-align:center;opacity:0;transform:translateY(14px)}
-.pc .pi{font-size:1.8rem;margin-bottom:4px}
-.pc .pl{font-size:.78rem;font-weight:700;margin-bottom:2px}
-.pc .pd{font-size:.62rem;color:var(--mt);line-height:1.3}
+.pc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 8px;width:clamp(120px,24vw,280px);text-align:center;opacity:0;transform:translateY(14px)}
+.pc .pi{font-size:clamp(1.8rem,3vw,3rem);margin-bottom:4px}
+.pc .pl{font-size:clamp(.78rem,1.3vw,1.2rem);font-weight:700;margin-bottom:2px}
+.pc .pd{font-size:clamp(.62rem,1vw,1rem);color:var(--mt);line-height:1.3}
 
 .br{font-size:.65rem;color:var(--mt);margin-top:12px;opacity:.5;line-height:1.4}
 
@@ -95,24 +95,24 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 /* LANDSCAPE */
 @media (orientation:landscape){
   .scene{padding:8px 16px 48px}
-  .t{font-size:clamp(1rem,3vh,1.6rem);margin-bottom:4px}
-  .tx{font-size:clamp(.68rem,1.6vh,.85rem);line-height:1.35}
-  .ico{font-size:clamp(1.8rem,7vh,3rem);margin-bottom:4px}
+  .t{font-size:clamp(1rem,3vh,4rem);margin-bottom:4px}
+  .tx{font-size:clamp(.68rem,1.6vh,1.5rem);line-height:1.35}
+  .ico{font-size:clamp(1.8rem,7vh,6rem);margin-bottom:4px}
   .steps{gap:4px;margin-top:2px}
-  .sc{width:clamp(80px,13vw,130px);padding:5px 4px}
-  .sc .si{font-size:1.1rem;margin-bottom:0}
-  .sc .sn{font-size:.52rem}
-  .sc .sl{font-size:.6rem}
+  .sc{width:clamp(80px,13vw,220px);padding:5px 4px}
+  .sc .si{font-size:clamp(1.1rem,2.5vw,2.2rem);margin-bottom:0}
+  .sc .sn{font-size:clamp(.52rem,.9vw,.95rem)}
+  .sc .sl{font-size:clamp(.6rem,1.1vw,1.05rem)}
   .badges{gap:4px;margin-top:2px}
-  .b{padding:3px 8px;font-size:.65rem}
+  .b{padding:3px 8px;font-size:clamp(.65rem,1.2vw,1.1rem)}
   .flow{margin:5px 0;gap:4px}
-  .fi .fic{width:34px;height:34px;font-size:1.1rem}
-  .fi{font-size:.6rem}
-  .fa{font-size:.8rem}
-  .mm{height:clamp(70px,28vh,140px);width:clamp(180px,45vw,340px);margin-bottom:4px}
+  .fi .fic{width:clamp(34px,4.5vw,72px);height:clamp(34px,4.5vw,72px);font-size:clamp(1.1rem,2.5vw,2.2rem)}
+  .fi{font-size:clamp(.6rem,1vw,1.05rem)}
+  .fa{font-size:clamp(.8rem,1.4vw,1.4rem)}
+  .mm{height:clamp(70px,28vh,280px);width:clamp(180px,45vw,580px);margin-bottom:4px}
   .pf{gap:4px;margin-top:4px}
-  .pc{width:clamp(105px,20vw,160px);padding:5px 5px}
-  .pc .pi{font-size:1.2rem;margin-bottom:1px}
+  .pc{width:clamp(105px,20vw,260px);padding:5px 5px}
+  .pc .pi{font-size:clamp(1.2rem,2.5vw,2.4rem);margin-bottom:1px}
   .pc .pl{font-size:.65rem}
   .pc .pd{font-size:.52rem}
   .ctrl{padding:3px 8px 5px}
@@ -256,7 +256,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   <div class="tx" data-d="400" style="margin-bottom:5px">Kostenlos im Browser oder als Android-App:</div>
   <div class="badges" style="margin-bottom:10px">
     <a href="https://009aj.github.io/schulweg-check/" target="_blank" class="b" data-d="600" style="background:rgba(37,99,235,.15);border-color:rgba(96,165,250,.3);text-decoration:none;color:var(--tx);cursor:pointer">&#127760; 009aj.github.io/schulweg-check</a>
-    <div class="b" data-d="700" style="background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.15);opacity:0.7">&#128241; Google Play Store – demnächst</div>
+    <a href="https://play.google.com/store/apps/details?id=de.zweirat.schulwegdetektive&amp;hl=de" target="_blank" class="b" data-d="700" style="background:rgba(34,197,94,.15);border-color:rgba(74,222,128,.3);text-decoration:none;color:var(--tx);cursor:pointer">&#128241; Im Google Play Store</a>
   </div>
   <div class="tx" data-d="900" style="font-size:.78rem"><strong>Kontakt:</strong><br>Armin Jung &#183; Jugendpflege der Gemeinde Kirkel<br>a.jung@kirkel.de &#183; 06841-809860</div>
   <div class="br" data-d="1100">Gemeinschaftsprojekt von <strong>Jugendpflege der Gemeinde Kirkel</strong> und <strong>2Rat &#8211; B&#252;ro f&#252;r Radverkehrsplanung</strong></div>
