@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vergabe-Assistent Saarland</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', 'Segoe UI', sans-serif; background: #f8fafc; }
+  .art-btn { transition: all 0.15s ease; }
+  .art-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important; }
+  .result-enter { animation: fadeUp 0.35s ease-out; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .quick-btn { transition: all 0.12s; }
+  .quick-btn:hover { background: #eef2ff !important; }
+  .step-row:hover { background: #f9fafb; }
+  input[type=text]:focus { outline: none; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); border-color: #6366f1; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const e = React.createElement;
+const { useState, useEffect, useRef } = React;
+
+const THRESHOLDS_2026 = { bau: 5404000, liefer_dl: 216000, freiberuflich: 216000 };
+const LEISTUNGSARTEN = [
+  { id: "bau", label: "Bau", icon: "\u{1F3D7}\uFE0F" },
+  { id: "liefer_dl", label: "Liefer / DL", icon: "\u{1F4E6}" },
+  { id: "freiberuflich", label: "Freiberuflich", icon: "\u{1F4D0}" },
+];
+
+function formatEuro(val) { return val.toLocaleString("de-DE") + " \u20AC"; }
+
+function getVerfahren(wert, art) {
+  const sw = THRESHOLDS_2026[art];
+  if (wert <= 0) return null;
+  if (wert <= 100000) {
+    return {
+      level: "direkt", name: "Direktauftrag", color: "#10b981",
+      bgColor: "#ecfdf5", borderColor: "#a7f3d0", tagLabel: "Einfachstes Verfahren",
+      kurz: "Kein f\u00F6rmliches Verfahren n\u00F6tig. Auftrag direkt vergeben.",
+      pflicht: [
+        "Haushaltsmittel verf\u00FCgbar?",
+        "Vergabevermerk anlegen (Bedarf + Wirtschaftlichkeit)",
+        "Auftrag erteilen",
+      ],
+      empfohlen: [
+        "Vergleichsangebot einholen (Markterkundung)",
+        "Mehr-Augen-Prinzip bei > 25.000 \u20AC",
+      ],
+      nurBeiBedarf: [
+        "Bei F\u00F6rdermitteln: ANBest-Vorgaben des F\u00F6rdermittelgebers pr\u00FCfen",
+        "Werkst\u00E4tten f\u00FCr behinderte Menschen / Inklusionsbetriebe ber\u00FCcksichtigen",
+      ],
+      rechtsgrundlagen: [
+        "Vergabeerlass SL 2025, Ziff. 2",
+        "\u00A7 82 KSVG",
+        art === "bau" ? "\u00A7 3a Abs. 4 VOB/A" : "\u00A7 14 UVgO",
+      ],
+    };
+  }
+  if (wert <= sw) {
+    const isNahSchwelle = wert > sw * 0.8;
+    const isFreihaendig = wert <= (art === "bau" ? sw * 0.3 : sw * 0.5);
+    return {
+      level: "vereinfacht",
+      name: isFreihaendig ? "Freih\u00E4ndige Vergabe" : "Beschr\u00E4nkte Ausschreibung o. TW",
+      color: "#f59e0b", bgColor: "#fffbeb", borderColor: "#fde68a",
+      tagLabel: "Unterhalb EU-Schwellenwert",
+      kurz: isFreihaendig
+        ? "Vereinfachtes Verfahren \u2013 mind. 3 Angebote einholen."
+        : "Beschr\u00E4nkte Ausschreibung \u2013 mind. 3\u20135 Bieter auffordern.",
+      pflicht: [
+        "Haushaltsmittel verf\u00FCgbar?",
+        "Leistungsbeschreibung erstellen",
+        isFreihaendig ? "Mind. 3 Angebote einholen" : "Mind. 3\u20135 Bieter auffordern",
+        "Angebote vergleichen + dokumentieren",
+        "Vergabevermerk mit Verfahrenswahl-Begr\u00FCndung",
+      ],
+      empfohlen: [
+        "Gleichbehandlung dokumentieren (keine Ortspr\u00E4ferenz)",
+        "Antikorruption: Rotation, Mehr-Augen-Prinzip",
+        ...(isNahSchwelle ? ["\u26A0\uFE0F N\u00E4he EU-Schwellenwert \u2013 Puffer einplanen!"] : []),
+      ],
+      nurBeiBedarf: [
+        "Bei F\u00F6rdermitteln: ANBest-Vorgaben pr\u00FCfen",
+        "Werkst\u00E4tten / Inklusionsbetriebe ber\u00FCcksichtigen",
+      ],
+      rechtsgrundlagen: [
+        "Vergabeerlass SL 2025, Ziff. 3\u20134",
+        "\u00A7 82 KSVG",
+        art === "bau" ? "\u00A7 3a Abs. 2\u20133 VOB/A" : "\u00A7\u00A7 8\u201312 UVgO",
+      ],
+    };
+  }
+  return {
+    level: "eu", name: "EU-weite Ausschreibung", color: "#ef4444",
+    bgColor: "#fef2f2", borderColor: "#fecaca", tagLabel: "EU-Vergaberecht",
+    kurz: "F\u00F6rmliches EU-Verfahren nach GWB/VgV. Fristen, Bekanntmachung, Dokumentation zwingend.",
+    pflicht: [
+      "Bedarfsermittlung + Kostensch\u00E4tzung",
+      "Vergabeart festlegen (offen / nichtoffen / Verhandlung)",
+      "Leistungsbeschreibung produktneutral erstellen",
+      "Eignungs- und Zuschlagskriterien vorab festlegen",
+      "EU-weite Bekanntmachung (TED)",
+      "Vergabeunterlagen elektronisch bereitstellen",
+      "Fristen nach VgV/VOB/A-EU einhalten",
+      "Angebotswertung + Vergabevermerk",
+      "Informationspflicht \u00A7 134 GWB (Wartefrist)",
+    ],
+    empfohlen: [
+      "Rechtliche Beratung einholen",
+      "Vorinformation (Vorabbekanntmachung) pr\u00FCfen",
+    ],
+    nurBeiBedarf: [
+      "F\u00F6rdermittelvorgaben pr\u00FCfen",
+      "Werkst\u00E4tten / Inklusionsbetriebe",
+    ],
+    rechtsgrundlagen: [
+      "GWB, 4. Teil",
+      art === "bau" ? "VOB/A Abschnitt 2 (EU)" : "VgV",
+      "\u00A7 82 KSVG",
+      "EU-SW 2026: " + THRESHOLDS_2026[art].toLocaleString("de-DE") + " \u20AC",
+    ],
+  };
+}
+
+function StepRow({ text, done, onToggle, type }) {
+  const colors = {
+    pflicht: { check: "#10b981" },
+    empfohlen: { check: "#f59e0b" },
+    bedarf: { check: "#3b82f6" },
+  };
+  const c = colors[type];
+  const isWarning = text.startsWith("\u26A0");
+  return e("div", {
+    onClick: onToggle, className: "step-row",
+    style: {
+      display: "flex", alignItems: "center", gap: 12,
+      padding: "12px 14px", cursor: "pointer", borderRadius: 10,
+      background: done ? (type === "pflicht" ? "#f0fdf4" : type === "empfohlen" ? "#fffbeb" : "#f0f9ff") : "transparent",
+      transition: "all 0.15s ease", userSelect: "none",
+      borderLeft: "3px solid " + (done ? c.check : "transparent"),
+    }
+  },
+    e("div", { style: {
+      width: 24, height: 24, minWidth: 24, borderRadius: 7,
+      border: "2px solid " + (done ? c.check : "#d1d5db"),
+      background: done ? c.check : "#fff",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      transition: "all 0.15s ease",
+    }}, done ? e("svg", { width: 14, height: 14, viewBox: "0 0 24 24", fill: "none", stroke: "#fff", strokeWidth: 3, strokeLinecap: "round", strokeLinejoin: "round" }, e("polyline", { points: "20 6 9 17 4 12" })) : null),
+    e("span", { style: {
+      fontSize: 14, lineHeight: 1.5,
+      color: done ? "#9ca3af" : isWarning ? "#b45309" : "#1f2937",
+      textDecoration: done ? "line-through" : "none",
+      fontWeight: isWarning ? 600 : 400, flex: 1,
+    }}, text)
+  );
+}
+
+function Collapsible({ title, badge, children }) {
+  const [open, setOpen] = useState(false);
+  return e("div", null,
+    e("button", {
+      onClick: function() { setOpen(!open); },
+      style: {
+        width: "100%", display: "flex", alignItems: "center", gap: 8,
+        padding: "10px 14px", background: "none", border: "none",
+        cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#6b7280", textAlign: "left",
+      }
+    },
+      e("span", { style: { transform: open ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s", fontSize: 10, display: "inline-block" }}, "\u25B6"),
+      title,
+      badge ? e("span", { style: { fontSize: 11, fontWeight: 500, padding: "2px 8px", borderRadius: 10, background: "#f1f5f9", color: "#64748b" }}, badge) : null
+    ),
+    open ? e("div", { style: { paddingLeft: 4 }}, children) : null
+  );
+}
+
+function VermerkGenerator({ wert, art, verfahren }) {
+  const [copied, setCopied] = useState(false);
+  const [show, setShow] = useState(false);
+  const artLabel = LEISTUNGSARTEN.find(function(l) { return l.id === art; })?.label || art;
+  const today = new Date().toLocaleDateString("de-DE");
+  var text;
+  if (verfahren.level === "direkt") {
+    text = "Vergabevermerk \u2013 Direktauftrag\n\nDatum: " + today + "\nLeistungsart: " + artLabel + "\nGesch. Auftragswert: " + formatEuro(wert) + " (netto)\nVerfahren: Direktauftrag gem. Vergabeerlass SL 2025\n\nBegr\u00FCndung:\nDer gesch\u00E4tzte Auftragswert liegt unterhalb der Wertgrenze von 100.000 \u20AC netto f\u00FCr Direktauftr\u00E4ge gem. Vergabeerlass SL 2025 (Amtsbl. Nr. 26/2025). Die Vergabe erfolgt unter Beachtung der Haushaltsgrundsätze der Wirtschaftlichkeit und Sparsamkeit (\u00A7 82 KSVG).\n\nAuftragnehmer: ___________________________\nAngebotssumme: _______________ \u20AC netto\nWirtschaftlichkeit: ___________________________\n\nUnterschrift: ___________________________";
+  } else if (verfahren.level === "vereinfacht") {
+    text = "Vergabevermerk \u2013 " + verfahren.name + "\n\nDatum: " + today + "\nLeistungsart: " + artLabel + "\nGesch. Auftragswert: " + formatEuro(wert) + " (netto)\nVerfahren: " + verfahren.name + " gem. Vergabeerlass SL 2025\n\nBegr\u00FCndung Verfahrenswahl:\nDer gesch. Auftragswert liegt unterhalb des EU-Schwellenwerts (" + formatEuro(THRESHOLDS_2026[art]) + "). Die " + verfahren.name + " ist gem. Vergabeerlass SL 2025 ohne weitere Einzelbegr\u00FCndung zul\u00E4ssig.\n\nBeteiligte Bieter:\n1. _______________ \u2013 Angebot: ___________ \u20AC\n2. _______________ \u2013 Angebot: ___________ \u20AC\n3. _______________ \u2013 Angebot: ___________ \u20AC\n\nZuschlag an: ___________________________\nBegr\u00FCndung: ___________________________\n\nUnterschrift: ___________________________";
+  } else {
+    text = "Vergabevermerk \u2013 EU-weites Verfahren\n\nDatum: " + today + "\nLeistungsart: " + artLabel + "\nGesch. Auftragswert: " + formatEuro(wert) + " (netto)\n\nDer Auftragswert erreicht/\u00FCberschreitet den EU-Schwellenwert (" + formatEuro(THRESHOLDS_2026[art]) + "). Vollst\u00E4ndiger Vergabevermerk gem. \u00A7 8 VgV erforderlich.\n\n[Hinweis: Rechtliche Beratung empfohlen]";
+  }
+  function handleCopy() {
+    navigator.clipboard.writeText(text).then(function() {
+      setCopied(true);
+      setTimeout(function() { setCopied(false); }, 2000);
+    });
+  }
+  return e("div", { style: { background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.04)", marginBottom: 12 }},
+    e("button", { onClick: function() { setShow(!show); }, style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", background: "none", border: "none", cursor: "pointer" }},
+      e("span", { style: { fontSize: 14, fontWeight: 700, color: "#1e293b" }}, "\u{1F4DD} Vergabevermerk-Vorlage"),
+      e("span", { style: { transform: show ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s", fontSize: 10, color: "#94a3b8" }}, "\u25B6")
+    ),
+    show ? e("div", null,
+      e("div", { style: { padding: "0 16px 8px", display: "flex", justifyContent: "flex-end" }},
+        e("button", { onClick: handleCopy, style: { padding: "6px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600, border: "none", cursor: "pointer", background: copied ? "#10b981" : "#6366f1", color: "#fff", transition: "all 0.2s" }},
+          copied ? "\u2713 Kopiert!" : "In Zwischenablage kopieren")
+      ),
+      e("pre", { style: { padding: "14px 16px", margin: 0, fontSize: 12, lineHeight: 1.7, color: "#374151", background: "#f8fafc", whiteSpace: "pre-wrap", fontFamily: "'JetBrains Mono', Consolas, monospace", maxHeight: 280, overflowY: "auto", borderTop: "1px solid #f1f5f9" }}, text)
+    ) : null
+  );
+}
+
+function App() {
+  const [art, setArt] = useState(null);
+  const [wertInput, setWertInput] = useState("");
+  const [wert, setWert] = useState(0);
+  const [checks, setChecks] = useState({});
+  const resultRef = useRef(null);
+
+  function parseWert(input) {
+    var cleaned = input.replace(/[^\d,.]/g, "").replace(/\./g, "").replace(",", ".");
+    return parseFloat(cleaned) || 0;
+  }
+
+  var verfahren = art && wert > 0 ? getVerfahren(wert, art) : null;
+
+  useEffect(function() {
+    setChecks({});
+    if (verfahren) {
+      setTimeout(function() { resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }, 120);
+    }
+  }, [art, wert]);
+
+  function toggle(key) { setChecks(function(prev) { var n = {}; for (var k in prev) n[k] = prev[k]; n[key] = !prev[key]; return n; }); }
+  var pflichtDone = verfahren ? verfahren.pflicht.filter(function(_, i) { return checks["p" + i]; }).length : 0;
+  var pflichtTotal = verfahren ? verfahren.pflicht.length : 0;
+  var allDone = pflichtDone === pflichtTotal && pflichtTotal > 0;
+
+  return e("div", { style: { minHeight: "100vh", background: "#f8fafc" }},
+    // Header
+    e("div", { style: { background: "#1e293b", padding: "16px 20px", borderBottom: "2px solid #6366f1" }},
+      e("div", { style: { maxWidth: 640, margin: "0 auto", display: "flex", alignItems: "center", gap: 10 }},
+        e("span", { style: { fontSize: 22 }}, "\u2696\uFE0F"),
+        e("div", null,
+          e("h1", { style: { fontSize: 18, fontWeight: 700, color: "#fff", margin: 0 }}, "Vergabe-Assistent Saarland"),
+          e("p", { style: { fontSize: 11, color: "#64748b", margin: 0 }}, "Vergabeerlass 2025 \u00B7 EU-SW 2026 \u00B7 KSVG")
+        )
+      )
+    ),
+    e("div", { style: { maxWidth: 640, margin: "0 auto", padding: "20px 16px 60px" }},
+      // Input Card
+      e("div", { style: { background: "#fff", borderRadius: 14, padding: 16, border: "1px solid #e2e8f0", marginBottom: 16, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
+        // Leistungsart
+        e("div", { style: { marginBottom: 14 }},
+          e("label", { style: { fontSize: 12, fontWeight: 600, color: "#64748b", display: "block", marginBottom: 8 }}, "Leistungsart"),
+          e("div", { style: { display: "flex", gap: 8 }},
+            LEISTUNGSARTEN.map(function(l) {
+              return e("button", {
+                key: l.id, className: "art-btn",
+                onClick: function() { setArt(l.id); },
+                style: {
+                  flex: 1, padding: "10px 8px", borderRadius: 10,
+                  border: art === l.id ? "2px solid #6366f1" : "2px solid #e2e8f0",
+                  background: art === l.id ? "#eef2ff" : "#fff",
+                  cursor: "pointer", textAlign: "center",
+                }
+              },
+                e("div", { style: { fontSize: 20 }}, l.icon),
+                e("div", { style: { fontSize: 12, fontWeight: art === l.id ? 700 : 500, color: art === l.id ? "#4338ca" : "#6b7280", marginTop: 2 }}, l.label)
+              );
+            })
+          )
+        ),
+        // Auftragswert
+        e("div", null,
+          e("label", { style: { fontSize: 12, fontWeight: 600, color: "#64748b", display: "block", marginBottom: 8 }}, "Auftragswert netto"),
+          e("div", { style: { display: "flex", borderRadius: 10, border: "2px solid #e2e8f0", overflow: "hidden" }},
+            e("input", {
+              type: "text", value: wertInput,
+              onChange: function(ev) { setWertInput(ev.target.value); setWert(parseWert(ev.target.value)); },
+              placeholder: "z.B. 75000",
+              style: { flex: 1, padding: "10px 14px", fontSize: 18, border: "none", fontFamily: "'JetBrains Mono', monospace", color: "#1e293b", outline: "none", background: "transparent" }
+            }),
+            e("div", { style: { padding: "10px 14px", fontSize: 14, fontWeight: 600, color: "#94a3b8", background: "#f8fafc", borderLeft: "1px solid #e2e8f0", display: "flex", alignItems: "center" }}, "\u20AC")
+          ),
+          e("div", { style: { display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }},
+            [5000, 50000, 100000, 150000, 250000].map(function(v) {
+              return e("button", {
+                key: v, className: "quick-btn",
+                onClick: function() { setWertInput(v.toString()); setWert(v); },
+                style: {
+                  padding: "4px 10px", borderRadius: 6, fontSize: 11,
+                  border: "1px solid #e2e8f0", background: wert === v ? "#eef2ff" : "#fff",
+                  color: "#64748b", cursor: "pointer",
+                  fontFamily: "'JetBrains Mono', monospace", fontWeight: 500,
+                }
+              }, v >= 1000 ? (v / 1000) + "k" : v);
+            })
+          )
+        )
+      ),
+
+      // RESULT
+      verfahren ? e("div", { ref: resultRef, className: "result-enter" },
+        // Badge
+        e("div", { style: { background: verfahren.bgColor, border: "2px solid " + verfahren.borderColor, borderRadius: 14, padding: "16px 18px", marginBottom: 12 }},
+          e("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }},
+            e("div", { style: { padding: "3px 10px", borderRadius: 6, fontSize: 11, fontWeight: 700, background: verfahren.color, color: "#fff", textTransform: "uppercase", letterSpacing: "0.04em" }}, verfahren.tagLabel),
+            e("span", { style: { fontSize: 11, color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace" }}, formatEuro(wert))
+          ),
+          e("h2", { style: { fontSize: 20, fontWeight: 700, color: "#1e293b", margin: "0 0 4px" }}, verfahren.name),
+          e("p", { style: { fontSize: 14, color: "#4b5563", margin: 0, lineHeight: 1.5 }}, verfahren.kurz)
+        ),
+
+        // Pflicht
+        e("div", { style: { background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", overflow: "hidden", marginBottom: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
+          e("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderBottom: "1px solid #f1f5f9" }},
+            e("div", { style: { display: "flex", alignItems: "center", gap: 8 }},
+              e("span", { style: { width: 8, height: 8, borderRadius: "50%", background: allDone ? "#10b981" : "#ef4444", display: "inline-block" }}),
+              e("span", { style: { fontSize: 14, fontWeight: 700, color: "#1e293b" }}, "Pflichtschritte")
+            ),
+            e("span", { style: { fontSize: 13, fontWeight: 700, fontFamily: "'JetBrains Mono', monospace", color: allDone ? "#10b981" : "#6b7280" }}, pflichtDone + "/" + pflichtTotal)
+          ),
+          e("div", { style: { padding: "4px 4px" }},
+            verfahren.pflicht.map(function(t, i) {
+              return e(StepRow, { key: "p" + i, text: t, done: !!checks["p" + i], onToggle: function() { toggle("p" + i); }, type: "pflicht" });
+            })
+          ),
+          allDone ? e("div", { style: { padding: "10px 16px", background: "#f0fdf4", borderTop: "1px solid #bbf7d0", fontSize: 13, fontWeight: 600, color: "#059669", textAlign: "center" }}, "\u2705 Fertig \u2013 Auftrag kann erteilt werden") : null
+        ),
+
+        // Empfohlen
+        e("div", { style: { background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", overflow: "hidden", marginBottom: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
+          e(Collapsible, { title: "\u{1F4A1} Empfohlen", badge: "" + verfahren.empfohlen.length },
+            e("div", { style: { padding: "0 4px 4px" }},
+              verfahren.empfohlen.map(function(t, i) {
+                return e(StepRow, { key: "e" + i, text: t, done: !!checks["e" + i], onToggle: function() { toggle("e" + i); }, type: "empfohlen" });
+              })
+            )
+          )
+        ),
+
+        // Nur bei Bedarf
+        e("div", { style: { background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", overflow: "hidden", marginBottom: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
+          e(Collapsible, { title: "\u{1F4CE} Nur bei Bedarf", badge: "" + verfahren.nurBeiBedarf.length },
+            e("div", { style: { padding: "0 4px 4px" }},
+              verfahren.nurBeiBedarf.map(function(t, i) {
+                return e(StepRow, { key: "b" + i, text: t, done: !!checks["b" + i], onToggle: function() { toggle("b" + i); }, type: "bedarf" });
+              })
+            )
+          )
+        ),
+
+        // Vergabevermerk
+        e(VermerkGenerator, { wert: wert, art: art, verfahren: verfahren }),
+
+        // Rechtsgrundlagen
+        e("div", { style: { background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
+          e(Collapsible, { title: "\u{1F4DA} Rechtsgrundlagen", badge: "" + verfahren.rechtsgrundlagen.length },
+            e("div", { style: { padding: "0 4px 8px" }},
+              verfahren.rechtsgrundlagen.map(function(rg, i) {
+                return e("div", { key: i, style: { padding: "6px 14px", fontSize: 13, color: "#374151", background: i % 2 === 0 ? "#f8fafc" : "transparent", borderRadius: 6, marginBottom: 1 }}, rg);
+              })
+            )
+          )
+        )
+      ) : null,
+
+      // Footer
+      e("div", { style: { marginTop: 32, padding: "12px 16px", borderRadius: 10, background: "rgba(0,0,0,0.02)", border: "1px solid #e2e8f0" }},
+        e("p", { style: { fontSize: 10, color: "#a1a1aa", margin: 0, lineHeight: 1.6 }},
+          "Orientierungshilfe, keine Rechtsberatung. Vergabeerlass SL 2025 (Amtsbl. 26/2025, ab 01.07.2025 unbefristet), EU-SW 2026/27, KSVG \u00A7\u00A7 82 ff. Alle Werte netto. Bei F\u00F6rdermitteln ggf. strengere Vorgaben. Stand 03/2026."
+        )
+      )
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(e(App));
+</script>
+</body>
+</html>
