@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Förderrichtlinien Radverkehr – 2RAT Werkzeuge</title>
+<style>
+  :root{
+    --c-bg:#f4f6f5;
+    --c-surface:#ffffff;
+    --c-ink:#1a2421;
+    --c-ink-soft:#4a544f;
+    --c-line:#d8dedb;
+    --c-accent:#2d6a4f;       /* Saarland-Grün, gedämpft */
+    --c-accent-soft:#e8f1ed;
+    --c-accent-strong:#1b4332;
+    --c-bund:#1d4e89;          /* Bundes-Blau für JGF */
+    --c-bund-soft:#e6edf5;
+    --c-warn:#9a4a14;
+    --c-warn-soft:#fbeee2;
+    --c-praxis:#7a5c00;
+    --c-praxis-soft:#fcf6da;
+    --c-shadow:0 1px 2px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.04);
+    --r-md:6px;
+    --r-lg:10px;
+    --f-display:"Source Serif 4","Source Serif Pro",Georgia,serif;
+    --f-body:"Inter","Segoe UI",system-ui,sans-serif;
+    --f-mono:"JetBrains Mono","SFMono-Regular",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--c-bg);color:var(--c-ink);font-family:var(--f-body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+  /* ---------- HEADER ---------- */
+  .topbar{background:var(--c-surface);border-bottom:1px solid var(--c-line)}
+  .topbar-inner{max-width:1200px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand-logo{width:48px;height:48px;border-radius:8px;background:var(--c-accent-strong);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.5px}
+  .brand-text{display:flex;flex-direction:column;line-height:1.2}
+  .brand-text strong{font-family:var(--f-display);font-size:17px;font-weight:600}
+  .brand-text span{font-size:12px;color:var(--c-ink-soft)}
+  .topbar-meta{font-size:12px;color:var(--c-ink-soft);text-align:right}
+  .topbar-meta a{color:var(--c-accent);text-decoration:none}
+
+  /* ---------- HERO ---------- */
+  .hero{background:linear-gradient(180deg,#fff 0%,var(--c-bg) 100%);border-bottom:1px solid var(--c-line);padding:36px 24px 28px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero-eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--c-accent);font-weight:600;margin-bottom:8px}
+  .hero h1{font-family:var(--f-display);font-size:34px;line-height:1.15;margin:0 0 10px;font-weight:600;letter-spacing:-.5px}
+  .hero p.lead{font-size:16px;color:var(--c-ink-soft);max-width:780px;margin:0 0 18px}
+  .hero-stats{display:flex;flex-wrap:wrap;gap:20px;margin-top:16px}
+  .stat{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:10px 14px;font-size:13px}
+  .stat strong{display:block;font-family:var(--f-display);font-size:18px;color:var(--c-accent-strong);margin-bottom:2px}
+  .stat span{color:var(--c-ink-soft)}
+
+  /* ---------- TABS ---------- */
+  .tabs{background:var(--c-surface);border-bottom:1px solid var(--c-line);position:sticky;top:0;z-index:20;box-shadow:var(--c-shadow)}
+  .tabs-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin}
+  .tab{background:none;border:none;padding:14px 18px;font-family:var(--f-body);font-size:14px;font-weight:500;color:var(--c-ink-soft);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s ease}
+  .tab:hover{color:var(--c-ink)}
+  .tab.active{color:var(--c-accent-strong);border-bottom-color:var(--c-accent)}
+  .tab-icon{display:inline-block;margin-right:6px;opacity:.7}
+
+  /* ---------- MAIN ---------- */
+  main{max-width:1200px;margin:0 auto;padding:32px 24px 64px}
+  .panel{display:none}
+  .panel.active{display:block;animation:fadeIn .3s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  h2.section{font-family:var(--f-display);font-size:24px;font-weight:600;margin:0 0 6px;letter-spacing:-.3px}
+  p.section-sub{color:var(--c-ink-soft);margin:0 0 24px;font-size:14px}
+  h3.sub{font-family:var(--f-display);font-size:18px;font-weight:600;margin:32px 0 12px}
+
+  /* ---------- CARDS ---------- */
+  .card{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:20px 22px;margin-bottom:16px;box-shadow:var(--c-shadow)}
+  .card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:8px}
+  .card h4{font-family:var(--f-display);font-size:16px;font-weight:600;margin:0}
+  .card .num{font-family:var(--f-mono);font-size:12px;color:var(--c-accent);background:var(--c-accent-soft);padding:2px 8px;border-radius:4px;font-weight:600}
+  .card p{margin:6px 0;font-size:14px}
+  .card .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .tag{font-size:11px;padding:3px 9px;border-radius:11px;background:var(--c-accent-soft);color:var(--c-accent-strong);font-weight:500}
+  .tag.warn{background:var(--c-warn-soft);color:var(--c-warn)}
+  .tag.bund{background:var(--c-bund-soft);color:var(--c-bund)}
+  .tag.outline{background:transparent;border:1px solid var(--c-line);color:var(--c-ink-soft)}
+
+  /* ---------- HINWEIS-BOX (2RAT-Stil) ---------- */
+  .hinweis{background:var(--c-praxis-soft);border-left:4px solid var(--c-praxis);padding:14px 18px;border-radius:0 var(--r-md) var(--r-md) 0;margin:16px 0;font-size:14px}
+  .hinweis strong{color:var(--c-praxis);font-weight:600}
+  .hinweis-blau{background:var(--c-bund-soft);border-left-color:var(--c-bund)}
+  .hinweis-blau strong{color:var(--c-bund)}
+  .hinweis-gruen{background:var(--c-accent-soft);border-left-color:var(--c-accent)}
+  .hinweis-gruen strong{color:var(--c-accent-strong)}
+
+  /* ---------- TABLE ---------- */
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);overflow:hidden}
+  .tbl th,.tbl td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--c-line);vertical-align:top}
+  .tbl th{background:var(--c-accent-soft);font-weight:600;color:var(--c-accent-strong);font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl tr:hover td{background:#fafbfa}
+  .tbl td.num{font-family:var(--f-mono);font-size:13px;white-space:nowrap}
+
+  /* ---------- COMPARE GRID ---------- */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+  @media(max-width:780px){.compare{grid-template-columns:1fr}}
+  .compare > div{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:20px;box-shadow:var(--c-shadow)}
+  .compare h3{margin-top:0;font-family:var(--f-display);font-size:18px;display:flex;align-items:center;gap:8px}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+  .badge.land{background:var(--c-accent-soft);color:var(--c-accent-strong)}
+  .badge.bund{background:var(--c-bund-soft);color:var(--c-bund)}
+
+  /* ---------- FILTER ---------- */
+  .filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;align-items:center}
+  .filter-bar input{flex:1;min-width:200px;padding:9px 12px;border:1px solid var(--c-line);border-radius:var(--r-md);font-family:var(--f-body);font-size:14px;background:var(--c-surface)}
+  .filter-bar input:focus{outline:none;border-color:var(--c-accent);box-shadow:0 0 0 3px var(--c-accent-soft)}
+  .filter-chip{padding:6px 12px;border:1px solid var(--c-line);background:var(--c-surface);border-radius:18px;font-size:12px;cursor:pointer;color:var(--c-ink-soft);transition:all .15s}
+  .filter-chip:hover{border-color:var(--c-accent)}
+  .filter-chip.active{background:var(--c-accent-strong);color:#fff;border-color:var(--c-accent-strong)}
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{border-left:2px solid var(--c-line);padding-left:20px;margin:20px 0}
+  .tl-item{margin-bottom:18px;position:relative}
+  .tl-item::before{content:"";position:absolute;left:-26px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--c-bund);border:2px solid var(--c-surface);box-shadow:0 0 0 2px var(--c-bund)}
+  .tl-item.done::before{background:var(--c-accent)}
+  .tl-item.urgent::before{background:var(--c-warn);box-shadow:0 0 0 2px var(--c-warn)}
+  .tl-date{font-family:var(--f-mono);font-size:12px;color:var(--c-ink-soft);font-weight:600}
+  .tl-title{font-weight:600;margin:2px 0 4px}
+  .tl-desc{font-size:13px;color:var(--c-ink-soft)}
+
+  /* ---------- RECHNER ---------- */
+  .rechner{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--c-shadow)}
+  .rechner-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  @media(max-width:780px){.rechner-grid{grid-template-columns:1fr}}
+  .rechner-form{padding:24px;border-right:1px solid var(--c-line);background:#fcfdfd}
+  @media(max-width:780px){.rechner-form{border-right:none;border-bottom:1px solid var(--c-line)}}
+  .rechner-result{padding:24px;background:linear-gradient(180deg,var(--c-accent-soft) 0%,#fff 100%)}
+  .rechner-form label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px;color:var(--c-ink)}
+  .rechner-form select,.rechner-form input{width:100%;padding:10px 12px;border:1px solid var(--c-line);border-radius:var(--r-md);font-family:var(--f-body);font-size:14px;background:#fff}
+  .rechner-form select:focus,.rechner-form input:focus{outline:none;border-color:var(--c-accent);box-shadow:0 0 0 3px var(--c-accent-soft)}
+  .rechner-form .checkrow{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px}
+  .rechner-form .checkrow input{width:auto}
+  .result-big{font-family:var(--f-display);font-size:42px;font-weight:600;color:var(--c-accent-strong);line-height:1;margin:8px 0}
+  .result-label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--c-ink-soft);font-weight:600}
+  .result-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--c-line);font-size:14px}
+  .result-row:last-child{border-bottom:none}
+  .result-row strong{font-family:var(--f-mono)}
+  .result-warn{margin-top:14px;padding:12px;background:var(--c-warn-soft);border-left:3px solid var(--c-warn);font-size:13px;border-radius:0 var(--r-md) var(--r-md) 0}
+  .result-warn strong{color:var(--c-warn)}
+
+  /* ---------- LIST WITH ICONS ---------- */
+  .checklist{list-style:none;padding:0;margin:12px 0}
+  .checklist li{padding:7px 0 7px 28px;position:relative;font-size:14px;border-bottom:1px solid var(--c-line)}
+  .checklist li:last-child{border-bottom:none}
+  .checklist li::before{content:"✓";position:absolute;left:0;top:7px;color:var(--c-accent);font-weight:700}
+  .crosslist li::before{content:"✗";color:var(--c-warn)}
+  .arrowlist li::before{content:"→";color:var(--c-bund)}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--c-line);background:var(--c-surface);padding:24px;margin-top:48px;font-size:12px;color:var(--c-ink-soft)}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  /* ---------- PRINT ---------- */
+  @media print{
+    .tabs,.filter-bar,.topbar-meta{display:none !important}
+    .panel{display:block !important;page-break-after:always}
+    body{background:#fff}
+    .card,.tbl{box-shadow:none;border:1px solid #ccc}
+  }
+
+  .quelle{font-size:11px;color:var(--c-ink-soft);font-style:italic;margin-top:8px}
+  .quelle::before{content:"§ ";color:var(--c-accent)}
+
+  /* ---------- MATCHER ---------- */
+  .matcher-wiz{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:24px;box-shadow:var(--c-shadow);margin-bottom:24px}
+  .wiz-step{margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--c-line)}
+  .wiz-step:last-of-type{border-bottom:none;margin-bottom:0}
+  .wiz-q{font-family:var(--f-display);font-size:15px;font-weight:600;margin-bottom:10px;display:flex;align-items:baseline;gap:8px}
+  .wiz-q .num{font-family:var(--f-mono);font-size:11px;color:var(--c-accent);background:var(--c-accent-soft);padding:2px 7px;border-radius:4px}
+  .wiz-options{display:flex;flex-wrap:wrap;gap:8px}
+  .wiz-opt{padding:10px 14px;border:1.5px solid var(--c-line);background:var(--c-surface);border-radius:8px;font-size:13px;cursor:pointer;color:var(--c-ink);transition:all .15s;font-family:var(--f-body)}
+  .wiz-opt:hover{border-color:var(--c-accent);background:var(--c-accent-soft)}
+  .wiz-opt.active{background:var(--c-accent-strong);color:#fff;border-color:var(--c-accent-strong)}
+  .wiz-help{font-size:12px;color:var(--c-ink-soft);margin-top:6px;font-style:italic}
+  .wiz-actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:12px}
+  .wiz-btn{padding:10px 22px;background:var(--c-accent-strong);color:#fff;border:none;border-radius:var(--r-md);font-family:var(--f-body);font-size:14px;font-weight:600;cursor:pointer;transition:all .15s}
+  .wiz-btn:hover{background:var(--c-accent)}
+  .wiz-btn.outline{background:transparent;color:var(--c-ink-soft);border:1px solid var(--c-line)}
+  .wiz-btn.outline:hover{background:var(--c-bg);color:var(--c-ink)}
+
+  .match-result{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:18px 20px;margin-bottom:14px;box-shadow:var(--c-shadow);position:relative;overflow:hidden}
+  .match-result::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c-accent)}
+  .match-result.bund::before{background:var(--c-bund)}
+  .match-result.weak::before{background:var(--c-line)}
+  .match-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:8px}
+  .match-title{font-family:var(--f-display);font-size:17px;font-weight:600;margin:0}
+  .match-score{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--c-ink-soft);font-weight:600;white-space:nowrap}
+  .score-bar{width:80px;height:6px;background:var(--c-line);border-radius:3px;overflow:hidden}
+  .score-fill{height:100%;background:var(--c-accent);transition:width .4s ease}
+  .score-fill.bund{background:var(--c-bund)}
+  .match-why{font-size:13px;color:var(--c-ink-soft);margin:6px 0 10px}
+  .match-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;padding-top:10px;border-top:1px dashed var(--c-line)}
+  .match-meta div strong{display:block;color:var(--c-ink-soft);font-size:10px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1px}
+  .match-issues{margin-top:10px;padding:8px 12px;background:var(--c-warn-soft);border-left:3px solid var(--c-warn);border-radius:0 var(--r-md) var(--r-md) 0;font-size:12px}
+  .match-issues strong{color:var(--c-warn)}
+
+  .empty-state{text-align:center;padding:40px 20px;color:var(--c-ink-soft);font-size:14px}
+  .summary-bar{display:flex;flex-wrap:wrap;gap:6px;padding:12px 16px;background:var(--c-accent-soft);border-radius:var(--r-md);margin-bottom:20px;font-size:12px}
+  .summary-bar span{padding:4px 10px;background:#fff;border-radius:4px;color:var(--c-ink-soft)}
+  .summary-bar span strong{color:var(--c-accent-strong)}
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-logo">2R</div>
+      <div class="brand-text">
+        <strong>2RAT — Förderrichtlinien Radverkehr</strong>
+        <span>Büro für Radverkehrsplanung · Armin Jung · www.2rat.org</span>
+      </div>
+    </div>
+    <div class="topbar-meta">
+      Stand 04.05.2026<br>
+      Quellen: <a href="#quellen">FRL-NMOB · Bundesaufruf JGF · Publizitätsmerkblatt</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Werkzeuge · Wissensbasis</div>
+    <h1>Förderrichtlinien für Rad- und Fußverkehr</h1>
+    <p class="lead">Konsolidierte Übersicht der zwei aktuell relevanten Förderschienen für saarländische Kommunen — Landes-Richtlinie FRL-NMOB-Rad-Fuß (gültig 17.11.2025–17.11.2030) und Bundes-Förderaufruf „Junge Generation Fahrrad" (Fristen Juli 2026). Inklusive Verfahrens-Doku und Förderrechner.</p>
+    <div class="hero-stats">
+      <div class="stat"><strong>12</strong><span>Fördergegenstände FRL-NMOB</span></div>
+      <div class="stat"><strong>bis 100 %</strong><span>Förderquote (Landesinteresse)</span></div>
+      <div class="stat"><strong>145 Mio €</strong><span>Volumen Bundesaufruf JGF</span></div>
+      <div class="stat"><strong>15.07.2026</strong><span>Frist FL 1 (JGF Skizzen)</span></div>
+      <div class="stat"><strong>31.07.2026</strong><span>Frist FL 2 (JGF Anträge)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TABS ===================== -->
+<nav class="tabs">
+  <div class="tabs-inner">
+    <button class="tab active" data-tab="uebersicht"><span class="tab-icon">◆</span>Übersicht</button>
+    <button class="tab" data-tab="frl-nmob"><span class="tab-icon">▣</span>FRL-NMOB Saarland</button>
+    <button class="tab" data-tab="jgf"><span class="tab-icon">▣</span>Bundesaufruf JGF</button>
+    <button class="tab" data-tab="verfahren"><span class="tab-icon">▣</span>Antrag &amp; Verwendungsnachweis</button>
+    <button class="tab" data-tab="publizitaet"><span class="tab-icon">▣</span>Publizität</button>
+    <button class="tab" data-tab="rechner"><span class="tab-icon">∑</span>Förderrechner</button>
+    <button class="tab" data-tab="matcher"><span class="tab-icon">◈</span>Förder-Matcher</button>
+  </div>
+</nav>
+
+<!-- ===================== MAIN ===================== -->
+<main>
+
+  <!-- ============ ÜBERSICHT ============ -->
+  <section class="panel active" id="uebersicht">
+    <h2 class="section">Schnellvergleich: Land vs. Bund</h2>
+    <p class="section-sub">Beide Programme sind kumulierbar — mit Einschränkungen. Hier die wichtigsten Eckdaten zum Direktvergleich.</p>
+
+    <div class="compare">
+      <div>
+        <h3><span class="badge land">Land</span> FRL-NMOB-Rad-Fuß</h3>
+        <p style="font-size:13px;color:var(--c-ink-soft);margin-top:0">Saarländisches Förderpaket für nachhaltige Mobilität — der Standardweg für die meisten kommunalen Radverkehrs-Maßnahmen.</p>
+        <table class="tbl" style="margin-top:14px">
+          <tr><th>Quote regulär</th><td>75 %</td></tr>
+          <tr><th>Quote finanzschwach</th><td>bis 90 %</td></tr>
+          <tr><th>Quote Schule/Kita</th><td>bis 95 %</td></tr>
+          <tr><th>Quote Landesinteresse</th><td>bis 100 %</td></tr>
+          <tr><th>Antragsfrist</th><td>30.09. jährlich</td></tr>
+          <tr><th>Bewilligung durch</th><td>MUKMAV (+ BALM bei 2.1/2.2.1/2.3)</td></tr>
+          <tr><th>Zweckbindung</th><td>5 J. (nicht-investiv) bzw. 12 J. (Bau)</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3><span class="badge bund">Bund</span> Junge Generation Fahrrad</h3>
+        <p style="font-size:13px;color:var(--c-ink-soft);margin-top:0">Innovativer Förderaufruf BMV — speziell für Schul- und Jugendwege, größere Investitionen mit Modellcharakter.</p>
+        <table class="tbl" style="margin-top:14px">
+          <tr><th>Quote regulär</th><td>75 %</td></tr>
+          <tr><th>Quote finanzschwach</th><td>bis 90 %</td></tr>
+          <tr><th>FL 1 (mehrjährig)</th><td>1,5–6 Mio €, bis 2031</td></tr>
+          <tr><th>FL 2 (Sprint)</th><td>0,25–1,5 Mio €, bis 2027</td></tr>
+          <tr><th>Skizzen-Frist FL 1</th><td>15.07.2026, 23:59 Uhr</td></tr>
+          <tr><th>Antrags-Frist FL 2</th><td>31.07.2026, 23:59 Uhr</td></tr>
+          <tr><th>Bewilligung durch</th><td>BALM</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="hinweis hinweis-gruen">
+      <strong>Kumulierung:</strong> FRL-NMOB ist mit Landesmitteln und EU-Mitteln kumulierbar (Eigenanteil mind. 10 % muss verbleiben). Beim Bundesaufruf JGF ist Kumulierung mit Landesmitteln möglich, mit Bundesmitteln nicht — Ausnahme: LuKIFG-Mittel im Einzelfall.
+    </div>
+
+    <h3 class="sub">Welches Programm wann?</h3>
+    <table class="tbl">
+      <thead><tr><th>Vorhaben-Typ</th><th>Empfehlung</th><th>Begründung</th></tr></thead>
+      <tbody>
+        <tr><td>Einzelne Radwege, Schutzstreifen, Knotenpunkt</td><td><span class="tag">FRL-NMOB</span></td><td>Standardförderung, jährlicher Antrag, kein Wettbewerb</td></tr>
+        <tr><td>Schulweg-Programm mit ≥ 3 Maßnahmen, mehrjährig</td><td><span class="tag bund">JGF FL 1</span></td><td>Modellcharakter, hohe Fördersumme, bis 2031</td></tr>
+        <tr><td>Schnelle Lückenschluss-Maßnahme an Schule/Kita</td><td><span class="tag bund">JGF FL 2</span></td><td>Einstufig, bis 1,5 Mio, bis 2027</td></tr>
+        <tr><td>Rad- oder Fußverkehrskonzept (Planung)</td><td><span class="tag">FRL-NMOB 2.5</span></td><td>80 % bis max. 50.000 € — niederschwellig</td></tr>
+        <tr><td>Lastenrad/Lastenpedelec-Kauf</td><td><span class="tag">FRL-NMOB 2.6</span></td><td>25 % bzw. 500/1.000 € pro Rad, bis 5/Jahr</td></tr>
+        <tr><td>Abstellanlage an Schule/Kita</td><td><span class="tag">FRL-NMOB 2.2.1</span></td><td>95 % Quote — höchste Quote im Schul-Kontext</td></tr>
+        <tr><td>Mobilitätsbildung an Schule</td><td><span class="tag">FRL-NMOB 2.12</span></td><td>90 % bis max. 50.000 €, Personalkosten möglich</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">Aktuelle Fristen-Timeline</h3>
+    <div class="timeline">
+      <div class="tl-item urgent">
+        <div class="tl-date">19.05.2026 + 11.06.2026</div>
+        <div class="tl-title">BALM Online-Sprechstunden FL 1</div>
+        <div class="tl-desc">Anmeldung über Mobilitätsforum Bund</div>
+      </div>
+      <div class="tl-item urgent">
+        <div class="tl-date">21.05.2026 + 09.06.2026</div>
+        <div class="tl-title">BALM Online-Sprechstunden FL 2</div>
+        <div class="tl-desc">Anmeldung über Mobilitätsforum Bund</div>
+      </div>
+      <div class="tl-item urgent">
+        <div class="tl-date">15.07.2026, 23:59</div>
+        <div class="tl-title">Frist FL 1 — Skizzeneinreichung</div>
+        <div class="tl-desc">Über easy-Online · 30 Modellkommunen werden ausgewählt</div>
+      </div>
+      <div class="tl-item urgent">
+        <div class="tl-date">31.07.2026, 23:59</div>
+        <div class="tl-title">Frist FL 2 — vollständige Anträge</div>
+        <div class="tl-desc">Einstufig · Vorplanung/Machbarkeitsstudie und Ratsbeschluss müssen vorliegen</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">31.08.2026</div>
+        <div class="tl-title">FL 1 — Auswahl durch Fachjury</div>
+        <div class="tl-desc">Aufforderung zur Antragstellung an ausgewählte Skizzeneinreicher</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">30.09.2026</div>
+        <div class="tl-title">Jährliche Antragsfrist FRL-NMOB</div>
+        <div class="tl-desc">Anträge an MUKMAV, Referat A/4, Keplerstr. 18, Saarbrücken</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">18.10.2026</div>
+        <div class="tl-title">FL 1 — Ende Antragsphase (zweite Stufe)</div>
+        <div class="tl-desc">Nur für ausgewählte Skizzeneinreicher relevant</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Dezember 2026</div>
+        <div class="tl-title">JGF — Bewilligung beider Förderlinien</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FRL-NMOB ============ -->
+  <section class="panel" id="frl-nmob">
+    <h2 class="section">FRL-NMOB-Rad-Fuß <span class="badge land" style="vertical-align:middle">Land Saarland</span></h2>
+    <p class="section-sub">Richtlinie zur Förderung der nachhaltigen Mobilität im Saarland (NMOB), Teil Förderung des Rad- und Fußverkehrs · vom 17.11.2025 · gültig bis 17.11.2030 · Ministerin Petra Berg · ersetzt FRL NMOB Stadt-Land vom 01.05.2024.</p>
+
+    <div class="hinweis hinweis-gruen">
+      <strong>Wichtig:</strong> Antrag <em>vor</em> Vorhabenbeginn stellen — Vorhabenbeginn = Abschluss eines Lieferungs-/Leistungsvertrags. Vorzeitiger Maßnahmenbeginn ausnahmsweise auf schriftlichen Antrag möglich, ohne Anspruch.
+    </div>
+
+    <h3 class="sub">Antragsberechtigte</h3>
+    <ul class="checklist">
+      <li><strong>Vorhaben 2.1–2.12:</strong> Gemeinden, Städte, Landkreise, Regionalverband — auch in Funktion als Träger öffentlicher Kitas, Schulen, Hochschulen, Bildungs-/Freizeiteinrichtungen.</li>
+      <li><strong>Vorhaben 2.2.2, 2.6–2.8, 2.10–2.12 zusätzlich:</strong> Gemeinnützige und religionsgemeinschaftliche Kitas/Schulen/Hochschulen/Bildungseinrichtungen, Zweckverbände, Anstalten/Körperschaften des öffentlichen Rechts.</li>
+      <li><strong>Vorhaben 2.6, 2.10–2.12 zusätzlich:</strong> Eingetragene, nicht wirtschaftliche Vereine.</li>
+      <li><strong>Vorhaben 2.6 zusätzlich:</strong> Juristische Personen privaten und öffentlichen Rechts mit Betriebsstätte im Saarland.</li>
+    </ul>
+
+    <h3 class="sub">Fördergegenstände 2.1 – 2.12</h3>
+    <p style="color:var(--c-ink-soft);font-size:13px">Klick auf eine Karte für Detailinfos · Filter unten</p>
+
+    <div class="filter-bar">
+      <input type="text" id="filter-frl" placeholder="Suchen (z. B. „Lastenrad", „Schule", „Querung"…)">
+      <button class="filter-chip active" data-cat="all">Alle</button>
+      <button class="filter-chip" data-cat="bau">Bauliche Maßnahmen</button>
+      <button class="filter-chip" data-cat="abstell">Abstellanlagen</button>
+      <button class="filter-chip" data-cat="konzept">Konzepte/Studien</button>
+      <button class="filter-chip" data-cat="schule">Schule/Kita</button>
+      <button class="filter-chip" data-cat="invest">Investiv</button>
+      <button class="filter-chip" data-cat="nicht-invest">Nicht-investiv</button>
+    </div>
+
+    <div id="frl-cards"></div>
+
+    <h3 class="sub">Bagatellgrenzen</h3>
+    <table class="tbl">
+      <thead><tr><th>Maßnahmen</th><th>Mindest-Zuwendung</th></tr></thead>
+      <tbody>
+        <tr><td>2.1.1 – 2.1.4 und 2.1.8 (straßenbegl. Radwege, eigenständige Radwege, Fahrradstraßen, Brücken/Unterführungen, Fußverkehr i.V.m. Rad)</td><td class="num">15.000 €</td></tr>
+        <tr><td>2.1.5 und 2.1.7 (Schutz-/Radfahrstreifen, verkehrstechnische Ausstattung)</td><td class="num">5.000 €</td></tr>
+        <tr><td>2.1.6 (Knotenpunkte)</td><td class="num">10.000 €</td></tr>
+        <tr><td>2.2 und 2.3 (Abstellanlagen, betriebliche Maßnahmen)</td><td class="num">5.000 €</td></tr>
+        <tr><td>2.4 (Querungshilfen)</td><td class="num">10.000 €</td></tr>
+        <tr><td>2.5, 2.8, 2.9, 2.10, 2.11, 2.12 (Konzepte, Ladeeinrichtungen, Zählstellen, Modellvorhaben, Kampagnen, Schule/Kita)</td><td class="num">2.000 €</td></tr>
+        <tr><td>2.6 und 2.7 (Lastenräder, Reparatur-/Servicestationen)</td><td class="num">500 €</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">Was ist nicht zuwendungsfähig?</h3>
+    <ul class="checklist crosslist">
+      <li>Eigenleistungen des Zuwendungsempfängers</li>
+      <li>Personalkosten (Ausnahme: 2.10 + 2.12, projektbezogen + befristet)</li>
+      <li>Prototypen-Entwicklung, Mietkauf, Leasingverträge</li>
+      <li>Kauf von bebauten Grundstücken (nur Wert in unbebautem Zustand zuwendungsfähig)</li>
+      <li>Finanzierung, Skonti, Zinsen</li>
+      <li>Versicherungen und regelmäßige Verwaltungs-/Betriebskosten</li>
+      <li>Mehrwertsteuer (sofern Vorsteuerabzugsberechtigung besteht)</li>
+      <li>Repräsentation, Werbung und Vertrieb</li>
+      <li>Mehraufwand und Leistungsänderungen nach Bewilligung (Ausnahmen begründbar)</li>
+      <li>Radschnellwege i.S.v. Art. 3 Abs. 1 VV Bund-Länder (gesondert finanziert)</li>
+      <li>Radverkehrsanlagen mit wassergebundenen Decken (außer naturschutzfachlich erforderlich)</li>
+      <li>Radwege, die ausschließlich touristischen Zwecken dienen</li>
+      <li>Bewirtungs- und Reisekosten</li>
+    </ul>
+
+    <h3 class="sub">Zweckbindungsfristen</h3>
+    <ul class="checklist arrowlist">
+      <li><strong>Bauvorhaben 2.1.1 – 2.1.4 und 2.1.8:</strong> 12 Jahre ab Inbetriebnahme</li>
+      <li><strong>Alle übrigen Vorhaben:</strong> 5 Jahre ab letzter Auszahlung</li>
+      <li><strong>Nicht-investive Vorhaben 2.11 und ggf. 2.12:</strong> Zweckbindung endet mit Durchführung</li>
+    </ul>
+
+    <div class="hinweis">
+      <strong>Praxis-Hinweis:</strong> Bei Fördergegenstand 2.5 (Konzepte) verpflichtet sich der Zuwendungsempfänger, spätestens 3 Jahre nach Erstellen des Konzepts mindestens eine sich daraus ergebende investive bauliche Maßnahme umzusetzen. Sonst Rückzahlung. Schriftliche Begründung möglich, wenn Umsetzung nicht möglich ist.
+    </div>
+
+    <p class="quelle">Quelle: FRL-NMOB-Rad-Fuß vom 17.11.2025, Ziffer 2, 6.3, 6.4, 7.1</p>
+  </section>
+
+  <!-- ============ JGF ============ -->
+  <section class="panel" id="jgf">
+    <h2 class="section">Bundesaufruf „Junge Generation Fahrrad — aktiv mobil" <span class="badge bund" style="vertical-align:middle">Bund</span></h2>
+    <p class="section-sub">Stand 27.04.2026 · Bundesministerium für Verkehr (BMV) · Projektträger: Bundesamt für Logistik und Mobilität (BALM) · Rechtsgrundlage: Richtlinie zur Förderung innovativer Projekte zur Verbesserung des Radverkehrs in Deutschland vom 21.12.2020.</p>
+
+    <div class="hinweis hinweis-blau">
+      <strong>Zielgruppe:</strong> Junge Menschen bis 25 Jahre. Projekte müssen klare räumliche Bezüge zu Bildungs-, Kinder-, Jugend- oder Freizeiteinrichtungen aufweisen.
+    </div>
+
+    <div class="compare">
+      <div>
+        <h3>FL 1 — „Zukunft fährt Fahrrad"</h3>
+        <p style="font-size:13px;color:var(--c-ink-soft)">Wettbewerb für mehr aktive Mobilität von jungen Menschen — Modellprojekte mit Vorbildcharakter.</p>
+        <ul class="checklist arrowlist">
+          <li><strong>Zielgruppe:</strong> junge Menschen bis 25 Jahre — Pflicht</li>
+          <li><strong>Räumlicher Bezug:</strong> Bildungs-, Kinder-, Jugend- oder Freizeiteinrichtung</li>
+          <li><strong>Verfahren:</strong> zweistufig (Skizze → Antrag)</li>
+          <li><strong>Frist Skizze:</strong> 15.07.2026, 23:59 Uhr</li>
+          <li><strong>Frist Antrag:</strong> 18.10.2026 (nach Aufforderung)</li>
+          <li><strong>Fördersumme:</strong> 1,5 – 6 Mio €</li>
+          <li><strong>Laufzeit:</strong> bis 31.12.2031</li>
+          <li><strong>Kontingent:</strong> bis zu 30 Modellkommunen</li>
+        </ul>
+        <div class="hinweis hinweis-blau" style="margin-top:14px;font-size:13px">
+          <strong>Mindestens 3 Teilmaßnahmen</strong> mit gesamthaftem Ansatz und Strategie für öffentlichkeitswirksame Maßnahmen.
+        </div>
+      </div>
+      <div>
+        <h3>FL 2 — „Lückenschluss im Sprint"</h3>
+        <p style="font-size:13px;color:var(--c-ink-soft)">Schnelle Maßnahmen zur Erhöhung von Sicherheit und Stärkung der aktiven Mobilität.</p>
+        <ul class="checklist arrowlist">
+          <li><strong>Zielgruppe:</strong> junge Menschen bis 25 Jahre — Pflicht</li>
+          <li><strong>Räumlicher Bezug:</strong> Bildungs-, Kinder-, Jugend- oder Freizeiteinrichtung</li>
+          <li><strong>Verfahren:</strong> einstufig (direkter Antrag)</li>
+          <li><strong>Frist Antrag:</strong> 31.07.2026, 23:59 Uhr</li>
+          <li><strong>Fördersumme:</strong> 250.000 – 1,5 Mio €</li>
+          <li><strong>Laufzeit:</strong> bis 31.12.2027</li>
+          <li><strong>Voraussetzung:</strong> Vorplanung + Ratsbeschluss + Grunderwerb erfolgt</li>
+        </ul>
+        <div class="hinweis hinweis-blau" style="margin-top:14px;font-size:13px">
+          <strong>Schnelle Umsetzbarkeit</strong> ist Pflicht — Eigenmittel-Nachweis und ggf. Plangenehmigung müssen vorliegen.
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub">Förderfähige Maßnahmen</h3>
+    <table class="tbl">
+      <thead><tr><th style="width:50%">FL 1 — Infrastruktur (A)</th><th>FL 2 — Infrastruktur (A)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>
+            <ul style="margin:0;padding-left:18px;font-size:13px">
+              <li>Planungsleistungen für Infrastruktur</li>
+              <li>Vorbildhafte Rad- und Fußverkehrsinfrastruktur</li>
+              <li>Reduktion von Unfallgefahr und Verkehrskonflikten</li>
+              <li>Sichere und attraktive Querungsanlagen</li>
+              <li>Verkehrsberuhigung</li>
+              <li>Verbesserung der Aufenthaltsqualität</li>
+              <li>Klimafolgenanpassung zur Unterstützung aktiver Mobilität</li>
+              <li>Verknüpfung mit dem ÖPNV</li>
+              <li>Barrierefreie Gestaltung</li>
+              <li>Reduzierung von Umwegen</li>
+              <li>Beleuchtung</li>
+              <li>Erhöhung der sozialen Sicherheit</li>
+              <li>Abstellanlagen für Fahrräder, Tretroller und E-Scooter</li>
+            </ul>
+          </td>
+          <td>
+            <ul style="margin:0;padding-left:18px;font-size:13px">
+              <li>Planungsleistungen für Infrastruktur</li>
+              <li>Reduktion von Unfallgefahr und Verkehrskonflikten</li>
+              <li>Sichere und attraktive Querungsanlagen</li>
+              <li>Verkehrsberuhigung</li>
+              <li>Lückenschlüsse im Rad- und Fußwegenetz</li>
+              <li>Dringend erforderliche Geh-/Radwegsanierungen (über Mindeststandard)</li>
+              <li>Temporäre Maßnahmen zur Erprobung</li>
+              <li>Markierungen / Beschilderungen</li>
+              <li>Barrierefreie (Um)Gestaltung</li>
+              <li>Beleuchtung</li>
+              <li>Erhöhung der sozialen Sicherheit</li>
+              <li>Abstellanlagen für Fahrräder, Tretroller und E-Scooter</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+      <thead><tr><th>FL 1 — Begleitende Maßnahmen (B)</th><th>FL 2 — Begleitende Maßnahmen (B)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>
+            <ul style="margin:0;padding-left:18px;font-size:13px">
+              <li>Bildungskampagnen und -maßnahmen</li>
+              <li>Innovative Kommunikationsmaßnahmen (zielgruppenspezifisch)</li>
+              <li>Zugang zu Fahrrädern/E-Bikes (Leih-/Sharing/Gemeinschaftsfahrräder)</li>
+              <li>Beteiligungsverfahren</li>
+              <li>Konzeptentwicklung und Grundlagenforschung</li>
+              <li>Wissenschaftliche Begleitung mit Bezug zur Zielgruppe</li>
+            </ul>
+          </td>
+          <td>
+            <ul style="margin:0;padding-left:18px;font-size:13px">
+              <li>Bildungsmaßnahmen</li>
+              <li>Kommunikationsmaßnahmen</li>
+              <li>Beteiligungsverfahren</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">Förderquote &amp; Kumulierung</h3>
+    <ul class="checklist arrowlist">
+      <li><strong>Regulär:</strong> max. 75 % der zuwendungsfähigen Gesamtausgaben</li>
+      <li><strong>Finanzschwach:</strong> bis 90 % (Schreiben der oberen Finanzaufsicht erforderlich, Kämmerei reicht <em>nicht</em>)</li>
+      <li><strong>Kumulierung mit Landesmitteln:</strong> möglich</li>
+      <li><strong>Kumulierung mit Bundesmitteln:</strong> nicht zulässig (Ausnahme: LuKIFG-Mittel im Einzelfall)</li>
+      <li><strong>Verbundprojekte:</strong> nur in FL 1 möglich</li>
+    </ul>
+
+    <h3 class="sub">Personalkosten</h3>
+    <div class="hinweis">
+      <strong>Grundregel:</strong> Personalkosten sind nicht förderfähig. Ausnahme: Wissenschaftliche Beschäftigte für nicht-investive Projektbestandteile.<br><br>
+      <strong>Zusätzliches Personal</strong> (neu eingestellt, befristet aufgestockt, oder Befristung verlängert) kann im Sonderfall anerkannt werden — Bestandspersonal nie.
+    </div>
+
+    <h3 class="sub">Bewertungskriterien FL 1 (durch Fachjury)</h3>
+    <ul class="checklist">
+      <li>Modellhaftigkeit des Gesamtprojekts</li>
+      <li>Sicherer und vorbildhafter Rad- und Fußverkehr (objektiv + subjektiv)</li>
+      <li>Stadtplanerische Qualität (Klimafolgenanpassung, Aufenthaltsqualität)</li>
+      <li>Begleitende Maßnahmen (Zielgruppen-Einbindung, Öffentlichkeit, wissenschaftl. Begleitung)</li>
+      <li>Qualität und Verständlichkeit der Einreichung</li>
+      <li>Nachvollziehbarkeit und Angemessenheit des Mitteleinsatzes</li>
+      <li>Realistische Zeitplanung</li>
+    </ul>
+
+    <h3 class="sub">Einreichung &amp; Kontakt</h3>
+    <table class="tbl">
+      <tr><th>Antragssystem</th><td>easy-Online (<code>foerderportal.bund.de/easyonline</code>)</td></tr>
+      <tr><th>Eingangsportal</th><td>eService-Portal (<code>antrag.gbbmdv.bund.de</code>) — unter „Rad- und Fußverkehr, ÖPNV…" → „Innovative Modellvorhaben Radverkehr"</td></tr>
+      <tr><th>Signatur</th><td>handschriftlich oder qualifizierte elektronische Signatur (QES)</td></tr>
+      <tr><th>Hotline</th><td>0221 / 5776-5699 (BALM Förderlotse)</td></tr>
+      <tr><th>E-Mail</th><td>foerderlotse@balm.bund.de</td></tr>
+      <tr><th>Web</th><td>mobilitaetsforum.bund.de/foerderaufruf-junge-generation-fahrrad</td></tr>
+    </table>
+
+    <p class="quelle">Quelle: BALM-FAQ „Förderaufruf Junge Generation Fahrrad — aktiv mobil", Stand 27.04.2026</p>
+  </section>
+
+  <!-- ============ VERFAHREN ============ -->
+  <section class="panel" id="verfahren">
+    <h2 class="section">Antrag &amp; Verwendungsnachweis (FRL-NMOB)</h2>
+    <p class="section-sub">Schritte vom Antrag bis zum Schlussverwendungsnachweis — und was zwischendurch passiert.</p>
+
+    <h3 class="sub">Antragsverfahren</h3>
+    <table class="tbl">
+      <tr><th>Bewilligungsbehörde</th><td>Ministerium für Umwelt, Klima, Mobilität, Agrar und Verbraucherschutz (MUKMAV) · Referat A/4 · Keplerstraße 18 · 66117 Saarbrücken · poststelle@umwelt.saarland.de</td></tr>
+      <tr><th>Bei 2.1, 2.2.1, 2.3</th><td>Zusätzlich Bundesamt für Logistik und Mobilität (BALM) — Sonderprogramm „Stadt und Land"</td></tr>
+      <tr><th>Antragsformular</th><td>AN-NMOB Rad-Fuß (Anlage 1)</td></tr>
+      <tr><th>Stichtag</th><td>30.09. jährlich (in 2030: 31.05.2030)</td></tr>
+      <tr><th>Form</th><td>digital</td></tr>
+      <tr><th>Aufsichtsprüfung</th><td>ab 100.000 € beantragter Zuwendung Stellungnahme der Kommunalaufsichtsbehörde nötig</td></tr>
+    </table>
+
+    <h3 class="sub">Pflicht-Anlagen für Vorhaben 2.1–2.4</h3>
+    <ul class="checklist">
+      <li>Erläuterungsbericht / Projektbeschreibung mit Verkehrsbedeutung, Verlagerungsprognose, Kostenberechnung, Finanzierungsplan, Zeitplan, Genehmigungsverfahren, ggf. CO₂-Vermeidung</li>
+      <li>Planunterlagen (Regelquerschnitte, Übersichts-/Lagepläne in geeignetem Maßstab)</li>
+      <li>Radverkehrskonzept oder vergleichbare Planunterlage mit vorhandenem Radnetz</li>
+      <li>Bei klassifiziertem Straßennetz / SaarRadland-Routen: Bestätigung des LfS über Abstimmung</li>
+      <li>Bei 2.1: Eigenerklärung — Vorhaben steht Zielen des saarl. Radverkehrsplans nicht entgegen</li>
+      <li>Bei 2.1.1–2.1.6, 2.1.8 und 2.4: Genehmigungs- oder Ausführungsplanung (innerhalb 3 Mon.)</li>
+      <li>Bei 2.1 (insb. 2.1.1, 2.2.2, 2.2.4) und 2.4: Behörden-Genehmigungen (Naturschutz, Straßenverkehr) — spätestens mit Schlussverwendungsnachweis</li>
+      <li>Abstimmungs-Vermerk mit kommunalpolitischen Gremien (sofern Satzungen)</li>
+      <li>Vermerk zur Anhörung von Behindertenbeauftragten / Verbänden</li>
+      <li>Honorarangebot für Planungsleistungen</li>
+      <li>Tabellarische Kostenermittlung / Finanzierungsplan</li>
+      <li>Sofern keine CO₂-Angaben möglich: Radverkehrsaufkommen + mittlere Fahrstrecke</li>
+      <li>Ggf. Stellungnahme der Kommunalaufsichtsbehörde („Finanzschwäche")</li>
+      <li>Erklärung über Vorsteuerabzugsberechtigung (soweit erforderlich)</li>
+    </ul>
+
+    <h3 class="sub">Pflicht-Anlagen für alle weiteren Vorhaben</h3>
+    <ul class="checklist">
+      <li>Detaillierte Projektbeschreibung</li>
+      <li>Kostenermittlung / Angebot</li>
+      <li>Ggf. Planunterlagen des Vorhabens</li>
+    </ul>
+
+    <h3 class="sub">Schlussverwendungsnachweis (Schluss-VN)</h3>
+    <p style="font-size:14px">Formular: <strong>VN-NMOB Rad-Fuß (Anlage 2)</strong> · Bestandteile:</p>
+    <ul class="checklist arrowlist">
+      <li><strong>Allgemeines:</strong> Aktenzeichen, Schlussverwendungs- vs. Zwischenverwendungsnachweis</li>
+      <li><strong>Zuwendungsempfänger*in:</strong> Stammdaten, Ansprechpartner, IBAN/Kreditinstitut</li>
+      <li><strong>Bewilligte Zuwendung:</strong> Daten zum Bescheid + in Anspruch genommener Betrag</li>
+      <li><strong>Sachbericht:</strong> Eingehende Darstellung der Durchführung, Bauzeiten, Rechnungen mit Zahlungsnachweisen, Abnahmeprotokolle, Publizitätsnachweis</li>
+      <li><strong>Zahlenmäßiger Nachweis:</strong> Gesamtausgaben, zuwendungsfähige Kosten, Einnahmen-/Ausgabentabellen Bescheid vs. Abrechnung</li>
+      <li><strong>Belegliste:</strong> Pos., Maßnahme, Betrag, Belegnummer, Datum, Zahlungsempfänger, Betrag (inkl. MWSt.)</li>
+      <li><strong>Publizitätsvorschriften:</strong> eingehalten ja/nein + Bildnachweis/Screenshot</li>
+      <li><strong>Genehmigungs-/Ausführungsplanung:</strong> als Anlage oder vorab eingereicht am ___</li>
+      <li><strong>Vergabevermerk:</strong> Dokumentation als Anlage</li>
+      <li><strong>Zwischenverwendungsnachweise:</strong> bereits eingereichte Nachweise mit Nr./Datum</li>
+      <li><strong>Erklärung:</strong> u.a. Belange Umwelt-/Naturschutz berücksichtigt, anerkannte Regeln der Technik (StVO/VwV-StVO/ERA), nachhaltige Unterhaltung gesichert, Saarland-Fachfirmen, Konzept-Nachfolge-Maßnahme innerhalb 3 J., baurechtliche Auflagen für Abstellplätze, Punkt 6.3 FRL beachtet</li>
+    </ul>
+
+    <h3 class="sub">Zwischenverwendungsnachweis</h3>
+    <p style="font-size:14px">Vor Abschluss der Maßnahme — vereinfachter Nachweis mit Belegliste, ohne Beifügung der Belege. Formular: Anlage 3.</p>
+    <table class="tbl">
+      <tr><th>Felder Zwischen-VN</th><td>Zuwendungsempfänger + Anschrift + IBAN/BIC/Kreditinstitut</td></tr>
+      <tr><th>Vorhaben</th><td>+ Datum Zuwendungsbescheid + Aktenzeichen A/4</td></tr>
+      <tr><th>Berechnung</th><td>1. Zuwendungsfähige Ausgaben lt. Bescheid<br>2. Bereits tatsächlich entstandene zuwendungsfähige Ausgaben<br>3. In den nächsten 2 Mon. entstehende zuwendungsfähige Ausgaben<br>4. Summe 2 + 3<br>5. Bewilligte Zuwendung insgesamt<br>6. Fördersatz lt. Bescheid in %<br>7. Bisher erhaltene Teilzahlung<br>8. Mittelanforderung</td></tr>
+      <tr><th>Erklärungen</th><td>Verzicht auf Rechtsbehelf, anteilige Verwendung im Verwendungszeitraum, 5 % Verzinsung über Basiszinssatz bei nicht zweckentsprechender Verwendung, Subventionserheblichkeit (§§ 263, 264 StGB)</td></tr>
+    </table>
+
+    <div class="hinweis">
+      <strong>Frist Schluss-VN:</strong> Bis zum im Zuwendungsbescheid festgelegten Vorlagedatum. Fertigstellung und Abrechnung müssen vollständig <em>bis zum Ablauf des Bewilligungszeitraums</em> erfolgen. Über Ausnahmen entscheidet die Bewilligungsbehörde im begründeten Einzelfall.
+    </div>
+
+    <h3 class="sub">Mitteilungspflichten während der Förderung</h3>
+    <ul class="checklist">
+      <li>Alle Tatsachen, die für Bewilligung/Auszahlung erheblich sind, sind <em>unverzüglich schriftlich</em> dem MUKMAV mitzuteilen</li>
+      <li>Diebstahl, Unfall oder Sachbeschädigung des Fördergegenstands → Anzeige nachweisen, sonst Rückforderung</li>
+      <li>Veränderung an geförderten Anlagen während Zweckbindung → vorherige Bewilligung erforderlich</li>
+      <li>Eigentumsübertragung → unverzüglich anzeigen (innerhalb von 5 J. bzw. 12 J. bei Bauvorhaben)</li>
+    </ul>
+
+    <p class="quelle">Quelle: FRL-NMOB-Rad-Fuß vom 17.11.2025, Ziffer 7 + 8 sowie VN-NMOB Rad-Fuß (Anlage 2) und Zwischenverwendungsnachweis</p>
+  </section>
+
+  <!-- ============ PUBLIZITÄT ============ -->
+  <section class="panel" id="publizitaet">
+    <h2 class="section">Publizitätspflichten NMOB</h2>
+    <p class="section-sub">Stand November 2022 · Pflichten für alle Begünstigten der NMOB-Förderstrategie.</p>
+
+    <div class="hinweis hinweis-blau">
+      <strong>Logo „Nachhaltig. Mobil. NMOB."</strong> wird vom MUKMAV mit dem Zuwendungsbescheid zur Verfügung gestellt. Pflicht: in Farbe, einfarbiger Hintergrund, Arial/Verdana, keine Kursivschrift/Unterstreichungen/Effekte. Bei mehreren Logos: NMOB-Emblem mindestens so groß wie das größte andere.
+    </div>
+
+    <h3 class="sub">Pflichten innerhalb des Bewilligungszeitraums</h3>
+    <table class="tbl">
+      <thead><tr><th>Schwellenwert</th><th>Pflicht</th><th>Inhalt</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Alle Förderungen</strong></td>
+          <td>Hinweis in allen Publikationen</td>
+          <td>Pressemitteilungen, Newsletter, Broschüren, Flyer, Präsentationen, audiovisuelles Material — Hinweis auf Förderung enthalten</td>
+        </tr>
+        <tr>
+          <td><strong>Eigene Website</strong></td>
+          <td>Projektseite mit NMOB-Logo</td>
+          <td>Kurze Beschreibung mit Zielen + Ergebnissen, finanzielle Unterstützung hervorheben, farbliche Logo-Darstellung</td>
+        </tr>
+        <tr>
+          <td><strong>&lt; 250.000 €</strong></td>
+          <td>Plakat (mind. DIN A3)</td>
+          <td>Gut sichtbar (z.B. Eingangsbereich) · Bezeichnung des Vorhabens · Hinweis auf NMOB-Förderung</td>
+        </tr>
+        <tr>
+          <td><strong>&gt; 250.000 €</strong> + Bau/Infrastruktur</td>
+          <td>Hinweisschild (Bauphase) → später Erläuterungstafel</td>
+          <td>Größe angemessen · Bezeichnung Vorhaben + Hauptziel + NMOB-Förderhinweis (mind. 25 % der Schildfläche)</td>
+        </tr>
+        <tr>
+          <td><strong>Lastenrad/Pedelec/Sharing</strong></td>
+          <td>Aufkleber</td>
+          <td>Werden mit Bescheid geliefert · Während gesamter Zweckbindungsfrist erhalten · Bei Beschädigung neu anfordern</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">Conifere-Datenbank — Begünstigten-Verzeichnis</h3>
+    <p style="font-size:14px">Mit Annahme der Finanzierung erklären sich Begünstigte mit der Veröffentlichung in einer öffentlichen Datenbank einverstanden, die alle 6 Monate aktualisiert wird:</p>
+    <ul class="checklist">
+      <li>Name der Begünstigten (nur juristische Personen)</li>
+      <li>Bezeichnung des Vorhabens</li>
+      <li>Zusammenfassung des Vorhabens</li>
+      <li>Datum Beginn / voraussichtliches Enddatum</li>
+      <li>Gesamtbetrag der förderfähigen Ausgaben</li>
+      <li>Postleitzahl bzw. Standortindikator</li>
+    </ul>
+
+    <h3 class="sub">Nach Abschluss — Erläuterungstafel</h3>
+    <div class="hinweis hinweis-gruen">
+      <strong>Frist:</strong> Spätestens 3 Monate nach Abschluss des Vorhabens muss eine permanente Erläuterungstafel angebracht sein — gut wahrnehmbar, lesbar, von signifikanter Größe.
+    </div>
+    <ul class="checklist">
+      <li>Bezeichnung des geförderten Vorhabens + Hauptziel</li>
+      <li>Hinweis auf Förderung durch NMOB-Richtlinien</li>
+      <li>Auch bei materiellen Gegenständen (Technik, Maschinen) — wenn nicht anbringbar: andere geeignete Maßnahmen</li>
+      <li>Bei <strong>Mobilitätsstationen:</strong> Logo auf Informationsstele genügt (gem. Gestaltungsleitfaden)</li>
+    </ul>
+
+    <h3 class="sub">Foto-Nachweis mit Schluss-VN</h3>
+    <p style="font-size:14px">Mit Einreichung des Verwendungsnachweises ist durch Foto des Vorhabens und des A3-Plakats / Hinweisschilds die Einhaltung der Publizitätspflicht in elektronischer Form zu belegen.</p>
+
+    <p class="quelle">Quelle: NMOB-Merkblatt Publizitätspflichten, Stand November 2022</p>
+  </section>
+
+  <!-- ============ RECHNER ============ -->
+  <section class="panel" id="rechner">
+    <h2 class="section">Förderrechner</h2>
+    <p class="section-sub">Wählen Sie Programm und Maßnahme — der Rechner ermittelt Quote, Maximalbetrag und prüft Bagatellgrenze.</p>
+
+    <div class="rechner">
+      <div class="rechner-grid">
+        <div class="rechner-form">
+          <label for="r-prog">Förderprogramm</label>
+          <select id="r-prog">
+            <option value="frl">FRL-NMOB-Rad-Fuß (Land Saarland)</option>
+            <option value="jgf1">JGF Förderlinie 1 (Bund, Modellprojekte)</option>
+            <option value="jgf2">JGF Förderlinie 2 (Bund, Sprint)</option>
+          </select>
+
+          <label for="r-mass">Maßnahme / Fördergegenstand</label>
+          <select id="r-mass"></select>
+
+          <label for="r-aus">Zuwendungsfähige Ausgaben (€)</label>
+          <input type="number" id="r-aus" value="100000" min="0" step="1000">
+
+          <div class="checkrow">
+            <input type="checkbox" id="r-fin"><label for="r-fin" style="margin:0">Finanzschwäche nachgewiesen</label>
+          </div>
+          <div class="checkrow">
+            <input type="checkbox" id="r-schule"><label for="r-schule" style="margin:0">Vorhaben an Schule / Kita</label>
+          </div>
+          <div class="checkrow">
+            <input type="checkbox" id="r-li"><label for="r-li" style="margin:0">Besonderes Landesinteresse (nur FRL)</label>
+          </div>
+        </div>
+        <div class="rechner-result">
+          <div class="result-label">Voraussichtliche Förderung</div>
+          <div class="result-big" id="r-betrag">0 €</div>
+          <div class="result-row"><span>Förderquote</span><strong id="r-quote">—</strong></div>
+          <div class="result-row"><span>Bagatellgrenze</span><strong id="r-bag">—</strong></div>
+          <div class="result-row"><span>Förderhöchstbetrag</span><strong id="r-max">—</strong></div>
+          <div class="result-row"><span>Eigenanteil</span><strong id="r-eigen">—</strong></div>
+          <div id="r-warn"></div>
+          <div id="r-praxis" style="margin-top:14px"></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub">Hinweise zum Rechner</h3>
+    <ul class="checklist">
+      <li>Der Rechner berücksichtigt die <strong>aktuellen Quoten</strong> der FRL-NMOB (17.11.2025) und des JGF-Aufrufs (27.04.2026).</li>
+      <li><strong>Eigenanteil</strong> bei Kumulierung muss mindestens 10 % der zuwendungsfähigen Ausgaben verbleiben (FRL Ziffer 6.5).</li>
+      <li>Bei <strong>besonderem Landesinteresse</strong> kann die FRL-Förderung bis 100 % betragen — die Beurteilung obliegt der Bewilligungsbehörde (Modell-/Pilotcharakter, Lückenschluss, Verknüpfung Umweltverbund).</li>
+      <li>Die Förderung steht <em>immer</em> unter dem Vorbehalt der Verfügbarkeit von Haushaltsmitteln. Es besteht <strong>kein Rechtsanspruch</strong>.</li>
+    </ul>
+  </section>
+
+  <!-- ============ MATCHER ============ -->
+  <section class="panel" id="matcher">
+    <h2 class="section">Förder-Matcher</h2>
+    <p class="section-sub">Beschreiben Sie Ihr Vorhaben in 6 Schritten — der Matcher schlägt passende Förderprogramme vor, sortiert nach Eignung. Die Auswahl ist eine Entscheidungshilfe und ersetzt keine verbindliche Förderberatung.</p>
+
+    <div class="matcher-wiz" id="matcher-wiz">
+
+      <div class="wiz-step">
+        <div class="wiz-q"><span class="num">1</span>Welche Art von Maßnahme planen Sie?</div>
+        <div class="wiz-options" data-wiz="art">
+          <button class="wiz-opt" data-val="radweg">Radweg / straßenbegleitend</button>
+          <button class="wiz-opt" data-val="eigenstaendig">Eigenständiger Radweg</button>
+          <button class="wiz-opt" data-val="fahrradstrasse">Fahrradstraße / -zone</button>
+          <button class="wiz-opt" data-val="schutzstreifen">Schutz-/Radfahrstreifen</button>
+          <button class="wiz-opt" data-val="knoten">Knotenpunkt / Querung / LSA</button>
+          <button class="wiz-opt" data-val="bruecke">Brücke / Unterführung</button>
+          <button class="wiz-opt" data-val="abstell">Abstellanlage</button>
+          <button class="wiz-opt" data-val="konzept">Rad-/Fußverkehrskonzept</button>
+          <button class="wiz-opt" data-val="lastenrad">Lastenrad / -pedelec</button>
+          <button class="wiz-opt" data-val="reparatur">Reparatur-/Servicestation</button>
+          <button class="wiz-opt" data-val="ladung">Ladeeinrichtung Pedelec</button>
+          <button class="wiz-opt" data-val="zaehl">Zählstelle</button>
+          <button class="wiz-opt" data-val="modell">Modell-/Pilotprojekt</button>
+          <button class="wiz-opt" data-val="kampagne">Kampagne / Öffentlichkeit</button>
+          <button class="wiz-opt" data-val="schule">Schul-/Kita-Maßnahme (nicht-baulich)</button>
+        </div>
+        <div class="wiz-help">Wählen Sie das, was am ehesten passt — Mehrkomponenten-Projekte (z. B. Schulweg-Programm) gehören eher zu „Modell-/Pilotprojekt".</div>
+      </div>
+
+      <div class="wiz-step">
+        <div class="wiz-q"><span class="num">2</span>Räumlicher / inhaltlicher Bezug?</div>
+        <div class="wiz-options" data-wiz="bezug">
+          <button class="wiz-opt" data-val="schule">An / nahe Schule oder Kita</button>
+          <button class="wiz-opt" data-val="jugend">An / nahe Jugend- oder Freizeiteinrichtung</button>
+          <button class="wiz-opt" data-val="oepv">Verknüpfungspunkt zum ÖPV</button>
+          <button class="wiz-opt" data-val="netz">Netz-Lückenschluss / Pendlerroute</button>
+          <button class="wiz-opt" data-val="tour">Touristischer Bezug</button>
+          <button class="wiz-opt" data-val="allgemein">Allgemeine Innerorts-Maßnahme</button>
+        </div>
+      </div>
+
+      <div class="wiz-step">
+        <div class="wiz-q"><span class="num">3</span>Wer ist der Antragsteller?</div>
+        <div class="wiz-options" data-wiz="traeger">
+          <button class="wiz-opt" data-val="kommune">Kommune (Gemeinde / Stadt / LK / RV)</button>
+          <button class="wiz-opt" data-val="gemeinnuetzig">Gemeinnützige Bildungseinrichtung / Verein</button>
+          <button class="wiz-opt" data-val="privat">Privates Unternehmen / Betrieb</button>
+        </div>
+      </div>
+
+      <div class="wiz-step">
+        <div class="wiz-q"><span class="num">4</span>Voraussichtliches Investitionsvolumen?</div>
+        <div class="wiz-options" data-wiz="vol">
+          <button class="wiz-opt" data-val="micro">unter 25.000 €</button>
+          <button class="wiz-opt" data-val="klein">25.000 – 100.000 €</button>
+          <button class="wiz-opt" data-val="mittel">100.000 – 500.000 €</button>
+          <button class="wiz-opt" data-val="gross">500.000 – 1,5 Mio €</button>
+          <button class="wiz-opt" data-val="xl">1,5 – 6 Mio €</button>
+          <button class="wiz-opt" data-val="xxl">über 6 Mio €</button>
+        </div>
+      </div>
+
+      <div class="wiz-step">
+        <div class="wiz-q"><span class="num">5</span>Stand der Vorbereitung?</div>
+        <div class="wiz-options" data-wiz="reife">
+          <button class="wiz-opt" data-val="idee">Idee / noch keine Planung</button>
+          <button class="wiz-opt" data-val="vorplanung">Vorplanung vorhanden</button>
+          <button class="wiz-opt" data-val="reif">Vorplanung + Ratsbeschluss + Eigenmittel gesichert</button>
+          <button class="wiz-opt" data-val="begonnen">Bereits begonnen / Vertrag geschlossen</button>
+        </div>
+        <div class="wiz-help">„Bereits begonnen" schließt jede Förderung aus — kein vorzeitiger Maßnahmenbeginn ohne Genehmigung möglich.</div>
+      </div>
+
+      <div class="wiz-step">
+        <div class="wiz-q"><span class="num">6</span>Zeitschiene Umsetzung?</div>
+        <div class="wiz-options" data-wiz="zeit">
+          <button class="wiz-opt" data-val="schnell">Schnell — bis Ende 2027</button>
+          <button class="wiz-opt" data-val="mittel">Mittelfristig — 2028–2030</button>
+          <button class="wiz-opt" data-val="lang">Langfristig — bis 2031 oder darüber</button>
+        </div>
+      </div>
+
+      <div class="wiz-step">
+        <div class="wiz-q"><span class="num">+</span>Optional: Finanzschwäche der Kommune?</div>
+        <div class="wiz-options" data-wiz="finanz">
+          <button class="wiz-opt" data-val="ja">Ja, Finanzschwäche-Nachweis vorhanden</button>
+          <button class="wiz-opt" data-val="nein">Nein / unsicher</button>
+        </div>
+        <div class="wiz-help">Finanzschwäche erhöht die Förderquote bei mehreren Programmen auf bis zu 90 %.</div>
+      </div>
+
+      <div class="wiz-actions">
+        <button class="wiz-btn outline" id="wiz-reset">Zurücksetzen</button>
+        <button class="wiz-btn" id="wiz-go">Förderoptionen finden →</button>
+      </div>
+    </div>
+
+    <div id="match-output"></div>
+
+  </section>
+
+  <!-- ============ QUELLEN ============ -->
+  <section id="quellen" style="margin-top:48px;padding-top:24px;border-top:2px solid var(--c-line)">
+    <h3 class="sub" style="margin-top:0">Quellen-Dokumente</h3>
+    <ul class="checklist">
+      <li><strong>FRL-NMOB-Rad-Fuß</strong> vom 17.11.2025 — Richtlinie zur Förderung der nachhaltigen Mobilität im Saarland, Teil Förderung des Rad- und Fußverkehrs (Petra Berg, Ministerin)</li>
+      <li><strong>VN-NMOB Rad-Fuß (Anlage 2)</strong> — Verwendungsnachweis-Formular</li>
+      <li><strong>Zwischenverwendungsnachweis</strong> — MUKMAV-Formblatt</li>
+      <li><strong>NMOB-Merkblatt Publizitätspflichten</strong>, Stand November 2022</li>
+      <li><strong>FAQ Förderaufruf „Junge Generation Fahrrad — aktiv mobil"</strong>, BALM Stand 27.04.2026</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 2RAT — Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS</div>
+    <div>www.2rat.org · fahr2rat@gmail.com</div>
+  </div>
+</footer>
+
+<script>
+// ====================== DATEN ======================
+const FRL_GEGENSTAENDE = [
+  {nr:"2.1.1", titel:"Straßenbegleitende Radwege", cat:["bau","invest"], zweck:"Neu-/Um-/Ausbau einschl. Planungsleistungen Dritter und Grunderwerb. Möglichst getrennt vom MIV.", quote:"75 % (90 % finanzschwach, 95 % Schule/Kita)", bagatell:15000, hinweise:"Standardförderung für straßenbegleitende Radinfrastruktur. Mit Umsetzung erst nach Bescheid beginnen."},
+  {nr:"2.1.2", titel:"Eigenständige Radwege", cat:["bau","invest"], zweck:"Neu-/Um-/Ausbau eigenständiger Radwege außerhalb von Straßenbegleitung.", quote:"75 % (90 % finanzschwach, 95 % Schule/Kita)", bagatell:15000, hinweise:"Wegen Grunderwerb häufig komplexer als 2.1.1. Eintragung im Grundbuch nach Veröffentlichung der Richtlinie erforderlich."},
+  {nr:"2.1.3", titel:"Fahrradstraßen und Fahrradzonen", cat:["bau","invest"], zweck:"Neu-/Um-/Ausbau von Fahrradstraßen und -zonen.", quote:"75 % (90 % finanzschwach, 95 % Schule/Kita)", bagatell:15000, hinweise:"Begründung gemäß VwV-StVO 2025 nötig (Sicherheit/Leichtigkeit oder Förderung des Radverkehrs). Unser Begründungsgenerator (Vorhaben 3.3) hilft."},
+  {nr:"2.1.4", titel:"Radwegebrücken / Unterführungen", cat:["bau","invest"], zweck:"Höhenfreie Querungen von Straßen, Schienen, Wasserwegen.", quote:"75 % (90 % finanzschwach, 95 % Schule/Kita)", bagatell:15000, hinweise:"Hochinvestiv. Baugrundgutachten dringend empfehlenswert (sonst Mehrkosten nicht zuwendungsfähig)."},
+  {nr:"2.1.5", titel:"Schutz- und Radfahrstreifen", cat:["bau","invest"], zweck:"Schutz-/Radfahrstreifen, ggf. mit baulicher Trennung vom Kfz-Verkehr.", quote:"75 % (90 % finanzschwach, 95 % Schule/Kita)", bagatell:5000, hinweise:"Niedrige Bagatellgrenze macht auch kleinere Maßnahmen förderfähig. Markierungsstandard nach ERA."},
+  {nr:"2.1.6", titel:"Knotenpunkte", cat:["bau","invest"], zweck:"Komplexitätsreduktion, Sichtverhältnisse, Schutzinseln, vorgezogene Haltelinien.", quote:"75 % (90 % finanzschwach, 95 % Schule/Kita)", bagatell:10000, hinweise:"Förderfähig sind Maßnahmen, die Verkehrsströme trennen, vollständig gesicherte Führung des Radverkehrs vorsehen."},
+  {nr:"2.1.7", titel:"Verkehrstechnische Ausstattung", cat:["bau","invest"], zweck:"Beleuchtungsanlagen und wegweisende Beschilderung (aus Sicherheitsgründen).", quote:"75 % (90 % finanzschwach, 95 % Schule/Kita)", bagatell:5000, hinweise:"Auch Markierungsmaßnahmen nach bundeseinheitlichen Standards förderfähig."},
+  {nr:"2.1.8", titel:"Fußverkehrsmaßnahmen i.V.m. Rad", cat:["bau","invest"], zweck:"Fußverkehrsmaßnahmen, baulich vom Rad getrennt aber im Verbund mit Radvorhaben.", quote:"75 % (90 % finanzschwach, 95 % Schule/Kita)", bagatell:15000, hinweise:"Voraussetzung: Kostenanteil Fußverkehr je Maßnahme geringer als Radanteil; gemeinsame Planung + Bau."},
+  {nr:"2.2.1", titel:"Abstellanlagen — öffentliche Einrichtungen / ÖPV", cat:["abstell","invest"], zweck:"Diebstahlsichere Abstellanlagen an Schulen, Kitas, Rathäusern, Schwimmbädern, Sportstätten, Bibliotheken, Museen — oder an Verknüpfungspunkten zum ÖPV.", quote:"75 % (90 % finanzschwach, 95 % Schule/Kita)", bagatell:5000, hinweise:"Mind. 6 zusätzliche Stellplätze bei Neubau/Umbau/Ausbau. Allen Nutzergruppen jederzeit öffentlich zugänglich (Ausnahme: Schule/Kita)."},
+  {nr:"2.2.2", titel:"Abstellanlagen — öffentl. Verkehrsraum / nicht-kommunale (Bildungs-)Einrichtungen", cat:["abstell","invest"], zweck:"Anlehnbügel, Doppelstockparksysteme, Fahrradboxen, Fahrradparkhäuser an Quell-/Zielorten.", quote:"75 % (90 % finanzschwach, 95 % Schule/Kita gemeinnützig)", bagatell:5000, hinweise:"Auch für gemeinnützige/religionsgemeinschaftliche Schulen/Kitas. Stromzuleitung NICHT zuwendungsfähig."},
+  {nr:"2.3", titel:"Betriebliche Maßnahmen LSA", cat:["bau","invest"], zweck:"Optimierung des Verkehrsflusses, Koordinierung von LSA, getrennte Grünphasen für Verkehrsströme.", quote:"75 % (90 % finanzschwach, 95 % Schule/Kita)", bagatell:5000, hinweise:"Schwerpunkt: Reduktion von Verkehrskonflikten zwischen Rad und MIV an Knotenpunkten."},
+  {nr:"2.4", titel:"Querungshilfen", cat:["bau","invest"], zweck:"Gesicherte (LSA, Fußgängerüberweg) oder ungesicherte (Mittelinseln, Gehwegüberfahrten) Querungsstellen außerhalb von Knoten.", quote:"75 % (90 % Schule/Kita), max. 60.000 €", bagatell:10000, hinweise:"Gesicherte Querungen bevorzugt aus Sicht von Menschen mit Mobilitätseinschränkungen."},
+  {nr:"2.5", titel:"Konzepte (Rad/Fuß) durch Dritte", cat:["konzept","nicht-invest"], zweck:"Erstellung von Rad- und/oder Fußverkehrskonzepten durch externe Fachbüros.", quote:"80 %, max. 50.000 €", bagatell:2000, hinweise:"Pflicht: Innerhalb 3 Jahren mind. 1 investive Maßnahme aus Konzept umsetzen, sonst Rückzahlung. Eigene Verwaltung darf nicht beauftragt werden. Auch Fußverkehrs-Checks förderfähig."},
+  {nr:"2.6", titel:"Lastenfahrräder / Lastenpedelecs", cat:["invest"], zweck:"Beschaffung serienmäßig hergestellter Lastenfahrräder/-pedelecs.", quote:"25 % vom Anschaffungspreis · max. 500 € (Lastenrad) / 1.000 € (Pedelec)", bagatell:500, hinweise:"Pro Jahr/Antragsteller bis zu 5 Fahrzeuge. Zuladung mind. 50 kg, Gesamtgewicht mind. 150 kg. Keine Vermietung/Sharing. Liefer-/Montagekosten + Zubehör NICHT förderfähig."},
+  {nr:"2.7", titel:"Reparatur- und Servicestationen", cat:["invest"], zweck:"Beschaffung von Reparatur- und Servicestationen für den Radverkehr.", quote:"40 %, max. 15.000 € (90 % Schule/Kita, max. 15.000 €)", bagatell:500, hinweise:"An wichtigem Quell-/Zielort des Radverkehrs · jederzeit öffentlich zugänglich."},
+  {nr:"2.8", titel:"Ladeeinrichtungen für Pedelecs", cat:["invest"], zweck:"Errichtung/Nachrüstung einzelner Ladeeinrichtungen an Fahrradabstellanlagen.", quote:"40 %, max. 15.000 € (90 % Schule/Kita)", bagatell:2000, hinweise:"Tiefbau- und Anschlusskosten für Stromzuführung NICHT förderfähig."},
+  {nr:"2.9", titel:"Zählstellen Rad/Fuß", cat:["invest"], zweck:"Beschaffung und Errichtung stationärer Zählstellen (Displays oder Säulen).", quote:"60 %, max. 25.000 €/Anlage (90 % Schule/Kita)", bagatell:2000, hinweise:"Pro Gemeinde/Stadt/LK/RV und Jahr bis 3 Zählstellen. Lizenz-/Software-/Datenkosten 3 Jahre lang förderfähig. Daten müssen kostenfrei an Land übermittelbar sein."},
+  {nr:"2.10", titel:"Modell-/Pilotvorhaben", cat:["konzept","invest","nicht-invest"], zweck:"Innovative Projekte mit Modell-/Pilotcharakter, einschl. Machbarkeitsstudien und Potenzialanalysen.", quote:"75 %, max. 50.000 € (90 % Schule/Kita)", bagatell:2000, hinweise:"Personalkosten projektbezogen + befristet förderfähig. Wissenschaftliche Begleitung möglich. Nicht: Maßnahmen mit Einnahmeerwartung oder reine Öffentlichkeitsarbeit (→ 2.12)."},
+  {nr:"2.11", titel:"Öffentlichkeitswirksame Kampagnen", cat:["nicht-invest"], zweck:"Nicht-investive Kampagnen, Aktionen, Maßnahmen mit Bezug zum Rad-/Fußverkehr — Bewusstseinsbildung.", quote:"60 %, max. 25.000 € (90 % Schule/Kita)", bagatell:2000, hinweise:"Pro Maßnahmenträger und Jahr 2 Bewilligungen möglich. Veranstaltungen müssen unentgeltlich öffentlich sein. Keine Speisen/Getränke. Kein betriebliches Mobilitätsmanagement."},
+  {nr:"2.12", titel:"Schul-/Kita-Maßnahmen Rad/Fuß", cat:["schule","nicht-invest"], zweck:"Mobilitätserziehung, Rad-/Fußverkehr im Schul-/Kitaalltag, Mobilitätsmanagement.", quote:"90 %, max. 50.000 €", bagatell:2000, hinweise:"Personalkosten projektbezogen + befristet förderfähig. Pro Maßnahmenträger und Jahr 2 Bewilligungen. NICHT: Bauliche Maßnahmen (Geländeumgestaltung, Anbindung, Abstellanlagen — die laufen über 2.1/2.2.1)."}
+];
+
+// ====================== TABS ======================
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ====================== FRL-CARDS RENDER ======================
+function renderFrlCards(filter='', cat='all'){
+  const wrap = document.getElementById('frl-cards');
+  const f = filter.toLowerCase();
+  const cards = FRL_GEGENSTAENDE.filter(g=>{
+    const matchCat = cat==='all' || g.cat.includes(cat);
+    const matchTxt = !f || g.titel.toLowerCase().includes(f) || g.zweck.toLowerCase().includes(f) || g.nr.includes(f) || g.hinweise.toLowerCase().includes(f);
+    return matchCat && matchTxt;
+  });
+  if(cards.length===0){
+    wrap.innerHTML = '<div class="card" style="text-align:center;color:var(--c-ink-soft)">Keine Treffer für diese Filter-Kombination.</div>';
+    return;
+  }
+  wrap.innerHTML = cards.map(g=>`
+    <div class="card">
+      <div class="card-head">
+        <h4>${g.titel}</h4>
+        <span class="num">${g.nr}</span>
+      </div>
+      <p>${g.zweck}</p>
+      <table class="tbl" style="margin:10px 0">
+        <tr><th style="width:40%">Förderquote</th><td>${g.quote}</td></tr>
+        <tr><th>Bagatellgrenze</th><td class="num">${g.bagatell.toLocaleString('de-DE')} €</td></tr>
+      </table>
+      <div class="hinweis" style="margin:10px 0 0"><strong>Praxis:</strong> ${g.hinweise}</div>
+      <div class="meta">
+        ${g.cat.map(c=>`<span class="tag outline">${c}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+renderFrlCards();
+
+// Filter
+document.getElementById('filter-frl').addEventListener('input',e=>{
+  const cat = document.querySelector('.filter-chip.active').dataset.cat;
+  renderFrlCards(e.target.value, cat);
+});
+document.querySelectorAll('.filter-chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-chip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+    const txt = document.getElementById('filter-frl').value;
+    renderFrlCards(txt, c.dataset.cat);
+  });
+});
+
+// ====================== RECHNER ======================
+const PROG_MASS = {
+  frl: FRL_GEGENSTAENDE.map(g=>({val:g.nr,label:`${g.nr} — ${g.titel}`,data:g})),
+  jgf1: [{val:"jgf1",label:"FL 1 — Modellprojekt (1,5–6 Mio €)",data:{quote:"75 % (90 % finanzschwach)",bagatell:1500000,hinweise:"Mehrjähriges Modellprojekt mit mind. 3 Teilmaßnahmen, Laufzeit bis 2031.",max:6000000}}],
+  jgf2: [{val:"jgf2",label:"FL 2 — Sprint (250 T€ – 1,5 Mio €)",data:{quote:"75 % (90 % finanzschwach)",bagatell:250000,hinweise:"Schnelle Maßnahme bis 2027. Vorplanung, Ratsbeschluss, Eigenmittel-Nachweis erforderlich.",max:1500000}}]
+};
+
+function fillMass(prog){
+  const sel = document.getElementById('r-mass');
+  sel.innerHTML = PROG_MASS[prog].map(o=>`<option value="${o.val}">${o.label}</option>`).join('');
+}
+fillMass('frl');
+
+function calcRechner(){
+  const prog = document.getElementById('r-prog').value;
+  const massVal = document.getElementById('r-mass').value;
+  const aus = parseFloat(document.getElementById('r-aus').value)||0;
+  const fin = document.getElementById('r-fin').checked;
+  const sch = document.getElementById('r-schule').checked;
+  const li = document.getElementById('r-li').checked;
+
+  const mObj = PROG_MASS[prog].find(o=>o.val===massVal);
+  if(!mObj) return;
+
+  let quote = 0.75;
+  let quoteText = "75 %";
+  let max = null;
+  let bag = mObj.data.bagatell;
+
+  // Quote-Logik je Programm/Gegenstand
+  if(prog==='frl'){
+    const nr = mObj.val;
+    // Sonderfälle pro FRL-Gegenstand
+    if(["2.6"].includes(nr)){ quote=0.25; quoteText="25 % vom Anschaffungspreis"; max=nr==="2.6"?1000:500; }
+    else if(["2.7","2.8"].includes(nr)){ quote = sch?0.90:0.40; quoteText = sch?"90 %":"40 %"; max=15000; }
+    else if(nr==="2.9"){ quote = sch?0.90:0.60; quoteText = sch?"90 %":"60 %"; max=25000; }
+    else if(nr==="2.10"){ quote = sch?0.90:0.75; quoteText = sch?"90 %":"75 %"; max=50000; }
+    else if(nr==="2.11"){ quote = sch?0.90:0.60; quoteText = sch?"90 %":"60 %"; max=25000; }
+    else if(nr==="2.12"){ quote=0.90; quoteText="90 %"; max=50000; }
+    else if(nr==="2.5"){ quote=0.80; quoteText="80 %"; max=50000; }
+    else if(nr==="2.4"){ quote = sch?0.90:0.75; quoteText = sch?"90 %":"75 %"; max=60000; }
+    else {
+      // 2.1.x, 2.2.x, 2.3 — Standardlogik
+      if(sch){ quote=0.95; quoteText="95 %"; }
+      else if(fin){ quote=0.90; quoteText="90 %"; }
+      else { quote=0.75; quoteText="75 %"; }
+    }
+    if(li){ quote=1.00; quoteText="100 %"; }
+  } else {
+    // JGF
+    if(fin){ quote=0.90; quoteText="90 %"; }
+    else { quote=0.75; quoteText="75 %"; }
+    max = mObj.data.max;
+  }
+
+  let betrag = aus * quote;
+  let cappedByMax = false;
+  if(max!=null && betrag>max){ betrag=max; cappedByMax=true; }
+
+  // Bagatell-Check (nur unter Bagatell wäre Problem)
+  let bagatellWarn = '';
+  if(aus*quote < bag){
+    bagatellWarn = `<div class="result-warn"><strong>Bagatellgrenze unterschritten:</strong> Mindest-Zuwendung ${bag.toLocaleString('de-DE')} € — ihre berechnete Förderung läge darunter.</div>`;
+  }
+  let maxWarn = '';
+  if(cappedByMax){
+    maxWarn = `<div class="result-warn"><strong>Förderhöchstbetrag erreicht:</strong> Über ${max.toLocaleString('de-DE')} € hinaus muss aus eigenen Mitteln finanziert werden.</div>`;
+  }
+
+  document.getElementById('r-betrag').textContent = Math.round(betrag).toLocaleString('de-DE') + ' €';
+  document.getElementById('r-quote').textContent = quoteText;
+  document.getElementById('r-bag').textContent = bag.toLocaleString('de-DE') + ' €';
+  document.getElementById('r-max').textContent = max!=null ? max.toLocaleString('de-DE') + ' €' : 'kein Höchstbetrag';
+  document.getElementById('r-eigen').textContent = Math.round(aus-betrag).toLocaleString('de-DE') + ' €';
+  document.getElementById('r-warn').innerHTML = bagatellWarn + maxWarn;
+  document.getElementById('r-praxis').innerHTML = mObj.data.hinweise ? `<div class="hinweis"><strong>Hinweis:</strong> ${mObj.data.hinweise}</div>` : '';
+}
+
+document.getElementById('r-prog').addEventListener('change',e=>{ fillMass(e.target.value); calcRechner(); });
+['r-mass','r-aus','r-fin','r-schule','r-li'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',calcRechner);
+  document.getElementById(id).addEventListener('change',calcRechner);
+});
+calcRechner();
+
+// ====================== MATCHER ======================
+const wizState = {art:null, bezug:null, traeger:null, vol:null, reife:null, zeit:null, finanz:null};
+
+document.querySelectorAll('.wiz-options').forEach(group=>{
+  const key = group.dataset.wiz;
+  group.querySelectorAll('.wiz-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      group.querySelectorAll('.wiz-opt').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      wizState[key] = btn.dataset.val;
+    });
+  });
+});
+
+document.getElementById('wiz-reset').addEventListener('click',()=>{
+  document.querySelectorAll('.wiz-opt.active').forEach(b=>b.classList.remove('active'));
+  Object.keys(wizState).forEach(k=>wizState[k]=null);
+  document.getElementById('match-output').innerHTML='';
+});
+
+// Mapping: Maßnahmen-Art → passende FRL-Vorhaben (mit Score-Gewicht)
+const ART_FRL_MAP = {
+  radweg:        [{nr:"2.1.1", score:100}],
+  eigenstaendig: [{nr:"2.1.2", score:100}],
+  fahrradstrasse:[{nr:"2.1.3", score:100}],
+  schutzstreifen:[{nr:"2.1.5", score:100}, {nr:"2.1.7", score:40}],
+  knoten:        [{nr:"2.1.6", score:80}, {nr:"2.4", score:80}, {nr:"2.3", score:60}],
+  bruecke:       [{nr:"2.1.4", score:100}],
+  abstell:       [{nr:"2.2.1", score:90}, {nr:"2.2.2", score:90}],
+  konzept:       [{nr:"2.5", score:100}],
+  lastenrad:     [{nr:"2.6", score:100}],
+  reparatur:     [{nr:"2.7", score:100}],
+  ladung:        [{nr:"2.8", score:100}],
+  zaehl:         [{nr:"2.9", score:100}],
+  modell:        [{nr:"2.10", score:100}],
+  kampagne:      [{nr:"2.11", score:100}, {nr:"2.12", score:50}],
+  schule:        [{nr:"2.12", score:100}, {nr:"2.10", score:40}]
+};
+
+// Maßnahmen-Arten, die für JGF überhaupt baulich relevant sind
+const JGF_TAUGLICH = ['radweg','eigenstaendig','fahrradstrasse','schutzstreifen','knoten','bruecke','abstell','modell'];
+
+function calcMatch(){
+  const s = wizState;
+  // Pflichtfelder
+  const required = ['art','bezug','traeger','vol','reife','zeit'];
+  const missing = required.filter(k=>!s[k]);
+  if(missing.length){
+    document.getElementById('match-output').innerHTML =
+      `<div class="empty-state">Bitte beantworten Sie noch die Schritte: <strong>${missing.map(m=>'#'+(required.indexOf(m)+1)).join(', ')}</strong></div>`;
+    return;
+  }
+
+  // Hard-Stopp: bereits begonnen
+  if(s.reife==='begonnen'){
+    document.getElementById('match-output').innerHTML = `
+      <div class="match-result weak">
+        <div class="match-head"><h3 class="match-title">Keine Förderung mehr möglich</h3></div>
+        <p class="match-why">Sobald ein der Ausführung zuzurechnender Lieferungs- oder Leistungsvertrag geschlossen wurde, gilt das Vorhaben als begonnen — die Förderung ist dann ausgeschlossen. Beide Programme verlangen Antrag <em>vor</em> Vorhabenbeginn. Ausnahme: ein bewilligter Antrag auf vorzeitigen Maßnahmenbeginn lag <em>vor</em> Vertragsabschluss vor.</p>
+      </div>`;
+    return;
+  }
+
+  const results = [];
+
+  // ---- FRL-NMOB Vorhaben ----
+  const frlMatches = ART_FRL_MAP[s.art] || [];
+  frlMatches.forEach(m=>{
+    const g = FRL_GEGENSTAENDE.find(x=>x.nr===m.nr);
+    if(!g) return;
+    let score = m.score;
+    const issues = [];
+    const boosts = [];
+
+    // Träger-Check
+    const nichtKommunale = ['2.2.2','2.6','2.7','2.8','2.10','2.11','2.12'];
+    if(s.traeger==='gemeinnuetzig' && !nichtKommunale.includes(g.nr)){
+      score -= 60;
+      issues.push('Antragsberechtigung für gemeinnützige Träger eingeschränkt — Vorhaben 2.1, 2.2.1, 2.3–2.5 nur durch Kommunen.');
+    }
+    if(s.traeger==='privat'){
+      if(g.nr==='2.6'){ /* ok */ }
+      else { score -= 80; issues.push('Private Antragsteller nur bei 2.6 (Lastenrad) zulässig.'); }
+    }
+
+    // Schule/Kita-Boost (höhere Quote)
+    if(s.bezug==='schule' && ['2.1.1','2.1.2','2.1.3','2.1.4','2.1.5','2.1.6','2.1.7','2.1.8','2.2.1','2.3','2.4','2.7','2.8','2.9','2.10','2.11'].includes(g.nr)){
+      score += 8;
+      boosts.push('Höhere Quote (90/95 %) durch Schul-/Kita-Bezug');
+    }
+    if(s.bezug==='schule' && g.nr==='2.12'){
+      score += 15;
+      boosts.push('Direkter Schul-/Kita-Bezug — perfekt passend');
+    }
+    if(s.bezug==='oepv' && g.nr==='2.2.1'){
+      score += 10;
+      boosts.push('Verknüpfungspunkt zum ÖPV — explizit gefördert');
+    }
+
+    // Touristisch ausgeschlossen
+    if(s.bezug==='tour' && ['2.1.1','2.1.2','2.1.3','2.1.4'].includes(g.nr)){
+      score -= 70;
+      issues.push('Investition darf nicht ausschließlich touristischen Verkehren dienen.');
+    }
+
+    // Volumen-Check (Bagatell und Plausibilität)
+    const volMin = {micro:0, klein:25000, mittel:100000, gross:500000, xl:1500000, xxl:6000000}[s.vol];
+    const volMax = {micro:25000, klein:100000, mittel:500000, gross:1500000, xl:6000000, xxl:99999999}[s.vol];
+    const expectedFunding = ((volMin+volMax)/2) * 0.75;
+    if(expectedFunding < g.bagatell){
+      score -= 30;
+      issues.push(`Förderbetrag würde Bagatellgrenze (${g.bagatell.toLocaleString('de-DE')} €) unterschreiten.`);
+    }
+
+    // Lastenrad: Volumen-spezifisch
+    if(g.nr==='2.6' && (s.vol==='gross'||s.vol==='xl'||s.vol==='xxl')){
+      score -= 50;
+      issues.push('Pro Antragsteller max. 5 Fahrzeuge/Jahr → meist unter 25.000 €.');
+    }
+
+    // Reife-Check
+    if(s.reife==='idee' && ['2.1.1','2.1.2','2.1.3','2.1.4','2.1.6','2.1.8'].includes(g.nr)){
+      score -= 15;
+      issues.push('Genehmigungs-/Ausführungsplanung ist innerhalb 3 Mon. nach Antrag nachzureichen.');
+    }
+
+    results.push({
+      type:'frl',
+      nr:g.nr,
+      title:`FRL-NMOB ${g.nr} — ${g.titel}`,
+      why:g.zweck,
+      quote:g.quote,
+      bagatell:g.bagatell.toLocaleString('de-DE')+' €',
+      frist:'30.09.2026',
+      score:Math.max(0,Math.min(100,score)),
+      issues, boosts
+    });
+  });
+
+  // ---- JGF Förderlinien ----
+  if(['schule','jugend'].includes(s.bezug) && JGF_TAUGLICH.includes(s.art)){
+    // FL 2 — Sprint
+    if(['mittel','gross'].includes(s.vol) && s.zeit==='schnell'){
+      let scoreFL2 = 80;
+      const iss=[], bo=[];
+      if(s.reife!=='reif'){ scoreFL2 -= 25; iss.push('FL 2 verlangt Vorplanung + Ratsbeschluss + Eigenmittel-Nachweis bei Antragstellung.'); }
+      else { bo.push('Bewilligungsreife erfüllt'); }
+      if(s.traeger!=='kommune' && s.traeger!=='gemeinnuetzig'){ scoreFL2 -= 30; iss.push('Privatwirtschaftliche Träger eingeschränkt.'); }
+      if(s.bezug==='schule'){ scoreFL2 += 10; bo.push('Schul-/Kita-Bezug ideal für Zielgruppe < 25 J.'); }
+      results.push({
+        type:'jgf', nr:'JGF FL 2',
+        title:'JGF Förderlinie 2 — „Lückenschluss im Sprint"',
+        why:'Schnelle Maßnahme bis Ende 2027 mit klarem Bezug zu Bildungs-/Jugendeinrichtung. Einstufiger Antrag direkt beim BALM.',
+        quote:'75 % (90 % bei Finanzschwäche)',
+        bagatell:'Mind. 250.000 €, max. 1,5 Mio €',
+        frist:'31.07.2026, 23:59 Uhr',
+        score:Math.max(0,Math.min(100,scoreFL2)),
+        issues:iss, boosts:bo
+      });
+    }
+    // FL 1 — Modellprojekt
+    if(['xl'].includes(s.vol) && (s.zeit==='lang'||s.zeit==='mittel') && s.art==='modell'){
+      let scoreFL1 = 90;
+      const iss=[], bo=[];
+      bo.push('Volumen + Mehrjährigkeit + Modellcharakter passen zu FL 1');
+      if(s.bezug==='schule'||s.bezug==='jugend') bo.push('Zielgruppe < 25 J. mit räumlichem Bezug erfüllt');
+      iss.push('Skizze bis 15.07.2026, mind. 3 Teilmaßnahmen mit gesamthaftem Ansatz erforderlich.');
+      results.push({
+        type:'jgf', nr:'JGF FL 1',
+        title:'JGF Förderlinie 1 — „Zukunft fährt Fahrrad"',
+        why:'Mehrjähriges Modellprojekt mit Vorbildcharakter, mind. 3 Teilmaßnahmen, kommunikative Begleitung. Wettbewerb um 30 Plätze.',
+        quote:'75 % (90 % bei Finanzschwäche)',
+        bagatell:'Mind. 1,5 Mio €, max. 6 Mio €',
+        frist:'15.07.2026 (Skizze), 18.10.2026 (Antrag)',
+        score:Math.max(0,Math.min(100,scoreFL1)),
+        issues:iss, boosts:bo
+      });
+    }
+  }
+
+  // Wenn JGF gewählt aber Bezug fehlt → Hinweis
+  if(['xl','xxl','gross'].includes(s.vol) && !['schule','jugend'].includes(s.bezug)){
+    results.push({
+      type:'info', nr:'JGF',
+      title:'JGF kommt voraussichtlich NICHT in Frage',
+      why:'Beide JGF-Linien sind zwingend auf junge Menschen bis 25 Jahre und einen räumlichen Bezug zu Bildungs-, Kinder-, Jugend- oder Freizeiteinrichtungen beschränkt. Ohne diesen Bezug bleibt nur die FRL-NMOB.',
+      quote:'—', bagatell:'—', frist:'—',
+      score:0, issues:[], boosts:[]
+    });
+  }
+
+  // Sortieren nach Score absteigend
+  results.sort((a,b)=>b.score-a.score);
+
+  // Output
+  const summary = `<div class="summary-bar">
+    <span>Maßnahme: <strong>${document.querySelector(`[data-wiz="art"] [data-val="${s.art}"]`).textContent}</strong></span>
+    <span>Bezug: <strong>${document.querySelector(`[data-wiz="bezug"] [data-val="${s.bezug}"]`).textContent}</strong></span>
+    <span>Träger: <strong>${document.querySelector(`[data-wiz="traeger"] [data-val="${s.traeger}"]`).textContent}</strong></span>
+    <span>Volumen: <strong>${document.querySelector(`[data-wiz="vol"] [data-val="${s.vol}"]`).textContent}</strong></span>
+    <span>Reife: <strong>${document.querySelector(`[data-wiz="reife"] [data-val="${s.reife}"]`).textContent}</strong></span>
+    <span>Zeit: <strong>${document.querySelector(`[data-wiz="zeit"] [data-val="${s.zeit}"]`).textContent}</strong></span>
+    ${s.finanz?`<span>Finanzschwäche: <strong>${s.finanz==='ja'?'ja':'nein'}</strong></span>`:''}
+  </div>`;
+
+  let html = summary;
+
+  if(results.length===0 || results[0].score<10){
+    html += `<div class="empty-state">Keine eindeutigen Treffer — die FRL-NMOB ist meist trotzdem ein Versuch wert. Wechseln Sie in den Tab „FRL-NMOB Saarland" und prüfen Sie die Fördergegenstände manuell.</div>`;
+  } else {
+    html += results.map(r=>{
+      const cls = r.type==='jgf' ? 'bund' : r.score<25 ? 'weak' : '';
+      const fillCls = r.type==='jgf' ? 'bund' : '';
+      return `
+      <div class="match-result ${cls}">
+        <div class="match-head">
+          <h3 class="match-title">${r.title}</h3>
+          <div class="match-score">
+            ${r.score} %
+            <div class="score-bar"><div class="score-fill ${fillCls}" style="width:${r.score}%"></div></div>
+          </div>
+        </div>
+        <p class="match-why">${r.why}</p>
+        ${r.boosts && r.boosts.length ? `<div style="font-size:12px;color:var(--c-accent-strong);margin:6px 0">✓ ${r.boosts.join(' · ')}</div>` : ''}
+        ${r.score>5 ? `<div class="match-meta">
+          <div><strong>Förderquote</strong>${r.quote}</div>
+          <div><strong>Bagatell / Volumen</strong>${r.bagatell}</div>
+          <div><strong>Frist</strong>${r.frist}</div>
+        </div>` : ''}
+        ${r.issues && r.issues.length ? `<div class="match-issues"><strong>Hinweise:</strong> ${r.issues.join(' · ')}</div>` : ''}
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('match-output').innerHTML = html;
+  document.getElementById('match-output').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+document.getElementById('wiz-go').addEventListener('click',calcMatch);
+</script>
+</body>
+</html>
