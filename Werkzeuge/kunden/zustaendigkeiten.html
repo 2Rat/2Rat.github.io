@@ -388,6 +388,18 @@ function selectLocation(id){state.location=id;render();}
 function goStep(n){state.step=n;render();}
 function resetAll(){state={step:0,category:null,measure:null,street:null,location:null};render();}
 
+/* URL-Parameter ?m=<measure-id> auswerten (Sprung aus dem VwV-StVO-Tool) */
+(function applyUrlParam(){
+  const params = new URLSearchParams(window.location.search);
+  const target = params.get('m');
+  if(!target) return;
+  // passende Kategorie finden, in der diese Maßnahme liegt
+  const cat = MEASURES.find(c => c.items.some(i => i.id === target));
+  if(!cat) return;
+  state.category = cat.id;
+  state.measure = target;
+})();
+
 render();
 </script>
 </body>

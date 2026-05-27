@@ -394,6 +394,19 @@ function selectFoerder(id){state.foerder=id;render();}
 function goStep(n){state.step=n;render();}
 function resetAll(){state={step:0,category:null,foerder:null,applicant:null};render();}
 
+/* URL-Parameter ?f=<foerder-id> auswerten (Sprung aus dem VwV-StVO-Tool).
+   Der Nutzer durchläuft trotzdem noch die Antragsteller-Auswahl,
+   aber Kategorie und Fördergegenstand sind dann schon vorselektiert. */
+(function applyUrlParam(){
+  const params = new URLSearchParams(window.location.search);
+  const target = params.get('f');
+  if(!target || !FOERDER[target]) return;
+  const cat = CATEGORIES.find(c => c.items.includes(target));
+  if(!cat) return;
+  state.category = cat.id;
+  state.foerder = target;
+})();
+
 render();
 </script>
 </body>

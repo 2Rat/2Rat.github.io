@@ -270,6 +270,26 @@ const LOGO='data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTE
 document.getElementById('logo').src=LOGO;
 
 /* ── Maßnahmen-Datenbank: VwV-StVO 2025 ── */
+
+/* Mapping zu anderen Tools der Suite.
+   Schlüssel = Maßnahmen-ID hier, Werte = IDs in den Ziel-Tools.
+   null = kein sinnvolles Direktmapping, Button wird ausgeblendet. */
+const TOOL_LINKS = {
+  "rechtsgrundlage_neu":      { zust: null,                fm: null },
+  "schutzgueter":             { zust: null,                fm: null },
+  "fahrradstrasse":           { zust: "fahrradstrasse",    fm: "2_1" },
+  "fahrradzone":              { zust: "fahrradzone",       fm: "2_1" },
+  "radfahrstreifen":          { zust: "radfahrstreifen",   fm: "2_1" },
+  "schutzstreifen":           { zust: "schutzstreifen",    fm: "2_1" },
+  "t30_soziale_einrichtungen":{ zust: "tempo30_strecke",   fm: "2_1" },
+  "t30_querungen":            { zust: "tempo30_strecke",   fm: "2_4" },
+  "t30_lueckenschluss":       { zust: "tempo30_strecke",   fm: "2_1" },
+  "einbahn_oeffnung":         { zust: "einbahn_oeffnung",  fm: "2_1" },
+  "verkehrsversuch":          { zust: "beschilderung",     fm: "2_10" },
+  "fgu":                      { zust: "beschilderung",     fm: "2_4" },
+  "bewohnerparken":           { zust: null,                fm: null }
+};
+
 const CATEGORIES = [
   {
     id: "kernstueck",
@@ -467,16 +487,23 @@ function renderMeasures(){
       if(m.practice){
         html += `<div class="body-section"><div class="practice-block"><div class="practice-title">📐 Hinweise aus der Planungspraxis</div>${m.practice}</div></div>`;
       }
-      html += `<div class="cross-actions">
-        <a href="zustaendigkeiten.html" target="_blank" class="cross-btn">
-          <strong>→ Wer ist zuständig?</strong>
-          <span>Zuständigkeiten-Tool öffnen</span>
-        </a>
-        <a href="foerdermittel-finder.html" target="_blank" class="cross-btn">
-          <strong>→ Welche Förderung?</strong>
-          <span>Fördermittel-Finder öffnen</span>
-        </a>
-      </div>`;
+      const links = TOOL_LINKS[mid] || { zust:null, fm:null };
+      if(links.zust || links.fm){
+        html += `<div class="cross-actions">`;
+        if(links.zust){
+          html += `<a href="zustaendigkeiten.html?m=${links.zust}" target="_blank" class="cross-btn">
+            <strong>→ Wer ist zuständig?</strong>
+            <span>Zuständigkeiten-Tool öffnen</span>
+          </a>`;
+        }
+        if(links.fm){
+          html += `<a href="foerdermittel-finder.html?f=${links.fm}" target="_blank" class="cross-btn">
+            <strong>→ Welche Förderung?</strong>
+            <span>Fördermittel-Finder öffnen</span>
+          </a>`;
+        }
+        html += `</div>`;
+      }
       html += `</div>`;
       html += `</div>`;
     });
