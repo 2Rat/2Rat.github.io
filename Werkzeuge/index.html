@@ -94,56 +94,7 @@ body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:var(--
     <button class="logout-btn" onclick="doLogout()">Abmelden</button>
   </div>
   <p class="license-info" id="licenseInfo"></p>
-  <div class="tool-card">
-    <h3>Fördermittel-Finder</h3>
-    <p class="tool-desc">Interaktiver Wegweiser durch die Förderrichtlinie Rad- und Fußverkehr Saarland (FRL-NMOB-Rad-Fuß). Findet passende Fördergegenstände, Quoten und Antragsberechtigungen.</p>
-    <div class="tool-tags">
-      <span class="tag">FRL-NMOB-Rad-Fuß</span>
-      <span class="tag green">Stand 03/2026</span>
-      <span class="tag">Vollversion</span>
-    </div>
-    <a class="open-btn" href="foerdermittel-finder.html" target="_blank">Tool öffnen →</a>
-  </div>
-  <div class="tool-card">
-    <h3>Zuständigkeiten Radverkehr</h3>
-    <p class="tool-desc">Entscheidungshilfe zur Bestimmung der zuständigen Behörde für Radverkehrsmaßnahmen im Saarland. Mit Praxis-Hinweisen und Rechtsgrundlagen.</p>
-    <div class="tool-tags">
-      <span class="tag">StVO · VwV-StVO 2025</span>
-      <span class="tag green">Praxis-Boxen</span>
-      <span class="tag">Vollversion</span>
-    </div>
-    <a class="open-btn" href="zustaendigkeiten.html" target="_blank">Tool öffnen →</a>
-  </div>
-  <div class="tool-card">
-    <h3>Vergabe-Assistent Saarland</h3>
-    <p class="tool-desc">Bestimmt das korrekte Vergabeverfahren (Direktauftrag · freihändige Vergabe · beschränkte Ausschreibung) anhand von Auftragswert und Leistungsart. Mit Pflicht-Schritten, Empfehlungen und Rechtsgrundlagen.</p>
-    <div class="tool-tags">
-      <span class="tag">Vergabeerlass SL 2025</span>
-      <span class="tag green">Wertgrenzen 2026</span>
-      <span class="tag">Vollversion</span>
-    </div>
-    <a class="open-btn" href="vergabe-assistent.html" target="_blank">Tool öffnen →</a>
-  </div>
-  <div class="tool-card">
-    <h3>VwV-StVO 2025 – Maßnahmen-Übersicht</h3>
-    <p class="tool-desc">Interaktive Wissensbasis aller radverkehrsrelevanten Neuerungen der VwV-StVO 2025 (Flächenbereitstellung, Tempo 30, Einbahn, Begründung & Abwägung) mit Alt-Neu-Vergleich.</p>
-    <div class="tool-tags">
-      <span class="tag">VwV-StVO 03/2025</span>
-      <span class="tag green">Alt-Neu-Vergleich</span>
-      <span class="tag">Wissensbasis</span>
-    </div>
-    <a class="open-btn" href="vwv-stvo-2025.html" target="_blank">Tool öffnen →</a>
-  </div>
-  <div class="tool-card">
-    <h3>Förderrichtlinien & Förder-Matcher</h3>
-    <p class="tool-desc">Konsolidierte Wissensbasis: Landes-Richtlinie FRL-NMOB-Rad-Fuß (gültig 17.11.2025–17.11.2030) und Bundes-Förderaufruf „Junge Generation Fahrrad" (Fristen Juli 2026), inkl. Verfahrens-Doku, Publizitätspflichten, Förderrechner und interaktivem Wizard, der zum Vorhaben das passende Programm vorschlägt.</p>
-    <div class="tool-tags">
-      <span class="tag">Land + Bund</span>
-      <span class="tag green">Förder-Matcher</span>
-      <span class="tag">Vollversion</span>
-    </div>
-    <a class="open-btn" href="foerderrichtlinien.html" target="_blank">Tool öffnen →</a>
-  </div>
+  <div id="toolsContainer"></div>
 </div>
 
 <div class="footer">
@@ -154,19 +105,90 @@ body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:var(--
 document.getElementById('logo').src='data:image/png;base64,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';
 
 /* ══════════════════════════════════════════════════════════════════
+   TOOLS – Stammdaten aller verfügbaren Tools
+   ─────────────────────────────────────────
+   Eine zentrale Liste. Neues Tool? Hier einen Eintrag ergänzen.
+   id = Dateiname ohne .html, wird automatisch zum Link.
+   ══════════════════════════════════════════════════════════════════ */
+const TOOLS = [
+  {
+    id: "foerdermittel-finder",
+    title: "Fördermittel-Finder",
+    desc: "Interaktiver Wegweiser durch die Förderrichtlinie Rad- und Fußverkehr Saarland (FRL-NMOB-Rad-Fuß). Findet passende Fördergegenstände, Quoten und Antragsberechtigungen.",
+    tags: ["FRL-NMOB-Rad-Fuß", "Stand 03/2026"]
+  },
+  {
+    id: "zustaendigkeiten",
+    title: "Zuständigkeiten Radverkehr",
+    desc: "Entscheidungshilfe zur Bestimmung der zuständigen Behörde für Radverkehrsmaßnahmen im Saarland. Mit Praxis-Hinweisen und Rechtsgrundlagen.",
+    tags: ["StVO · VwV-StVO 2025", "Praxis-Boxen"]
+  },
+  {
+    id: "vergabe-assistent",
+    title: "Vergabe-Assistent Saarland",
+    desc: "Bestimmt das korrekte Vergabeverfahren (Direktauftrag · freihändige Vergabe · beschränkte Ausschreibung) anhand von Auftragswert und Leistungsart. Mit Pflicht-Schritten, Empfehlungen und Rechtsgrundlagen.",
+    tags: ["Vergabeerlass SL 2025", "Wertgrenzen 2026"]
+  },
+  {
+    id: "vwv-stvo-2025",
+    title: "VwV-StVO 2025 – Maßnahmen-Übersicht",
+    desc: "Wissensbasis aller radverkehrsrelevanten Neuerungen der VwV-StVO 2025 (Flächenbereitstellung, Tempo 30, Einbahn, Begründung und Abwägung). Mit fertigen Textbausteinen für Ordnungsamt, Rat und Bürgerinformation.",
+    tags: ["VwV-StVO 03/2025", "Textbausteine"]
+  },
+  {
+    id: "foerderrichtlinien",
+    title: "Förderrichtlinien & Förder-Matcher",
+    desc: "Konsolidierte Wissensbasis: Landes-Richtlinie FRL-NMOB-Rad-Fuß und Bundes-Förderaufruf „Junge Generation Fahrrad\". Inkl. Verfahrens-Doku, Publizitätspflichten, Förderrechner und interaktivem Wizard.",
+    tags: ["Land + Bund", "Förder-Matcher"]
+  }
+];
+
+/* ══════════════════════════════════════════════════════════════════
+   PATHS – Ordner pro Tool-Variante (target)
+   ─────────────────────────────────────────
+   kunden/   = 2RAT-Vollversionen
+   agfk-sl/  = überarbeitete Versionen für AGFK Saarland
+   demo/     = Trial-Versionen
+   ══════════════════════════════════════════════════════════════════ */
+const PATHS = {
+  "kunden":  "kunden/",
+  "agfk-sl": "agfk-sl/",
+  "demo":    "demo/"
+};
+
+/* ══════════════════════════════════════════════════════════════════
    LIZENZEN VERWALTEN
    ─────────────────
    Codes sind als SHA-256-Hash gespeichert → nicht im Klartext sichtbar!
    Neue Hashes erzeugen: hash-generator.html öffnen, Code eingeben,
    Hash kopieren und hier eintragen.
+
+   Felder:
+     hash    – SHA-256 des Zugangscodes (Pflicht)
+     org     – Anzeigename der Organisation (Pflicht)
+     expires – Ablaufdatum YYYY-MM-DD (Pflicht)
+     target  – Ordner-Variante: "kunden" / "agfk-sl" / "demo" (Pflicht)
+     tools   – Optional: Array von Tool-IDs (siehe TOOLS).
+               Wenn weggelassen → alle Tools sichtbar.
    ══════════════════════════════════════════════════════════════════ */
 const LICENSES = [
-  // DEMO2026
-  { hash:"4aa05c62bc51969c5466a0bd884105fa76e806b034362effd5439368446aacba", org:"Demo-Zugang", expires:"2026-12-31" },
-  // AGFK Saarland
-  { hash:"ff77a4cebf755ba7d5ad12fb022e4a693a7e64e1a3f280ab3238fabc78dcdf36", org:"AGFK Saarland", expires:"2026-05-15" },
-  // Weitere Lizenzen hier eintragen:
-  // { hash:"...", org:"Gemeinde XY", expires:"2027-12-31" },
+  // 2RAT intern – Vollzugang auf alles
+  // Code muss noch generiert werden (hash-generator.html, dann hier eintragen)
+  // { hash:"HASH_HIER_EINFUEGEN", org:"2RAT intern", expires:"2099-12-31", target:"kunden" },
+
+  // DEMO2026 – aktuell: Vollzugang als Demo
+  { hash:"4aa05c62bc51969c5466a0bd884105fa76e806b034362effd5439368446aacba",
+    org:"Demo-Zugang", expires:"2026-12-31", target:"kunden" },
+
+  // AGFK Saarland – nur Fördermittel-Finder + Zuständigkeiten
+  // (target bleibt "kunden" bis überarbeitete agfk-sl/-Versionen fertig sind)
+  { hash:"ff77a4cebf755ba7d5ad12fb022e4a693a7e64e1a3f280ab3238fabc78dcdf36",
+    org:"AGFK Saarland", expires:"2026-05-15", target:"kunden",
+    tools:["foerdermittel-finder","zustaendigkeiten"] },
+
+  // Beispiel für weitere Lizenzen:
+  // { hash:"...", org:"Gemeinde XY", expires:"2027-12-31", target:"kunden",
+  //   tools:["vwv-stvo-2025"] },
 ];
 
 /* ── SHA-256 ── */
@@ -200,6 +222,41 @@ async function doLogin() {
   showDash(lic, orgIn);
 }
 
+function getVisibleTools(lic) {
+  const base = PATHS[lic.target] || PATHS["kunden"];
+  const allowedIds = lic.tools || TOOLS.map(t => t.id);
+  return TOOLS
+    .filter(t => allowedIds.includes(t.id))
+    .map(t => ({ ...t, url: base + t.id + ".html" }));
+}
+
+function renderTools(lic) {
+  const container = document.getElementById('toolsContainer');
+  const tools = getVisibleTools(lic);
+  if (tools.length === 0) {
+    container.innerHTML = '<p style="color:var(--gray-light);font-size:14px;padding:20px;text-align:center">Für diese Lizenz sind aktuell keine Tools freigeschaltet. Bitte 2RAT kontaktieren.</p>';
+    return;
+  }
+  container.innerHTML = tools.map(t => {
+    const tags = (t.tags || []).map((tag, i) =>
+      `<span class="tag${i === 1 ? ' green' : ''}">${tag}</span>`
+    ).join('');
+    return `
+    <div class="tool-card">
+      <h3>${t.title}</h3>
+      <p class="tool-desc">${t.desc}</p>
+      <div class="tool-tags">${tags}<span class="tag">${labelForTarget(lic.target)}</span></div>
+      <a class="open-btn" href="${t.url}" target="_blank">Tool öffnen →</a>
+    </div>`;
+  }).join('');
+}
+
+function labelForTarget(target) {
+  return target === 'agfk-sl' ? 'AGFK-Version'
+       : target === 'demo'    ? 'Demo-Version'
+       :                        'Vollversion';
+}
+
 function showDash(lic, orgName) {
   document.getElementById('loginView').style.display='none';
   document.getElementById('dashView').style.display='block';
@@ -207,7 +264,8 @@ function showDash(lic, orgName) {
   const days = Math.ceil((new Date(lic.expires)-new Date())/(864e5));
   const el = document.getElementById('licenseInfo');
   if (days<=30) el.innerHTML=`Lizenz bis: <span class="expired">${fmtDate(lic.expires)}</span> – <span class="expired">Läuft in ${days} Tagen ab!</span> → <a href="mailto:fahr2rat@gmail.com" style="color:var(--blue)">fahr2rat@gmail.com</a>`;
-  else el.innerHTML=`Lizenz gültig bis: <strong>${fmtDate(lic.expires)}</strong> · Vollversion`;
+  else el.innerHTML=`Lizenz gültig bis: <strong>${fmtDate(lic.expires)}</strong> · ${labelForTarget(lic.target)}`;
+  renderTools(lic);
 }
 
 function doLogout() {
