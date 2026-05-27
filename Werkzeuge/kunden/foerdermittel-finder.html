@@ -395,16 +395,21 @@ function goStep(n){state.step=n;render();}
 function resetAll(){state={step:0,category:null,foerder:null,applicant:null};render();}
 
 /* URL-Parameter ?f=<foerder-id> auswerten (Sprung aus dem VwV-StVO-Tool).
-   Der Nutzer durchläuft trotzdem noch die Antragsteller-Auswahl,
-   aber Kategorie und Fördergegenstand sind dann schon vorselektiert. */
+   Wir springen direkt zur Ergebnis-Seite mit "Gemeinde" als Default-Antragsteller
+   (häufigster Fall im Saarland). Wer ein anderer Antragsteller ist, klickt unten
+   auf "Neue Abfrage starten" und durchläuft den Wizard normal. */
 (function applyUrlParam(){
   const params = new URLSearchParams(window.location.search);
   const target = params.get('f');
   if(!target || !FOERDER[target]) return;
   const cat = CATEGORIES.find(c => c.items.includes(target));
   if(!cat) return;
+  /* Berechtigung prüfen: nur weiterspringen, wenn Gemeinde antragsberechtigt ist */
+  if(!FOERDER[target].berechtigte.includes('gemeinde')) return;
+  state.applicant = 'gemeinde';
   state.category = cat.id;
   state.foerder = target;
+  state.step = 2;
 })();
 
 render();
