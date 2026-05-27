@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VwV-StVO 2025 Maßnahmen-Übersicht Radverkehr Saarland – 2RAT</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#1678A9;--blue-dark:#115d85;--blue-light:#e8f4fa;
+  --green:#659444;--green-dark:#4a7332;--green-light:#eef5e6;
+  --gray:#3E403F;--gray-light:#8a8a8a;--gray-border:#d9d9d9;
+  --bg:#f9fafb;--white:#ffffff;
+  --warn:#d4930a;--warn-bg:#fef9ec;--warn-border:#f0dca0;
+}
+body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);background:var(--bg);min-height:100vh}
+.header{background:var(--white);border-bottom:3px solid var(--green);padding:18px 20px}
+.header-inner{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.header-left{display:flex;align-items:center;gap:14px}
+.header-logo{height:38px}
+.header-sub{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-light)}
+.header-title{font-size:17px;font-weight:700;color:var(--gray);line-height:1.3}
+.header-title span{color:var(--blue)}
+.header-right{text-align:right;font-size:11px;color:var(--gray-light);line-height:1.5}
+.main{max-width:760px;margin:0 auto;padding:24px 20px 60px}
+
+h2{font-size:17px;font-weight:700;margin:0 0 4px}
+h3{font-size:14px;font-weight:700;margin:0 0 8px;color:var(--gray)}
+.subtitle{font-size:13px;color:var(--gray-light);margin:0 0 14px}
+
+/* Intro */
+.intro{background:var(--white);border-radius:8px;border:1.5px solid var(--gray-border);padding:16px 18px;margin-bottom:18px}
+.intro p{font-size:13px;color:var(--gray);line-height:1.6}
+.intro .legal-ref{font-size:11px;color:var(--gray-light);margin-top:8px;padding-top:8px;border-top:1px solid var(--gray-border)}
+
+/* Filter-Leiste */
+.filterbar{background:var(--white);border-radius:8px;border:1.5px solid var(--gray-border);padding:12px 14px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filterbar input,.filterbar select{padding:7px 12px;border-radius:6px;border:1px solid var(--gray-border);font-size:12px;font-family:inherit;color:var(--gray);background:var(--white)}
+.filterbar input{flex:1;min-width:180px}
+.filterbar select{cursor:pointer}
+.filterbar button{padding:7px 12px;border-radius:6px;border:1px solid var(--gray-border);background:var(--white);font-size:12px;cursor:pointer;color:var(--gray);font-weight:600}
+.filterbar button:hover{border-color:var(--blue);color:var(--blue)}
+.filterbar button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* Kategorien */
+.category{background:var(--white);border-radius:8px;border:1.5px solid var(--gray-border);margin-bottom:12px;overflow:hidden}
+.cat-header{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;background:var(--white);transition:background .15s}
+.cat-header:hover{background:#fafbfc}
+.cat-icon{font-size:18px;width:24px;text-align:center;color:var(--green)}
+.cat-title{flex:1;font-size:14px;font-weight:700;color:var(--gray)}
+.cat-count{font-size:11px;color:var(--gray-light);font-weight:600}
+.cat-arrow{font-size:11px;color:var(--gray-light);margin-left:8px;transition:transform .2s}
+.category.closed .cat-arrow{transform:rotate(-90deg)}
+.category.closed .measures{display:none}
+.measures{padding:4px 14px 14px;display:flex;flex-direction:column;gap:8px}
+
+/* Maßnahmen-Karte */
+.measure-card{border-radius:7px;border:1px solid var(--gray-border);background:var(--white);overflow:hidden}
+.measure-header{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;transition:background .15s}
+.measure-header:hover{background:#fafbfc}
+.measure-icon{font-size:20px;min-width:30px;text-align:center}
+.measure-title{flex:1}
+.measure-name{font-weight:700;font-size:13px;color:var(--gray);line-height:1.3}
+.measure-desc{font-size:11px;color:var(--gray-light);margin-top:2px;line-height:1.4}
+.badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.04em;margin-left:6px;white-space:nowrap;display:inline-block;vertical-align:middle}
+.badge-new{background:var(--green-light);color:var(--green-dark)}
+.badge-changed{background:var(--blue-light);color:var(--blue-dark)}
+.badge-rn{background:#f3f4f6;color:var(--gray);font-weight:600}
+.expand-symbol{font-size:11px;color:var(--gray-light);transition:transform .2s;margin-left:6px}
+.measure-card.open .expand-symbol{transform:rotate(90deg)}
+.measure-body{display:none;padding:0 14px 14px;border-top:1px solid var(--gray-border);background:#fafbfc}
+.measure-card.open .measure-body{display:block}
+
+.body-section{margin-top:12px}
+.body-label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-light);margin-bottom:5px}
+.body-text{font-size:12px;color:var(--gray);line-height:1.6}
+
+.legal-block{background:var(--blue-light);border-radius:6px;padding:9px 12px;font-size:11px;color:var(--blue-dark);line-height:1.5;border:1px solid rgba(22,120,169,.18)}
+.practice-block{background:var(--green-light);border-radius:6px;padding:9px 12px;font-size:11px;color:#3a5a1f;line-height:1.5;border:1px solid rgba(101,148,68,.25)}
+.practice-block .practice-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-dark);margin-bottom:4px}
+
+.arg-block{background:var(--white);border-radius:6px;padding:9px 12px;font-size:11px;color:var(--gray);line-height:1.55;border-left:3px solid var(--blue);border:1px solid var(--gray-border);border-left:3px solid var(--blue);white-space:pre-line;font-family:Georgia,serif;font-style:italic}
+.copy-btn{margin-top:6px;padding:5px 10px;border-radius:5px;border:1px solid var(--gray-border);background:var(--white);font-size:10px;color:var(--gray);cursor:pointer;font-weight:600;font-family:inherit}
+.copy-btn:hover{border-color:var(--blue);color:var(--blue)}
+.copy-btn.ok{background:var(--green);color:#fff;border-color:var(--green)}
+
+.crossref{margin-top:10px;padding:8px 12px;background:#f3f4f6;border-radius:6px;font-size:11px;color:var(--gray-light);line-height:1.5}
+.crossref strong{color:var(--gray)}
+
+/* Tool-Generatoren (Bausteine) */
+.tools-section{margin-top:24px}
+.tools-header{font-size:15px;font-weight:700;color:var(--gray);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--green)}
+.basisdaten{background:var(--white);border-radius:8px;border:2px solid var(--blue);padding:14px 16px;margin-bottom:12px}
+.basisdaten-title{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.basisdaten select,.basisdaten input{width:100%;padding:8px 10px;border-radius:6px;border:1px solid var(--gray-border);font-size:12px;font-family:inherit;color:var(--gray);background:var(--white);margin-bottom:8px}
+.basisdaten .btn-gen{padding:10px 16px;border-radius:6px;border:none;background:var(--blue);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;width:100%;margin-top:4px}
+.basisdaten .btn-gen:hover{background:var(--blue-dark)}
+.tool-card{background:var(--white);border-radius:8px;border:1.5px solid var(--gray-border);margin-bottom:10px;overflow:hidden}
+.tool-card-header{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer}
+.tool-card-header:hover{background:#fafbfc}
+.tool-card-icon{font-size:18px;width:24px;text-align:center;color:var(--blue)}
+.tool-card-title{flex:1;font-weight:700;font-size:13px;color:var(--gray)}
+.tool-card-body{display:none;padding:12px 16px 16px;border-top:1px solid var(--gray-border);background:#fafbfc}
+.tool-card.open .tool-card-body{display:block}
+.tool-card.open .expand-symbol{transform:rotate(90deg)}
+.tool-card select,.tool-card textarea,.tool-card input{width:100%;padding:8px 10px;border-radius:6px;border:1px solid var(--gray-border);font-size:12px;font-family:inherit;color:var(--gray);background:var(--white);margin-bottom:8px}
+.tool-card textarea{min-height:140px;line-height:1.6;font-family:Georgia,serif;font-size:12px;white-space:pre-wrap;resize:vertical}
+.tool-card .btn-row{display:flex;gap:6px;flex-wrap:wrap}
+.tool-card .btn-gen{padding:8px 14px;border-radius:6px;border:none;background:var(--blue);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.tool-card .btn-gen:hover{background:var(--blue-dark)}
+.tool-card .btn-copy{padding:8px 14px;border-radius:6px;border:1px solid var(--gray-border);background:var(--white);color:var(--gray);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.tool-card .btn-copy:hover{border-color:var(--blue);color:var(--blue)}
+.tool-card .btn-copy.ok{background:var(--green);color:#fff;border-color:var(--green)}
+.field-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.field-row > *{flex:1;min-width:140px}
+.field-label-inline{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-light);margin-bottom:3px;display:block}
+
+/* Querverweise zu anderen Tools */
+.suite-links{margin-top:24px;background:var(--blue-light);border-radius:8px;padding:14px 16px;border:1px solid rgba(22,120,169,.19)}
+.suite-links-title{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.suite-links-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.suite-link{display:block;padding:10px 12px;background:var(--white);border-radius:6px;border:1px solid rgba(22,120,169,.2);text-decoration:none;color:var(--gray);font-size:12px;line-height:1.4;transition:all .15s}
+.suite-link:hover{border-color:var(--blue);transform:translateY(-1px)}
+.suite-link strong{display:block;color:var(--blue-dark);font-size:12px;margin-bottom:2px}
+.suite-link span{font-size:11px;color:var(--gray-light)}
+
+.footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--gray-border);font-size:11px;color:var(--gray-light);line-height:1.6}
+.footer a{color:var(--blue);text-decoration:none}
+.footer strong{color:var(--gray)}
+
+@media (max-width:600px){
+  .suite-links-grid{grid-template-columns:1fr}
+  .header-right{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <img class="header-logo" id="logo" alt="2RAT" src="">
+      <div>
+        <div class="header-sub">Büro für Radverkehrsplanung</div>
+        <div class="header-title">VwV-StVO 2025 <span>Maßnahmen-Übersicht Radverkehr</span></div>
+      </div>
+    </div>
+    <div class="header-right">Saarland<br>VwV-StVO 03/2025<br>Stand 05/2026</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="intro">
+    <h2>Werkzeugkasten für den Paradigmenwechsel</h2>
+    <p>Die VwV-StVO 2025 erleichtert die Anordnung von Radverkehrs- und Fußverkehrsmaßnahmen erheblich. Der Nachweis einer qualifizierten Gefahrenlage entfällt für viele Maßnahmen, neue Schutzgüter (Umwelt, Klima, Gesundheit, Stadtentwicklung) treten an seine Stelle. Dieses Tool bündelt die relevanten Neuerungen mit fertigen Textbausteinen für Ordnungsamt, Rat und Bürgerschaft.</p>
+    <div class="legal-ref">Rechtsstand: Allgemeine Verwaltungsvorschrift zur StVO vom 03.04.2025 (BAnz AT 09.04.2025 B2)</div>
+  </div>
+
+  <div class="filterbar">
+    <input type="text" id="searchInput" placeholder="🔍 Maßnahme, Zeichen oder Randnummer suchen …">
+    <select id="typeFilter">
+      <option value="all">Alle Maßnahmen</option>
+      <option value="new">Neu in der VwV</option>
+      <option value="changed">Erleichtert / geändert</option>
+    </select>
+    <button id="expandAllBtn">Alle aufklappen</button>
+    <button id="collapseAllBtn">Alle zuklappen</button>
+  </div>
+
+  <div id="measuresContainer"></div>
+
+  <div class="tools-section">
+    <div class="tools-header">📝 Textbausteine generieren</div>
+
+    <div class="basisdaten">
+      <div class="basisdaten-title">Basisdaten – einmal eintragen, alle drei Bausteine erzeugen</div>
+      <label class="field-label-inline">Maßnahme</label>
+      <select id="globalMeasureSelect"></select>
+      <div class="field-row">
+        <div>
+          <label class="field-label-inline">Kommune</label>
+          <input type="text" id="globalKommune" placeholder="z. B. Gemeinde Lebach">
+        </div>
+        <div>
+          <label class="field-label-inline">Straße / Ort</label>
+          <input type="text" id="globalOrt" placeholder="z. B. Hauptstraße, Ortsdurchfahrt">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-gen" id="genAllBtn">▶ Alle drei Bausteine erzeugen</button>
+      </div>
+    </div>
+
+    <div class="tool-card" id="tool-ordnungsamt">
+      <div class="tool-card-header">
+        <div class="tool-card-icon">🏛️</div>
+        <div class="tool-card-title">Antrag an das Ordnungsamt</div>
+        <span class="expand-symbol">▶</span>
+      </div>
+      <div class="tool-card-body">
+        <textarea id="ordnungsamtOutput" placeholder="Hier erscheint der Antragstext, sobald oben „Alle Bausteine erzeugen" geklickt wurde …" readonly></textarea>
+        <div class="btn-row">
+          <button class="btn-copy" id="copyOrdnungsamtBtn">📋 Text kopieren</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-card" id="tool-rat">
+      <div class="tool-card-header">
+        <div class="tool-card-icon">📋</div>
+        <div class="tool-card-title">Beschlussvorlage Gemeinde-/Stadtrat</div>
+        <span class="expand-symbol">▶</span>
+      </div>
+      <div class="tool-card-body">
+        <textarea id="ratOutput" placeholder="Hier erscheint die Beschlussvorlage, sobald oben „Alle Bausteine erzeugen" geklickt wurde …" readonly></textarea>
+        <div class="btn-row">
+          <button class="btn-copy" id="copyRatBtn">📋 Text kopieren</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-card" id="tool-buerger">
+      <div class="tool-card-header">
+        <div class="tool-card-icon">📢</div>
+        <div class="tool-card-title">Bürgerinformation / Aushang</div>
+        <span class="expand-symbol">▶</span>
+      </div>
+      <div class="tool-card-body">
+        <textarea id="buergerOutput" placeholder="Hier erscheint die Bürgerinformation, sobald oben „Alle Bausteine erzeugen" geklickt wurde …" readonly></textarea>
+        <div class="btn-row">
+          <button class="btn-copy" id="copyBuergerBtn">📋 Text kopieren</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="suite-links">
+    <div class="suite-links-title">↔ Weitere Tools der 2RAT-Suite</div>
+    <div class="suite-links-grid">
+      <a href="foerdermittel-finder.html" class="suite-link">
+        <strong>Fördermittel-Finder</strong>
+        <span>Welcher Fördergegenstand greift? Wie hoch ist die Quote nach FRL-NMOB-Rad-Fuß?</span>
+      </a>
+      <a href="zustaendigkeiten.html" class="suite-link">
+        <strong>Zuständigkeiten-Tool</strong>
+        <span>Welche Behörde ordnet die Maßnahme an? Welcher Baulastträger ist zuständig?</span>
+      </a>
+      <a href="vergabe-assistent.html" class="suite-link">
+        <strong>Vergabe-Assistent</strong>
+        <span>Welches Vergabeverfahren ist richtig? Wertgrenzen 2026 und Pflichtschritte.</span>
+      </a>
+      <a href="foerderrichtlinien.html" class="suite-link">
+        <strong>Förderrichtlinien & Förder-Matcher</strong>
+        <span>Konsolidierte Wissensbasis Land + Bund. Wizard, der das passende Programm vorschlägt.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    Dieses Tool dient als Orientierungshilfe und ersetzt keine Rechtsberatung.
+    Grundlage: Allgemeine Verwaltungsvorschrift zur StVO (VwV-StVO) vom 03.04.2025 (BAnz AT 09.04.2025 B2).
+    Verbindlich ist ausschließlich der Verordnungs- und Verwaltungsvorschrifttext in der jeweils aktuellen Fassung.
+    <br>
+    <strong>© 2RAT</strong> · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
+  </div>
+</div>
+
+<script>
+const LOGO='data:image/png;base64,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';
+document.getElementById('logo').src=LOGO;
+
+/* ── Maßnahmen-Datenbank: VwV-StVO 2025 ── */
+const CATEGORIES = [
+  {
+    id: "kernstueck",
+    label: "Rechtsgrundlage und Schutzgüter",
+    icon: "⚡",
+    items: ["rechtsgrundlage_neu", "schutzgueter"]
+  },
+  {
+    id: "flaechen",
+    label: "Flächenbereitstellung für Radverkehr",
+    icon: "🛣️",
+    items: ["fahrradstrasse", "fahrradzone", "radfahrstreifen", "schutzstreifen"]
+  },
+  {
+    id: "tempo30",
+    label: "Tempo 30 – erleichterte Anordnung",
+    icon: "🔴",
+    items: ["t30_soziale_einrichtungen", "t30_querungen", "t30_lueckenschluss"]
+  },
+  {
+    id: "weitere",
+    label: "Weitere Erleichterungen",
+    icon: "↔️",
+    items: ["einbahn_oeffnung", "verkehrsversuch", "fgu", "bewohnerparken"]
+  }
+];
+
+const MEASURES = {
+  "rechtsgrundlage_neu": {
+    name: "Neue Rechtsgrundlage § 45 Abs. 1 S. 2 Nr. 7 StVO",
+    icon: "📜",
+    desc: "Paradigmenwechsel: Maßnahmen ohne qualifizierte Gefahrenlage",
+    type: "new",
+    rn: "§ 45 Abs. 1 S. 2 Nr. 7",
+    legal: "§ 45 Abs. 1 S. 2 Nr. 7 StVO i. V. m. Rn. 14a–14e VwV-StVO",
+    explanation: "Maßnahmen zur Förderung des Rad- und Fußverkehrs können auf Basis dieser Norm angeordnet werden – aus Gründen des Umwelt-, Klima- und Gesundheitsschutzes sowie zur Unterstützung der städtebaulichen Entwicklung. Eine qualifizierte Gefahrenlage nach § 45 Abs. 9 StVO ist nicht erforderlich.",
+    arg: "Die beantragte Maßnahme stützt sich auf § 45 Abs. 1 S. 2 Nr. 7 StVO i. V. m. Rn. 14a–14e VwV-StVO. Sie dient den Schutzgütern Umwelt-, Klima- und Gesundheitsschutz sowie der städtebaulichen Entwicklung. Ein gesonderter Nachweis einer qualifizierten Gefahrenlage nach § 45 Abs. 9 StVO ist nach geltender Rechtslage nicht erforderlich.",
+    practice: "Diese Norm ist das rechtliche Fundament für nahezu alle in dieser Übersicht aufgeführten Maßnahmen. Sie sollte in jedem Anordnungsbescheid zitiert werden."
+  },
+  "schutzgueter": {
+    name: "Schutzgüter und Abwägung (Rn. 14b–14d)",
+    icon: "🌿",
+    desc: "Umwelt, Klima, Gesundheit, Stadtentwicklung als gleichrangige Belange",
+    type: "new",
+    rn: "Rn. 14b–14d",
+    legal: "VwV-StVO Rn. 14b (Schutzgüter), Rn. 14c (Abwägung), Rn. 14d (Einzelfall)",
+    explanation: "Die VwV nennt die Schutzgüter ausdrücklich (Rn. 14b). Nachteile für den Kfz-Verkehr sind hinnehmbar, sofern die Erreichbarkeit gewahrt bleibt (Rn. 14c). Auch ohne formales Gesamtkonzept können Maßnahmen im Einzelfall angeordnet werden, wenn die Verbesserung des Radverkehrs schlüssig dargestellt ist (Rn. 14d).",
+    arg: "Die Maßnahme dient den in Rn. 14b VwV-StVO genannten Schutzgütern. Etwaige Erschwernisse für den Kfz-Verkehr sind nach Rn. 14c hinnehmbar, da die Erreichbarkeit gewährleistet bleibt. Die Verbesserung der Bedingungen für den Radverkehr ist nachvollziehbar dargelegt (Rn. 14d).",
+    practice: "Wichtig: Eine bloße Bezugnahme reicht nicht – die Abwägung der Belange muss in der Anordnung dokumentiert werden."
+  },
+  "fahrradstrasse": {
+    name: "Fahrradstraße (Z 244.1)",
+    icon: "🚲",
+    desc: "Keine vorherrschende Radverkehrsdichte mehr erforderlich",
+    type: "changed",
+    rn: "Rn. 14a–14e + VwV zu Z 244.1",
+    legal: "§ 45 Abs. 1 S. 2 Nr. 7 StVO i. V. m. Rn. 14a–14e VwV-StVO; alternativ § 45 Abs. 1d StVO",
+    explanation: "Die Anordnung ist auf zwei Wegen möglich: (1) über § 45 Abs. 1 S. 2 Nr. 7 StVO als Maßnahme der Flächenbereitstellung – ohne Nachweis einer bestehenden Radverkehrsdichte. (2) Klassisch über § 45 Abs. 1d StVO, wenn der Radverkehr bereits die maßgebliche Verkehrsart darstellt oder dies zu erwarten ist. Das Merkmal 'vorherrschend' ist nicht zwingende Voraussetzung.",
+    arg: "Die Anordnung der Fahrradstraße erfolgt auf Grundlage des § 45 Abs. 1 S. 2 Nr. 7 StVO i. V. m. Rn. 14a–14e VwV-StVO. Sie ist Teil der Flächenbereitstellung für den Radverkehr und dient den Schutzgütern Umwelt-, Klima- und Gesundheitsschutz sowie der städtebaulichen Entwicklung. Ein Nachweis einer bereits vorherrschenden Radverkehrsdichte ist nach aktueller Rechtslage nicht erforderlich.",
+    practice: "Empfehlung: Anordnung der Fahrradstraße immer mit Zusatzzeichen 'Kfz frei' (1020-30) – Vollsperrung des Kfz-Verkehrs erfordert eine deutlich höhere Begründungstiefe."
+  },
+  "fahrradzone": {
+    name: "Fahrradzone (Z 244.3)",
+    icon: "🟢",
+    desc: "Klarstellung: keine Vorherrschaft des Radverkehrs nötig",
+    type: "changed",
+    rn: "Rn. 45j–45k zu Z 244.3",
+    legal: "§ 45 Abs. 1d StVO; § 45 Abs. 1 S. 2 Nr. 7 StVO i. V. m. Rn. 14a–14e",
+    explanation: "Fahrradzonen können als Instrument der Flächenbereitstellung angeordnet werden. Die VwV stellt klar: Eine hohe Radverkehrsdichte setzt nicht voraus, dass der Radverkehr bereits vorherrscht. Erforderlich ist eine erkennbar quartiers- oder netzbezogene Funktion.",
+    arg: "Die Fahrradzone wird als zusammenhängendes Quartier mehrerer Fahrradstraßen angeordnet. Rechtsgrundlage ist § 45 Abs. 1 S. 2 Nr. 7 StVO i. V. m. Rn. 14a–14e und Rn. 45j–45k zu Z 244.3 VwV-StVO. Die VwV stellt klar, dass eine hohe Radverkehrsdichte nicht das Vorherrschen des Radverkehrs voraussetzt. Die Maßnahme dient der Bündelung und Sicherung des Radverkehrs im betreffenden Quartier.",
+    practice: "Eignet sich besonders für Wohnquartiere mit Schulen, Kitas, Nahversorgung. Begleitende Maßnahmen (Pollerung an Knoten, Modalfilter) erhöhen die Wirksamkeit."
+  },
+  "radfahrstreifen": {
+    name: "Radfahrstreifen (Z 237)",
+    icon: "🔵",
+    desc: "Über Flächenbereitstellung anordbar – ohne Gefahrenlage",
+    type: "changed",
+    rn: "Rn. 14e",
+    legal: "§ 45 Abs. 1 S. 2 Nr. 7 StVO i. V. m. Rn. 14e VwV-StVO",
+    explanation: "Der Radfahrstreifen ist in Rn. 14e ausdrücklich als Instrument der Flächenbereitstellung gelistet. Die Anordnung kann ohne den Nachweis einer qualifizierten Gefahrenlage erfolgen, wenn sie der Förderung des Radverkehrs dient.",
+    arg: "Der Radfahrstreifen wird gemäß § 45 Abs. 1 S. 2 Nr. 7 StVO i. V. m. Rn. 14e VwV-StVO als Maßnahme der Flächenbereitstellung angeordnet. Die Markierung dient der sicheren und durchgehenden Führung des Radverkehrs. Nachteile für den Kfz-Verkehr sind nach Rn. 14c hinnehmbar.",
+    practice: "Empfohlene Breite ERA 2010: 1,85 m Regelmaß, 1,60 m Mindestmaß; Sicherheitstrennstreifen zum ruhenden Kfz-Verkehr von mindestens 0,75 m. Bei beengten Verhältnissen ggf. geschützter Radfahrstreifen prüfen."
+  },
+  "schutzstreifen": {
+    name: "Schutzstreifen (Z 340)",
+    icon: "⚪",
+    desc: "Anordnung wesentlich erleichtert",
+    type: "changed",
+    rn: "Rn. 14e",
+    legal: "§ 45 Abs. 1 S. 2 Nr. 7 StVO i. V. m. Rn. 14e VwV-StVO",
+    explanation: "Schutzstreifen sind in Rn. 14e als Instrument der Flächenbereitstellung gelistet. Eine qualifizierte Gefahrenlage ist nicht mehr Voraussetzung. Die Anordnung dient der sichtbaren Berücksichtigung des Radverkehrs auf der Fahrbahn.",
+    arg: "Der Schutzstreifen wird gemäß § 45 Abs. 1 S. 2 Nr. 7 StVO i. V. m. Rn. 14e VwV-StVO als Maßnahme der Flächenbereitstellung angeordnet. Er dient der sichtbaren Führung des Radverkehrs und der Reduktion seitlicher Überholabstände.",
+    practice: "Regelbreite ERA 2010: 1,50 m, Mindestmaß 1,25 m. Verbleibende Fahrbahnbreite zwischen den Schutzstreifen mindestens 4,50 m. Schutzstreifen im Begegnungsfall durch Kfz nutzbar – daher auf Markierungsqualität (z. B. Z 340 mit Piktogrammen) achten."
+  },
+  "t30_soziale_einrichtungen": {
+    name: "Tempo 30 vor sozialen Einrichtungen",
+    icon: "🏫",
+    desc: "Erweitert: Kitas, Schulen, Alten- und Pflegeheime, Krankenhäuser",
+    type: "changed",
+    rn: "§ 45 Abs. 9 S. 4 Nr. 6 StVO + VwV",
+    legal: "§ 45 Abs. 9 S. 4 Nr. 6 StVO",
+    explanation: "Tempo 30 kann auch auf Bundes-, Landes- und (im Saarland nicht relevanten) Kreisstraßen im unmittelbaren Bereich sozialer Einrichtungen angeordnet werden. Die Aufzählung umfasst u. a. Kindergärten und -tagesstätten, allgemeinbildende Schulen, Förderschulen, Alten- und Pflegeheime sowie Krankenhäuser.",
+    arg: "Im Bereich der [Einrichtung] wird Tempo 30 nach § 45 Abs. 9 S. 4 Nr. 6 StVO angeordnet. Die Anordnung erstreckt sich auf den unmittelbaren Bereich der Einrichtung und ist auch auf einer Bundes-/Landesstraße zulässig. Eine zeitliche Beschränkung ist nicht erforderlich.",
+    practice: "Räumliche Begrenzung 'unmittelbarer Bereich' – im Regelfall ca. 100–200 m beidseitig des Eingangs, je nach örtlichen Verhältnissen. Begründung des räumlichen Zuschnitts im Anordnungsbescheid dokumentieren."
+  },
+  "t30_querungen": {
+    name: "Tempo 30 im Bereich von Querungsstellen",
+    icon: "🦓",
+    desc: "Auch an Fußgängerüberwegen und Querungshilfen",
+    type: "new",
+    rn: "§ 45 Abs. 9 S. 4 Nr. 6 StVO (erweiterte Fassung)",
+    legal: "§ 45 Abs. 9 S. 4 Nr. 6 StVO i. V. m. VwV-StVO",
+    explanation: "Die erweiterte Fassung der Norm erlaubt Tempo 30 im unmittelbaren Bereich von Querungsstellen für den Fuß- und Radverkehr – auch auf klassifizierten Straßen. Die räumliche Ausdehnung ist auf den notwendigen Schutzbereich zu begrenzen.",
+    arg: "Tempo 30 wird im Bereich der Querungsstelle in Höhe [Ort] angeordnet, um die Sicherheit der querenden Personen zu erhöhen. Rechtsgrundlage ist § 45 Abs. 9 S. 4 Nr. 6 StVO. Die räumliche Ausdehnung wurde auf den unmittelbaren Schutzbereich begrenzt.",
+    practice: "Konkrete Längenangaben der Norm/VwV beachten – im Zweifel an die jeweils geltende Fassung halten. Räumliche Ausdehnung mit Verkehrsschau abstimmen."
+  },
+  "t30_lueckenschluss": {
+    name: "Tempo 30 zum Lückenschluss",
+    icon: "📏",
+    desc: "Kurze Verbindungsabschnitte zwischen zwei T30-Bereichen",
+    type: "new",
+    rn: "§ 45 Abs. 9 S. 4 Nr. 6 StVO + VwV",
+    legal: "§ 45 Abs. 9 S. 4 Nr. 6 StVO",
+    explanation: "Zur Vermeidung kurzer und schwer vermittelbarer Wechsel zwischen 30 km/h und 50 km/h kann Tempo 30 auch auf einem Verbindungsabschnitt zwischen zwei bereits angeordneten T30-Bereichen festgesetzt werden. Maximallänge gemäß jeweiliger Fassung der VwV.",
+    arg: "Zwischen den bestehenden T30-Bereichen [A] und [B] wird Tempo 30 auch auf dem Verbindungsabschnitt nach § 45 Abs. 9 S. 4 Nr. 6 StVO angeordnet. Ziel ist die Vermeidung kurzer Geschwindigkeitswechsel und eine durchgehende, gut nachvollziehbare Verkehrsregelung.",
+    practice: "Maximallänge in der jeweils geltenden VwV-Fassung nachsehen – im Zweifel die örtliche Verkehrsbehörde einbinden. Die Verkehrsschau dokumentiert die Notwendigkeit des Lückenschlusses."
+  },
+  "einbahn_oeffnung": {
+    name: "Einbahnstraßenöffnung für den Radverkehr",
+    icon: "🔄",
+    desc: "Soll-Regelung in Tempo-30-Einbahnstraßen",
+    type: "changed",
+    rn: "VwV zu Zeichen 220",
+    legal: "§ 45 Abs. 1 StVO, VwV-StVO zu Z 220",
+    explanation: "In Einbahnstraßen mit Tempo 30 soll der Radverkehr in Gegenrichtung zugelassen werden, wenn die örtlichen Verhältnisse dies erlauben (insbesondere ausreichende Fahrbahn- bzw. Begegnungsbreite, übersichtliche Knoten). Der Verzicht ist nur in begründeten Ausnahmefällen sachgerecht.",
+    arg: "Die Einbahnstraße [Name] wird nach § 45 Abs. 1 StVO i. V. m. der VwV-StVO zu Z 220 für den Radverkehr in Gegenrichtung freigegeben (Zeichen 1000-32 / 1022-10). Die Voraussetzungen (insbesondere Fahrbahnbreite und Knotensicherheit) wurden geprüft und sind gegeben.",
+    practice: "Erforderliche Beschilderung: am Anfang Z 220 + Z 1000-32 'Radverkehr frei in Gegenrichtung'; am Ende Z 267 + Z 1022-10. Knotensicherung durch Furtmarkierungen oder Aufstellbereiche prüfen."
+  },
+  "verkehrsversuch": {
+    name: "Verkehrsversuch nach § 45 Abs. 1 Nr. 6 StVO",
+    icon: "🧪",
+    desc: "Befristete Erprobung – ohne Nachweis einer Gefahrenlage",
+    type: "new",
+    rn: "§ 45 Abs. 1 S. 1 Nr. 6 StVO + VwV",
+    legal: "§ 45 Abs. 1 S. 1 Nr. 6 StVO",
+    explanation: "Verkehrsversuche dienen der Erprobung verkehrsregelnder Maßnahmen. Sie sind befristet anzuordnen und während der Laufzeit zu evaluieren. Eine qualifizierte Gefahrenlage ist nicht Voraussetzung. Die VwV-StVO 2025 konkretisiert die Anforderungen an Begründung, Befristung und Evaluation.",
+    arg: "Die Anordnung erfolgt als Verkehrsversuch nach § 45 Abs. 1 S. 1 Nr. 6 StVO. Sie ist befristet auf den Zeitraum vom [Datum] bis [Datum]. Während der Versuchsphase wird die Wirkung der Maßnahme regelmäßig evaluiert. Auf Grundlage der Evaluation wird über eine Verstetigung, Anpassung oder Aufhebung entschieden.",
+    practice: "Empfehlung: Vorab Evaluationskonzept festlegen (Indikatoren, Erhebungsmethoden, Vergleichszeiträume). Bürgerbeteiligung begleitet den Versuch und erhöht die Akzeptanz. Verstetigung erfolgt anschließend auf regulärer Rechtsgrundlage."
+  },
+  "fgu": {
+    name: "Fußgängerüberweg (Zebrastreifen)",
+    icon: "🦓",
+    desc: "Angebotsplanung möglich – ohne besondere Gefahrenlage",
+    type: "changed",
+    rn: "VwV zu Z 350",
+    legal: "§ 45 Abs. 1 StVO, VwV-StVO zu Z 350; R-FGÜ 2001",
+    explanation: "Fußgängerüberwege können nach der VwV-StVO 2025 angeordnet werden, ohne dass eine besondere örtliche Gefahrenlage nachzuweisen ist. Sie sind als Maßnahme der Angebotsplanung im Sinne der Förderung des Fußverkehrs zulässig. Die Anforderungen der R-FGÜ 2001 (Sichtbeziehungen, Verkehrsstärken, Beleuchtung) sind zu beachten.",
+    arg: "Der Fußgängerüberweg wird in Höhe [Ort] nach § 45 Abs. 1 StVO i. V. m. § 45 Abs. 1 S. 2 Nr. 7 StVO als Angebotsplanung zur Förderung des Fußverkehrs angeordnet. Die Anforderungen der R-FGÜ 2001 hinsichtlich Sichtbeziehungen, Knotenpunktabstand, Beleuchtung und Verkehrsstärken sind eingehalten.",
+    practice: "Beleuchtung des FGÜ ist Pflicht (R-FGÜ 2001). Im Bereich von Querungshilfen prüfen, ob LSA, FGÜ oder Mittelinsel der bessere Lösungsansatz ist – orientiert an Kfz-Stärke und Fußverkehrsfrequenz."
+  },
+  "bewohnerparken": {
+    name: "Bewohnerparken (Z 314 mit Z 1044-30)",
+    icon: "🅿️",
+    desc: "Erweiterte Anordnungsmöglichkeiten",
+    type: "changed",
+    rn: "VwV zu Z 314 / § 45 Abs. 1b Nr. 2a StVO",
+    legal: "§ 45 Abs. 1b Nr. 2a StVO, VwV-StVO zu Z 314",
+    explanation: "Bewohnerparken kann nach der Neufassung der VwV-StVO bereits bei drohendem Parkraummangel angeordnet werden. Der maßgebliche Radius zwischen Wohnung und Parkstand wurde erweitert; die konkrete Maximaldistanz ergibt sich aus der jeweils geltenden Fassung der VwV.",
+    arg: "Die Bewohnerparkregelung wird nach § 45 Abs. 1b Nr. 2a StVO i. V. m. der VwV-StVO zu Z 314 angeordnet. Im Quartier besteht ein erheblicher / drohender Parkraummangel. Der Ausweis der Bewohnerparkzone dient dem Schutz der Wohnbevölkerung vor übermäßigem Fremdparken.",
+    practice: "Bewohnerparken kann gezielt eingesetzt werden, um Flächen für Rad-Abstellanlagen, Lieferzonen oder Aufenthaltsqualität zu gewinnen. Konkreten Maximalradius in der jeweils geltenden VwV-Fassung nachschlagen."
+  }
+};
+
+/* ── Rendering ── */
+function renderMeasures(){
+  const container = document.getElementById('measuresContainer');
+  let html = '';
+  CATEGORIES.forEach(cat => {
+    html += `<div class="category" data-cat="${cat.id}">`;
+    html += `<div class="cat-header"><div class="cat-icon">${cat.icon}</div><div class="cat-title">${cat.label}</div><div class="cat-count">${cat.items.length} Einträge</div><span class="cat-arrow">▼</span></div>`;
+    html += `<div class="measures">`;
+    cat.items.forEach(mid => {
+      const m = MEASURES[mid];
+      if(!m) return;
+      const badgeType = m.type === 'new'
+        ? '<span class="badge badge-new">NEU</span>'
+        : '<span class="badge badge-changed">ERLEICHTERT</span>';
+      const badgeRn = m.rn ? `<span class="badge badge-rn">${m.rn}</span>` : '';
+      html += `<div class="measure-card" data-id="${mid}" data-type="${m.type}" data-search="${(m.name + ' ' + m.desc + ' ' + (m.rn||'')).toLowerCase()}">`;
+      html += `<div class="measure-header"><div class="measure-icon">${m.icon}</div><div class="measure-title"><div class="measure-name">${m.name} ${badgeType} ${badgeRn}</div><div class="measure-desc">${m.desc}</div></div><span class="expand-symbol">▶</span></div>`;
+      html += `<div class="measure-body">`;
+      html += `<div class="body-section"><div class="body-label">Erläuterung</div><div class="body-text">${m.explanation}</div></div>`;
+      html += `<div class="body-section"><div class="body-label">Rechtsgrundlage</div><div class="legal-block">${m.legal}</div></div>`;
+      html += `<div class="body-section"><div class="body-label">Begründungsbaustein (für Anordnungsbescheid)</div><div class="arg-block">${m.arg}</div><button class="copy-btn" data-copy="${encodeURIComponent(m.arg)}">📋 Baustein kopieren</button></div>`;
+      if(m.practice){
+        html += `<div class="body-section"><div class="practice-block"><div class="practice-title">📐 Hinweise aus der Planungspraxis</div>${m.practice}</div></div>`;
+      }
+      html += `<div class="crossref"><strong>→ Zuständige Behörde:</strong> Siehe Zuständigkeiten-Tool · <strong>→ Förderfähig?</strong> Siehe Fördermittel-Finder</div>`;
+      html += `</div>`;
+      html += `</div>`;
+    });
+    html += `</div></div>`;
+  });
+  container.innerHTML = html;
+  bindMeasureEvents();
+}
+
+function bindMeasureEvents(){
+  document.querySelectorAll('.cat-header').forEach(h => {
+    h.addEventListener('click', () => h.closest('.category').classList.toggle('closed'));
+  });
+  document.querySelectorAll('.measure-header').forEach(h => {
+    h.addEventListener('click', (e) => {
+      e.stopPropagation();
+      h.closest('.measure-card').classList.toggle('open');
+    });
+  });
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const text = decodeURIComponent(btn.getAttribute('data-copy'));
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('ok');
+        btn.textContent = '✓ kopiert';
+        setTimeout(() => { btn.classList.remove('ok'); btn.textContent = '📋 Baustein kopieren'; }, 1500);
+      });
+    });
+  });
+}
+
+/* ── Filter ── */
+function applyFilter(){
+  const term = document.getElementById('searchInput').value.toLowerCase().trim();
+  const type = document.getElementById('typeFilter').value;
+  document.querySelectorAll('.category').forEach(cat => {
+    let visibleInCat = 0;
+    cat.querySelectorAll('.measure-card').forEach(card => {
+      const search = card.getAttribute('data-search');
+      const cardType = card.getAttribute('data-type');
+      const matchText = !term || search.includes(term);
+      const matchType = type === 'all' || cardType === type;
+      const visible = matchText && matchType;
+      card.style.display = visible ? '' : 'none';
+      if(visible) visibleInCat++;
+    });
+    cat.style.display = visibleInCat > 0 ? '' : 'none';
+    if(term && visibleInCat > 0) cat.classList.remove('closed');
+  });
+}
+
+document.getElementById('searchInput').addEventListener('input', applyFilter);
+document.getElementById('typeFilter').addEventListener('change', applyFilter);
+document.getElementById('expandAllBtn').addEventListener('click', () => {
+  document.querySelectorAll('.category').forEach(c => c.classList.remove('closed'));
+  document.querySelectorAll('.measure-card').forEach(c => c.classList.add('open'));
+});
+document.getElementById('collapseAllBtn').addEventListener('click', () => {
+  document.querySelectorAll('.measure-card').forEach(c => c.classList.remove('open'));
+});
+
+/* ── Tool-Generatoren ── */
+function fillMeasureSelects(){
+  const opts = Object.keys(MEASURES).map(id => `<option value="${id}">${MEASURES[id].name}</option>`).join('');
+  const sel = document.getElementById('globalMeasureSelect');
+  if(sel) sel.innerHTML = opts;
+}
+renderMeasures();
+fillMeasureSelects();
+
+/* Tool-Card Toggle */
+document.querySelectorAll('.tool-card-header').forEach(h => {
+  h.addEventListener('click', () => h.closest('.tool-card').classList.toggle('open'));
+});
+
+/* Copy helper */
+function setupCopy(btnId, areaId, defaultLabel){
+  document.getElementById(btnId).addEventListener('click', () => {
+    const ta = document.getElementById(areaId);
+    if(!ta.value) return;
+    navigator.clipboard.writeText(ta.value).then(() => {
+      const btn = document.getElementById(btnId);
+      btn.classList.add('ok');
+      btn.textContent = '✓ kopiert';
+      setTimeout(() => { btn.classList.remove('ok'); btn.textContent = defaultLabel; }, 1500);
+    });
+  });
+}
+setupCopy('copyOrdnungsamtBtn','ordnungsamtOutput','📋 Text kopieren');
+setupCopy('copyRatBtn','ratOutput','📋 Text kopieren');
+setupCopy('copyBuergerBtn','buergerOutput','📋 Text kopieren');
+
+/* Textbaustein-Generatoren */
+function buildOrdnungsamt(m, kommune, ort){
+  return `An die Straßenverkehrsbehörde
+${kommune}
+
+Antrag auf verkehrsrechtliche Anordnung
+Maßnahme: ${m.name}
+Ort: ${ort}
+
+Sehr geehrte Damen und Herren,
+
+hiermit beantrage ich die verkehrsrechtliche Anordnung der oben genannten Maßnahme in der ${ort}.
+
+Begründung:
+${m.arg}
+
+Rechtsgrundlage:
+${m.legal}
+
+Über eine zeitnahe Anordnung würde ich mich freuen. Für Rückfragen stehe ich gerne zur Verfügung.
+
+Mit freundlichen Grüßen
+
+[Name, Funktion]
+[Datum]`;
+}
+
+function buildRat(m, kommune, ort){
+  return `Vorlage für den Gemeinde-/Stadtrat – ${kommune}
+
+TOP: ${m.name} in der ${ort}
+
+1. Sachverhalt
+Die Verwaltung plant die Anordnung folgender Maßnahme in der ${ort}: ${m.name}.
+
+${m.explanation}
+
+2. Rechtsgrundlage
+${m.legal}
+
+Die Allgemeine Verwaltungsvorschrift zur StVO (VwV-StVO) vom 03.04.2025 (BAnz AT 09.04.2025 B2) hat die Anordnungsvoraussetzungen für Maßnahmen zur Förderung des Rad- und Fußverkehrs erleichtert. Der Nachweis einer qualifizierten Gefahrenlage ist nicht mehr erforderlich, wenn die Maßnahme den Schutzgütern Umwelt, Klima, Gesundheit oder städtebaulicher Entwicklung dient (Rn. 14a–14e VwV-StVO).
+
+3. Begründung
+${m.arg}
+
+4. Finanzielle Auswirkungen
+[Kostenschätzung und Hinweis auf Förderfähigkeit; Quote nach FRL-NMOB-Rad-Fuß im Fördermittel-Finder prüfen]
+
+5. Beschlussvorschlag
+Der Rat nimmt die Planung zur Kenntnis und beauftragt die Verwaltung, die verkehrsrechtliche Anordnung bei der zuständigen Straßenverkehrsbehörde zu beantragen und die Umsetzung vorzubereiten.
+
+[Datum]
+[Verfasser/in]`;
+}
+
+function buildBuerger(m, kommune, ort){
+  return `Information für Anwohnerinnen und Anwohner
+
+${m.name} – ${ort}
+
+Liebe Anwohnerinnen und Anwohner,
+
+die ${kommune} plant in der ${ort} folgende Maßnahme: ${m.name}.
+
+Was bedeutet das?
+${m.desc}. ${m.explanation}
+
+Warum jetzt?
+Die neue Verwaltungsvorschrift zur Straßenverkehrsordnung (VwV-StVO 2025) erleichtert die Anordnung von Maßnahmen, die dem Rad- und Fußverkehr zugutekommen und gleichzeitig Klimaschutz, Gesundheit und eine lebenswerte Quartiersentwicklung unterstützen.
+
+Was bleibt für Sie unverändert?
+Anlieger erreichen ihre Grundstücke wie gewohnt. Liefer- und Rettungsverkehre bleiben gewährleistet. Bei Rückfragen wenden Sie sich gerne an die Verwaltung der ${kommune}.
+
+Mit freundlichen Grüßen
+Ihre ${kommune}
+[Datum]`;
+}
+
+/* Ein Button erzeugt alle drei Bausteine */
+document.getElementById('genAllBtn').addEventListener('click', () => {
+  const mid = document.getElementById('globalMeasureSelect').value;
+  const m = MEASURES[mid];
+  const kommune = document.getElementById('globalKommune').value.trim() || '[Kommune]';
+  const ort = document.getElementById('globalOrt').value.trim() || '[Straße / Ort]';
+
+  document.getElementById('ordnungsamtOutput').value = buildOrdnungsamt(m, kommune, ort);
+  document.getElementById('ratOutput').value = buildRat(m, kommune, ort);
+  document.getElementById('buergerOutput').value = buildBuerger(m, kommune, ort);
+
+  /* Alle drei Cards aufklappen, damit man die Ergebnisse sieht */
+  document.querySelectorAll('.tool-card').forEach(c => c.classList.add('open'));
+
+  /* Sanft zur ersten Card scrollen */
+  document.getElementById('tool-ordnungsamt').scrollIntoView({behavior:'smooth', block:'start'});
+});
+</script>
+</body>
+</html>
