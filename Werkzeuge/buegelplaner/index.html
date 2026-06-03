@@ -1,1 +1,409 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bügelplaner – Fahrradabstellanlagen | 2RAT</title>
+<meta name="description" content="Planungswerkzeug für Fahrrad-Anlehnbügel: Fläche eingeben, beste Aufstellung und Stellplatzzahl automatisch berechnen, Skizze erzeugen.">
+<style>
+  :root{
+    --blau:#0671B9; --gruen:#66A242;
+    --akzent:var(--blau); --akzent2:var(--gruen);
+    --bg:#f4f6f8; --card:#fff; --line:#dce1e6;
+    --text:#1f2933; --muted:#6b7682;
+    --ok-bg:#eaf4e1; --warn-bg:#fff6e5; --warn-bd:#e8b54a;
+  }
+  body.neutral{ --akzent:#2f5d7c; --akzent2:#4a7a52; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.55;padding-bottom:50px}
+  header{background:var(--card);border-bottom:3px solid var(--akzent);padding:13px 20px;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .brand{display:flex;align-items:baseline;gap:9px}
+  .brand .logo{font-size:25px;font-weight:800;letter-spacing:-1px}
+  .brand .logo .b{color:var(--blau)} .brand .logo .r{color:var(--gruen)}
+  body.neutral .brand .logo{color:var(--text)}
+  .brand .sub{font-size:13px;color:var(--muted)}
+  .brand .tool{font-size:15px;font-weight:600;color:var(--akzent)}
+  .modeswitch{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted)}
+  .modeswitch button{border:1px solid var(--line);background:#fff;padding:5px 11px;
+    border-radius:6px;cursor:pointer;font-size:13px;color:var(--text)}
+  .modeswitch button.active{background:var(--akzent);color:#fff;border-color:var(--akzent)}
 
+  .wrap{max-width:1040px;margin:22px auto;padding:0 16px;
+    display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start}
+  @media(max-width:800px){.wrap{grid-template-columns:1fr}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:18px}
+  .card h2{font-size:14px;color:var(--akzent);margin-bottom:13px;text-transform:uppercase;letter-spacing:.5px}
+
+  label{display:block;font-size:14px;font-weight:600;margin:14px 0 5px}
+  label:first-of-type{margin-top:0}
+  .hint{font-size:12px;color:var(--muted);font-weight:400}
+  input[type=number],select{width:100%;padding:10px;border:1px solid var(--line);
+    border-radius:6px;font-size:16px;font-family:inherit;background:#fff}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .seg{display:flex;gap:0;border:1px solid var(--line);border-radius:7px;overflow:hidden;margin-top:4px}
+  .seg button{flex:1;border:none;background:#fff;padding:11px 6px;font-size:14px;cursor:pointer;
+    color:var(--text);font-family:inherit}
+  .seg button.active{background:var(--akzent2);color:#fff;font-weight:600}
+
+  .hero{text-align:center;padding:20px 14px;background:var(--ok-bg);border-radius:8px;margin-bottom:14px}
+  .hero .num{font-size:46px;font-weight:800;color:var(--akzent2);line-height:1}
+  .hero .lbl{font-size:14px;color:var(--muted);margin-top:5px}
+  .hero .empf{font-size:13px;color:var(--text);margin-top:10px;font-weight:600}
+
+  .sub3{display:flex;justify-content:space-around;text-align:center;margin-bottom:6px}
+  .sub3 .num{font-size:21px;font-weight:700;color:var(--akzent)}
+  .sub3 .lbl{font-size:12px;color:var(--muted)}
+
+  .vergleich{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+  .vbox{border:1px solid var(--line);border-radius:8px;padding:11px;text-align:center;cursor:pointer}
+  .vbox.best{border-color:var(--akzent2);background:var(--ok-bg)}
+  .vbox .vt{font-size:13px;font-weight:600;color:var(--text)}
+  .vbox .vn{font-size:26px;font-weight:800;color:var(--akzent2);line-height:1.1}
+  .vbox .vl{font-size:11px;color:var(--muted)}
+  .vbox .tag{display:inline-block;font-size:10px;background:var(--akzent2);color:#fff;
+    padding:1px 7px;border-radius:8px;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+
+  table.specs{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+  table.specs td{padding:6px 4px;border-bottom:1px solid var(--line)}
+  table.specs td:last-child{text-align:right;font-weight:600}
+
+  .note{font-size:13px;padding:10px 12px;border-radius:6px;margin-top:10px}
+  .note.info{background:#eaf1f8;border-left:4px solid var(--akzent)}
+  .note.warn{background:var(--warn-bg);border-left:4px solid var(--warn-bd)}
+
+  svg.skizze{width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
+  .legende{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:10px}
+  .legende span{display:flex;align-items:center;gap:6px}
+  .lg-buegel{width:16px;height:9px;background:var(--akzent2);border-radius:2px;display:inline-block}
+  .lg-rad{width:18px;height:0;border-top:2px solid #888;display:inline-block}
+
+  .btnbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .btn{border:none;padding:10px 16px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600}
+  .btn-primary{background:var(--akzent2);color:#fff}
+  .btn-sec{background:#fff;color:var(--text);border:1px solid var(--line)}
+
+  details.adv{margin-top:8px;border-top:1px solid var(--line);padding-top:10px}
+  details.adv summary{cursor:pointer;font-size:13px;color:var(--akzent);font-weight:600}
+  details.adv .rl{display:grid;grid-template-columns:1fr 80px;gap:8px;align-items:center;margin:9px 0;font-size:13px}
+  details.adv input{padding:6px 8px;font-size:13px}
+
+  footer{max-width:1040px;margin:6px auto 0;padding:0 16px;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <span class="logo"><span class="b">2</span><span class="r">RAT</span></span>
+    <span class="sub" id="brandsub">Büro für Radverkehrsplanung</span>
+    <span class="tool">· Bügelplaner</span>
+  </div>
+  <div class="modeswitch">Modus:
+    <button id="m2rat" class="active" onclick="setMode('2rat')">2RAT</button>
+    <button id="mneutral" onclick="setMode('neutral')">Neutral</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <!-- EINGABE -->
+  <div>
+    <div class="card">
+      <h2>1 · Fläche eingeben</h2>
+      <div class="row2">
+        <div><label>Breite <span class="hint">(m)</span></label>
+          <input type="number" id="breite" value="4.5" step="0.1" min="0.5" oninput="rechne()"></div>
+        <div><label>Tiefe <span class="hint">(m)</span></label>
+          <input type="number" id="tiefe" value="5.0" step="0.1" min="0.5" oninput="rechne()"></div>
+      </div>
+
+      <label>Räder pro Bügel</label>
+      <div class="seg" id="seg-besch">
+        <button class="active" data-v="doppel" onclick="setSeg('besch',this)">2 (beidseitig)</button>
+        <button data-v="einzel" onclick="setSeg('besch',this)">1 (einseitig)</button>
+      </div>
+
+      <label>Platz zum Rangieren</label>
+      <div class="seg" id="seg-gasse">
+        <button data-v="voll" onclick="setSeg('gasse',this)">Eng</button>
+        <button class="active" data-v="normal" onclick="setSeg('gasse',this)">Normal</button>
+        <button data-v="komfort" onclick="setSeg('gasse',this)">Komfort</button>
+      </div>
+
+      <label>Packdichte</label>
+      <div class="seg" id="seg-dichte">
+        <button class="active" data-v="standard" onclick="setSeg('dichte',this)">Standard</button>
+        <button data-v="dicht" onclick="setSeg('dichte',this)">Dicht (max. Plätze)</button>
+      </div>
+
+      <details class="adv">
+        <summary>Für Profis: Maße anpassen</summary>
+        <div id="rulebox"></div>
+        <div class="note info" style="margin-top:6px;font-size:12px">
+          Werte nach DIN 79008 / ADFC, Bohle (EIPOS) und Landes-Planungstool. Richtwerte — vor Ort prüfen.
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ERGEBNIS -->
+  <div>
+    <div class="card">
+      <h2>2 · Empfehlung</h2>
+      <div class="hero">
+        <div class="num" id="r-stell">–</div>
+        <div class="lbl">Stellplätze (beste Aufstellung)</div>
+        <div class="empf" id="r-empf"></div>
+      </div>
+      <div class="vergleich">
+        <div class="vbox" id="v-quer" onclick="waehle('quer')">
+          <div id="tag-quer"></div>
+          <div class="vt">Bügel vertikal</div>
+          <div class="vn" id="vn-quer">–</div>
+          <div class="vl">Räder ragen zur Seite</div>
+        </div>
+        <div class="vbox" id="v-laengs" onclick="waehle('laengs')">
+          <div id="tag-laengs"></div>
+          <div class="vt">Bügel horizontal</div>
+          <div class="vn" id="vn-laengs">–</div>
+          <div class="vl">Räder zeigen nach vorn/hinten</div>
+        </div>
+      </div>
+      <table class="specs" id="specs"></table>
+      <div id="notes"></div>
+    </div>
+
+    <div class="card">
+      <h2>3 · Aufstellskizze</h2>
+      <div id="skizzebox"></div>
+      <div class="legende">
+        <span><span class="lg-buegel"></span> Anlehnbügel</span>
+        <span><span class="lg-rad"></span> Fahrrad (angelehnt)</span>
+      </div>
+      <div class="btnbar">
+        <button class="btn btn-primary" onclick="downloadSVG()">Skizze speichern (SVG)</button>
+        <button class="btn btn-sec" onclick="window.print()">Drucken / PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer id="foot">2RAT – Büro für Radverkehrsplanung · www.2rat.org · Bügelplaner. Alle Angaben ohne Gewähr; Maße vor Ort prüfen.</footer>
+
+<script>
+/* ====== REGELBASIS (editierbar) — alle Maße in Metern ======
+   Quellen: DIN 79008/ADFC TR 6102 (Rad-Abstand 0,70/0,50 m),
+   Bohle/EIPOS (Bügelabstand beidseitig 1,1–1,5 m; Flächen/Kosten),
+   ADFC (Wandabstand 0,80 m), Landes-Planungstool Radparken. */
+const REGELN = {
+  achsabstand:   {label:"Bügel-Achsabstand",   val:0.70, hint:"Abstand der Stellplätze nebeneinander"},
+  buegeltiefe:   {label:"Bügeltiefe",          val:0.70, hint:"Bauraum eines Bügels in Längsrichtung"},
+  radlaenge:     {label:"Radlänge",            val:1.00, hint:"Überstand eines angelehnten Rades"},
+  wandabstand:   {label:"Abstand zu Wand/Zaun",val:0.80, hint:"hinten/seitlich zur festen Kante"},
+  randabstand:   {label:"Seitlicher Rand",     val:0.30, hint:"links/rechts zur Begrenzung"},
+  reihenabstand: {label:"Lücke zw. Bügeln",    val:0.15, hint:"zwischen hintereinander stehenden Bügeln"}
+};
+/* Rangiergasse je Komfortstufe */
+const GASSE = { voll:0.0, normal:1.8, komfort:2.3 };
+/* Referenz für Auto-Vergleich & Kosten */
+const REF = {
+  pkwBox:12.5, pkwErschl:23.0,
+  kostMaterial:[125,310],   // €/Bügel, Marktpreis 2025/26
+  kostVoll:[210,305]        // €/Stellplatz inkl. Montage (indexiert)
+};
+
+let state = { besch:'doppel', gasse:'normal', dichte:'standard', wahl:null };
+
+function renderRules(){
+  const b=document.getElementById('rulebox'); b.innerHTML='';
+  for(const k in REGELN){const r=REGELN[k];
+    const d=document.createElement('div'); d.className='rl';
+    d.innerHTML=`<span>${r.label}<br><span class="hint">${r.hint}</span></span>
+      <input type="number" step="0.05" value="${r.val}"
+        oninput="REGELN['${k}'].val=parseFloat(this.value)||0;rechne()">`;
+    b.appendChild(d);
+  }
+}
+function setSeg(group,btn){
+  const seg=btn.parentElement;
+  seg.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  state[group]=btn.dataset.v;
+  state.wahl=null; // Auto-Empfehlung zurücksetzen
+  rechne();
+}
+function waehle(v){ state.wahl=v; rechne(); }
+
+/* Kernberechnung für eine Ausrichtung */
+function calc(ori){
+  const B=parseFloat(document.getElementById('breite').value)||0;
+  const T=parseFloat(document.getElementById('tiefe').value)||0;
+  const R=REGELN, doppel=state.besch==='doppel';
+  const gasse=GASSE[state.gasse];
+  // Dichte Packung: DIN-Mindestwerte für Achs-, Rand- und Wandabstand
+  const dicht = state.dichte==='dicht';
+  const achsW = dicht ? Math.min(R.achsabstand.val,0.60) : R.achsabstand.val;
+  const randW = dicht ? Math.min(R.randabstand.val,0.15) : R.randabstand.val;
+  const wandW = dicht ? Math.min(R.wandabstand.val,0.30) : R.wandabstand.val;
+
+  let buegel=0, reihen=0, proReihe=0, achs=achsW;
+
+  if(ori==='quer'){
+    // Bügel waagerecht, gestapelt über die TIEFE. Räder ragen links/rechts (in die Breite).
+    // hinten Wandabstand, vorne kleiner Saum (Anfahrt frei)
+    const saum = dicht ? 0.10 : 0.20;
+    const tiefeFrei=T-wandW-saum;
+    proReihe=Math.max(0,Math.floor(tiefeFrei/achsW)+1);
+    // Breitencheck: Bügel + Räder links/rechts müssen in die Breite passen
+    const breiteBedarf=(doppel?2*R.radlaenge.val:R.radlaenge.val)+0.6+2*randW;
+    reihen=(B>=breiteBedarf)?1:0;
+    buegel=proReihe*reihen;
+  } else {
+    // Bügel längs: Räder zeigen zur Seite. Bügel hintereinander in einer Spur.
+    const tiefeFrei=T-R.wandabstand.val-gasse;
+    const proBuegel=R.buegeltiefe.val+R.reihenabstand.val;
+    proReihe=1;
+    reihen=Math.max(0,Math.floor((tiefeFrei+R.reihenabstand.val)/proBuegel));
+    // Breitencheck: Spur braucht beidseitig Radlänge
+    const breiteBedarf=(doppel?2*R.radlaenge.val:R.radlaenge.val)+0.4;
+    if(B<breiteBedarf) reihen=0;
+    buegel=reihen;
+  }
+  const stell=buegel*(doppel?2:1);
+  return {ori,buegel,reihen,proReihe,achs,stell,B,T,gasse,doppel,randW};
+}
+
+function rechne(){
+  const q=calc('quer'), l=calc('laengs');
+  document.getElementById('vn-quer').textContent=q.stell;
+  document.getElementById('vn-laengs').textContent=l.stell;
+
+  // beste automatisch
+  const best=(q.stell>=l.stell)?'quer':'laengs';
+  const aktiv=state.wahl||best;
+  const r=(aktiv==='quer')?q:l;
+
+  // Markierung
+  document.getElementById('v-quer').classList.toggle('best',aktiv==='quer');
+  document.getElementById('v-laengs').classList.toggle('best',aktiv==='laengs');
+  document.getElementById('tag-quer').innerHTML=(best==='quer')?'<span class="tag">Empfehlung</span>':'';
+  document.getElementById('tag-laengs').innerHTML=(best==='laengs')?'<span class="tag">Empfehlung</span>':'';
+
+  document.getElementById('r-stell').textContent=r.stell;
+  const mehr=Math.abs(q.stell-l.stell);
+  document.getElementById('r-empf').textContent =
+    (q.stell===l.stell)? 'Beide Aufstellungen gleichwertig'
+    : `Aufstellung „${best==='quer'?'vertikal':'horizontal'}" bringt ${mehr} Plätze mehr`;
+
+  // Specs
+  const matMin=r.buegel*REF.kostMaterial[0], matMax=r.buegel*REF.kostMaterial[1];
+  const vMin=r.stell*REF.kostVoll[0], vMax=r.stell*REF.kostVoll[1];
+  const flaeche=r.B*r.T, proStell=r.stell>0?flaeche/r.stell:0;
+  document.getElementById('specs').innerHTML=`
+    <tr><td>Fläche</td><td>${fmt(r.B)} × ${fmt(r.T)} m</td></tr>
+    <tr><td>Gewählte Aufstellung</td><td>${aktiv==='quer'?'vertikal':'horizontal'}${r.reihen>1?', '+r.reihen+'-reihig':''}</td></tr>
+    <tr><td>Bügel</td><td>${r.buegel}${r.reihen>1?' ('+r.reihen+'×'+r.proReihe+')':''}</td></tr>
+    <tr><td>Stellplätze</td><td>${r.stell}</td></tr>
+    <tr><td>Fläche je Stellplatz</td><td>${proStell>0?fmt(proStell)+' m²':'–'}</td></tr>
+    <tr><td>Materialkosten Bügel*</td><td>${matMin.toLocaleString('de')}–${matMax.toLocaleString('de')} €</td></tr>
+    <tr><td>Vollkosten inkl. Montage*</td><td>${vMin.toLocaleString('de')}–${vMax.toLocaleString('de')} €</td></tr>`;
+
+  // Hinweise + Auto-Vergleich
+  const notes=document.getElementById('notes'); notes.innerHTML='';
+  if(r.stell===0){
+    addNote(notes,'warn','Mit diesen Maßen passt kein Bügel — Fläche oder Rangier-Einstellung prüfen.');
+  } else {
+    const raeder=Math.round(REF.pkwBox/proStell);
+    addNote(notes,'info',`🚲 vs 🚗 — Auf der Fläche eines Pkw-Stellplatzes (12,5 m²) parken hier rund <b>${raeder} Fahrräder</b>. Die ganze Fläche (${fmt(flaeche)} m²) entspricht etwa <b>${fmt(flaeche/REF.pkwErschl)} Pkw-Plätzen</b> — bietet aber <b>${r.stell} Radplätze</b>.`);
+    if(aktiv==='laengs' && q.stell>l.stell)
+      addNote(notes,'warn',`Tipp: Quer aufgestellt passen ${q.stell} statt ${l.stell} Plätze auf dieselbe Fläche.`);
+  }
+
+  zeichne(r);
+}
+function fmt(n){return n.toFixed(n%1===0?0:2).replace('.',',');}
+function addNote(parent,cls,html){const d=document.createElement('div');d.className='note '+cls;d.innerHTML=html;parent.appendChild(d);}
+
+/* ====== SKIZZE mit Beschriftung ====== */
+function zeichne(r){
+  const W=470,H=470,pad=58;
+  const s=Math.min((W-2*pad)/r.B,(H-2*pad)/r.T);
+  const fw=r.B*s,fh=r.T*s,ox=(W-fw)/2,oy=64;
+  const ak=getComputedStyle(document.body).getPropertyValue('--akzent').trim();
+  const ak2=getComputedStyle(document.body).getPropertyValue('--akzent2').trim();
+  const R=REGELN; let p=[];
+
+  // Titelzeile
+  const titel=(document.body.classList.contains('neutral')?'':'2RAT · ')+'Aufstellskizze';
+  p.push(`<text x="20" y="24" font-size="13" font-weight="bold" fill="${ak}">${titel}</text>`);
+  p.push(`<text x="20" y="42" font-size="11" fill="#666">${r.buegel} Bügel · ${r.stell} Stellplätze · Aufstellung ${r.ori==='quer'?'vertikal':'horizontal'}</text>`);
+
+  // Flächenrahmen + Maße
+  p.push(`<rect x="${ox}" y="${oy}" width="${fw}" height="${fh}" rx="5" fill="none" stroke="${ak}" stroke-width="1.3" stroke-dasharray="6 5"/>`);
+  p.push(`<text x="${ox+fw/2}" y="${oy+fh+30}" font-size="12" fill="#444" text-anchor="middle">Breite ${fmt(r.B)} m</text>`);
+  p.push(`<text x="${ox+fw+26}" y="${oy+fh/2}" font-size="12" fill="#444" text-anchor="middle" transform="rotate(90 ${ox+fw+26} ${oy+fh/2})">Tiefe ${fmt(r.T)} m</text>`);
+  // Rückkante
+  p.push(`<line x1="${ox+5}" y1="${oy}" x2="${ox+fw-5}" y2="${oy}" stroke="#555" stroke-width="2"/>`);
+  p.push(`<text x="${ox+fw/2}" y="${oy-7}" font-size="10" fill="#777" text-anchor="middle">Wand / Zaun (Rückkante)</text>`);
+
+  const bw=0.38*s, rl=R.radlaenge.val*s*0.55;
+
+  if(r.buegel>0 && r.ori==='quer'){
+    // Bügel als waagerechte Ellipsen, gleichmäßig über die Tiefe verteilt; Räder ragen links/rechts.
+    const cx=ox+fw/2;
+    const topY=oy+18, botY=oy+fh-26;     // nutzbarer Bereich im Rahmen
+    const n=r.proReihe;
+    const ery=Math.min(((botY-topY)/n)*0.38, 16);
+    const erx=Math.min(fw*0.30, 75);
+    for(let i=0;i<n;i++){
+      const cy = topY + (botY-topY) * (n===1?0.5:(i/(n-1)));
+      p.push(`<ellipse cx="${cx}" cy="${cy}" rx="${erx}" ry="${ery}" fill="none" stroke="${ak2}" stroke-width="4"/>`);
+      p.push(`<line x1="${cx-erx}" y1="${cy}" x2="${cx-erx-rl}" y2="${cy}" stroke="#888" stroke-width="2"/>`);
+      if(r.doppel) p.push(`<line x1="${cx+erx}" y1="${cy}" x2="${cx+erx+rl}" y2="${cy}" stroke="#888" stroke-width="2"/>`);
+    }
+    p.push(`<text x="${ox+fw/2}" y="${oy+fh+44}" font-size="11" fill="${ak2}" text-anchor="middle">${n} Bügel gestapelt · ${r.doppel?'2 Räder je Bügel':'1 Rad je Bügel'}</text>`);
+  } else if(r.buegel>0 && r.ori==='laengs'){
+    const bt=R.buegeltiefe.val*s, gap=R.reihenabstand.val*s;
+    const cx=ox+fw/2, startY=oy+R.wandabstand.val*s+8;
+    for(let i=0;i<r.reihen;i++){
+      const y=startY+i*(bt+gap);
+      p.push(`<rect x="${cx-bw/2}" y="${y}" width="${bw}" height="${bt}" rx="3" fill="${ak2}" opacity="0.85"/>`);
+      p.push(`<line x1="${cx-bw/2}" y1="${y+bt*0.5}" x2="${cx-bw/2-rl}" y2="${y+bt*0.5}" stroke="#888" stroke-width="2"/>`);
+      if(r.doppel) p.push(`<line x1="${cx+bw/2}" y1="${y+bt*0.5}" x2="${cx+bw/2+rl}" y2="${y+bt*0.5}" stroke="#888" stroke-width="2"/>`);
+    }
+    p.push(`<text x="${ox+fw/2}" y="${oy+fh-8}" font-size="11" fill="${ak}" text-anchor="middle">${r.reihen} Bügel hintereinander, Räder zur Seite</text>`);
+  }
+
+  const svg=`<svg class="skizze" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" font-family="Arial,sans-serif">
+    <rect width="${W}" height="${H}" fill="#fff"/>${p.join('')}</svg>`;
+  document.getElementById('skizzebox').innerHTML=svg;
+  window._lastSVG=svg.replace('class="skizze" ','');
+}
+function downloadSVG(){
+  const b=new Blob([window._lastSVG],{type:'image/svg+xml'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download='buegel-skizze.svg';a.click();
+}
+
+function setMode(m){
+  const b2=document.getElementById('m2rat'),bn=document.getElementById('mneutral');
+  if(m==='neutral'){
+    document.body.classList.add('neutral');bn.classList.add('active');b2.classList.remove('active');
+    document.getElementById('brandsub').textContent='Planungswerkzeug';
+    document.querySelector('.brand .logo').innerHTML='Bügelplaner';
+    document.getElementById('foot').textContent='Aufstellplanung Fahrradabstellanlagen · Alle Angaben ohne Gewähr; Maße vor Ort prüfen.';
+  } else {
+    document.body.classList.remove('neutral');b2.classList.add('active');bn.classList.remove('active');
+    document.getElementById('brandsub').textContent='Büro für Radverkehrsplanung';
+    document.querySelector('.brand .logo').innerHTML='<span class="b">2</span><span class="r">RAT</span>';
+    document.getElementById('foot').textContent='2RAT – Büro für Radverkehrsplanung · www.2rat.org · Bügelplaner. Alle Angaben ohne Gewähr; Maße vor Ort prüfen.';
+  }
+  rechne();
+}
+
+renderRules();
+rechne();
+</script>
+</body>
+</html>
