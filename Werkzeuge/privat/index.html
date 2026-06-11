@@ -611,8 +611,8 @@
 // Codes werden clientseitig als SHA-256-Hash abgeglichen.
 // Normalisierung: trim() + toUpperCase() (wie im Hauptportal).
 //
-// Aktive Codes:
-//   2RAT-PRIV-CGSB-5VPT    (Armin Jung, persönlich, gültig bis 31.12.2028)
+// Aktive Codes: NIEMALS im Klartext in dieser Datei notieren –
+// nur lokal dokumentieren (Lizenz-Generator bleibt offline).
 //
 const LIZENZEN = [
   {
@@ -659,7 +659,7 @@ const WEB_TOOLS = [
 const CODE_REPOS = [
   { titel: "Org-Übersicht 2Rat",        url: "https://github.com/2Rat",                                       status: "aktiv",  beschreibung: "Alle Repositories der GitHub-Organisation 2Rat auf einen Blick.",            meta: "GitHub Org · 7 Repos" },
   { titel: "Haupt-Repo (Website + Pages)", url: "https://github.com/2Rat/2Rat.github.io",                     status: "aktiv",  beschreibung: "Gesamt-Infrastruktur: Website, Werkzeuge-Portal, Cockpit, Kommandozentrale.", meta: "Vorh. 5.1, 5.2, 5.4" },
-  { titel: "Werkzeuge-Ordner",          url: "https://github.com/2Rat/2Rat.github.io/tree/main/Werkzeuge",    status: "aktiv",  beschreibung: "Zuständigkeiten, Fördermittel-Finder, Vergabe-Assistent, VwV-StVO-Übersicht, Förderrichtlinien & Matcher, Hash-Generator.", meta: "Tools 2.1–2.3, 2.7, 2.9, 2.10, 3.4" },
+  { titel: "Werkzeuge-Ordner",          url: "https://github.com/2Rat/2Rat.github.io/tree/main/Werkzeuge",    status: "aktiv",  beschreibung: "Zuständigkeiten, Fördermittel-Finder, Vergabe-Assistent, VwV-StVO-Übersicht, Förderrichtlinien & Matcher.", meta: "Tools 2.1–2.3, 2.7, 2.9, 2.10, 3.4" },
   { titel: "Velomeld",                  url: "https://github.com/2Rat/velomeld",                              status: "aktiv",  beschreibung: "Bürger-App für Radwege-Meldungen (Kernprodukt).",                              meta: "Vorhaben 4.1" },
   { titel: "Velomeld Pro",              url: "https://github.com/2Rat/velomeld-pro",                          status: "aktiv",  beschreibung: "Profi-Variante / Repo-Split von Velomeld.",                                    meta: "Vorhaben 4.1" },
   { titel: "RadPlan Pro",               url: "https://github.com/2Rat/radplan-pro",                           status: "aktiv",  beschreibung: "Profi-Erhebungs-PWA mit ERA-Konformitätscheck. Repo privat, Deployment live auf Netlify.", meta: "Vorhaben 4.2 · privat" },
