@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekt-Check Radverkehr Saarland – 2RAT</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#1678A9;--blue-dark:#115d85;--blue-light:#e8f4fa;
+  --green:#659444;--green-dark:#4a7332;--green-light:#eef5e6;
+  --gray:#3E403F;--gray-light:#8a8a8a;--gray-border:#d9d9d9;
+  --bg:#f9fafb;--white:#ffffff;
+  --warn:#d4930a;--warn-bg:#fef9ec;--warn-border:#f0dca0;
+  --info:#1678A9;--info-bg:#e8f4fa;--info-border:#b3d7ea;
+}
+body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);background:var(--bg);min-height:100vh}
+.header{background:var(--white);border-bottom:3px solid var(--green);padding:18px 20px}
+.header-inner{max-width:680px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.header-left{display:flex;align-items:center;gap:14px}
+.header-logo{height:38px}
+.header-sub{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-light)}
+.header-title{font-size:17px;font-weight:700;color:var(--gray);line-height:1.3}
+.header-title span{color:var(--blue)}
+.header-right{text-align:right;font-size:11px;color:var(--gray-light);line-height:1.5}
+.main{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.steps{display:flex;gap:6px;align-items:center;margin-bottom:24px}
+.step-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;transition:all .2s}
+.step-dot.done{background:var(--green);color:#fff}
+.step-dot.active{background:var(--blue);color:#fff}
+.step-dot.pending{background:#e5e7eb;color:#9ca3af}
+.step-line{width:32px;height:2px;transition:all .2s}
+.step-line.done{background:var(--green)}
+.step-line.pending{background:#e5e7eb}
+h2{font-size:17px;font-weight:700;margin:0 0 4px}
+h3{font-size:14px;font-weight:700;margin:0 0 8px}
+.subtitle{font-size:13px;color:var(--gray-light);margin-bottom:18px;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr;gap:10px}
+.card{padding:14px 18px;border-radius:8px;border:1.5px solid var(--gray-border);background:var(--white);cursor:pointer;transition:all .15s}
+.card:hover{border-color:var(--blue)}
+.card.selected{border-color:var(--blue);background:var(--blue-light)}
+.card-label{font-size:14px;font-weight:600;margin-bottom:2px}
+.card-desc{font-size:12px;color:var(--gray-light);line-height:1.5}
+.check-row{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border-radius:8px;border:1.5px solid var(--gray-border);background:var(--white);cursor:pointer;transition:all .15s}
+.check-row:hover{border-color:var(--blue)}
+.check-row.checked{border-color:var(--green);background:var(--green-light)}
+.check-box{flex-shrink:0;width:20px;height:20px;border-radius:5px;border:2px solid var(--gray-border);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;margin-top:1px;transition:all .15s}
+.check-row.checked .check-box{background:var(--green);border-color:var(--green)}
+.check-label{font-size:13.5px;font-weight:600;line-height:1.4}
+.btn{margin-top:18px;width:100%;padding:13px;border-radius:8px;border:none;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s}
+.btn:hover{opacity:.9}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue)}
+.btn-back{background:none;border:none;color:var(--blue);cursor:pointer;font-size:13px;font-weight:600;padding:0;margin-bottom:12px}
+.result-card{background:var(--white);border-radius:10px;border:1.5px solid var(--gray-border);overflow:hidden}
+.result-header{background:var(--blue);padding:14px 18px;color:#fff}
+.result-header .label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:2px}
+.result-header .value{font-size:17px;font-weight:700}
+.result-header .detail{font-size:12px;opacity:.8;margin-top:2px}
+.result-body{padding:16px 18px}
+.result-section{margin-bottom:16px}
+.result-section:last-child{margin-bottom:0}
+.result-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-light);margin-bottom:6px}
+.tag-list{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;font-weight:600;background:var(--blue-light);color:var(--blue-dark);border:1px solid rgba(22,120,169,.25);border-radius:6px;padding:4px 10px}
+.tag.extra{background:var(--green-light);color:var(--green-dark);border-color:rgba(101,148,68,.3)}
+.pruef-list{font-size:13px;line-height:1.6;color:var(--gray)}
+.pruef-list li{margin-left:18px;margin-bottom:3px}
+.schema-item{display:flex;gap:12px;padding:11px 14px;border-radius:8px;border:1.5px solid var(--gray-border);background:var(--white);cursor:pointer;margin-bottom:8px;transition:all .15s}
+.schema-item.done-item{border-color:var(--green);background:var(--green-light)}
+.schema-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.schema-item.done-item .schema-num{background:var(--green)}
+.schema-title{font-size:13.5px;font-weight:700;margin-bottom:2px}
+.schema-desc{font-size:12px;color:var(--gray-light);line-height:1.5}
+.agfk-box{margin-top:16px;background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:8px;padding:14px 16px}
+.agfk-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--warn);margin-bottom:6px}
+.agfk-body{font-size:12.5px;line-height:1.65}
+.agfk-body ul{margin:6px 0 6px 18px}
+.info-box{margin-top:16px;background:var(--blue-light);border-radius:8px;border:1px solid rgba(22,120,169,.19);padding:14px 16px}
+.info-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.info-body{font-size:12px;color:var(--gray);line-height:1.7}
+.copy-box{margin-top:16px;background:var(--white);border:1.5px solid var(--gray-border);border-radius:8px;overflow:hidden}
+.copy-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--gray-border)}
+.copy-head-title{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-light)}
+.copy-btn{background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;padding:6px 14px;cursor:pointer}
+.copy-btn.copied{background:var(--green)}
+.copy-body{padding:12px 14px;font-size:12px;font-family:ui-monospace,'SF Mono',Consolas,monospace;white-space:pre-wrap;line-height:1.6;max-height:300px;overflow-y:auto;color:#555}
+.crosslinks{margin-top:16px;display:grid;gap:8px}
+.crosslink{display:block;padding:11px 14px;border-radius:8px;border:1.5px solid var(--gray-border);background:var(--white);text-decoration:none;color:var(--gray);font-size:13px;transition:all .15s}
+.crosslink:hover{border-color:var(--blue)}
+.crosslink b{color:var(--blue)}
+.footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--gray-border);font-size:11px;color:var(--gray-light);line-height:1.6}
+.footer a{color:var(--blue);text-decoration:none}
+.section{margin-top:18px}
+.hidden{display:none}
+@media(min-width:560px){.grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <img class="header-logo" id="logo" alt="2RAT" src="">
+      <div>
+        <div class="header-sub">Büro für Radverkehrsplanung</div>
+        <div class="header-title">Projekt-Check <span>Radverkehr Saarland</span></div>
+      </div>
+    </div>
+    <div class="header-right">Saarland<br>Stand 06/2026</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="steps" id="steps"></div>
+  <div id="content"></div>
+  <div class="footer">
+    Dieses Tool dient als Orientierungshilfe und ersetzt keine Rechtsberatung oder Einzelfallprüfung.
+    Datengrundlage: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL, Arbeitsfassung 05/2026) sowie StVO, VwV-StVO 2025, StVZustG Saarland, SaarlStrG, FStrG.
+    Zuständigkeiten, Baulastträger und Bewilligungsstellen im Einzelfall projektbezogen verifizieren.<br>
+    Entwickelt von 2RAT – Büro für Radverkehrsplanung · <a href="https://www.2rat.org">www.2rat.org</a>
+  </div>
+</div>
+
+<script>
+const LOGO='data:image/png;base64,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';
+document.getElementById('logo').src=LOGO;
+
+/* Relative Links – Tool liegt mit den anderen im selben Ordner (kunden/). Bei agfk-sl/-Variante bleiben die Namen gleich, nur der Ordner wechselt. */
+const TOOL_LINKS={
+  zustaendigkeiten:{href:"zustaendigkeiten.html",label:"Zuständigkeiten Radverkehr",desc:"Wer ordnet an, wer trägt die Baulast?"},
+  foerdermittel:{href:"foerdermittel-finder.html?f=2_1",label:"Fördermittel-Finder",desc:"Passende Förderung nach FRL-NMOB-Rad-Fuß"},
+  vergabe:{href:"vergabe-assistent.html",label:"Vergabe-Assistent",desc:"Korrektes Vergabeverfahren bestimmen"}
+};
+
+const FALLTYPEN=[
+{id:"neuer_radweg_bl",label:"Neuer Radweg an Bundes-/Landesstraße",desc:"Neubau eines straßenbegleitenden Geh-/Radwegs",lead:"LfS / Land",
+ beteiligte:["Betroffene Kommune","Straßenverkehrsbehörde","Polizei","Umwelt-/Wasser-/Naturschutzbehörden","Förder-/Haushaltsstellen","ggf. Grunderwerb"],
+ pruef:["Baulast","Trassenführung","Knotenpunkte","Querungen","Planrecht","Umwelt","Unterhaltung","Baustellenführung"]},
+{id:"sanierung_bl",label:"Sanierung Radweg an Bundes-/Landesstraße",desc:"Sanierung eines bestehenden Radwegs",lead:"LfS",
+ beteiligte:["Straßenverkehrsbehörde","Polizei","Versorger","ggf. Tourismus bei SaarRadland-Route"],
+ pruef:["Sperrung/Umleitung","Belag","Breite","Barrierefreiheit","Markierung","Kommunikation"]},
+{id:"kommunaler_radweg",label:"Kommunaler Radweg / Lückenschluss",desc:"Radweg oder Lückenschluss an Gemeindestraße",lead:"Stadt / Gemeinde",
+ beteiligte:["Bauamt","Verkehrsplanung","Straßenverkehrsbehörde","Polizei","Fördergeber","Kämmerei","Anlieger","ggf. AGFK-SL"],
+ pruef:["Haushalt","Förderfähigkeit","Widmung","Grundstücke","Beleuchtung"]},
+{id:"fahrradstrasse",label:"Fahrradstraße oder Fahrradzone",desc:"Anordnung Z 244.1/244.3 mit Begleitmaßnahmen",lead:"Kommune / Straßenverkehrsbehörde",
+ beteiligte:["Straßenverkehrsbehörde","Polizei","Baulastträger","ÖPNV / Rettungsdienste","Anliegerkommunikation"],
+ pruef:["Rechtsgrundlage","Netzfunktion","Begleitmaßnahmen","Beschilderung","Markierung","Evaluation"]},
+{id:"einbahn_markierung",label:"Einbahnstraßenfreigabe / Markierung",desc:"Freigabe in Gegenrichtung oder Markierungsmaßnahme",lead:"Straßenverkehrsbehörde oder Kommune",
+ beteiligte:["Straßenverkehrsbehörde","Polizei","Baulastträger / Bauhof"],
+ pruef:["Fahrbahnbreite","Sichtbeziehungen","Knotenpunkte","Beschilderung","Konfliktpunkte"]},
+{id:"schulweg",label:"Schulwegmaßnahme",desc:"Sichere Schulwege, Abstellanlagen, Schulumfeld",lead:"Schule, Schulträger oder Kommune",
+ beteiligte:["Schulträger","Schule","Eltern","Straßenverkehrsbehörde","Polizei","Bauamt","Fördergeber"],
+ pruef:["Bringverkehr","Querungen","Abstellanlagen","Hol-/Bringzonen","Kommunikation","Verkehrserziehung"]},
+{id:"bike_ride",label:"Bike+Ride am Bahnhof / Haltepunkt",desc:"Fahrradparken und Anschlussmobilität am ÖPNV",lead:"Kommune / Bahnhofseigentümer / ÖPNV-Akteur",
+ beteiligte:["DB InfraGO / DB","Saarbahn / ZPS / saarVV","Fördergeber","Flächeneigentümer","Straßenverkehrsbehörde","Kommune"],
+ pruef:["Flächenverfügbarkeit","Gestattung","Reinigung","Instandhaltung","Beleuchtung","Diebstahlschutz"]},
+{id:"tour_route",label:"Touristische Route / SaarRadland",desc:"Touristischer Routenabschnitt, Wegweisung, Qualität",lead:"Tourismusstelle, Kommune, Lenkungsgruppe oder Land",
+ beteiligte:["Baulastträger der Abschnitte","Tourismus Zentrale Saarland","LfS","LUA","ADFC","lokale Tourismusstellen","StVB bei Beschilderung/Umleitung"],
+ pruef:["Route vs. Baulast","Beschilderung","Zertifizierung","Mängelmanagement","Umleitung","Schutzgebiete"]},
+{id:"aktion",label:"Radverkehrsaktion / STADTRADELN",desc:"Kampagne, Mobilitätswoche, Aktionstag",lead:"Kommune, Landkreis, Ministerium, AGFK-SL oder Initiative",
+ beteiligte:["Ordnungsamt","Straßenverkehrsbehörde","Polizei","Schulen / Vereine","Pressestelle","ggf. Klima-Bündnis"],
+ pruef:["Genehmigung","Sicherheit","Versicherung","Kommunikation","Sperrungen/Sondernutzung"]},
+{id:"unfall",label:"Unfallhäufung / Sicherheitsproblem",desc:"Reaktion auf Unfalllage oder Gefahrenstelle",lead:"Polizei, StVB, Kommune, LfS oder Hinweisgeber",
+ beteiligte:["Unfallkommission","Straßenverkehrsbehörde","Straßenbaubehörde / Baulastträger","Polizei"],
+ pruef:["Datenlage","Sofortmaßnahmen","bauliche Maßnahmen","Evaluation"]}
+];
+
+const FRAGEN=[
+{id:"q_bund",label:"Betrifft das Vorhaben eine Bundes- oder Landesstraße?",stellen:["LfS","zuständige Straßenverkehrsbehörde","bei Autobahnbezug: Autobahn GmbH"]},
+{id:"q_gemeinde",label:"Liegt die Maßnahme auf einer Gemeindestraße?",stellen:["Bau-/Tiefbauamt","Verkehrsplanung","ggf. kommunale Straßenverkehrsbehörde"]},
+{id:"q_anordnung",label:"Geht es (auch) um Zeichen, Markierung, Tempo, Sperrung oder Umleitung?",stellen:["zuständige Straßenverkehrsbehörde","Baulastträger für die Umsetzung"]},
+{id:"q_tour",label:"Ist ein touristischer Radweg betroffen?",stellen:["Tourismusstelle / TZS / SaarRadland (nach Klärung von Abschnitt und Baulast)"]},
+{id:"q_schule",label:"Geht es um Schule oder Schulweg?",stellen:["Schulträger","Schule","Straßenverkehrsbehörde","Polizei"]},
+{id:"q_foerder",label:"Sollen Fördermittel eingesetzt werden?",stellen:["Mobilitätsministerium / Bewilligungsstelle","interne Kämmerei / Fördermittelstelle (früh beteiligen)"]},
+{id:"q_umwelt",label:"Sind Natur, Wasser, Wald oder private Flächen betroffen?",stellen:["zuständige Fachbehörde bzw. Eigentümer (vor vertiefter Planung)"]},
+{id:"q_agfk",label:"Soll die AGFK-SL unterstützen?",stellen:["AGFK-SL als Erstberatung, Netzwerk- und Wissensschnittstelle"]}
+];
+
+const SCHEMA=[
+{t:"Ausgangspunkt bestimmen",d:"Kommt der Impuls vom Land, LfS, Kommune, Kreis/Regionalverband, Schule, Tourismus, ÖPNV, Verband oder aus der Bürgerschaft?"},
+{t:"Straße oder Fläche bestimmen",d:"Bundesautobahn, Bundesstraße, Landesstraße, Gemeindestraße, Wirtschaftsweg, Waldweg, Bahnhofsfläche, private Fläche oder Ufer-/Wasserstraßenbereich?"},
+{t:"Baulastträger und Eigentümer klären",d:"Wer darf bauen und wer muss später unterhalten? Sind Gestattung, Grunderwerb oder Vereinbarung erforderlich?"},
+{t:"Verkehrsrechtliche Anordnung klären",d:"Braucht es Verkehrszeichen, Markierungen, Sperrungen, Tempo-Regelung, Umleitung, Baustellenanordnung oder Veranstaltungszulassung?"},
+{t:"Planungs- und Genehmigungsrecht prüfen",d:"Sind Planfeststellung, Baurecht, Naturschutz, Wasserrecht, Waldrecht, Denkmalschutz, Immissionsschutz oder Leitungsträger betroffen?"},
+{t:"Finanzierung und Förderung prüfen",d:"Welche Richtlinie passt? Wer ist antragsberechtigt? Welche Fristen, Eigenanteile, Zweckbindungen und Vergaberegeln gelten?"},
+{t:"Betrieb und Unterhalt absichern",d:"Reinigung, Winterdienst, Beleuchtung, Beschilderung, Mängelmanagement, Grünpflege und Verkehrssicherungspflichten klären."},
+{t:"Kommunikation und Beteiligung planen",d:"Politische Gremien, Anlieger, Schulen, Verbände, Tourismus, ÖPNV, Presse und Nutzerinnen/Nutzer rechtzeitig einbinden."},
+{t:"Evaluation vorsehen",d:"Vorher-/Nachher-Betrachtung, Unfalllage, Nutzung, Akzeptanz, Mängel und Nachsteuerungsbedarf dokumentieren."}
+];
+
+let state={step:0,falltyp:null,fragen:{},schemaDone:{}};
+
+function renderSteps(){
+  const labels=["Falltyp","Rahmen","Ergebnis"];
+  let h='';
+  for(let i=0;i<3;i++){
+    const cls=i<state.step?'done':(i===state.step?'active':'pending');
+    h+='<div class="step-dot '+cls+'">'+(i<state.step?'✓':(i+1))+'</div>';
+    if(i<2)h+='<div class="step-line '+(i<state.step?'done':'pending')+'"></div>';
+  }
+  document.getElementById('steps').innerHTML=h;
+}
+
+function render(){
+  renderSteps();
+  const c=document.getElementById('content');
+  if(state.step===0)c.innerHTML=viewFalltyp();
+  else if(state.step===1)c.innerHTML=viewFragen();
+  else c.innerHTML=viewErgebnis();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function viewFalltyp(){
+  let h='<h2>Worum geht es?</h2><div class="subtitle">Falltyp des Vorhabens wählen – daraus ergeben sich Federführung, Beteiligte und Prüfpunkte.</div><div class="grid">';
+  FALLTYPEN.forEach(f=>{
+    h+='<div class="card'+(state.falltyp===f.id?' selected':'')+'" onclick="selectFalltyp(\''+f.id+'\')">'+
+       '<div class="card-label">'+f.label+'</div><div class="card-desc">'+f.desc+'</div></div>';
+  });
+  h+='</div>';
+  return h;
+}
+
+function selectFalltyp(id){state.falltyp=id;state.step=1;render();}
+
+function viewFragen(){
+  const f=FALLTYPEN.find(x=>x.id===state.falltyp);
+  let h='<button class="btn-back" onclick="goBack(0)">← Falltyp ändern</button>';
+  h+='<h2>Rahmenbedingungen</h2><div class="subtitle">Gewählt: <b>'+f.label+'</b>. Was trifft zusätzlich zu? Jede Antwort ergänzt die Liste der einzubindenden Stellen.</div>';
+  h+='<div style="display:grid;gap:8px">';
+  FRAGEN.forEach(q=>{
+    const on=!!state.fragen[q.id];
+    h+='<div class="check-row'+(on?' checked':'')+'" onclick="toggleFrage(\''+q.id+'\')">'+
+       '<div class="check-box">'+(on?'✓':'')+'</div><div class="check-label">'+q.label+'</div></div>';
+  });
+  h+='</div><button class="btn btn-primary" onclick="goResult()">Beteiligte und Prüfschema anzeigen →</button>';
+  return h;
+}
+
+function toggleFrage(id){state.fragen[id]=!state.fragen[id];render();}
+function goBack(s){state.step=s;render();}
+function goResult(){state.step=2;render();}
+function toggleSchema(i){state.schemaDone[i]=!state.schemaDone[i];render();}
+
+function activeExtras(){
+  return FRAGEN.filter(q=>state.fragen[q.id]&&q.id!=='q_agfk');
+}
+
+function viewErgebnis(){
+  const f=FALLTYPEN.find(x=>x.id===state.falltyp);
+  const extras=activeExtras();
+  let h='<button class="btn-back" onclick="goBack(1)">← Rahmenbedingungen ändern</button>';
+  h+='<div class="result-card"><div class="result-header">'+
+     '<div class="label">Federführung / Startpunkt</div><div class="value">'+f.lead+'</div>'+
+     '<div class="detail">'+f.label+'</div></div><div class="result-body">';
+
+  h+='<div class="result-section"><div class="result-label">Unverzichtbare Beteiligte</div><div class="tag-list">';
+  f.beteiligte.forEach(b=>{h+='<span class="tag">'+b+'</span>';});
+  h+='</div></div>';
+
+  if(extras.length){
+    h+='<div class="result-section"><div class="result-label">Zusätzlich einbinden (aus Rahmenbedingungen)</div><div class="tag-list">';
+    const seen=new Set(f.beteiligte.map(x=>x.toLowerCase()));
+    extras.forEach(q=>q.stellen.forEach(s=>{
+      if(!seen.has(s.toLowerCase())){seen.add(s.toLowerCase());h+='<span class="tag extra">'+s+'</span>';}
+    }));
+    h+='</div></div>';
+  }
+
+  h+='<div class="result-section"><div class="result-label">Besondere Prüfpunkte</div><ul class="pruef-list">';
+  f.pruef.forEach(p=>{h+='<li>'+p+'</li>';});
+  h+='</ul></div></div></div>';
+
+  if(state.fragen.q_agfk){
+    h+='<div class="agfk-box"><div class="agfk-title">Rolle der AGFK-SL</div><div class="agfk-body">'+
+       'Die AGFK-SL ist keine Straßenverkehrsbehörde und kein Baulastträger. Sie unterstützt durch Beratung, Vernetzung, fachliche Begleitung, Wissenstransfer und Öffentlichkeitsarbeit – zum Beispiel:'+
+       '<ul><li>Erstklärung der Rollen, Verweis an Baulastträger / StVB / Förderstelle</li>'+
+       '<li>Fachlicher Austausch, Beispiele, Musterlösungen, Kontaktvermittlung</li>'+
+       '<li>Moderation und Bündelung kommunaler Anliegen bei Schnittstellenproblemen</li>'+
+       '<li>Materialien und gemeinsame Kommunikation bei Kampagnen</li></ul>'+
+       'Grenze der Rolle: keine rechtsverbindliche Zuständigkeitsentscheidung, keine Weisungsbefugnis – Genehmigungen verbleiben bei den Ordnungs- und Straßenverkehrsbehörden.</div></div>';
+  }
+
+  h+='<div class="section"><h3>Prüfschema – 9 Schritte zum Projektstart</h3><div class="subtitle">Schritte antippen und abhaken. Der Stand wird in den Projektvermerk übernommen.</div>';
+  SCHEMA.forEach((s,i)=>{
+    const done=!!state.schemaDone[i];
+    h+='<div class="schema-item'+(done?' done-item':'')+'" onclick="toggleSchema('+i+')">'+
+       '<div class="schema-num">'+(done?'✓':(i+1))+'</div>'+
+       '<div><div class="schema-title">'+s.t+'</div><div class="schema-desc">'+s.d+'</div></div></div>';
+  });
+  h+='</div>';
+
+  h+='<div class="copy-box"><div class="copy-head"><span class="copy-head-title">Projektvermerk (für E-Mail / Akte)</span>'+
+     '<button class="copy-btn" id="copyBtn" onclick="copyVermerk()">Kopieren</button></div>'+
+     '<div class="copy-body" id="vermerk">'+escapeHtml(buildVermerk())+'</div></div>';
+
+  h+='<div class="crosslinks">'+
+     '<a class="crosslink" href="'+TOOL_LINKS.zustaendigkeiten.href+'"><b>'+TOOL_LINKS.zustaendigkeiten.label+'</b> – '+TOOL_LINKS.zustaendigkeiten.desc+'</a>'+
+     (state.fragen.q_foerder?'<a class="crosslink" href="'+TOOL_LINKS.foerdermittel.href+'"><b>'+TOOL_LINKS.foerdermittel.label+'</b> – '+TOOL_LINKS.foerdermittel.desc+'</a>':'')+
+     '<a class="crosslink" href="'+TOOL_LINKS.vergabe.href+'"><b>'+TOOL_LINKS.vergabe.label+'</b> – '+TOOL_LINKS.vergabe.desc+'</a></div>';
+
+  h+='<div class="info-box"><div class="info-title">Hinweis</div><div class="info-body">'+
+     'Die Zusammenstellung ersetzt keine Einzelfallprüfung. Konkret zuständige untere Straßenverkehrsbehörde, Baulastträger und aktuelle Bewilligungsstelle immer projektbezogen verifizieren.</div></div>';
+
+  h+='<button class="btn btn-outline" onclick="resetAll()">Neuen Projekt-Check starten</button>';
+  return h;
+}
+
+function buildVermerk(){
+  const f=FALLTYPEN.find(x=>x.id===state.falltyp);
+  const extras=activeExtras();
+  let t='PROJEKT-CHECK RADVERKEHR\n';
+  t+='Falltyp: '+f.label+'\n';
+  t+='Federführung / Startpunkt: '+f.lead+'\n\n';
+  t+='Unverzichtbare Beteiligte:\n';
+  f.beteiligte.forEach(b=>{t+='- '+b+'\n';});
+  if(extras.length){
+    t+='\nZusätzlich einzubinden:\n';
+    const seen=new Set(f.beteiligte.map(x=>x.toLowerCase()));
+    extras.forEach(q=>q.stellen.forEach(s=>{
+      if(!seen.has(s.toLowerCase())){seen.add(s.toLowerCase());t+='- '+s+'\n';}
+    }));
+  }
+  t+='\nBesondere Prüfpunkte: '+f.pruef.join(', ')+'\n';
+  if(state.fragen.q_agfk){
+    t+='\nAGFK-SL: Unterstützung als Erstberatung, Netzwerk- und Wissensschnittstelle vorgesehen (keine rechtsverbindliche Zuständigkeitsentscheidung).\n';
+  }
+  t+='\nPrüfschema (Stand):\n';
+  SCHEMA.forEach((s,i)=>{t+=(state.schemaDone[i]?'[x] ':'[ ] ')+(i+1)+'. '+s.t+'\n';});
+  t+='\nQuelle: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL) · Projekt-Check 2RAT · www.2rat.org';
+  return t;
+}
+
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function copyVermerk(){
+  const text=buildVermerk();
+  const done=()=>{const b=document.getElementById('copyBtn');b.textContent='Kopiert ✓';b.classList.add('copied');
+    setTimeout(()=>{b.textContent='Kopieren';b.classList.remove('copied');},2000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));
+  }else{fallbackCopy(text,done);}
+}
+function fallbackCopy(text,done){
+  const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);
+  ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);
+}
+
+function resetAll(){state={step:0,falltyp:null,fragen:{},schemaDone:{}};render();}
+
+/* Deep-Link: ?ft=fahrradstrasse öffnet direkt den Falltyp */
+(function(){
+  const p=new URLSearchParams(location.search).get('ft');
+  if(p&&FALLTYPEN.some(f=>f.id===p)){state.falltyp=p;state.step=1;}
+  render();
+})();
+</script>
+</body>
+</html>
