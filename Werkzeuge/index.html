@@ -180,7 +180,8 @@ const TOOLS = [
 const PATHS = {
   "kunden":  "kunden/",
   "agfk-sl": "agfk-sl/",
-  "demo":    "demo/"
+  "demo":    "demo/",
+  "test":    "kunden/"
 };
 
 /* ══════════════════════════════════════════════════════════════════
@@ -218,7 +219,7 @@ const LICENSES = [
     tools:["foerdermittel-finder","zustaendigkeiten","vwv-stvo-2025","projekt-check","vergabe-assistent"] },
   // TEMPORÄR – RAD-Lab Testrunde, nach Ablauf (31.08.2026) entfernen
   { hash:"2d67dfd036acb96541fb05fa470cc6dbb291f3a5e1f052c81641d2dca70c8220",
-    org:"RAD-Lab", expires:"2026-08-31", target:"kunden",
+    org:"RAD-Lab", expires:"2026-08-31", target:"test",
     tools:["foerdermittel-finder","zustaendigkeiten","vwv-stvo-2025","projekt-check","vergabe-assistent"] },
   // Beispiel für weitere Lizenzen:
   // { hash:"...", org:"Gemeinde XY", expires:"2027-12-31", target:"kunden",
@@ -252,16 +253,24 @@ async function doLogin() {
   if (isExpired(lic.expires)) { err.textContent='Zugangscode abgelaufen – bitte 2RAT kontaktieren.'; err.classList.add('show'); return; }
 
   err.classList.remove('show');
-  sessionStorage.setItem('2rat_s', JSON.stringify({ hash:lic.hash, org:orgIn||lic.org }));
-  showDash(lic, orgIn);
+  sessionStorage.setItem('2rat_s', JSON.stringify({ hash:lic.hash, org:lic.org }));
+  showDash(lic, lic.org);
 }
+
+// Anzeige-Reihenfolge: Projekt-Check als Einstieg, dann der logische Workflow.
+// Nicht hier gelistete Tools werden hinten angehängt (in TOOLS-Reihenfolge).
+const DISPLAY_ORDER = ["projekt-check","zustaendigkeiten","foerdermittel-finder","vergabe-assistent","vwv-stvo-2025","foerderrichtlinien"];
 
 function getVisibleTools(lic) {
   const base = PATHS[lic.target] || PATHS["kunden"];
   const allowedIds = lic.tools || TOOLS.map(t => t.id);
-  return TOOLS
-    .filter(t => allowedIds.includes(t.id))
-    .map(t => ({ ...t, url: base + t.id + ".html" }));
+  const visible = TOOLS.filter(t => allowedIds.includes(t.id));
+  visible.sort((a, b) => {
+    let ia = DISPLAY_ORDER.indexOf(a.id); if (ia === -1) ia = 999;
+    let ib = DISPLAY_ORDER.indexOf(b.id); if (ib === -1) ib = 999;
+    return ia - ib;
+  });
+  return visible.map(t => ({ ...t, url: base + t.id + ".html" }));
 }
 
 
@@ -339,13 +348,14 @@ function renderTools(lic) {
 function labelForTarget(target) {
   return target === 'agfk-sl' ? 'AGFK-Version'
        : target === 'demo'    ? 'Demo-Version'
+       : target === 'test'    ? 'Testversion'
        :                        'Vollversion';
 }
 
 function showDash(lic, orgName) {
   document.getElementById('loginView').style.display='none';
   document.getElementById('dashView').style.display='block';
-  document.getElementById('welcomeMsg').textContent=`Willkommen, ${orgName||lic.org}`;
+  document.getElementById('welcomeMsg').textContent=`Willkommen, ${lic.org}`;
   const days = Math.ceil((new Date(lic.expires)-new Date())/(864e5));
   const el = document.getElementById('licenseInfo');
   if (days<=30) el.innerHTML=`Lizenz bis: <span class="expired">${fmtDate(lic.expires)}</span> – <span class="expired">Läuft in ${days} Tagen ab!</span> → <a href="mailto:fahr2rat@gmail.com" style="color:var(--blue)">fahr2rat@gmail.com</a>`;
