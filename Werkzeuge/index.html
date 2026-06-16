@@ -54,6 +54,20 @@ body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:var(--
 .tool-card:nth-child(2){border-left-color:var(--green)}
 .footer{padding:20px;text-align:center;font-size:11px;color:var(--gray-light)}
 .footer a{color:var(--blue);text-decoration:none}
+
+.help-box{background:var(--white,#fff);border:1.5px solid var(--gray-border,#d9d9d9);border-radius:10px;margin-bottom:22px;overflow:hidden}
+.help-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--blue-light,#e8f4fa);border:none;cursor:pointer;font-size:14px;font-weight:700;color:var(--blue,#1678A9);text-align:left}
+.help-toggle:hover{background:#ddeef7}
+.help-toggle .chev{transition:transform .2s;font-size:13px}
+.help-box.open .help-toggle .chev{transform:rotate(180deg)}
+.help-content{display:none;padding:6px 18px 18px}
+.help-box.open .help-content{display:block}
+.help-intro{font-size:13px;color:var(--gray,#3E403F);line-height:1.6;margin:10px 0 16px}
+.help-step{display:flex;gap:10px;font-size:13px;line-height:1.55;margin-bottom:8px;color:var(--gray,#3E403F)}
+.help-step .n{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--green,#659444);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.help-tool{border-top:1px solid var(--gray-border,#eee);padding-top:12px;margin-top:14px}
+.help-tool h4{font-size:13.5px;color:var(--blue,#1678A9);margin-bottom:3px}
+.help-tool p{font-size:12.5px;color:var(--gray,#555);line-height:1.55}
 </style>
 </head>
 <body>
@@ -94,6 +108,7 @@ body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:var(--
     <button class="logout-btn" onclick="doLogout()">Abmelden</button>
   </div>
   <p class="license-info" id="licenseInfo"></p>
+  <div id="helpContainer"></div>
   <div id="toolsContainer"></div>
 </div>
 
@@ -188,13 +203,13 @@ const LICENSES = [
 
   // AGFK Saarland – nur Fördermittel-Finder + Zuständigkeiten
   // (target bleibt "kunden" bis überarbeitete agfk-sl/-Versionen fertig sind)
-  { hash:"ff77a4cebf755ba7d5ad12fb022e4a693a7e64e1a3f280ab3238fabc78dcdf36",
+  { hash:"2446bed856ff177684f89703cf489c7e67849a0aa7f2e6c4be334a4d472893ce",
     org:"AGFK Saarland", expires:"2027-05-15", target:"kunden",
-    tools:["foerdermittel-finder","zustaendigkeiten","vwv-stvo-2025","projekt-check"] },
+    tools:["foerdermittel-finder","zustaendigkeiten","vwv-stvo-2025","projekt-check","vergabe-assistent"] },
   // AGFK Honorarkraft – Eingeschränkt: 3 Tools
   { hash:"c5090bd3bf60984e5d51309eaacc7407e0a944ecbc4f8bc415826d28bb0f3089",
     org:"AGFK Honorarkraft", expires:"2027-05-27", target:"kunden",
-    tools:["foerdermittel-finder","zustaendigkeiten","vwv-stvo-2025","projekt-check"] },
+    tools:["foerdermittel-finder","zustaendigkeiten","vwv-stvo-2025","projekt-check","vergabe-assistent"] },
   // Beispiel für weitere Lizenzen:
   // { hash:"...", org:"Gemeinde XY", expires:"2027-12-31", target:"kunden",
   //   tools:["vwv-stvo-2025"] },
@@ -239,6 +254,40 @@ function getVisibleTools(lic) {
     .map(t => ({ ...t, url: base + t.id + ".html" }));
 }
 
+
+/* ===== Hilfe / So funktioniert's ===== */
+const HELP_HOWTO = {
+  "foerdermittel-finder":"Schritt f\u00fcr Schritt das Vorhaben eingrenzen (Ma\u00dfnahmenart, Tr\u00e4ger) \u2013 das Tool zeigt passende F\u00f6rdergegenst\u00e4nde, Quoten und ob die Kommune antragsberechtigt ist.",
+  "zustaendigkeiten":"Stra\u00dfentyp und Ma\u00dfnahme w\u00e4hlen \u2013 das Tool nennt die zust\u00e4ndige Beh\u00f6rde (Anordnung) und den Baulasttr\u00e4ger, mit Praxis-Hinweisen und Rechtsgrundlagen.",
+  "vergabe-assistent":"Auftragswert und Leistungsart eingeben \u2013 das Tool bestimmt das korrekte Vergabeverfahren und listet die Pflicht-Schritte mit Rechtsgrundlage.",
+  "vwv-stvo-2025":"Ma\u00dfnahme ausw\u00e4hlen (z.B. Tempo 30, Einbahn-Freigabe) \u2013 das Tool liefert Voraussetzungen, Abw\u00e4gung und fertige Textbausteine f\u00fcr Ordnungsamt, Rat und B\u00fcrgerinfo zum Kopieren.",
+  "foerderrichtlinien":"\u00dcber den Wizard Land- und Bundesf\u00f6rderung vergleichen \u2013 mit F\u00f6rderrechner, Verfahrens-Doku und Publizit\u00e4tspflichten.",
+  "projekt-check":"Falltyp w\u00e4hlen, Rahmenfragen ankreuzen \u2013 das Tool zeigt Federf\u00fchrung, einzubindende Stellen und das 9-Punkte-Pr\u00fcfschema. Der Projektvermerk l\u00e4sst sich per Klick kopieren."
+};
+
+function renderHelp(lic){
+  const box=document.getElementById('helpContainer');
+  if(!box) return;
+  const tools=getVisibleTools(lic);
+  const toolHelp=tools.map(t=>{
+    const h=HELP_HOWTO[t.id]||'';
+    return h?`<div class="help-tool"><h4>${t.title}</h4><p>${h}</p></div>`:'';
+  }).join('');
+  box.innerHTML=`
+    <div class="help-box" id="helpBox">
+      <button class="help-toggle" onclick="document.getElementById('helpBox').classList.toggle('open')">
+        <span>\u2139\ufe0f So funktionieren die Werkzeuge</span><span class="chev">\u25be</span>
+      </button>
+      <div class="help-content">
+        <p class="help-intro">Alle Werkzeuge laufen direkt im Browser \u2013 keine Installation, auch auf dem Handy. Sie f\u00fchren Schritt f\u00fcr Schritt durch eine Frage und liefern am Ende ein konkretes Ergebnis zum Weiterverwenden.</p>
+        <div class="help-step"><span class="n">1</span><span>Auf <strong>\u201eTool \u00f6ffnen\u201c</strong> klicken \u2013 das Werkzeug \u00f6ffnet sich in einem neuen Tab.</span></div>
+        <div class="help-step"><span class="n">2</span><span>Den Fragen folgen und ausw\u00e4hlen, was auf das Vorhaben zutrifft.</span></div>
+        <div class="help-step"><span class="n">3</span><span>Ergebnis ablesen, bei Bedarf Textbausteine oder Vermerke per Knopf <strong>kopieren</strong> und in Mail oder Akte einf\u00fcgen.</span></div>
+        ${toolHelp}
+      </div>
+    </div>`;
+}
+
 function renderTools(lic) {
   const container = document.getElementById('toolsContainer');
   const tools = getVisibleTools(lic);
@@ -274,6 +323,7 @@ function showDash(lic, orgName) {
   const el = document.getElementById('licenseInfo');
   if (days<=30) el.innerHTML=`Lizenz bis: <span class="expired">${fmtDate(lic.expires)}</span> – <span class="expired">Läuft in ${days} Tagen ab!</span> → <a href="mailto:fahr2rat@gmail.com" style="color:var(--blue)">fahr2rat@gmail.com</a>`;
   else el.innerHTML=`Lizenz gültig bis: <strong>${fmtDate(lic.expires)}</strong> · ${labelForTarget(lic.target)}`;
+  renderHelp(lic);
   renderTools(lic);
 }
 
