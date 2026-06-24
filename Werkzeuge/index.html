@@ -74,6 +74,7 @@ body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:var(--
 .help-start p{font-size:12.5px;color:var(--gray,#555);line-height:1.55}
 .help-flow{font-size:12px;color:var(--gray-light,#8a8a8a);margin:14px 0 4px;font-weight:600}
 .help-sub{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--gray-light,#8a8a8a);margin:16px 0 2px}
+.tool-expire{font-size:12px;color:var(--warn,#d4930a);background:var(--warn-bg,#fef9ec);border:1px solid var(--warn-border,#f0dca0);border-radius:6px;padding:5px 9px;margin:0 0 10px;font-weight:600}
 </style>
 </head>
 <body>
@@ -204,15 +205,18 @@ const LICENSES = [
   // Code muss noch generiert werden (hash-generator.html, dann hier eintragen)
   // { hash:"HASH_HIER_EINFUEGEN", org:"2RAT intern", expires:"2099-12-31", target:"kunden" },
 
-  // DEMO2026 – aktuell: Vollzugang als Demo
-  { hash:"4aa05c62bc51969c5466a0bd884105fa76e806b034362effd5439368446aacba",
-    org:"Demo-Zugang", expires:"2026-12-31", target:"kunden" },
+  // DEMO2026 – DEAKTIVIERT am 24.06.2026 (Altlast, gab Vollzugang ohne tools-Filter).
+  // Bei Bedarf reaktivieren UND tools-Liste setzen, sonst sieht der Zugang ALLE Tools.
+  // { hash:"4aa05c62bc51969c5466a0bd884105fa76e806b034362effd5439368446aacba",
+  //   org:"Demo-Zugang", expires:"2026-12-31", target:"kunden" },
 
   // AGFK Saarland – nur Fördermittel-Finder + Zuständigkeiten
   // (target bleibt "kunden" bis überarbeitete agfk-sl/-Versionen fertig sind)
   { hash:"2446bed856ff177684f89703cf489c7e67849a0aa7f2e6c4be334a4d472893ce",
     org:"AGFK Saarland", expires:"2027-05-15", target:"kunden",
-    tools:["foerdermittel-finder","zustaendigkeiten","vwv-stvo-2025","projekt-check","vergabe-assistent"] },
+    tools:["foerdermittel-finder","zustaendigkeiten","vwv-stvo-2025","projekt-check","vergabe-assistent"],
+    // Projekt-Check beauftragt & bezahlt -> dauerhaft. Übrige Tools zum Kennenlernen befristet:
+    toolExpires:{ "foerdermittel-finder":"2026-09-30", "zustaendigkeiten":"2026-09-30", "vwv-stvo-2025":"2026-09-30", "vergabe-assistent":"2026-09-30" } },
   // AGFK Honorarkraft – Eingeschränkt: 3 Tools
   { hash:"c5090bd3bf60984e5d51309eaacc7407e0a944ecbc4f8bc415826d28bb0f3089",
     org:"AGFK Honorarkraft", expires:"2027-05-27", target:"kunden",
@@ -264,13 +268,16 @@ const DISPLAY_ORDER = ["projekt-check","zustaendigkeiten","foerdermittel-finder"
 function getVisibleTools(lic) {
   const base = PATHS[lic.target] || PATHS["kunden"];
   const allowedIds = lic.tools || TOOLS.map(t => t.id);
-  const visible = TOOLS.filter(t => allowedIds.includes(t.id));
+  const te = lic.toolExpires || {};            // optionales Pro-Tool-Ablaufdatum
+  const visible = TOOLS.filter(t => allowedIds.includes(t.id))
+    // Tool ausblenden, wenn sein eigenes Ablaufdatum überschritten ist
+    .filter(t => !(te[t.id] && isExpired(te[t.id])));
   visible.sort((a, b) => {
     let ia = DISPLAY_ORDER.indexOf(a.id); if (ia === -1) ia = 999;
     let ib = DISPLAY_ORDER.indexOf(b.id); if (ib === -1) ib = 999;
     return ia - ib;
   });
-  return visible.map(t => ({ ...t, url: base + t.id + ".html" }));
+  return visible.map(t => ({ ...t, url: base + t.id + ".html", expiresAt: te[t.id] || null }));
 }
 
 
@@ -335,11 +342,17 @@ function renderTools(lic) {
     const tags = (t.tags || []).map((tag, i) =>
       `<span class="tag${i === 1 ? ' green' : ''}">${tag}</span>`
     ).join('');
+    let hint = '';
+    if (t.expiresAt) {
+      const days = Math.ceil((new Date(t.expiresAt) - new Date()) / 864e5);
+      hint = `<p class="tool-expire">Testweise freigeschaltet bis ${fmtDate(t.expiresAt)}${days<=30?` · noch ${days} Tage`:''}</p>`;
+    }
     return `
     <div class="tool-card">
       <h3>${t.title}</h3>
       <p class="tool-desc">${t.desc}</p>
       <div class="tool-tags">${tags}<span class="tag">${labelForTarget(lic.target)}</span></div>
+      ${hint}
       <a class="open-btn" href="${t.url}" target="_blank">Tool öffnen →</a>
     </div>`;
   }).join('');
