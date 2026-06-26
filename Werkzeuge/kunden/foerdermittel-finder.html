@@ -80,6 +80,11 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .quota-card.alt .quota-value{color:var(--blue-dark)}
 .quota-sub{font-size:10px;color:var(--gray-light);margin-top:1px}
 .section{margin-top:18px}
+.scope-note{margin:16px 0 22px;background:var(--blue-light);border:1px solid rgba(22,120,169,.25);border-radius:8px;padding:13px 16px}
+.scope-title{font-size:12px;font-weight:700;color:var(--blue-dark);margin-bottom:5px}
+.scope-body{font-size:12.5px;color:var(--gray);line-height:1.6}
+.scope-body a{color:var(--blue);text-decoration:none;font-weight:600}
+.scope-body a:hover{text-decoration:underline}
 .footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--gray-border);font-size:11px;color:var(--gray-light);line-height:1.6}
 .footer a{color:var(--blue);text-decoration:none}
 .praxis-box{margin-top:16px;background:var(--green-light);border:1.5px solid var(--green);border-radius:8px;padding:14px 16px}
@@ -277,7 +282,12 @@ function render(){
 
   if(state.step===0){
     let h=`<h2>Wer stellt den Antrag?</h2>
-    <p class="subtitle">Wählen Sie den Antragsteller-Typ – die Fördergegenstände werden dann nach Berechtigung gefiltert.</p>`;
+    <p class="subtitle">Wählen Sie den Antragsteller-Typ – die Fördergegenstände werden dann nach Berechtigung gefiltert.</p>
+    <div class="scope-note">
+      <div class="scope-title">Dieses Werkzeug zeigt die saarländische Landesförderung</div>
+      <div class="scope-body">Grundlage ist allein die Landesrichtlinie <strong>FRL-NMOB-Rad-Fuß</strong> des Saarlandes (inkl. der über das Land laufenden Mittel aus „Stadt und Land“). Details beim <a href="https://www.saarland.de/mukmav/DE/portale/mobilitaet/informationen/mobilitaetsfoerderung/nmob/nmob_rad_fuss/nmob_rad_fuss" target="_blank" rel="noopener">MUKMAV (NMOB Rad & Fuß)</a>.<br>
+      Daneben gibt es <strong>Bundesförderungen</strong>, die hier nicht abgebildet sind – etwa die <a href="https://www.klimaschutz.de/de/foerderung-der-nki/foerderprogramme/kommunalrichtlinie/bikeride-offensive" target="_blank" rel="noopener">Kommunalrichtlinie / Bike+Ride-Offensive</a> (Radabstellanlagen am Bahnhof) und den BMV-Förderaufruf <a href="https://www.mobilitaetsforum.bund.de/DE/Foerderungen/Foerderaufruf-Junge-Generation-Fahrrad/foerderaufruf-junge-generation-fahrrad_node.html" target="_blank" rel="noopener">„Junge Generation Fahrrad – aktiv mobil“</a> (Maßnahmen rund um Schulen, Kitas und Jugendeinrichtungen). Eine Förderung lässt sich oft kombinieren – im Zweifel beide Ebenen prüfen.</div>
+    </div>`;
     h+=renderCards(APPLICANTS.map(a=>({id:a.id,html:`<div class="card-row"><span class="card-icon">${a.icon}</span><span class="card-label">${a.label}</span></div>`})),state.applicant,'selectApplicant');
     if(state.applicant)h+=`<button class="btn btn-primary" onclick="goStep(1)">Weiter → Maßnahme wählen</button>`;
     el.innerHTML=h;

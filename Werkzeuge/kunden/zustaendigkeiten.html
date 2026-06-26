@@ -116,8 +116,6 @@ const MEASURES=[
 {id:"markierung",label:"Markierung",icon:"━",items:[
 {id:"schutzstreifen",label:"Schutzstreifen",desc:"Markierung mit Z 340 (unterbrochene Linie) + Fahrradsymbol",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu § 2 Abs. 4",type:"anordnung"},
 {id:"radfahrstreifen",label:"Radfahrstreifen",desc:"Markierung mit Z 237 + Z 295 (durchgezogene Linie)",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu § 2 Abs. 4",type:"anordnung"},
-{id:"radfahrstreifen_schutz",label:"Geschützter Radfahrstreifen",desc:"Radfahrstreifen mit baulicher Trennung (Poller, Borde)",legal:"§ 45 Abs. 1 StVO + bauliche Umsetzung",type:"anordnung_bau"},
-{id:"aras",label:"Aufgeweiteter Radaufstellstreifen (ARAS)",desc:"Vorgezogener Aufstellbereich an Lichtsignalanlagen",legal:"§ 37 Abs. 2 StVO, VwV-StVO zu § 37",type:"anordnung"},
 {id:"rotmarkierung",label:"Rotmarkierung / Radwegfurt",desc:"Farbliche Hervorhebung von Radverkehrsfurten",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu § 2",type:"anordnung"}]},
 {id:"beschilderung",label:"Beschilderung & Anordnung",icon:"◆",items:[
 {id:"fahrradstrasse",label:"Fahrradstraße",desc:"Anordnung Z 244.1/244.2, ggf. mit Zusatzzeichen Kfz frei",legal:"§ 45 Abs. 1 StVO i. V. m. VwV-StVO zu Z 244.1; alternativ § 45 Abs. 1 S. 2 Nr. 7",type:"anordnung"},
@@ -126,6 +124,7 @@ const MEASURES=[
 {id:"tempo30_strecke",label:"Tempo 30 (streckenbezogen)",desc:"Geschwindigkeitsbeschränkung auf einzelner Strecke (Z 274)",legal:"§ 45 Abs. 1 / Abs. 9 StVO",type:"anordnung"},
 {id:"einbahn_oeffnung",label:"Einbahnstraßenöffnung für Radverkehr",desc:"Zusatzzeichen Z 1000-32 »Radfahrer frei« an Einbahnstraße",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu Z 220",type:"anordnung"},
 {id:"gehweg_frei",label:"Gehweg – Radfahrer frei",desc:"Z 239 + Zusatzzeichen 1022-10 »Radfahrer frei«",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu Z 239",type:"anordnung"},
+{id:"gemeinsam_ohne_bp",label:"Gemeinsamer Geh-/Radweg ohne Benutzungspflicht",desc:"Z 239 mit Zusatz »Radfahrer frei« – Mitbenutzung ohne Pflicht",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu Z 239/240",type:"anordnung"},
 {id:"benutzungspflicht_aufheben",label:"Benutzungspflicht aufheben",desc:"Entfernung Z 237/240/241 (benutzungspflichtiger Radweg)",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu § 2 Abs. 4",type:"anordnung"},
 {id:"radweg_beschilderung",label:"Radweg beschildern (Z 237/240/241)",desc:"Anordnung benutzungspflichtiger Radweg",legal:"§ 45 Abs. 9 StVO, VwV-StVO zu § 2 Abs. 4",type:"anordnung"},
 {id:"modale_filter",label:"Modale Filter / Durchfahrtssperre",desc:"Durchfahrtsbeschränkung für Kfz, Radverkehr frei (Z 250 + 1022-10)",legal:"§ 45 Abs. 1 StVO",type:"anordnung"},
@@ -140,12 +139,15 @@ const MEASURES=[
 ];
 
 const STREETS=[
-{id:"autobahn",label:"Bundesautobahn",icon:"A",color:"#1a56db"},
-{id:"bundesstrasse",label:"Bundesstraße",icon:"B",color:"#dc2626"},
-{id:"landesstrasse1",label:"Landstraße I. Ordnung",icon:"L1",color:"#d97706"},
-{id:"landesstrasse2",label:"Landstraße II. Ordnung",icon:"L2",color:"#d97706"},
+{id:"bundeslandstrasse",label:"Bundes- oder Landesstraße",icon:"B/L",color:"#dc2626"},
 {id:"gemeindestrasse",label:"Gemeindestraße",icon:"G",color:"#659444"},
 {id:"sonstige",label:"Sonstige öffentliche Straße",icon:"S",color:"#8a8a8a"}
+];
+/* Unterauswahl, wenn Bundes-/Landesstraße gewählt wird – hält die Rechtslogik exakt */
+const BL_SUB=[
+{id:"bundesstrasse",label:"Bundesstraße (B)",desc:"Baulast Bund · FStrG"},
+{id:"landesstrasse1",label:"Landstraße I. Ordnung (L)",desc:"Baulast Land · SaarlStrG"},
+{id:"landesstrasse2",label:"Landstraße II. Ordnung (L)",desc:"Baulast Land · SaarlStrG"}
 ];
 
 const LOCATIONS=[
@@ -209,17 +211,19 @@ const PRAXIS={
   ]
 };
 
-let state={step:0,category:null,measure:null,street:null,location:null};
+let state={step:0,category:null,measure:null,street:null,blsub:null,location:null};
 
 function getResult(){
   const m=MEASURES.flatMap(c=>c.items).find(i=>i.id===state.measure);
   if(!m)return null;
-  const s=state.street,loc=state.location||(s==="gemeindestrasse"||s==="sonstige"?"innerorts":"ausserorts");
+  const s=(state.street==="bundeslandstrasse")?state.blsub:state.street;
+  let loc=state.location||(s==="gemeindestrasse"||s==="sonstige"?"innerorts":"ausserorts");
+  // Bundes-/Landesstraße innerorts ist rechtlich immer Ortsdurchfahrt
+  if((s==="bundesstrasse"||s==="landesstrasse1"||s==="landesstrasse2")&&loc==="innerorts")loc="ortsdurchfahrt";
   let authority="",authorityDetail="",baulast="",baulastDetail="",notes=[],praxis=[],legal=m.legal;
 
   /* Baulastträger */
-  if(s==="autobahn"){baulast="Bund (Verwaltung: Autobahn GmbH des Bundes)";baulastDetail="§ 5 Abs. 1 FStrG; Verwaltung seit 2021 durch die Autobahn GmbH des Bundes";}
-  else if(s==="bundesstrasse"){
+  if(s==="bundesstrasse"){
     if(loc==="ortsdurchfahrt"||loc==="innerorts"){
       baulast="Bund (Fahrbahn und Radwege) / Gemeinde (Gehwege, Parkplätze)";
       baulastDetail="§ 5 Abs. 2 und 3 FStrG – Gemeinden ≤ 80.000 EW: Gemeinde trägt nur Gehwege und Parkplätze; Saarbrücken (> 80.000 EW): volle Baulast für OD";
@@ -238,8 +242,7 @@ function getResult(){
 
   /* Zuständige Behörde (verkehrsrechtliche Anordnung) */
   if(m.type==="anordnung"||m.type==="anordnung_bau"){
-    if(s==="autobahn"){authority="Landesbetrieb für Straßenbau (LfS)";authorityDetail="§ 7 Abs. 2 StVZustG Saarland";notes.push("Radverkehrsmaßnahmen auf Autobahnen sind in der Praxis nicht relevant.");}
-    else if(s==="gemeindestrasse"||s==="sonstige"){authority="Gemeinde (eigene Zuständigkeit nach § 12 StVZustG)";authorityDetail="§ 12 Abs. 1 StVZustG Saarland";notes.push("Auf Gemeindestraßen und sonstigen öffentlichen Straßen sind die Gemeinden selbst zuständig für: Verkehrsbeschränkungen aller Art (§ 45 Abs. 1 bis 1d StVO – damit auch Fahrradstraßen, Tempo-30-Zonen und Maßnahmen der Flächenbereitstellung nach § 45 Abs. 1 S. 2 Nr. 7), Fußgängerüberwege, Vorfahrtsregelungen und Spielstraßen (§ 12 Abs. 1 Nr. 1–4 StVZustG). Nicht übertragen sind Maßnahmen nach § 45 Abs. 1e ff. StVO – insbesondere Fahrradzonen (Abs. 1i).");}
+    if(s==="gemeindestrasse"||s==="sonstige"){authority="Gemeinde (eigene Zuständigkeit nach § 12 StVZustG)";authorityDetail="§ 12 Abs. 1 StVZustG Saarland";notes.push("Auf Gemeindestraßen und sonstigen öffentlichen Straßen sind die Gemeinden selbst zuständig für: Verkehrsbeschränkungen aller Art (§ 45 Abs. 1 bis 1d StVO – damit auch Fahrradstraßen, Tempo-30-Zonen und Maßnahmen der Flächenbereitstellung nach § 45 Abs. 1 S. 2 Nr. 7), Fußgängerüberwege, Vorfahrtsregelungen und Spielstraßen (§ 12 Abs. 1 Nr. 1–4 StVZustG). Nicht übertragen sind Maßnahmen nach § 45 Abs. 1e ff. StVO – insbesondere Fahrradzonen (Abs. 1i).");}
     else{authority="Straßenverkehrsbehörde (Landkreis / Regionalverband Saarbrücken)";authorityDetail="§ 7 Abs. 1 StVZustG Saarland";notes.push("Eigene Straßenverkehrsbehörden haben: die Landeshauptstadt Saarbrücken (§ 7 Abs. 1 StVZustG) sowie die Mittelstädte Völklingen und St. Ingbert. Den Mittelstädten sind die Befugnisse nach der StVO vollumfänglich als Auftragsangelegenheit übertragen (§ 1 Abs. 1 Nr. 8 Mittelstadtverordnung i. V. m. § 7 KSVG) – sie ordnen in ihrem Stadtgebiet daher auch auf Bundes- und Landstraßen selbst an.");
     if(loc==="innerorts"||loc==="ortsdurchfahrt")notes.push("Bei Maßnahmen in Ortsdurchfahrten ist Einvernehmen mit der Gemeinde und dem Baulastträger herzustellen (§ 45 Abs. 1b StVO).");}
 
@@ -270,6 +273,8 @@ function getResult(){
     if(m.id==="einbahn_oeffnung")notes.push("VwV-StVO zu Z 220: Öffnung nur bei ausreichender Breite und Sichtbeziehungen, Tempo ≤ 30 km/h empfohlen.");
     if(m.id==="benutzungspflicht_aufheben")notes.push("Benutzungspflicht (Z 237/240/241) nur bei qualifizierter Gefahrenlage zulässig. Ohne diese ist die Benutzungspflicht aufzuheben (BVerwG, 18.11.2010 – 3 C 42.09).");
     if(m.id==="radweg_beschilderung")notes.push("Radwegebenutzungspflicht setzt qualifizierte Gefahrenlage voraus (§ 45 Abs. 9 Satz 4 Nr. 1 StVO). Radweg muss ERA-Anforderungen erfüllen.");
+    if(m.id==="rotmarkierung")notes.push("Eine Roteinfärbung mit Piktogrammkette hat unterstützenden Charakter und ist Sache des Baulastträgers – sie ersetzt nicht die Anordnung der zugrunde liegenden Radverkehrsführung. Empfehlung: mit Straßenverkehrsbehörde und Polizei abstimmen. Radwegefurten an Vorfahrtstraßen (Z 306) sind stets zu markieren (VwV-StVO zu § 9).");
+    if(m.id==="gemeinsam_ohne_bp")notes.push("Ein gemeinsamer Geh-/Radweg ohne Benutzungspflicht (Z 239 + »Radfahrer frei«) lässt dem Radverkehr die Wahl zwischen Weg und Fahrbahn. Keine qualifizierte Gefahrenlage erforderlich – im Gegensatz zur Benutzungspflicht (Z 240).");
   }
 
   /* Bauliche Maßnahmen */
@@ -293,7 +298,11 @@ function getResult(){
     legal,notes:[...new Set(notes)],praxis};
 }
 
-function needsLocation(){return state.street&&state.street!=="gemeindestrasse"&&state.street!=="sonstige"&&state.street!=="autobahn";}
+function needsLocation(){
+  if(state.street==="gemeindestrasse"||state.street==="sonstige")return false;
+  if(state.street==="bundeslandstrasse")return true;
+  return false;
+}
 function totalSteps(){return needsLocation()?4:3;}
 
 function renderSteps(){
@@ -340,7 +349,13 @@ function render(){
     <p class="subtitle">Maßnahme: <strong>${m.label}</strong></p>
     <p class="hint">Hinweis: Im Saarland gibt es keine Kreisstraßen.</p>`;
     h+=renderCards(STREETS.map(s=>({id:s.id,html:`<div class="card-row"><span class="street-badge" style="background:${s.color}">${s.icon}</span><span class="card-label">${s.label}</span></div>`})),state.street,'selectStreet');
-    if(state.street){
+    if(state.street==="bundeslandstrasse"){
+      h+=`<div class="section"><h3>Welche Einstufung?</h3><p class="subtitle">Die Baulast unterscheidet sich – Bund (FStrG) oder Land (SaarlStrG).</p>`;
+      h+=renderCards(BL_SUB.map(b=>({id:b.id,html:`<div class="card-label sm">${b.label}</div><div class="card-desc">${b.desc}</div>`})),state.blsub,'selectBlsub',true);
+      h+=`</div>`;
+    }
+    const ready = state.street && (state.street!=="bundeslandstrasse" || state.blsub);
+    if(ready){
       const label=needsLocation()?'Weiter → Lage':'Weiter → Ergebnis';
       const next=needsLocation()?2:3;
       h+=`<button class="btn btn-primary" onclick="goStep(${next})">${label}</button>`;
@@ -353,13 +368,16 @@ function render(){
     let h=`<button class="btn-back" onclick="goStep(1)">← Zurück</button>
     <h2>Wo liegt die Maßnahme?</h2>
     <p class="subtitle">${m.label} auf ${s.label}</p>`;
-    h+=renderCards(LOCATIONS.map(l=>({id:l.id,html:`<span class="card-label">${l.label}</span>`})),state.location,'selectLocation');
+    const locOpts=[{id:"innerorts",label:"Innerorts (geschlossene Ortschaft)"},{id:"ausserorts",label:"Außerorts (freie Strecke)"}];
+    h+=`<p class="hint">Innerorts an einer Bundes-/Landesstraße = Ortsdurchfahrt (wird automatisch berücksichtigt).</p>`;
+    h+=renderCards(locOpts.map(l=>({id:l.id,html:`<span class="card-label">${l.label}</span>`})),state.location,'selectLocation');
     if(state.location)h+=`<button class="btn btn-primary" onclick="goStep(3)">Ergebnis anzeigen</button>`;
     el.innerHTML=h;
   }
   else if(state.step===3){
     const r=getResult();if(!r){el.innerHTML='';return;}
-    const s=STREETS.find(x=>x.id===state.street);
+    let s=STREETS.find(x=>x.id===state.street);
+    if(state.street==="bundeslandstrasse"&&state.blsub){const sub=BL_SUB.find(b=>b.id===state.blsub);s={label:sub.label.replace(/ \(.*\)/,""),color:"#dc2626"};}
     const loc=LOCATIONS.find(l=>l.id===state.location);
     const back=needsLocation()?2:1;
 
@@ -392,9 +410,9 @@ function render(){
       <strong>Landkreise:</strong> Merzig-Wadern, Neunkirchen, Saarlouis, Saarpfalz-Kreis (ohne St. Ingbert), St. Wendel<br>
       <strong>Regionalverband:</strong> Regionalverband Saarbrücken (ohne LH Saarbrücken & Völklingen)<br>
       <strong>Eigene Behörden:</strong> Landeshauptstadt Saarbrücken sowie die Mittelstädte Völklingen und St. Ingbert (StVO-Befugnisse übertragen, § 1 Abs. 1 Nr. 8 Mittelstadtverordnung)<br>
-      <strong>Autobahnen:</strong> Landesbetrieb für Straßenbau (LfS)<br>
       <strong>Oberste Behörde:</strong> Ministerium für Umwelt, Klima, Mobilität, Agrar und Verbraucherschutz (MUKMAV)
     </div></div>`;
+    h+=`<div class="agfk-contact" style="margin-top:16px;background:#eef5e6;border:1px solid rgba(101,148,68,.3);border-radius:8px;padding:13px 16px;font-size:12.5px;line-height:1.6">Fragen offen geblieben? Die <strong style="color:#4a7332">Geschäftsstelle der AGFK-SL</strong> hilft weiter.<br>Europaallee 27, 66113 Saarbrücken<br>Tel.: +49 (0)681 4109 6482 · E-Mail: geschaeftstelle@agfk-sl.de</div>`;
     h+=`<button class="btn btn-outline" onclick="resetAll()">Neue Abfrage starten</button>`;
     el.innerHTML=h;
   }
@@ -402,10 +420,11 @@ function render(){
 
 function selectCategory(id){state.category=id;state.measure=null;render();}
 function selectMeasure(id){state.measure=id;render();}
-function selectStreet(id){state.street=id;state.location=null;render();}
+function selectStreet(id){state.street=id;state.blsub=null;state.location=null;render();}
+function selectBlsub(id){state.blsub=id;render();}
 function selectLocation(id){state.location=id;render();}
 function goStep(n){state.step=n;render();}
-function resetAll(){state={step:0,category:null,measure:null,street:null,location:null};render();}
+function resetAll(){state={step:0,category:null,measure:null,street:null,blsub:null,location:null};render();}
 
 /* URL-Parameter ?m=<measure-id> auswerten (Sprung aus dem VwV-StVO-Tool) */
 (function applyUrlParam(){
