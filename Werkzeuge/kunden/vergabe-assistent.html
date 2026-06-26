@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vergabe-Assistent Saarland</title>
+<title>Vergabe-Assistent Saarland – 2Rat</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +19,15 @@
   .quick-btn:hover { background: #eef2ff !important; }
   .step-row:hover { background: #f9fafb; }
   input[type=text]:focus { outline: none; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); border-color: #6366f1; }
+  /* Barrierefreiheit: sichtbarer Fokus */
+  .step-row:focus-visible, .art-btn:focus-visible, .quick-btn:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid #1678A9; outline-offset: 2px; }
+  /* Druckansicht: nur Branding + Ergebnis */
+  @media print {
+    body { background: #fff; }
+    .header-meta, .input-card, .quick-btn, .art-btn { display: none !important; }
+    .result-enter { animation: none !important; }
+    .result-enter > div { box-shadow: none !important; break-inside: avoid; page-break-inside: avoid; }
+  }
 </style>
 </head>
 <body>
@@ -27,14 +36,16 @@
 const e = React.createElement;
 const { useState, useEffect, useRef } = React;
 
+const LOGO='data:image/jpeg;base64,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';
+
 const THRESHOLDS_2026 = { bau: 5404000, liefer_dl: 216000, freiberuflich: 216000 };
 const LEISTUNGSARTEN = [
-  { id: "bau", label: "Bau", icon: "\u{1F3D7}\uFE0F" },
+  { id: "bau", label: "Bau", icon: "\u{1F3D7}️" },
   { id: "liefer_dl", label: "Liefer / DL", icon: "\u{1F4E6}" },
   { id: "freiberuflich", label: "Freiberuflich", icon: "\u{1F4D0}" },
 ];
 
-function formatEuro(val) { return val.toLocaleString("de-DE") + " \u20AC"; }
+function formatEuro(val) { return val.toLocaleString("de-DE") + " €"; }
 
 function getVerfahren(wert, art) {
   const sw = THRESHOLDS_2026[art];
@@ -43,67 +54,65 @@ function getVerfahren(wert, art) {
     return {
       level: "direkt", name: "Direktauftrag", color: "#10b981",
       bgColor: "#ecfdf5", borderColor: "#a7f3d0", tagLabel: "Einfachstes Verfahren",
-      kurz: "Kein f\u00F6rmliches Verfahren n\u00F6tig. Auftrag direkt vergeben.",
+      kurz: "Kein förmliches Verfahren nötig. Auftrag direkt vergeben.",
       pflicht: [
-        "Haushaltsmittel verf\u00FCgbar?",
+        "Haushaltsmittel verfügbar?",
         "Vergabevermerk anlegen (Bedarf + Wirtschaftlichkeit)",
         "Auftrag erteilen",
       ],
       empfohlen: [
         "Vergleichsangebot einholen (Markterkundung)",
-        "Mehr-Augen-Prinzip bei > 25.000 \u20AC",
+        "Mehr-Augen-Prinzip bei > 25.000 €",
       ],
       nurBeiBedarf: [
-        "Bei F\u00F6rdermitteln: ANBest-Vorgaben des F\u00F6rdermittelgebers pr\u00FCfen",
-        "Werkst\u00E4tten f\u00FCr behinderte Menschen / Inklusionsbetriebe ber\u00FCcksichtigen",
+        "Bei Fördermitteln: ANBest-Vorgaben des Fördermittelgebers prüfen",
+        "Werkstätten für behinderte Menschen / Inklusionsbetriebe berücksichtigen",
       ],
       rechtsgrundlagen: [
-        "Vergabeerlass SL 2025, Ziff. 2",
-        "\u00A7 82 KSVG",
-        art === "bau" ? "\u00A7 3a Abs. 4 VOB/A" : "\u00A7 14 UVgO",
+        "Vergabeerlass SL 2025 (Amtsbl. 26/2025) – Direktauftrag bis 100.000 €",
+        "§ 82 KSVG",
+        art === "bau" ? "§ 3a Abs. 4 VOB/A (Direktauftrag)" : "§ 14 UVgO (Direktauftrag)",
       ],
     };
   }
   if (wert <= sw) {
     const isNahSchwelle = wert > sw * 0.8;
-    const isFreihaendig = wert <= (art === "bau" ? sw * 0.3 : sw * 0.5);
     return {
       level: "vereinfacht",
-      name: isFreihaendig ? "Freih\u00E4ndige Vergabe" : "Beschr\u00E4nkte Ausschreibung o. TW",
+      name: "Freihändige Vergabe oder Beschränkte Ausschreibung",
       color: "#f59e0b", bgColor: "#fffbeb", borderColor: "#fde68a",
       tagLabel: "Unterhalb EU-Schwellenwert",
-      kurz: isFreihaendig
-        ? "Vereinfachtes Verfahren \u2013 mind. 3 Angebote einholen."
-        : "Beschr\u00E4nkte Ausschreibung \u2013 mind. 3\u20135 Bieter auffordern.",
+      kurz: "Im Saarland sind seit dem Vergabeerlass 2025 oberhalb 100.000 € bis zum EU-Schwellenwert beide Verfahren frei wählbar – Sie entscheiden je nach Markt und Leistung. In beiden Fällen mind. 3 Angebote bzw. Bieter einholen und dokumentieren.",
       pflicht: [
-        "Haushaltsmittel verf\u00FCgbar?",
+        "Haushaltsmittel verfügbar?",
         "Leistungsbeschreibung erstellen",
-        isFreihaendig ? "Mind. 3 Angebote einholen" : "Mind. 3\u20135 Bieter auffordern",
+        "Verfahren wählen: Freihändige Vergabe oder Beschränkte Ausschreibung",
+        "Mind. 3 Angebote einholen bzw. Bieter auffordern",
         "Angebote vergleichen + dokumentieren",
-        "Vergabevermerk mit Verfahrenswahl-Begr\u00FCndung",
+        "Vergabevermerk mit Verfahrenswahl-Begründung",
       ],
       empfohlen: [
-        "Gleichbehandlung dokumentieren (keine Ortspr\u00E4ferenz)",
+        "Gleichbehandlung dokumentieren (keine Ortspräferenz)",
         "Antikorruption: Rotation, Mehr-Augen-Prinzip",
-        ...(isNahSchwelle ? ["\u26A0\uFE0F N\u00E4he EU-Schwellenwert \u2013 Puffer einplanen!"] : []),
+        ...(isNahSchwelle ? ["⚠️ Nähe EU-Schwellenwert – Puffer einplanen!"] : []),
       ],
       nurBeiBedarf: [
-        "Bei F\u00F6rdermitteln: ANBest-Vorgaben pr\u00FCfen",
-        "Werkst\u00E4tten / Inklusionsbetriebe ber\u00FCcksichtigen",
+        "Bei Fördermitteln: ANBest-Vorgaben prüfen",
+        "Werkstätten / Inklusionsbetriebe berücksichtigen",
       ],
       rechtsgrundlagen: [
-        "Vergabeerlass SL 2025, Ziff. 3\u20134",
-        "\u00A7 82 KSVG",
-        art === "bau" ? "\u00A7 3a Abs. 2\u20133 VOB/A" : "\u00A7\u00A7 8\u201312 UVgO",
+        "Vergabeerlass SL 2025 (Amtsbl. 26/2025) – Freihändige Vergabe und Beschränkte Ausschreibung bis zum EU-Schwellenwert zulässig",
+        "§ 82 KSVG",
+        art === "bau" ? "VOB/A Abschnitt 1 (§§ 3, 3a)" : "UVgO (§§ 8–12)",
       ],
     };
   }
   return {
     level: "eu", name: "EU-weite Ausschreibung", color: "#ef4444",
     bgColor: "#fef2f2", borderColor: "#fecaca", tagLabel: "EU-Vergaberecht",
-    kurz: "F\u00F6rmliches EU-Verfahren nach GWB/VgV. Fristen, Bekanntmachung, Dokumentation zwingend.",
+    kurz: "Förmliches EU-Verfahren nach GWB/VgV. Fristen, Bekanntmachung, Dokumentation zwingend.",
     pflicht: [
-      "Bedarfsermittlung + Kostensch\u00E4tzung",
+      "Bedarfsermittlung + Kostenschätzung",
       "Vergabeart festlegen (offen / nichtoffen / Verhandlung)",
       "Leistungsbeschreibung produktneutral erstellen",
       "Eignungs- und Zuschlagskriterien vorab festlegen",
@@ -111,21 +120,21 @@ function getVerfahren(wert, art) {
       "Vergabeunterlagen elektronisch bereitstellen",
       "Fristen nach VgV/VOB/A-EU einhalten",
       "Angebotswertung + Vergabevermerk",
-      "Informationspflicht \u00A7 134 GWB (Wartefrist)",
+      "Informationspflicht § 134 GWB (Wartefrist)",
     ],
     empfohlen: [
       "Rechtliche Beratung einholen",
-      "Vorinformation (Vorabbekanntmachung) pr\u00FCfen",
+      "Vorinformation (Vorabbekanntmachung) prüfen",
     ],
     nurBeiBedarf: [
-      "F\u00F6rdermittelvorgaben pr\u00FCfen",
-      "Werkst\u00E4tten / Inklusionsbetriebe",
+      "Fördermittelvorgaben prüfen",
+      "Werkstätten / Inklusionsbetriebe",
     ],
     rechtsgrundlagen: [
       "GWB, 4. Teil",
       art === "bau" ? "VOB/A Abschnitt 2 (EU)" : "VgV",
-      "\u00A7 82 KSVG",
-      "EU-SW 2026: " + THRESHOLDS_2026[art].toLocaleString("de-DE") + " \u20AC",
+      "§ 82 KSVG",
+      "EU-SW 2026/27: " + THRESHOLDS_2026[art].toLocaleString("de-DE") + " €",
     ],
   };
 }
@@ -137,9 +146,11 @@ function StepRow({ text, done, onToggle, type }) {
     bedarf: { check: "#3b82f6" },
   };
   const c = colors[type];
-  const isWarning = text.startsWith("\u26A0");
+  const isWarning = text.startsWith("⚠");
   return e("div", {
     onClick: onToggle, className: "step-row",
+    role: "button", tabIndex: 0, "aria-pressed": done,
+    onKeyDown: function(ev) { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onToggle(); } },
     style: {
       display: "flex", alignItems: "center", gap: 12,
       padding: "12px 14px", cursor: "pointer", borderRadius: 10,
@@ -169,13 +180,14 @@ function Collapsible({ title, badge, children }) {
   return e("div", null,
     e("button", {
       onClick: function() { setOpen(!open); },
+      "aria-expanded": open,
       style: {
         width: "100%", display: "flex", alignItems: "center", gap: 8,
         padding: "10px 14px", background: "none", border: "none",
         cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#6b7280", textAlign: "left",
       }
     },
-      e("span", { style: { transform: open ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s", fontSize: 10, display: "inline-block" }}, "\u25B6"),
+      e("span", { style: { transform: open ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s", fontSize: 10, display: "inline-block" }}, "▶"),
       title,
       badge ? e("span", { style: { fontSize: 11, fontWeight: 500, padding: "2px 8px", borderRadius: 10, background: "#f1f5f9", color: "#64748b" }}, badge) : null
     ),
@@ -190,11 +202,11 @@ function VermerkGenerator({ wert, art, verfahren }) {
   const today = new Date().toLocaleDateString("de-DE");
   var text;
   if (verfahren.level === "direkt") {
-    text = "Vergabevermerk \u2013 Direktauftrag\n\nDatum: " + today + "\nLeistungsart: " + artLabel + "\nGesch. Auftragswert: " + formatEuro(wert) + " (netto)\nVerfahren: Direktauftrag gem. Vergabeerlass SL 2025\n\nBegr\u00FCndung:\nDer gesch\u00E4tzte Auftragswert liegt unterhalb der Wertgrenze von 100.000 \u20AC netto f\u00FCr Direktauftr\u00E4ge gem. Vergabeerlass SL 2025 (Amtsbl. Nr. 26/2025). Die Vergabe erfolgt unter Beachtung der Haushaltsgrundsätze der Wirtschaftlichkeit und Sparsamkeit (\u00A7 82 KSVG).\n\nAuftragnehmer: ___________________________\nAngebotssumme: _______________ \u20AC netto\nWirtschaftlichkeit: ___________________________\n\nUnterschrift: ___________________________";
+    text = "Vergabevermerk – Direktauftrag\n\nDatum: " + today + "\nLeistungsart: " + artLabel + "\nGesch. Auftragswert: " + formatEuro(wert) + " (netto)\nVerfahren: Direktauftrag gem. Vergabeerlass SL 2025\n\nBegründung:\nDer geschätzte Auftragswert liegt unterhalb der Wertgrenze von 100.000 € netto für Direktaufträge gem. Vergabeerlass SL 2025 (Amtsbl. Nr. 26/2025). Die Vergabe erfolgt unter Beachtung der Haushaltsgrundsätze der Wirtschaftlichkeit und Sparsamkeit (§ 82 KSVG).\n\nAuftragnehmer: ___________________________\nAngebotssumme: _______________ € netto\nWirtschaftlichkeit: ___________________________\n\nUnterschrift: ___________________________";
   } else if (verfahren.level === "vereinfacht") {
-    text = "Vergabevermerk \u2013 " + verfahren.name + "\n\nDatum: " + today + "\nLeistungsart: " + artLabel + "\nGesch. Auftragswert: " + formatEuro(wert) + " (netto)\nVerfahren: " + verfahren.name + " gem. Vergabeerlass SL 2025\n\nBegr\u00FCndung Verfahrenswahl:\nDer gesch. Auftragswert liegt unterhalb des EU-Schwellenwerts (" + formatEuro(THRESHOLDS_2026[art]) + "). Die " + verfahren.name + " ist gem. Vergabeerlass SL 2025 ohne weitere Einzelbegr\u00FCndung zul\u00E4ssig.\n\nBeteiligte Bieter:\n1. _______________ \u2013 Angebot: ___________ \u20AC\n2. _______________ \u2013 Angebot: ___________ \u20AC\n3. _______________ \u2013 Angebot: ___________ \u20AC\n\nZuschlag an: ___________________________\nBegr\u00FCndung: ___________________________\n\nUnterschrift: ___________________________";
+    text = "Vergabevermerk – Verfahren unterhalb EU-Schwellenwert\n\nDatum: " + today + "\nLeistungsart: " + artLabel + "\nGesch. Auftragswert: " + formatEuro(wert) + " (netto)\nGewähltes Verfahren: □ Freihändige Vergabe   □ Beschränkte Ausschreibung\n\nBegründung Verfahrenswahl:\nDer gesch. Auftragswert liegt oberhalb der Direktauftragsgrenze (100.000 €) und unterhalb des EU-Schwellenwerts (" + formatEuro(THRESHOLDS_2026[art]) + "). Nach dem Vergabeerlass SL 2025 (Amtsbl. Nr. 26/2025) sind in diesem Bereich sowohl die Freihändige Vergabe als auch die Beschränkte Ausschreibung ohne weitere Einzelbegründung zulässig.\n\nBeteiligte Bieter:\n1. _______________ – Angebot: ___________ €\n2. _______________ – Angebot: ___________ €\n3. _______________ – Angebot: ___________ €\n\nZuschlag an: ___________________________\nBegründung: ___________________________\n\nUnterschrift: ___________________________";
   } else {
-    text = "Vergabevermerk \u2013 EU-weites Verfahren\n\nDatum: " + today + "\nLeistungsart: " + artLabel + "\nGesch. Auftragswert: " + formatEuro(wert) + " (netto)\n\nDer Auftragswert erreicht/\u00FCberschreitet den EU-Schwellenwert (" + formatEuro(THRESHOLDS_2026[art]) + "). Vollst\u00E4ndiger Vergabevermerk gem. \u00A7 8 VgV erforderlich.\n\n[Hinweis: Rechtliche Beratung empfohlen]";
+    text = "Vergabevermerk – EU-weites Verfahren\n\nDatum: " + today + "\nLeistungsart: " + artLabel + "\nGesch. Auftragswert: " + formatEuro(wert) + " (netto)\n\nDer Auftragswert erreicht/überschreitet den EU-Schwellenwert (" + formatEuro(THRESHOLDS_2026[art]) + "). Vollständiger Vergabevermerk gem. § 8 VgV erforderlich.\n\n[Hinweis: Rechtliche Beratung empfohlen]";
   }
   function handleCopy() {
     navigator.clipboard.writeText(text).then(function() {
@@ -203,14 +215,14 @@ function VermerkGenerator({ wert, art, verfahren }) {
     });
   }
   return e("div", { style: { background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.04)", marginBottom: 12 }},
-    e("button", { onClick: function() { setShow(!show); }, style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", background: "none", border: "none", cursor: "pointer" }},
+    e("button", { onClick: function() { setShow(!show); }, "aria-expanded": show, style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", background: "none", border: "none", cursor: "pointer" }},
       e("span", { style: { fontSize: 14, fontWeight: 700, color: "#1e293b" }}, "\u{1F4DD} Vergabevermerk-Vorlage"),
-      e("span", { style: { transform: show ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s", fontSize: 10, color: "#94a3b8" }}, "\u25B6")
+      e("span", { style: { transform: show ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s", fontSize: 10, color: "#94a3b8" }}, "▶")
     ),
     show ? e("div", null,
       e("div", { style: { padding: "0 16px 8px", display: "flex", justifyContent: "flex-end" }},
         e("button", { onClick: handleCopy, style: { padding: "6px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600, border: "none", cursor: "pointer", background: copied ? "#10b981" : "#6366f1", color: "#fff", transition: "all 0.2s" }},
-          copied ? "\u2713 Kopiert!" : "In Zwischenablage kopieren")
+          copied ? "✓ Kopiert!" : "In Zwischenablage kopieren")
       ),
       e("pre", { style: { padding: "14px 16px", margin: 0, fontSize: 12, lineHeight: 1.7, color: "#374151", background: "#f8fafc", whiteSpace: "pre-wrap", fontFamily: "'JetBrains Mono', Consolas, monospace", maxHeight: 280, overflowY: "auto", borderTop: "1px solid #f1f5f9" }}, text)
     ) : null
@@ -244,19 +256,22 @@ function App() {
   var allDone = pflichtDone === pflichtTotal && pflichtTotal > 0;
 
   return e("div", { style: { minHeight: "100vh", background: "#f8fafc" }},
-    // Header
-    e("div", { style: { background: "#1e293b", padding: "16px 20px", borderBottom: "2px solid #6366f1" }},
-      e("div", { style: { maxWidth: 640, margin: "0 auto", display: "flex", alignItems: "center", gap: 10 }},
-        e("span", { style: { fontSize: 22 }}, "\u2696\uFE0F"),
-        e("div", null,
-          e("h1", { style: { fontSize: 18, fontWeight: 700, color: "#fff", margin: 0 }}, "Vergabe-Assistent Saarland"),
-          e("p", { style: { fontSize: 11, color: "#64748b", margin: 0 }}, "Vergabeerlass 2025 \u00B7 EU-SW 2026 \u00B7 KSVG")
-        )
+    // Header (2Rat-Branding)
+    e("div", { className: "app-header", style: { background: "#fff", padding: "16px 20px", borderBottom: "3px solid #659444" }},
+      e("div", { style: { maxWidth: 640, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }},
+        e("div", { style: { display: "flex", alignItems: "center", gap: 14 }},
+          e("img", { src: LOGO, alt: "2Rat – Büro für Radverkehrsplanung", style: { height: 38 }}),
+          e("div", null,
+            e("div", { style: { fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#8a8a8a" }}, "Büro für Radverkehrsplanung"),
+            e("h1", { style: { fontSize: 17, fontWeight: 700, color: "#3E403F", margin: 0, lineHeight: 1.3 }}, "Vergabe-Assistent ", e("span", { style: { color: "#1678A9" }}, "Saarland"))
+          )
+        ),
+        e("div", { className: "header-meta", style: { textAlign: "right", fontSize: 11, color: "#8a8a8a", lineHeight: 1.5 }}, "Saarland", e("br"), "Vergabeerlass 2025 · EU-SW 2026", e("br"), "Stand 06/2026")
       )
     ),
     e("div", { style: { maxWidth: 640, margin: "0 auto", padding: "20px 16px 60px" }},
       // Input Card
-      e("div", { style: { background: "#fff", borderRadius: 14, padding: 16, border: "1px solid #e2e8f0", marginBottom: 16, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
+      e("div", { className: "input-card", style: { background: "#fff", borderRadius: 14, padding: 16, border: "1px solid #e2e8f0", marginBottom: 16, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
         // Leistungsart
         e("div", { style: { marginBottom: 14 }},
           e("label", { style: { fontSize: 12, fontWeight: 600, color: "#64748b", display: "block", marginBottom: 8 }}, "Leistungsart"),
@@ -265,6 +280,7 @@ function App() {
               return e("button", {
                 key: l.id, className: "art-btn",
                 onClick: function() { setArt(l.id); },
+                "aria-pressed": art === l.id,
                 style: {
                   flex: 1, padding: "10px 8px", borderRadius: 10,
                   border: art === l.id ? "2px solid #6366f1" : "2px solid #e2e8f0",
@@ -280,15 +296,15 @@ function App() {
         ),
         // Auftragswert
         e("div", null,
-          e("label", { style: { fontSize: 12, fontWeight: 600, color: "#64748b", display: "block", marginBottom: 8 }}, "Auftragswert netto"),
+          e("label", { htmlFor: "wertInput", style: { fontSize: 12, fontWeight: 600, color: "#64748b", display: "block", marginBottom: 8 }}, "Auftragswert netto"),
           e("div", { style: { display: "flex", borderRadius: 10, border: "2px solid #e2e8f0", overflow: "hidden" }},
             e("input", {
-              type: "text", value: wertInput,
+              id: "wertInput", type: "text", value: wertInput, inputMode: "numeric",
               onChange: function(ev) { setWertInput(ev.target.value); setWert(parseWert(ev.target.value)); },
               placeholder: "z.B. 75000",
               style: { flex: 1, padding: "10px 14px", fontSize: 18, border: "none", fontFamily: "'JetBrains Mono', monospace", color: "#1e293b", outline: "none", background: "transparent" }
             }),
-            e("div", { style: { padding: "10px 14px", fontSize: 14, fontWeight: 600, color: "#94a3b8", background: "#f8fafc", borderLeft: "1px solid #e2e8f0", display: "flex", alignItems: "center" }}, "\u20AC")
+            e("div", { style: { padding: "10px 14px", fontSize: 14, fontWeight: 600, color: "#94a3b8", background: "#f8fafc", borderLeft: "1px solid #e2e8f0", display: "flex", alignItems: "center" }}, "€")
           ),
           e("div", { style: { display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }},
             [5000, 50000, 100000, 150000, 250000].map(function(v) {
@@ -333,7 +349,7 @@ function App() {
               return e(StepRow, { key: "p" + i, text: t, done: !!checks["p" + i], onToggle: function() { toggle("p" + i); }, type: "pflicht" });
             })
           ),
-          allDone ? e("div", { style: { padding: "10px 16px", background: "#f0fdf4", borderTop: "1px solid #bbf7d0", fontSize: 13, fontWeight: 600, color: "#059669", textAlign: "center" }}, "\u2705 Fertig \u2013 Auftrag kann erteilt werden") : null
+          allDone ? e("div", { style: { padding: "10px 16px", background: "#f0fdf4", borderTop: "1px solid #bbf7d0", fontSize: 13, fontWeight: 600, color: "#059669", textAlign: "center" }}, "✅ Fertig – Auftrag kann erteilt werden") : null
         ),
 
         // Empfohlen
@@ -373,10 +389,13 @@ function App() {
         )
       ) : null,
 
-      // Footer
+      // Footer (2Rat)
       e("div", { style: { marginTop: 32, padding: "12px 16px", borderRadius: 10, background: "rgba(0,0,0,0.02)", border: "1px solid #e2e8f0" }},
         e("p", { style: { fontSize: 10, color: "#a1a1aa", margin: 0, lineHeight: 1.6 }},
-          "Orientierungshilfe, keine Rechtsberatung. Vergabeerlass SL 2025 (Amtsbl. 26/2025, ab 01.07.2025 unbefristet), EU-SW 2026/27, KSVG \u00A7\u00A7 82 ff. Alle Werte netto. Bei F\u00F6rdermitteln ggf. strengere Vorgaben. Stand 03/2026."
+          "Orientierungshilfe, keine Rechtsberatung. Grundlage: Vergabeerlass SL 2025 (Amtsbl. 26/2025, ab 01.07.2025 unbefristet) – Direktauftrag bis 100.000 €, darüber Freihändige Vergabe oder Beschränkte Ausschreibung bis zum EU-Schwellenwert (2026/27: Bau 5.404.000 €, Liefer/DL 216.000 €). KSVG §§ 82 ff. Alle Werte netto. Bei Fördermitteln ggf. strengere Vorgaben. Stand 06/2026."
+        ),
+        e("p", { style: { fontSize: 10, color: "#a1a1aa", margin: "6px 0 0", lineHeight: 1.6 }},
+          "© 2Rat · Armin Jung · Radverkehrsplaner EIPOS · www.2rat.org"
         )
       )
     )
