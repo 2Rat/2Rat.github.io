@@ -22,6 +22,8 @@ body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);ba
 .header-title{font-size:17px;font-weight:700;color:var(--gray);line-height:1.3}
 .header-title span{color:var(--green)}
 .header-right{text-align:right;font-size:11px;color:var(--gray-light);line-height:1.5}
+.portal-link{color:var(--blue);text-decoration:none;font-weight:600}
+.portal-link:hover{text-decoration:underline}
 .main{max-width:720px;margin:0 auto;padding:24px 20px 60px}
 .steps{display:flex;gap:6px;align-items:flex-start;margin-bottom:24px}
 .step-item{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0}
@@ -44,6 +46,7 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
 .card{padding:15px 16px;border-radius:8px;border:1.5px solid var(--gray-border);background:var(--white);cursor:pointer;transition:all .15s}
 .card:hover{border-color:var(--green);background:var(--green-light)}
 .card.selected{border-color:var(--green);background:var(--green-light)}
+.card:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .card-icon{width:42px;height:42px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
 .card.row{display:flex;align-items:center;gap:13px}
 .card-label{font-weight:600;font-size:14px}
@@ -55,6 +58,7 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
 .btn-primary{background:var(--green);color:#fff}
 .btn-outline{background:transparent;color:var(--green);border:2px solid var(--green)}
 .btn-back{background:none;border:none;color:var(--green);cursor:pointer;font-size:13px;font-weight:600;padding:0;margin-bottom:14px}
+.btn:focus-visible,.btn-back:focus-visible,.copy-btn:focus-visible,.crosslink:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .result-card{background:var(--white);border-radius:10px;border:1.5px solid var(--gray-border);overflow:hidden}
 .result-header{background:var(--green);padding:16px 18px;color:#fff}
 .result-header .label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.75;margin-bottom:2px}
@@ -97,6 +101,18 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
 .dot{width:11px;height:11px;border-radius:3px;display:inline-block;border:1px solid}
 .dot.green{background:var(--green-light);border-color:rgba(101,148,68,.4)}
 .dot.blue{background:var(--blue-light);border-color:rgba(22,120,169,.4)}
+@media (max-width:520px){
+  .cards{grid-template-columns:1fr}
+  .header-inner{flex-direction:column;align-items:flex-start;gap:10px}
+  .header-right{text-align:left}
+}
+@media print{
+  .steps,.btn,.btn-back,.copy-btn,.crosslinks,.header-right,.portal-link{display:none!important}
+  body{background:#fff}
+  .main{padding-top:12px}
+  .result-card,.info-box,.copy-box,.agfk-contact{break-inside:avoid;page-break-inside:avoid;box-shadow:none}
+  .copy-body{max-height:none;overflow:visible;border:1px solid var(--gray-border)}
+}
 </style>
 </head>
 <body>
@@ -104,17 +120,17 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
 <div class="header">
   <div class="header-inner">
     <div class="header-left">
-      <img class="header-logo" id="logo" alt="2RAT" src="">
+      <img class="header-logo" id="logo" alt="2RAT – Büro für Radverkehrsplanung" src="">
       <div>
         <div class="header-sub">Büro für Radverkehrsplanung</div>
         <div class="header-title">Projekt-Check <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>Kommunale Vorhaben<br>Stand 06/2026</div>
+    <div class="header-right"><a class="portal-link" href="index.html">← Zum Portal</a><br>Saarland · Kommunale Vorhaben<br>Werkzeug-Stand 06/2026</div>
   </div>
 </div>
 
-<div class="main">
+<main class="main">
   <div class="steps" id="steps"></div>
   <div id="content"></div>
   <div class="footer">
@@ -122,10 +138,10 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
     Datengrundlage: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL, Stand 05/2026) sowie StVO, VwV-StVO 2025, StVZustG Saarland, SaarlStrG, FStrG.<br>
     Entwickelt von 2RAT – Büro für Radverkehrsplanung · <a href="https://www.2rat.org">www.2rat.org</a>
   </div>
-</div>
+</main>
 
 <script>
-const LOGO='data:image/png;base64,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';
+const LOGO='data:image/jpeg;base64,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';
 document.getElementById('logo').src=LOGO;
 
 const TOOL_LINKS={
@@ -146,6 +162,7 @@ const FALLTYPEN=[
  beteiligte:["Bau-/Tiefbauamt","Verkehrsplanung","Straßenverkehrsbehörde","Polizei"],
  pruef:["Haushalt und Förderfähigkeit klären","Grundstücke und Widmung prüfen","Knotenpunkte und Querungen planen","Beleuchtung und Entwässerung mitdenken","Wer unterhält den Weg später?"],
  steps:["Ausgangspunkt und Ziel festhalten","Baulast und Eigentum klären","Förderung prüfen","Beteiligte einbinden","Planung beauftragen"],
+ hinweis:"Gemeint ist hier ein Radweg an einer Gemeinde- oder Ortsstraße. Liegt der Radweg an einer Bundes- oder Landesstraße (auch in der Ortsdurchfahrt)? Dann passt der Falltyp „Etwas an einer Durchgangsstraße“ besser – dort hat meist das Land (LfS) die Federführung.",
  links:["zustaendigkeiten","vergabe"], askFoerder:true, askStrasse:false},
 {id:"fahrradstrasse",icon:"🛣️",label:"Fahrradstraße oder -zone einrichten",
  desc:"Eine einzelne Fahrradstraße oder eine ganze Fahrradzone",
@@ -157,7 +174,7 @@ const FALLTYPEN=[
  links:["zustaendigkeiten"], askFoerder:true, askStrasse:false},
 {id:"markierung",icon:"🚧",label:"Schilder, Markierung oder Tempo ändern",
  desc:"Schutzstreifen, Tempo 30, Einbahn-Öffnung, Beschilderung",
- lead:"Die Straßenverkehrsbehörde ordnet an (ist Ihre Kommune selbst Straßenverkehrsbehörde, kann sie das selbst), der Baulastträger setzt um.",
+ lead:"Die Straßenverkehrsbehörde ordnet an – das ist meist der Landkreis bzw. Regionalverband, in Saarbrücken, Völklingen und St. Ingbert die Stadt selbst. Der Baulastträger setzt um.",
  beteiligte:["Straßenverkehrsbehörde","Polizei","Baulastträger / Bauhof"],
  pruef:["Fahrbahnbreite und Sichtbeziehungen","VwV-StVO 2025 beachten","Beschilderung und Markierung","auf Musterlösungen zurückgreifen"],
  steps:["Genaue Maßnahme festlegen","Mit Straßenverkehrsbehörde klären","Anordnung einholen","Umsetzung durch Bauhof/Baulastträger"],
@@ -172,7 +189,7 @@ const FALLTYPEN=[
  links:["vergabe"], askFoerder:true, askStrasse:false},
 {id:"schulweg",icon:"🎒",label:"Schulweg sicherer machen",
  desc:"Sichere Schulwege, Hol-/Bringzonen, Schulstraße",
- lead:"Schule, Schulträger und Kommune ziehen gemeinsam.",
+ lead:"Das läuft gemeinsam: Schule, Schulträger und Kommune stimmen sich ab – eine Stelle allein hat hier nicht den Hut auf.",
  beteiligte:["Schulträger","Schule","Straßenverkehrsbehörde","Polizei","Bau-/Tiefbauamt","Eltern"],
  pruef:["Querungen und Bringverkehr","Hol-/Bringzonen einrichten","Schulstraße prüfen (temporäre Sperrung zu Bring-/Holzeiten)","Abstellanlagen an der Schule","mit Eltern und Schule kommunizieren"],
  steps:["Problemstellen mit Schule aufnehmen","Beteiligte an einen Tisch holen","Maßnahmen festlegen","Förderung prüfen","Umsetzen und begleiten"],
@@ -200,7 +217,7 @@ const FALLTYPEN=[
  links:["zustaendigkeiten"], askFoerder:false},
 {id:"bikeride",icon:"🚉",label:"Fahrradparken am Bahnhof",
  desc:"Bike+Ride, Abstellanlagen am Bahnhof oder Haltepunkt",
- lead:"Kommune und Bahn/ÖPNV gemeinsam – die Flächenfrage ist zentral.",
+ lead:"Das machen Kommune und Bahn/ÖPNV gemeinsam – die Flächenfrage ist zentral.",
  beteiligte:["Bau-/Tiefbauamt","Verkehrsplanung","DB InfraGO / Saarbahn / ZPS","Flächeneigentümer"],
  pruef:["Flächenverfügbarkeit und Gestattung klären","Förderfähigkeit prüfen","Beleuchtung und Diebstahlschutz","Reinigung und Unterhaltung sichern"],
  steps:["Standort und Bedarf klären","Flächeneigentümer (oft DB/ÖPNV) ansprechen","Förderung prüfen","Anlage planen und bauen"],
@@ -225,7 +242,7 @@ const FALLTYPEN=[
  links:[], askFoerder:false, askStrasse:false},
 {id:"aktion",icon:"📣",label:"Aktion oder Kampagne",
  desc:"STADTRADELN, Mobilitätswoche, Aktionstag",
- lead:"Ihre Kommune organisiert, mehrere Stellen wirken mit.",
+ lead:"Ihre Kommune organisiert – mehrere Stellen wirken mit.",
  beteiligte:["Ordnungsamt","Straßenverkehrsbehörde","Polizei","Schulen / Vereine","Pressestelle"],
  pruef:["Genehmigung und Sondernutzung","Sicherheit und Versicherung","Kommunikation und Presse","ggf. Sperrungen anmelden"],
  steps:["Konzept und Termin festlegen","Genehmigungen einholen","Partner und Presse einbinden","Durchführen und auswerten"],
@@ -234,9 +251,9 @@ const FALLTYPEN=[
 
 /* ====== ZUSATZFAKTOREN aus Kap. 3.7 ====== */
 const EXTRAS=[
-{id:"foerder",icon:"💶",label:"Es sollen Fördermittel eingesetzt werden",desc:"Förderung nach Landesrichtlinie geplant",
+{id:"foerder",icon:"💶",label:"Es sollen Fördermittel eingesetzt werden",desc:"Förderung nach der Förderrichtlinie NMOB geplant",
  stellen:["Kämmerei / Fördermittelstelle (früh einbinden)"],
- pruef:["Förderantrag, Fristen und Eigenanteil klären"]},
+ pruef:["Förderantrag nach der Förderrichtlinie NMOB (nichtmotorisierte Mobilität), Fristen und Eigenanteil klären"]},
 {id:"umwelt",icon:"🌿",label:"Bäume, Bach, Wald oder Schutzgebiet in der Nähe",desc:"Eingriff in Natur, Gewässer oder Wald möglich",
  stellen:["Untere Naturschutzbehörde / LUA","ggf. Wasser- bzw. Forstbehörde"],
  pruef:["Genehmigungen vor der vertieften Planung klären (Naturschutz-, Wasser-, Waldrecht)"]},
@@ -255,6 +272,11 @@ const EXTRAS=[
 ];
 
 let state={step:0,falltyp:null,lage:null,extras:[]};
+
+/* Tastaturbedienung für die als Buttons ausgezeichneten Karten */
+function cardKey(e){
+  if(e.key==='Enter'||e.key===' '||e.key==='Spacebar'){e.preventDefault();e.currentTarget.click();}
+}
 
 function renderSteps(){
   const labels=["Vorhaben","Details","Ergebnis"];
@@ -283,7 +305,7 @@ function viewVorhaben(){
     '<div class="intro-line">In wenigen Schritten zeigt Ihnen dieses Werkzeug, <b>wer mit an den Tisch muss</b>, woran Sie denken müssen und welche Schritte anstehen – auch wenn Sie mit dem Thema noch nicht vertraut sind.</div>'+
     '<div class="cards">';
   FALLTYPEN.forEach(f=>{
-    h+='<div class="card'+(state.falltyp===f.id?' selected':'')+'" onclick="pickFalltyp(\''+f.id+'\')">'+
+    h+='<div class="card'+(state.falltyp===f.id?' selected':'')+'" role="button" tabindex="0" aria-pressed="'+(state.falltyp===f.id)+'" onkeydown="cardKey(event)" onclick="pickFalltyp(\''+f.id+'\')">'+
        '<div class="card-icon">'+f.icon+'</div>'+
        '<div class="card-label" style="margin-top:10px">'+f.label+'</div>'+
        '<div class="card-desc">'+f.desc+'</div></div>';
@@ -303,8 +325,8 @@ function pickFalltyp(id){
 function viewLage(){
   let h='<button class="btn-back" onclick="goStep(0)">← Vorhaben ändern</button>';
   h+='<h2>Wo genau liegt das?</h2><div class="subtitle">Bei einer Durchgangsstraße hängt es davon ab, ob sie durch den Ort führt.</div><div class="cards single">';
-  h+='<div class="card row" onclick="pickLage(\'ortsdurchfahrt\')"><div class="card-icon">🏘️</div><div><div class="card-label">Die Straße führt durch den Ort</div><div class="card-desc">Innerorts / Ortsdurchfahrt – Ihre Kommune redet mit</div></div></div>';
-  h+='<div class="card row" onclick="pickLage(\'ausserorts\')"><div class="card-icon">🌳</div><div><div class="card-label">Die Straße liegt außerhalb</div><div class="card-desc">Freie Strecke – das Land (LfS) führt</div></div></div>';
+  h+='<div class="card row" role="button" tabindex="0" onkeydown="cardKey(event)" onclick="pickLage(\'ortsdurchfahrt\')"><div class="card-icon">🏘️</div><div><div class="card-label">Die Straße führt durch den Ort</div><div class="card-desc">Innerorts / Ortsdurchfahrt – Ihre Kommune redet mit</div></div></div>';
+  h+='<div class="card row" role="button" tabindex="0" onkeydown="cardKey(event)" onclick="pickLage(\'ausserorts\')"><div class="card-icon">🌳</div><div><div class="card-label">Die Straße liegt außerhalb</div><div class="card-desc">Freie Strecke – das Land (LfS) führt</div></div></div>';
   h+='</div>';
   return h;
 }
@@ -327,7 +349,7 @@ function viewExtras(){
   EXTRAS.forEach(e=>{
     if(e.id==="foerder" && !f.askFoerder) return;
     const on=hasExtra(e.id);
-    h+='<div class="card row'+(on?' selected':'')+'" onclick="toggleExtra(\''+e.id+'\')">'+
+    h+='<div class="card row'+(on?' selected':'')+'" role="button" tabindex="0" aria-pressed="'+on+'" onkeydown="cardKey(event)" onclick="toggleExtra(\''+e.id+'\')">'+
        '<div class="card-icon">'+e.icon+'</div>'+
        '<div style="flex:1"><div class="card-label">'+e.label+'</div><div class="card-desc">'+e.desc+'</div></div>'+
        '<div class="card-check">'+(on?'✓':'')+'</div></div>';
@@ -346,9 +368,14 @@ function collectBeteiligte(f,d){
   state.extras.forEach(eid=>{const e=EXTRAS.find(x=>x.id===eid);if(e)e.stellen.forEach(st=>{if(!bet.includes(st))bet.push(st);});});
   return bet;
 }
+const BAULICH=["radweg","abstellanlage","schulweg","bikeride","tourroute","bundlandstrasse"];
 function collectPruef(f,d){
   const pr=d.pruef.slice();
   state.extras.forEach(eid=>{const e=EXTRAS.find(x=>x.id===eid);if(e)e.pruef.forEach(p=>{if(!pr.includes(p))pr.push(p);});});
+  // Bei baulichen Vorhaben immer an Betrieb/Unterhalt erinnern (Kap. 6, Punkt 7)
+  if(BAULICH.includes(f.id)&&!pr.some(p=>/unterhal|pflege|reinig/i.test(p))){
+    pr.push("Wer unterhält und pflegt die Anlage später? (Reinigung, Winterdienst, kleine Reparaturen)");
+  }
   return pr;
 }
 
@@ -405,9 +432,9 @@ function viewErgebnis(){
      '<button class="copy-btn" id="copyBtn" onclick="copyVermerk()">Kopieren</button></div>'+
      '<div class="copy-body" id="vermerk">'+escapeHtml(buildVermerk())+'</div></div>';
 
-  // Cross-Links
+  // Cross-Links – Fördermittel-Finder immer anbieten, wenn der Falltyp förderrelevant ist
   const links=(f.links||[]).slice();
-  if(hasExtra("foerder")&&!links.includes("foerdermittel"))links.unshift("foerdermittel");
+  if((f.askFoerder||hasExtra("foerder"))&&!links.includes("foerdermittel"))links.unshift("foerdermittel");
   if(links.length){
     h+='<div class="result-label" style="margin-top:18px">Passende weitere Werkzeuge</div><div class="crosslinks">';
     const order=["zustaendigkeiten","foerdermittel","vergabe"];
