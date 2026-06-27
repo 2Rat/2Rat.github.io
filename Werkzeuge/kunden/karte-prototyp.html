@@ -141,7 +141,7 @@ map.on('click', function(ev){
   const lat=ev.latlng.lat.toFixed(6), lon=ev.latlng.lng.toFixed(6);
   if(marker)marker.setLatLng(ev.latlng); else marker=L.marker(ev.latlng).addTo(map);
   resultEl.innerHTML='<div class="spin">⏳ Gemeinde & Straße werden ermittelt … (kann 1–3 Sek. dauern)</div>';
-  const q='[out:json][timeout:25];is_in('+lat+','+lon+');out tags;way(around:35,'+lat+','+lon+')["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road|track|service|cycleway|path)$"];out geom;way(around:80,'+lat+','+lon+')["highway"];rel(bw)["route"~"^(bicycle|mtb)$"];out tags;';
+  const q='[out:json][timeout:25];is_in('+lat+','+lon+');out tags;way(around:35,'+lat+','+lon+')["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road|track|service|cycleway|path)$"];out geom;way(around:100,'+lat+','+lon+')["highway"];rel(bw)["route"~"^(bicycle|mtb|hiking|foot|running|inline_skates)$"];out tags;';
   queryOverpass(q)
     .then(function(d){renderResult(d,lat,lon);})
     .catch(function(){
@@ -188,7 +188,8 @@ function renderResult(d,lat,lon){
   const els=((d&&d.elements)||[]);
   const areas=els.filter(function(e){return e.type==='area'&&e.tags;});
   const ways=els.filter(function(e){return e.type==='way'&&e.tags&&e.geometry;});
-  const rels=els.filter(function(e){return e.type==='relation'&&e.tags&&(e.tags.route==='bicycle'||e.tags.route==='mtb');});
+  const ROUTE_LABELS={bicycle:'Radroute',mtb:'MTB-Route',hiking:'Wanderweg',foot:'Fußroute',running:'Laufroute',inline_skates:'Skate-Route'};
+  const rels=els.filter(function(e){return e.type==='relation'&&e.tags&&ROUTE_LABELS[e.tags.route];});
   const admin=areas.filter(function(e){return e.tags.boundary==='administrative';});
   const gem=admin.find(function(e){return e.tags.admin_level==='8';});
   const kreis=admin.find(function(e){return e.tags.admin_level==='6';});
@@ -218,8 +219,8 @@ function renderResult(d,lat,lon){
     h+='<div class="warn-box" style="margin-top:12px">Keine Straße/Weg in der Nähe gefunden – bitte näher an die Linie klicken.</div>';
   }
   if(rels.length){
-    const rn=rels.map(function(r){return (r.tags.name||r.tags.ref||'Radroute')+(r.tags.network?(' ['+String(r.tags.network).toUpperCase()+']'):'');}).filter(function(v,i,a){return a.indexOf(v)===i;});
-    h+='<div class="stvb-box" style="background:var(--blue-light);border-color:rgba(22,120,169,.3);margin-top:14px"><b>Radroute(n) an dieser Stelle</b><br>🚴 '+rn.map(esc).join('<br>🚴 ')+'<br><span style="color:var(--gray-light);font-size:11.5px">Bei Maßnahmen an touristischen Routen die SaarRadland-/Tourismus-Abstimmung beachten (Falltyp „Touristische Route").</span></div>';
+    const rn=rels.map(function(r){const typ=ROUTE_LABELS[r.tags.route]||'Route';return (r.tags.name||r.tags.ref||typ)+' ('+typ+')'+(r.tags.network?(' ['+String(r.tags.network).toUpperCase()+']'):'');}).filter(function(v,i,a){return a.indexOf(v)===i;});
+    h+='<div class="stvb-box" style="background:var(--blue-light);border-color:rgba(22,120,169,.3);margin-top:14px"><b>Route(n) an dieser Stelle</b><br>🚴 '+rn.map(esc).join('<br>🚴 ')+'<br><span style="color:var(--gray-light);font-size:11.5px">Bei Maßnahmen an touristischen Routen die SaarRadland-/Tourismus-Abstimmung beachten (Falltyp „Touristische Route").</span></div>';
   }
   const nwt=nw?nw.way.tags:{};
   const dbg='Klick: '+lat+', '+lon
