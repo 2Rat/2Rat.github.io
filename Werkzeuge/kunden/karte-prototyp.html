@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karten-Prototyp · Kommune per Klick – 2Rat</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#1678A9;--blue-dark:#115d85;--blue-light:#e8f4fa;
+  --green:#659444;--green-dark:#4a7332;--green-light:#eef5e6;
+  --gray:#3E403F;--gray-light:#8a8a8a;--gray-border:#d9d9d9;
+  --bg:#f9fafb;--white:#ffffff;
+  --warn:#d4930a;--warn-bg:#fef9ec;--warn-border:#f0dca0;
+}
+body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);background:var(--bg)}
+.header{background:var(--white);border-bottom:3px solid var(--green);padding:16px 20px}
+.header-inner{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:42px;height:42px;border-radius:8px;background:var(--green-dark);color:#fff;display:grid;place-items:center;font-weight:700;font-size:17px}
+.brand-sub{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-light)}
+.brand-title{font-size:16px;font-weight:700;color:var(--gray)}
+.brand-title span{color:var(--blue)}
+.header-right{font-size:11px;color:var(--gray-light);text-align:right;line-height:1.5}
+.main{max-width:980px;margin:0 auto;padding:20px}
+.proto-note{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:8px;padding:12px 15px;font-size:12.5px;line-height:1.6;margin-bottom:16px;color:#6b5900}
+.proto-note b{color:var(--warn)}
+.layout{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}}
+#map{height:480px;border-radius:10px;border:1.5px solid var(--gray-border);z-index:1}
+.panel{background:var(--white);border:1.5px solid var(--gray-border);border-radius:10px;padding:18px;min-height:200px}
+.panel h2{font-size:15px;margin:0 0 4px}
+.panel .hint{font-size:12px;color:var(--gray-light);margin-bottom:14px;line-height:1.5}
+.result-empty{color:var(--gray-light);font-size:13px;line-height:1.6}
+.res-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-light);margin:14px 0 4px}
+.res-kommune{font-size:22px;font-weight:700;color:var(--green-dark);line-height:1.2}
+.res-line{font-size:13.5px;line-height:1.6}
+.res-line b{color:var(--blue-dark)}
+.stvb-box{margin-top:14px;background:var(--green-light);border:1px solid rgba(101,148,68,.3);border-radius:8px;padding:12px 14px;font-size:13px;line-height:1.55}
+.stvb-box b{color:var(--green-dark)}
+.warn-box{margin-top:12px;background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:8px;padding:12px 14px;font-size:12.5px;line-height:1.55;color:#6b5900}
+.raw{margin-top:14px;font-size:11px;color:var(--gray-light)}
+.raw summary{cursor:pointer;font-weight:600}
+.raw pre{white-space:pre-wrap;background:var(--bg);border:1px solid var(--gray-border);border-radius:6px;padding:8px 10px;margin-top:6px;font-family:ui-monospace,Consolas,monospace;font-size:11px;max-height:180px;overflow:auto}
+.takeover{margin-top:14px;display:none;padding:10px 14px;background:var(--blue-light);border:1px solid rgba(22,120,169,.25);border-radius:8px;font-size:12.5px;line-height:1.55}
+.takeover b{color:var(--blue-dark)}
+.spin{display:inline-block;font-size:13px;color:var(--blue)}
+.footer{max-width:980px;margin:20px auto 0;padding:14px 20px;border-top:1px solid var(--gray-border);font-size:11px;color:var(--gray-light);line-height:1.6}
+.footer a{color:var(--blue);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark">2R</div>
+      <div>
+        <div class="brand-sub">Büro für Radverkehrsplanung</div>
+        <div class="brand-title">Karten-Prototyp · <span>Kommune per Klick</span></div>
+      </div>
+    </div>
+    <div class="header-right">Saarland · Demo<br>OpenStreetMap + Nominatim</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="proto-note">
+    <b>Prototyp – zum Ausprobieren.</b> Klicken Sie auf eine <b>Straße</b>. Das System liest aus OpenStreetMap die <b>Gemeinde</b> (amtliche Grenze, auch bei Ortsteilen), die <b>Straßenklasse</b> (Bundes-/Landes-/Gemeindestraße – aus dem ref-Tag) und schätzt die <b>Lage</b> (innerorts/außerorts aus Tempo bzw. Bebauung). Daraus werden die drei Tool-Felder <b>vorgeschlagen</b>. Alle Vorschläge sind im echten Tool korrigierbar – die rechtliche Auswertung rechnet erst mit den bestätigten Werten. Sie wählen dann nur noch die Maßnahme. <i>Straßenklasse = zuverlässig, Lage = Vermutung.</i>
+  </div>
+
+  <div class="layout">
+    <div id="map"></div>
+    <div class="panel">
+      <h2>Ergebnis</h2>
+      <div class="hint">Auf eine Straße im Saarland klicken (möglichst auf die Fahrbahn).</div>
+      <div id="result"><div class="result-empty">Noch nichts ausgewählt. Klicken Sie auf eine Straße – z. B. eine Landstraße (L …) oder eine Wohnstraße im Ort.</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Prototyp · 2Rat – Büro für Radverkehrsplanung · Armin Jung · <a href="https://www.2rat.org">www.2rat.org</a><br>
+    Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende · Gemeinde-Erkennung über <a href="https://overpass-api.de">Overpass-API</a> (amtliche Verwaltungsgrenzen, admin_level 8) · Nutzungsrichtlinien beachten
+  </div>
+</div>
+
+<script>
+/* ====== Saarländische Kommunen nach Kreis (52 Gemeinden) ====== */
+const KREISE=[
+ {id:"rv",name:"Regionalverband Saarbrücken",kommunen:["Saarbrücken","Völklingen","Püttlingen","Riegelsberg","Heusweiler","Quierschied","Sulzbach/Saar","Friedrichsthal","Großrosseln","Kleinblittersdorf"]},
+ {id:"sls",name:"Landkreis Saarlouis",kommunen:["Saarlouis","Dillingen/Saar","Lebach","Schmelz","Schwalbach","Bous","Ensdorf","Saarwellingen","Wadgassen","Wallerfangen","Überherrn","Nalbach","Rehlingen-Siersburg"]},
+ {id:"mzg",name:"Landkreis Merzig-Wadern",kommunen:["Merzig","Wadern","Losheim am See","Mettlach","Beckingen","Perl","Weiskirchen"]},
+ {id:"nk",name:"Landkreis Neunkirchen",kommunen:["Neunkirchen","Ottweiler","Illingen","Eppelborn","Merchweiler","Schiffweiler","Spiesen-Elversberg"]},
+ {id:"wnd",name:"Landkreis St. Wendel",kommunen:["St. Wendel","Tholey","Marpingen","Nohfelden","Nonnweiler","Oberthal","Namborn","Freisen"]},
+ {id:"spk",name:"Saarpfalz-Kreis",kommunen:["Homburg","St. Ingbert","Blieskastel","Bexbach","Kirkel","Mandelbachtal","Gersheim"]}
+];
+const EIGENE_STVB=["Saarbrücken","Völklingen","St. Ingbert"];
+const OD_BAULAST=["Saarbrücken"];
+function findKommune(name){
+  for(const kr of KREISE){ if(kr.kommunen.includes(name)) return {name:name,kreis:kr.name,kreisId:kr.id,eigeneStVB:EIGENE_STVB.includes(name),odBaulast:OD_BAULAST.includes(name)}; }
+  return null;
+}
+
+/* Namens-Normalisierung: gleicht OSM-/Nominatim-Schreibweisen an unsere Liste an
+   (z. B. "Sankt Ingbert" -> "St. Ingbert", "Sulzbach/Saar" <-> "Sulzbach") */
+function norm(s){return (s||'').replace(/^Sankt\s+/i,'St. ').replace(/\s*\(\s*Saar\s*\)/ig,'').replace(/\/Saar\b/ig,'').replace(/\s+/g,' ').trim().toLowerCase();}
+const NORM_LOOKUP={};
+KREISE.forEach(kr=>kr.kommunen.forEach(n=>{NORM_LOOKUP[norm(n)]=n;}));
+function matchKommune(candidates){
+  for(const c of candidates){ const hit=NORM_LOOKUP[norm(c)]; if(hit) return hit; }
+  return null;
+}
+
+/* ====== Karte ====== */
+const map=L.map('map').setView([49.38,6.95],9);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  maxZoom:19, attribution:'© OpenStreetMap-Mitwirkende'
+}).addTo(map);
+let marker=null;
+const resultEl=document.getElementById('result');
+
+/* Mehrere öffentliche Overpass-Server – bei Überlastung wird der nächste versucht */
+const OVERPASS=[
+  'https://overpass-api.de/api/interpreter',
+  'https://overpass.kumi.systems/api/interpreter',
+  'https://overpass.openstreetmap.fr/api/interpreter'
+];
+function queryOverpass(q){
+  let i=0;
+  function tryNext(){
+    if(i>=OVERPASS.length) return Promise.reject(new Error('alle Server fehlgeschlagen'));
+    const url=OVERPASS[i++]+'?data='+encodeURIComponent(q);
+    return fetch(url).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }).catch(function(){ return tryNext(); });
+  }
+  return tryNext();
+}
+
+map.on('click', function(ev){
+  const lat=ev.latlng.lat.toFixed(6), lon=ev.latlng.lng.toFixed(6);
+  if(marker)marker.setLatLng(ev.latlng); else marker=L.marker(ev.latlng).addTo(map);
+  resultEl.innerHTML='<div class="spin">⏳ Gemeinde & Straße werden ermittelt … (kann 1–3 Sek. dauern)</div>';
+  const q='[out:json][timeout:25];is_in('+lat+','+lon+');out tags;way(around:35,'+lat+','+lon+')["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road)$"];out geom;';
+  queryOverpass(q)
+    .then(function(d){renderResult(d,lat,lon);})
+    .catch(function(){
+      resultEl.innerHTML='<div class="warn-box"><b>Geokodierung gerade nicht erreichbar.</b><br>Häufigste Ursache: Die Datei wurde lokal per Doppelklick geöffnet (<code>file://</code>) – Browser blockieren dann externe API-Aufrufe. Lösung: Datei über GitHub Pages oder einen lokalen Webserver öffnen. Alternativ können die öffentlichen Overpass-Server kurz überlastet sein – dann in ein paar Sekunden erneut klicken.</div>';
+    });
+});
+
+function esc(s){return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* grobe Distanz Punkt->Segment in Metern (equirektangulär, für Saarland-Maßstab ok) */
+function segDist(plat,plon,alat,alon,blat,blon){
+  const kx=111320*Math.cos(plat*Math.PI/180), ky=110540;
+  const px=plon*kx, py=plat*ky, ax=alon*kx, ay=alat*ky, bx=blon*kx, by=blat*ky;
+  const dx=bx-ax, dy=by-ay, l2=dx*dx+dy*dy;
+  let t=l2?((px-ax)*dx+(py-ay)*dy)/l2:0; t=Math.max(0,Math.min(1,t));
+  const x=ax+t*dx, y=ay+t*dy; return Math.hypot(px-x,py-y);
+}
+function nearestWay(ways,lat,lon){
+  let best=null,bestD=Infinity;
+  ways.forEach(function(w){const g=w.geometry||[];for(let i=0;i+1<g.length;i++){const dd=segDist(lat,lon,g[i].lat,g[i].lon,g[i+1].lat,g[i+1].lon);if(dd<bestD){bestD=dd;best=w;}}});
+  return best?{way:best,dist:bestD}:null;
+}
+/* Straßenklasse aus OSM-Tags (ref ist das verlässliche Signal) */
+function strKlasse(tags){
+  const ref=(tags.ref||'').replace(/\s+/g,' ').trim();
+  const hw=tags.highway||'';
+  if(/^B\s?\d/i.test(ref)||hw==='motorway'||hw==='trunk') return {strasse:'bundeslandstrasse',sub:'bundesstrasse',klasse:'Bundesstraße'+(ref?(' '+ref):'')};
+  if(/^L\s?\d/i.test(ref)) return {strasse:'bundeslandstrasse',sub:'landesstrasse1',klasse:'Landesstraße'+(ref?(' '+ref):'')};
+  if(/^K\s?\d/i.test(ref)) return {strasse:'sonstige',sub:null,klasse:'Kreisstraße '+ref+' (im Saarland unüblich)'};
+  return {strasse:'gemeindestrasse',sub:null,klasse:'Gemeindestraße'};
+}
+/* Lage-Vermutung (innerorts/außerorts) aus Tempo bzw. Bebauung */
+function lageGuess(tags,inResidential){
+  const ms=parseInt(String(tags.maxspeed||'').replace(/[^0-9]/g,''),10);
+  if(tags['zone:traffic']==='DE:urban'||inResidential||(ms&&ms<=50)) return {lage:'innerorts',basis:(tags['zone:traffic']==='DE:urban'?'Ortszone':inResidential?'bebaute Fläche':'Tempo '+ms)};
+  if(tags['zone:traffic']==='DE:rural'||(ms&&ms>50)) return {lage:'außerorts',basis:(tags['zone:traffic']==='DE:rural'?'Außerorts-Zone':'Tempo '+ms)};
+  return {lage:'unbekannt',basis:'keine eindeutigen Hinweise'};
+}
+function renderResult(d,lat,lon){
+  const els=((d&&d.elements)||[]);
+  const areas=els.filter(function(e){return e.type==='area'&&e.tags;});
+  const ways=els.filter(function(e){return e.type==='way'&&e.tags&&e.geometry;});
+  const admin=areas.filter(function(e){return e.tags.boundary==='administrative';});
+  const gem=admin.find(function(e){return e.tags.admin_level==='8';});
+  const kreis=admin.find(function(e){return e.tags.admin_level==='6';});
+  const land=admin.find(function(e){return e.tags.admin_level==='4';});
+  const inResidential=areas.some(function(e){return e.tags.landuse==='residential';});
+  const gemName=gem?(gem.tags['name:de']||gem.tags.name||''):'';
+  const matched=gemName?matchKommune([gemName]):null;
+  const nw=nearestWay(ways,parseFloat(lat),parseFloat(lon));
+  let h='';
+  if(matched){
+    const k=findKommune(matched);
+    const stvb=k.eigeneStVB?('Stadt '+esc(k.name)+' – <b>eigene Straßenverkehrsbehörde</b>'):(esc(k.kreis)+' – untere Straßenverkehrsbehörde');
+    h+='<div class="res-label">Kommune</div><div class="res-kommune">'+esc(k.name)+'</div>';
+    h+='<div class="res-line" style="margin-top:4px">Landkreis / RV: <b>'+esc(k.kreis)+'</b></div>';
+    h+='<div class="stvb-box">Zuständige Straßenverkehrsbehörde:<br>'+stvb+'</div>';
+  } else {
+    h+='<div class="warn-box"><b>Keine saarländische Gemeinde erkannt.</b>'+(gemName?(' Gefunden: '+esc(gemName)+'.'):'')+' Bitte im Tool manuell wählen.</div>';
+  }
+  if(nw){
+    const tg=nw.way.tags, cls=strKlasse(tg), nm=tg.name||tg.ref||'(unbenannt)', lg=lageGuess(tg,inResidential);
+    h+='<div class="res-label" style="margin-top:14px">Erkannte Straße (≈ '+Math.round(nw.dist)+' m vom Klick)</div>';
+    h+='<div class="res-line"><b>'+esc(nm)+'</b> · '+esc(cls.klasse)+'</div>';
+    h+='<div class="res-line" style="color:var(--gray-light)">Lage-Vermutung: '+esc(lg.lage)+' <span style="font-size:11px">('+esc(lg.basis)+')</span></div>';
+    h+='<div class="takeover" style="display:block;margin-top:12px"><b>Im Tool vorbelegt (Vorschlag – bitte prüfen):</b><br>Kommune: '+(matched?esc(matched):'—')+'<br>Straßenklasse: '+esc(cls.klasse)+'<br>Lage: '+esc(lg.lage)+'<br>→ Sie wählen nur noch die Maßnahme.</div>';
+  } else {
+    h+='<div class="warn-box" style="margin-top:12px">Keine Straße in der Nähe gefunden – bitte näher an die Fahrbahn klicken.</div>';
+  }
+  const nwt=nw?nw.way.tags:{};
+  const dbg='Klick: '+lat+', '+lon
+    +'\nGemeinde: '+(gemName||'—')+'  |  Kreis: '+(kreis?kreis.tags.name:'—')
+    +'\nbebaut (landuse=residential): '+inResidential
+    +'\nnächste Straße: '+(nw?((nwt.name||nwt.ref||'?')+'  [highway='+(nwt.highway||'')+(nwt.ref?(', ref='+nwt.ref):'')+(nwt.maxspeed?(', maxspeed='+nwt.maxspeed):'')+(nwt['zone:traffic']?(', zone='+nwt['zone:traffic']):'')+'],  '+Math.round(nw.dist)+' m'):'—')
+    +'\ngefundene Straßen im Umkreis: '+ways.length;
+  h+='<details class="raw"><summary>Rohdaten / Erkennung (OSM)</summary><pre>'+esc(dbg)+'</pre></details>';
+  resultEl.innerHTML=h;
+}
+</script>
+</body>
+</html>
