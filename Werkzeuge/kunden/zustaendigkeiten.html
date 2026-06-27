@@ -126,7 +126,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>Stand 06/2026 · v11</div>
+    <div class="header-right">Saarland<br>Stand 06/2026 · v12</div>
   </div>
 </div>
 
@@ -174,7 +174,7 @@ const MEASURES=[
 {id:"radweg_bau",label:"Radweg (baulich getrennt)",desc:"Selbständig geführter oder straßenbegleitender Radweg",legal:"SaarlStrG, ggf. Planfeststellung",type:"bau"},
 {id:"gemeinsamer_geh_radweg",label:"Gemeinsamer Geh-/Radweg (baulich)",desc:"Bauliche Anlage eines gemeinsamen Weges",legal:"SaarlStrG, § 45 StVO für Beschilderung",type:"bau"},
 {id:"querungshilfe",label:"Querungshilfe / Mittelinsel",desc:"Bauliche Querungshilfe für Rad- und Fußverkehr",legal:"SaarlStrG, ggf. § 45 StVO",type:"bau"},
-{id:"fahrbahnanhebung",label:"Fahrbahnanhebung / Plateau",desc:"Aufpflasterung zur Geschwindigkeitsreduzierung",legal:"SaarlStrG + § 45 Abs. 1 StVO",type:"bau"},
+{id:"fahrbahnanhebung",label:"Fahrbahnanhebung / Plateau",desc:"Aufpflasterung zur Geschwindigkeitsreduzierung",legal:"SaarlStrG + § 45 Abs. 1 StVO",type:"anordnung_bau"},
 {id:"abstellanlage",label:"Fahrradabstellanlage",desc:"Fahrradständer, Fahrradboxen, Radstationen",legal:"SaarlStrG / BauGB",type:"bau"},
 {id:"radschnellweg",label:"Radschnellverbindung",desc:"Qualitativ hochwertige Radwegeverbindung über größere Distanz",legal:"SaarlStrG, Planfeststellung, BFSG",type:"bau"}]}
 ];
@@ -313,7 +313,11 @@ function getResult(){
     if(m.id==="schutzstreifen")warnings.push("Schutzstreifen (Z 340) sind eine innerörtliche Markierungslösung (VwV-StVO; ERA 2010). Außerorts sind sie nicht vorgesehen – die Regellösung außerorts ist ein baulich getrennter (ggf. gemeinsamer) Geh-/Radweg.");
     if(m.id==="radfahrstreifen")warnings.push("Radfahrstreifen (Z 237 + Z 295) sind eine innerörtliche Führungsform. Außerorts ist die Regellösung ein baulich getrennter Radweg, kein Radfahrstreifen.");
     if(m.id==="tempo30_zone")warnings.push("Tempo-30-Zonen (Z 274.1) sind eine zonale, innerörtliche Anordnung in Erschließungsstraßen. Außerorts nicht zulässig – dort kommt nur eine streckenbezogene Beschränkung (Z 274) bei besonderer Gefahrenlage in Betracht.");
-    if(m.id==="fahrradzone")warnings.push("Fahrradzonen (Z 244.3) sind eine innerörtliche Maßnahme und außerorts nicht zulässig (§ 45 Abs. 1i StVO).");
+    if(m.id==="einbahn_oeffnung")warnings.push("Die Öffnung von Einbahnstraßen für den Radverkehr in Gegenrichtung (Z 220 + Z 1000-32) ist eine innerörtliche Maßnahme (VwV-StVO zu Z 220: beengte Erschließungsstraße, Tempo ≤ 30 km/h). Außerorts nicht einschlägig.");
+  }
+  if(m.id==="fahrradzone"){
+    if(isBL)warnings.push("Fahrradzonen (Z 244.3) sind auf Bundes-/Landstraßen und weiteren Vorfahrtstraßen (Z 306) unzulässig (§ 45 Abs. 1i S. 2 StVO).");
+    else if(loc==="ausserorts")warnings.push("Fahrradzonen (Z 244.3) sind eine innerörtliche Maßnahme und außerorts nicht zulässig (§ 45 Abs. 1i StVO).");
   }
   if(m.id==="fahrradstrasse"&&isBL)warnings.push("Fahrradstraßen (Z 244) setzen eine untergeordnete oder hohe Rad-Netzbedeutung voraus und sind für Straßen des überörtlichen Verkehrs (Bundes-/Landstraßen) in der Regel nicht einschlägig.");
 
@@ -378,9 +382,7 @@ function getResult(){
         authorityDetail="§ 45 Abs. 1i StVO i. V. m. § 7 Abs. 1 StVZustG – die Übertragung auf die Gemeinden (§ 12 Abs. 1 Nr. 4 StVZustG) umfasst nur § 45 Abs. 1 bis 1d, nicht Abs. 1i";
         notes.push("Achtung Sonderfall Fahrradzone: Anders als die Fahrradstraße wird die Fahrradzone nach § 45 Abs. 1i StVO angeordnet – dieser Absatz ist von der Aufgabenübertragung auf die Gemeinden (§ 12 Abs. 1 Nr. 4 StVZustG: nur § 45 Abs. 1 bis 1d) nicht umfasst. Zuständig ist daher auch auf Gemeindestraßen die Straßenverkehrsbehörde (Landkreis/Regionalverband bzw. Saarbrücken, Völklingen, St. Ingbert); die Gemeinde wirkt über das Einvernehmen mit (§ 45 Abs. 1i S. 1 StVO).");
       }
-      if(s==="bundesstrasse"||s.startsWith("landesstrasse")){
-        notes.push("Fahrradzonen sind auf Straßen des überörtlichen Verkehrs (Bundes- und Landstraßen) sowie auf weiteren Vorfahrtstraßen (Z 306) unzulässig (§ 45 Abs. 1i S. 2 StVO).");
-      }
+      /* B/L-Unzulässigkeit erscheint jetzt als rotes Warnfeld (siehe Zulässigkeits-Logik oben) */
       notes.push("Weitere Anforderungen an Fahrradzonen (§ 45 Abs. 1i StVO): grundsätzlich rechts-vor-links an allen Knoten, keine Überschneidung mit einer Tempo-30-Zone, Sinnbild Z 244.3 in regelmäßigen Abständen auf der Fahrbahn.");
     }
 
@@ -388,15 +390,15 @@ function getResult(){
     if(m.id==="benutzungspflicht_aufheben")notes.push("Benutzungspflicht (Z 237/240/241) nur bei qualifizierter Gefahrenlage zulässig. Ohne diese ist die Benutzungspflicht aufzuheben (BVerwG, 18.11.2010 – 3 C 42.09).");
     if(m.id==="radweg_beschilderung")notes.push("Radwegebenutzungspflicht setzt qualifizierte Gefahrenlage voraus (§ 45 Abs. 9 Satz 4 Nr. 1 StVO). Radweg muss ERA-Anforderungen erfüllen.");
     if(m.id==="rotmarkierung")notes.push("Eine Roteinfärbung mit Piktogrammkette hat unterstützenden Charakter und ist Sache des Baulastträgers – sie ersetzt nicht die Anordnung der zugrunde liegenden Radverkehrsführung. Empfehlung: mit Straßenverkehrsbehörde und Polizei abstimmen. Radwegefurten an Vorfahrtstraßen (Z 306) sind stets zu markieren (VwV-StVO zu § 9).");
-    if(m.id==="gemeinsam_ohne_bp")notes.push("Ein gemeinsamer Geh-/Radweg ohne Benutzungspflicht (Z 239 + »Radfahrer frei«) lässt dem Radverkehr die Wahl zwischen Weg und Fahrbahn. Keine qualifizierte Gefahrenlage erforderlich – im Gegensatz zur Benutzungspflicht (Z 240).");
+    if(m.id==="gemeinsam_ohne_bp")notes.push("Ein gemeinsamer Geh-/Radweg ohne Benutzungspflicht (Z 239 + »Radfahrer frei«) lässt dem Radverkehr die Wahl zwischen Weg und Fahrbahn. Keine qualifizierte Gefahrenlage erforderlich – im Gegensatz zum benutzungspflichtigen gemeinsamen Geh- und Radweg (Z 240).");
   }
 
   /* Bauliche Maßnahmen */
   if(m.type==="bau"||m.type==="anordnung_bau"){
     let ba=baulast;
-    if(m.id==="abstellanlage"){ba="Gemeinde (oder privater Grundstückseigentümer)";notes.push("Auf öffentlichem Straßengrund: Sondernutzungserlaubnis erforderlich.");}
+    if(m.id==="abstellanlage"){ba="Gemeinde (oder privater Grundstückseigentümer)";if(isBL)notes.push("Sondernutzung an Bundes-/Landstraßen: Die Erlaubnis erteilt der Träger der Straßenbaulast (Bund bzw. Land – Landesbetrieb für Straßenbau), nicht die Gemeinde (§ 8 FStrG bzw. § 18 SaarlStrG).");else notes.push("Auf öffentlichem Straßengrund: Sondernutzungserlaubnis erforderlich.");}
     else if(m.id==="radschnellweg"){ba="Land Saarland / ggf. interkommunale Zusammenarbeit";notes.push("Fördermöglichkeiten über Bundes- und Landesprogramme prüfen (u. a. FRL-NMOB-Rad-Fuß).");}
-    if(m.type==="bau"){authority=ba+" (als Baulastträger)";authorityDetail=baulastDetail;}
+    if(m.type==="bau"){authority=ba+(/\)\s*$/.test(ba)?"":" (als Baulastträger)");authorityDetail=baulastDetail;}
     if(m.type==="anordnung_bau")notes.push("Erfordert sowohl bauliche Umsetzung (Baulastträger) als auch verkehrsrechtliche Anordnung (Straßenverkehrsbehörde).");
     if(m.id!=="abstellanlage"&&m.id!=="radschnellweg")notes.push("Abstimmung zwischen Baulastträger und Straßenverkehrsbehörde erforderlich.");
   }
@@ -412,9 +414,10 @@ function getResult(){
     legal,notes:[...new Set(notes)],praxis,warnings:[...new Set(warnings)]};
 }
 
+const LAGE_SENSITIVE=["schutzstreifen","radfahrstreifen","tempo30_zone","fahrradzone","einbahn_oeffnung"];
 function needsLocation(){
-  if(state.street==="gemeindestrasse"||state.street==="sonstige")return false;
   if(state.street==="bundeslandstrasse")return true;
+  if((state.street==="gemeindestrasse"||state.street==="sonstige")&&LAGE_SENSITIVE.includes(state.measure))return true;
   return false;
 }
 function totalSteps(){return needsLocation()?4:3;}
