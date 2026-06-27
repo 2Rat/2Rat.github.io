@@ -141,7 +141,7 @@ map.on('click', function(ev){
   const lat=ev.latlng.lat.toFixed(6), lon=ev.latlng.lng.toFixed(6);
   if(marker)marker.setLatLng(ev.latlng); else marker=L.marker(ev.latlng).addTo(map);
   resultEl.innerHTML='<div class="spin">⏳ Gemeinde & Straße werden ermittelt … (kann 1–3 Sek. dauern)</div>';
-  const q='[out:json][timeout:25];is_in('+lat+','+lon+');out tags;way(around:35,'+lat+','+lon+')["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road|track|service|cycleway|path)$"];out geom;rel(around:40,'+lat+','+lon+')["route"="bicycle"];out tags;';
+  const q='[out:json][timeout:25];is_in('+lat+','+lon+');out tags;way(around:35,'+lat+','+lon+')["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road|track|service|cycleway|path)$"];out geom;way(around:80,'+lat+','+lon+')["highway"];rel(bw)["route"~"^(bicycle|mtb)$"];out tags;';
   queryOverpass(q)
     .then(function(d){renderResult(d,lat,lon);})
     .catch(function(){
@@ -188,7 +188,7 @@ function renderResult(d,lat,lon){
   const els=((d&&d.elements)||[]);
   const areas=els.filter(function(e){return e.type==='area'&&e.tags;});
   const ways=els.filter(function(e){return e.type==='way'&&e.tags&&e.geometry;});
-  const rels=els.filter(function(e){return e.type==='relation'&&e.tags&&e.tags.route==='bicycle';});
+  const rels=els.filter(function(e){return e.type==='relation'&&e.tags&&(e.tags.route==='bicycle'||e.tags.route==='mtb');});
   const admin=areas.filter(function(e){return e.tags.boundary==='administrative';});
   const gem=admin.find(function(e){return e.tags.admin_level==='8';});
   const kreis=admin.find(function(e){return e.tags.admin_level==='6';});
@@ -226,7 +226,7 @@ function renderResult(d,lat,lon){
     +'\nGemeinde: '+(gemName||'—')+'  |  Kreis: '+(kreis?kreis.tags.name:'—')
     +'\nbebaut (landuse=residential): '+inResidential
     +'\nnächste Straße: '+(nw?((nwt.name||nwt.ref||'?')+'  [highway='+(nwt.highway||'')+(nwt.ref?(', ref='+nwt.ref):'')+(nwt.maxspeed?(', maxspeed='+nwt.maxspeed):'')+(nwt['zone:traffic']?(', zone='+nwt['zone:traffic']):'')+'],  '+Math.round(nw.dist)+' m'):'—')
-    +'\ngefundene Straßen im Umkreis: '+ways.length;
+    +'\ngefundene Straßen im Umkreis: '+ways.length+'  |  Radrouten-Relationen: '+rels.length;
   h+='<details class="raw"><summary>Rohdaten / Erkennung (OSM)</summary><pre>'+esc(dbg)+'</pre></details>';
   resultEl.innerHTML=h;
 }
