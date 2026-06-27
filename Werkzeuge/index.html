@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2RAT Tools – Zugang</title>
+<title>2Rat Tools – Zugang</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -82,7 +82,7 @@ body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:var(--
 <div class="header">
   <div class="header-inner">
     <div class="header-left">
-      <img class="header-logo" id="logo" alt="2RAT" src="">
+      <img class="header-logo" id="logo" alt="2Rat" src="">
       <div>
         <div class="header-sub">Büro für Radverkehrsplanung</div>
         <div class="header-title">Tool-Portal</div>
@@ -95,7 +95,7 @@ body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:var(--
 <div class="center-wrap" id="loginView">
   <div class="login-card">
     <h2>Anmelden</h2>
-    <p class="subtitle">Geben Sie Ihren Zugangscode ein, um die 2RAT Radverkehrs-Tools zu nutzen.</p>
+    <p class="subtitle">Geben Sie Ihren Zugangscode ein, um die 2Rat Radverkehrs-Tools zu nutzen.</p>
     <div class="error-msg" id="errorMsg"></div>
     <div class="form-group">
       <label>Organisation</label>
@@ -120,7 +120,7 @@ body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:var(--
 </div>
 
 <div class="footer">
-  <strong style="color:var(--gray)">© 2RAT</strong> · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
+  <strong style="color:var(--gray)">© 2Rat</strong> · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
 </div>
 
 <script>
@@ -174,7 +174,7 @@ const TOOLS = [
 /* ══════════════════════════════════════════════════════════════════
    PATHS – Ordner pro Tool-Variante (target)
    ─────────────────────────────────────────
-   kunden/   = 2RAT-Vollversionen
+   kunden/   = 2Rat-Vollversionen
    agfk-sl/  = überarbeitete Versionen für AGFK Saarland
    demo/     = Trial-Versionen
    ══════════════════════════════════════════════════════════════════ */
@@ -201,9 +201,9 @@ const PATHS = {
                Wenn weggelassen → alle Tools sichtbar.
    ══════════════════════════════════════════════════════════════════ */
 const LICENSES = [
-  // 2RAT intern – Vollzugang auf alles
+  // 2Rat intern – Vollzugang auf alles
   // Code muss noch generiert werden (hash-generator.html, dann hier eintragen)
-  // { hash:"HASH_HIER_EINFUEGEN", org:"2RAT intern", expires:"2099-12-31", target:"kunden" },
+  { hash:"c77e4c9dc6b073f1dfd0b40de082ce5eac148c4609994d65e39f2dbe688c7afb", org:"2Rat intern", expires:"2099-12-31", target:"kunden" },
 
   // DEMO2026 – DEAKTIVIERT am 24.06.2026 (Altlast, gab Vollzugang ohne tools-Filter).
   // Bei Bedarf reaktivieren UND tools-Liste setzen, sonst sieht der Zugang ALLE Tools.
@@ -221,9 +221,9 @@ const LICENSES = [
   { hash:"c5090bd3bf60984e5d51309eaacc7407e0a944ecbc4f8bc415826d28bb0f3089",
     org:"AGFK Honorarkraft", expires:"2027-05-27", target:"kunden",
     tools:["foerdermittel-finder","zustaendigkeiten","vwv-stvo-2025","projekt-check","vergabe-assistent"] },
-  // TEMPORÄR – RAD-Lab Testrunde, nach Ablauf (31.08.2026) entfernen
+  // TEMPORÄR – RAD-Lab Testrunde, nach Ablauf (30.09.2026) entfernen
   { hash:"2d67dfd036acb96541fb05fa470cc6dbb291f3a5e1f052c81641d2dca70c8220",
-    org:"RAD-Lab", expires:"2026-08-31", target:"test",
+    org:"RAD-Lab", expires:"2026-09-30", target:"test",
     tools:["foerdermittel-finder","zustaendigkeiten","vwv-stvo-2025","projekt-check","vergabe-assistent"] },
   // Beispiel für weitere Lizenzen:
   // { hash:"...", org:"Gemeinde XY", expires:"2027-12-31", target:"kunden",
@@ -254,7 +254,7 @@ async function doLogin() {
 
   const lic = await findLicense(code);
   if (!lic) { err.textContent='Ungültiger Zugangscode.'; err.classList.add('show'); return; }
-  if (isExpired(lic.expires)) { err.textContent='Zugangscode abgelaufen – bitte 2RAT kontaktieren.'; err.classList.add('show'); return; }
+  if (isExpired(lic.expires)) { err.textContent='Zugangscode abgelaufen – bitte 2Rat kontaktieren.'; err.classList.add('show'); return; }
 
   err.classList.remove('show');
   sessionStorage.setItem('2rat_s', JSON.stringify({ hash:lic.hash, org:lic.org }));
@@ -335,7 +335,7 @@ function renderTools(lic) {
   const container = document.getElementById('toolsContainer');
   const tools = getVisibleTools(lic);
   if (tools.length === 0) {
-    container.innerHTML = '<p style="color:var(--gray-light);font-size:14px;padding:20px;text-align:center">Für diese Lizenz sind aktuell keine Tools freigeschaltet. Bitte 2RAT kontaktieren.</p>';
+    container.innerHTML = '<p style="color:var(--gray-light);font-size:14px;padding:20px;text-align:center">Für diese Lizenz sind aktuell keine Tools freigeschaltet. Bitte 2Rat kontaktieren.</p>';
     return;
   }
   container.innerHTML = tools.map(t => {
