@@ -68,7 +68,7 @@ body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);ba
 
 <div class="main">
   <div class="proto-note">
-    <b>Prototyp – zum Ausprobieren.</b> Klicken Sie auf eine <b>Straße</b>. Das System liest aus OpenStreetMap die <b>Gemeinde</b> (amtliche Grenze, auch bei Ortsteilen), die <b>Straßenklasse</b> (Bundes-/Landes-/Gemeindestraße – aus dem ref-Tag) und schätzt die <b>Lage</b> (innerorts/außerorts aus Tempo bzw. Bebauung). Daraus werden die drei Tool-Felder <b>vorgeschlagen</b>. Alle Vorschläge sind im echten Tool korrigierbar – die rechtliche Auswertung rechnet erst mit den bestätigten Werten. Sie wählen dann nur noch die Maßnahme. <i>Straßenklasse = zuverlässig, Lage = Vermutung.</i>
+    <b>Prototyp – zum Ausprobieren.</b> Klicken Sie auf eine <b>Straße</b>. Das System liest aus OpenStreetMap die <b>Gemeinde</b> (amtliche Grenze, auch bei Ortsteilen), die <b>Straßenklasse</b> (Bundes-/Landes-/Gemeindestraße – aus dem ref-Tag) und schätzt die <b>Lage</b> (innerorts/außerorts aus Tempo bzw. Bebauung). Daraus werden die drei Tool-Felder <b>vorgeschlagen</b>. Alle Vorschläge sind im echten Tool korrigierbar – die rechtliche Auswertung rechnet erst mit den bestätigten Werten. Sie wählen dann nur noch die Maßnahme. Auch <b>Wirtschaftswege</b> werden erkannt (Baulast meist Gemeinde – im Einzelfall prüfen), und liegt die Stelle an einer <b>Radroute</b> (z. B. SaarRadland), wird diese mit angezeigt. <i>Straßenklasse = zuverlässig, Lage = Vermutung.</i>
   </div>
 
   <div class="layout">
@@ -141,7 +141,7 @@ map.on('click', function(ev){
   const lat=ev.latlng.lat.toFixed(6), lon=ev.latlng.lng.toFixed(6);
   if(marker)marker.setLatLng(ev.latlng); else marker=L.marker(ev.latlng).addTo(map);
   resultEl.innerHTML='<div class="spin">⏳ Gemeinde & Straße werden ermittelt … (kann 1–3 Sek. dauern)</div>';
-  const q='[out:json][timeout:25];is_in('+lat+','+lon+');out tags;way(around:35,'+lat+','+lon+')["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road)$"];out geom;';
+  const q='[out:json][timeout:25];is_in('+lat+','+lon+');out tags;way(around:35,'+lat+','+lon+')["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road|track|service|cycleway|path)$"];out geom;rel(around:40,'+lat+','+lon+')["route"="bicycle"];out tags;';
   queryOverpass(q)
     .then(function(d){renderResult(d,lat,lon);})
     .catch(function(){
@@ -171,6 +171,10 @@ function strKlasse(tags){
   if(/^B\s?\d/i.test(ref)||hw==='motorway'||hw==='trunk') return {strasse:'bundeslandstrasse',sub:'bundesstrasse',klasse:'Bundesstraße'+(ref?(' '+ref):'')};
   if(/^L\s?\d/i.test(ref)) return {strasse:'bundeslandstrasse',sub:'landesstrasse1',klasse:'Landesstraße'+(ref?(' '+ref):'')};
   if(/^K\s?\d/i.test(ref)) return {strasse:'sonstige',sub:null,klasse:'Kreisstraße '+ref+' (im Saarland unüblich)'};
+  if(hw==='track') return {strasse:'sonstige',sub:null,klasse:'Wirtschafts-/Feldweg',wirtschaftsweg:true};
+  if(hw==='service') return {strasse:'sonstige',sub:null,klasse:(tags.service==='agricultural'?'Wirtschaftsweg':'Erschließungs-/Anliegerweg'),wirtschaftsweg:tags.service==='agricultural'};
+  if(hw==='cycleway') return {strasse:'sonstige',sub:null,klasse:'Eigenständiger Radweg'};
+  if(hw==='path'||hw==='footway') return {strasse:'sonstige',sub:null,klasse:'Weg (Rad-/Fußweg)'};
   return {strasse:'gemeindestrasse',sub:null,klasse:'Gemeindestraße'};
 }
 /* Lage-Vermutung (innerorts/außerorts) aus Tempo bzw. Bebauung */
@@ -184,6 +188,7 @@ function renderResult(d,lat,lon){
   const els=((d&&d.elements)||[]);
   const areas=els.filter(function(e){return e.type==='area'&&e.tags;});
   const ways=els.filter(function(e){return e.type==='way'&&e.tags&&e.geometry;});
+  const rels=els.filter(function(e){return e.type==='relation'&&e.tags&&e.tags.route==='bicycle';});
   const admin=areas.filter(function(e){return e.tags.boundary==='administrative';});
   const gem=admin.find(function(e){return e.tags.admin_level==='8';});
   const kreis=admin.find(function(e){return e.tags.admin_level==='6';});
@@ -207,9 +212,14 @@ function renderResult(d,lat,lon){
     h+='<div class="res-label" style="margin-top:14px">Erkannte Straße (≈ '+Math.round(nw.dist)+' m vom Klick)</div>';
     h+='<div class="res-line"><b>'+esc(nm)+'</b> · '+esc(cls.klasse)+'</div>';
     h+='<div class="res-line" style="color:var(--gray-light)">Lage-Vermutung: '+esc(lg.lage)+' <span style="font-size:11px">('+esc(lg.basis)+')</span></div>';
-    h+='<div class="takeover" style="display:block;margin-top:12px"><b>Im Tool vorbelegt (Vorschlag – bitte prüfen):</b><br>Kommune: '+(matched?esc(matched):'—')+'<br>Straßenklasse: '+esc(cls.klasse)+'<br>Lage: '+esc(lg.lage)+'<br>→ Sie wählen nur noch die Maßnahme.</div>';
+    if(cls.wirtschaftsweg)h+='<div class="res-line" style="color:var(--gray-light);font-size:11.5px;margin-top:4px">Wirtschaftsweg: Baulast meist bei der Gemeinde – teils aber Wegegenossenschaft/Realverband oder privat. Eigentum/Baulast im Einzelfall klären.</div>';
+    h+='<div class="takeover" style="display:block;margin-top:12px"><b>Im Tool vorbelegt (Vorschlag – bitte prüfen):</b><br>Kommune: '+(matched?esc(matched):'—')+'<br>Straße / Weg: '+esc(cls.klasse)+'<br>Lage: '+esc(lg.lage)+'<br>→ Sie wählen nur noch die Maßnahme.</div>';
   } else {
-    h+='<div class="warn-box" style="margin-top:12px">Keine Straße in der Nähe gefunden – bitte näher an die Fahrbahn klicken.</div>';
+    h+='<div class="warn-box" style="margin-top:12px">Keine Straße/Weg in der Nähe gefunden – bitte näher an die Linie klicken.</div>';
+  }
+  if(rels.length){
+    const rn=rels.map(function(r){return (r.tags.name||r.tags.ref||'Radroute')+(r.tags.network?(' ['+String(r.tags.network).toUpperCase()+']'):'');}).filter(function(v,i,a){return a.indexOf(v)===i;});
+    h+='<div class="stvb-box" style="background:var(--blue-light);border-color:rgba(22,120,169,.3);margin-top:14px"><b>Radroute(n) an dieser Stelle</b><br>🚴 '+rn.map(esc).join('<br>🚴 ')+'<br><span style="color:var(--gray-light);font-size:11.5px">Bei Maßnahmen an touristischen Routen die SaarRadland-/Tourismus-Abstimmung beachten (Falltyp „Touristische Route").</span></div>';
   }
   const nwt=nw?nw.way.tags:{};
   const dbg='Klick: '+lat+', '+lon
