@@ -99,6 +99,8 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .mapwrap.open #zmap{display:block}
 .map-status{display:none}
 .map-status.show{display:block;margin-top:10px}
+.map-tip{display:none;font-size:11.5px;color:var(--gray-light);margin-top:8px;line-height:1.5}
+.mapwrap.open .map-tip{display:block}
 .map-status .ok{background:var(--green-light);border:1px solid rgba(101,148,68,.3);border-radius:8px;padding:11px 14px;font-size:12.5px;line-height:1.55}
 .map-status .ok b{color:var(--green-dark)}
 @media (max-width:520px){
@@ -124,7 +126,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>Stand 06/2026 · v10</div>
+    <div class="header-right">Saarland<br>Stand 06/2026 · v11</div>
   </div>
 </div>
 
@@ -132,6 +134,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
   <div class="mapwrap" id="mapwrap">
     <button class="map-toggle" id="mapToggle" aria-expanded="false" onclick="toggleMap()">🗺 Auf der Karte klicken (optional) – Kommune, Straße und Lage werden automatisch erkannt</button>
     <div id="zmap"></div>
+    <div class="map-tip">💡 Tipp: möglichst <b>mittig auf die Fahrbahn</b> klicken – dann werden Straße und Lage am zuverlässigsten erkannt. Ein direkt daneben liegender Geh-/Radweg wird zusätzlich als „begleitende Radinfrastruktur" angezeigt.</div>
     <div class="map-status" id="mapStatus"></div>
   </div>
   <div class="kommune-bar" id="kommuneBar"></div>
