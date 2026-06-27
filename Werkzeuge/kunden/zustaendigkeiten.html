@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zuständigkeiten Radverkehr Saarland – 2Rat</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -81,6 +83,20 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .footer a{color:var(--blue);text-decoration:none}
 .section{margin-top:18px}
 .hidden{display:none}
+.kommune-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--white);border:1.5px solid var(--gray-border);border-radius:8px;padding:10px 14px;margin-bottom:18px}
+.kommune-label{font-size:12px;font-weight:600;color:var(--gray-light)}
+.kommune-select{flex:1;min-width:200px;padding:8px 10px;border-radius:6px;border:1px solid var(--gray-border);font-size:13px;font-family:inherit;color:var(--gray);background:var(--white);cursor:pointer}
+.kommune-select:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.mapwrap{margin-bottom:18px}
+.map-toggle{width:100%;text-align:left;background:var(--white);border:1.5px solid var(--gray-border);border-radius:8px;padding:11px 14px;font-size:13px;font-weight:600;color:var(--blue-dark);cursor:pointer}
+.map-toggle:hover{border-color:var(--blue)}
+.map-toggle:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+#zmap{height:340px;border-radius:8px;border:1.5px solid var(--gray-border);margin-top:10px;display:none;z-index:1}
+.mapwrap.open #zmap{display:block}
+.map-status{display:none}
+.map-status.show{display:block;margin-top:10px}
+.map-status .ok{background:var(--green-light);border:1px solid rgba(101,148,68,.3);border-radius:8px;padding:11px 14px;font-size:12.5px;line-height:1.55}
+.map-status .ok b{color:var(--green-dark)}
 @media (max-width:520px){
   .header-inner{flex-direction:column;align-items:flex-start;gap:10px}
   .header-right{text-align:left}
@@ -109,6 +125,12 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 </div>
 
 <div class="main">
+  <div class="mapwrap" id="mapwrap">
+    <button class="map-toggle" id="mapToggle" aria-expanded="false" onclick="toggleMap()">🗺 Stelle auf der Karte wählen (optional) – Klick belegt Kommune, Straße und Lage vor</button>
+    <div id="zmap"></div>
+    <div class="map-status" id="mapStatus"></div>
+  </div>
+  <div class="kommune-bar" id="kommuneBar"></div>
   <div class="steps" id="steps"></div>
   <div id="content"></div>
   <div class="footer">
@@ -168,6 +190,40 @@ const LOCATIONS=[
 {id:"ausserorts",label:"Außerorts (freie Strecke)"}
 ];
 
+/* ====== Saarländische Kommunen nach Kreis (52 Gemeinden) ====== */
+const KREISE=[
+ {id:"rv",name:"Regionalverband Saarbrücken",kommunen:["Saarbrücken","Völklingen","Püttlingen","Riegelsberg","Heusweiler","Quierschied","Sulzbach/Saar","Friedrichsthal","Großrosseln","Kleinblittersdorf"]},
+ {id:"sls",name:"Landkreis Saarlouis",kommunen:["Saarlouis","Dillingen/Saar","Lebach","Schmelz","Schwalbach","Bous","Ensdorf","Saarwellingen","Wadgassen","Wallerfangen","Überherrn","Nalbach","Rehlingen-Siersburg"]},
+ {id:"mzg",name:"Landkreis Merzig-Wadern",kommunen:["Merzig","Wadern","Losheim am See","Mettlach","Beckingen","Perl","Weiskirchen"]},
+ {id:"nk",name:"Landkreis Neunkirchen",kommunen:["Neunkirchen","Ottweiler","Illingen","Eppelborn","Merchweiler","Schiffweiler","Spiesen-Elversberg"]},
+ {id:"wnd",name:"Landkreis St. Wendel",kommunen:["St. Wendel","Tholey","Marpingen","Nohfelden","Nonnweiler","Oberthal","Namborn","Freisen"]},
+ {id:"spk",name:"Saarpfalz-Kreis",kommunen:["Homburg","St. Ingbert","Blieskastel","Bexbach","Kirkel","Mandelbachtal","Gersheim"]}
+];
+const EIGENE_STVB=["Saarbrücken","Völklingen","St. Ingbert"];
+const OD_BAULAST=["Saarbrücken"];
+function findKommune(name){
+  for(const kr of KREISE){ if(kr.kommunen.includes(name)) return {name:name,kreis:kr.name,kreisId:kr.id,eigeneStVB:EIGENE_STVB.includes(name),odBaulast:OD_BAULAST.includes(name)}; }
+  return null;
+}
+
+/* ===== Karten-Modus (optional): Klick belegt Kommune / Straße / Lage vor ===== */
+function normK(s){return (s||'').replace(/^Sankt\s+/i,'St. ').replace(/\s*\(\s*Saar\s*\)/ig,'').replace(/\/Saar\b/ig,'').replace(/\s+/g,' ').trim().toLowerCase();}
+const NORM_LOOKUP={};
+KREISE.forEach(function(kr){kr.kommunen.forEach(function(n){NORM_LOOKUP[normK(n)]=n;});});
+function matchKommuneName(name){return NORM_LOOKUP[normK(name)]||null;}
+const OVERPASS=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter','https://overpass.openstreetmap.fr/api/interpreter'];
+function queryOverpass(q){let i=0;function tryNext(){if(i>=OVERPASS.length)return Promise.reject(new Error('Overpass'));return fetch(OVERPASS[i++]+'?data='+encodeURIComponent(q)).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).catch(function(){return tryNext();});}return tryNext();}
+function segDist(plat,plon,alat,alon,blat,blon){const kx=111320*Math.cos(plat*Math.PI/180),ky=110540;const px=plon*kx,py=plat*ky,ax=alon*kx,ay=alat*ky,bx=blon*kx,by=blat*ky;const dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy;let t=l2?((px-ax)*dx+(py-ay)*dy)/l2:0;t=Math.max(0,Math.min(1,t));const x=ax+t*dx,y=ay+t*dy;return Math.hypot(px-x,py-y);}
+function nearestWay(ways,lat,lon){let best=null,bestD=Infinity;ways.forEach(function(w){const g=w.geometry||[];for(let i=0;i+1<g.length;i++){const dd=segDist(lat,lon,g[i].lat,g[i].lon,g[i+1].lat,g[i+1].lon);if(dd<bestD){bestD=dd;best=w;}}});return best?{way:best,dist:bestD}:null;}
+function strKlasseMap(tags){const ref=(tags.ref||'').replace(/\s+/g,' ').trim();const hw=tags.highway||'';if(/^B\s?\d/i.test(ref)||hw==='motorway'||hw==='trunk')return {street:'bundeslandstrasse',blsub:'bundesstrasse',klasse:'Bundesstraße'+(ref?(' '+ref):'')};if(/^L\s?\d/i.test(ref))return {street:'bundeslandstrasse',blsub:'landesstrasse1',klasse:'Landesstraße'+(ref?(' '+ref):'')};if(/^K\s?\d/i.test(ref))return {street:'sonstige',blsub:null,klasse:'Kreisstraße '+ref};if(hw==='track')return {street:'sonstige',blsub:null,klasse:'Wirtschafts-/Feldweg'};if(hw==='service')return {street:'sonstige',blsub:null,klasse:'Erschließungs-/Wirtschaftsweg'};if(hw==='cycleway')return {street:'sonstige',blsub:null,klasse:'Eigenständiger Radweg'};if(hw==='path'||hw==='footway')return {street:'sonstige',blsub:null,klasse:'Weg (Rad-/Fußweg)'};return {street:'gemeindestrasse',blsub:null,klasse:'Gemeindestraße'};}
+function lageGuessMap(tags,inRes){const ms=parseInt(String(tags.maxspeed||'').replace(/[^0-9]/g,''),10);if(tags['zone:traffic']==='DE:urban'||inRes||(ms&&ms<=50))return 'innerorts';if(tags['zone:traffic']==='DE:rural'||(ms&&ms>50))return 'ausserorts';return null;}
+let zmap=null,zmarker=null;
+function setMapStatus(html){const el=document.getElementById('mapStatus');if(el){el.innerHTML=html;el.classList.add('show');}}
+function toggleMap(){const w=document.getElementById('mapwrap');const open=w.classList.toggle('open');const b=document.getElementById('mapToggle');if(b)b.setAttribute('aria-expanded',String(open));if(open){initZmap();setTimeout(function(){if(zmap)zmap.invalidateSize();},150);}}
+function initZmap(){if(zmap)return;zmap=L.map('zmap').setView([49.38,6.95],9);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap-Mitwirkende'}).addTo(zmap);zmap.on('click',zmapClick);}
+function zmapClick(ev){const lat=ev.latlng.lat.toFixed(6),lon=ev.latlng.lng.toFixed(6);if(zmarker)zmarker.setLatLng(ev.latlng);else zmarker=L.marker(ev.latlng).addTo(zmap);setMapStatus('<div class="ok">⏳ Stelle wird ausgewertet …</div>');const q='[out:json][timeout:25];is_in('+lat+','+lon+');out tags;way(around:35,'+lat+','+lon+')["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road|track|service|cycleway|path)$"];out geom;';queryOverpass(q).then(function(d){applyMap(d,parseFloat(lat),parseFloat(lon));}).catch(function(){setMapStatus('<div class="ok" style="background:#fef3cd;border-color:#e0c067;color:#7a5b00">Abfrage nicht erreichbar – die Karte braucht Internet und läuft nur über einen Webserver / GitHub Pages (nicht per Doppelklick als lokale Datei). Bitte unten manuell wählen.</div>');});}
+function applyMap(d,lat,lon){const els=(d&&d.elements)||[];const areas=els.filter(function(e){return e.type==='area'&&e.tags;});const ways=els.filter(function(e){return e.type==='way'&&e.tags&&e.geometry;});const inRes=areas.some(function(e){return e.tags.landuse==='residential';});const gem=areas.find(function(e){return e.tags.boundary==='administrative'&&e.tags.admin_level==='8';});const gemName=gem?(gem.tags['name:de']||gem.tags.name||''):'';const km=gemName?matchKommuneName(gemName):null;const nw=nearestWay(ways,lat,lon);if(km)state.kommune=km;let cls=null,lg=null;if(nw){cls=strKlasseMap(nw.way.tags);lg=lageGuessMap(nw.way.tags,inRes);state.street=cls.street;state.blsub=cls.blsub;state.location=lg;}state.mapPrefill=true;state.step=0;state.category=null;state.measure=null;renderKommuneBar();setMapStatus('<div class="ok"><b>Aus Karte übernommen</b><br>Kommune: '+(km||'— (nicht erkannt – bitte unten wählen)')+'<br>'+(cls?('Straße/Weg: '+cls.klasse):'Straße: — (keine in der Nähe gefunden)')+'<br>Lage: '+(lg?(lg==='innerorts'?'innerorts':'außerorts'):'unbekannt (wird abgefragt)')+'<br><span style="color:var(--gray-light);font-size:11.5px">Unten ist alles vorbelegt – Sie wählen nur noch die Maßnahme (alle Werte im Assistenten änderbar).</span></div>');render();}
+
 /* Praxishinweise nach ERA 2010 und Musterlösungen BW (Okt. 2025) */
 const PRAXIS={
   schutzstreifen:[
@@ -223,7 +279,7 @@ const PRAXIS={
   ]
 };
 
-let state={step:0,category:null,measure:null,street:null,blsub:null,location:null};
+let state={step:0,category:null,measure:null,street:null,blsub:null,location:null,kommune:null,mapPrefill:false};
 
 function cardKey(e){if(e.key==='Enter'||e.key===' '||e.key==='Spacebar'){e.preventDefault();e.currentTarget.click();}}
 
@@ -235,30 +291,48 @@ function getResult(){
   // Bundes-/Landesstraße innerorts ist rechtlich immer Ortsdurchfahrt
   if((s==="bundesstrasse"||s==="landesstrasse1"||s==="landesstrasse2")&&loc==="innerorts")loc="ortsdurchfahrt";
   let authority="",authorityDetail="",baulast="",baulastDetail="",notes=[],praxis=[],legal=m.legal;
+  const k = state.kommune ? findKommune(state.kommune) : null;
 
   /* Baulastträger */
   if(s==="bundesstrasse"){
     if(loc==="ortsdurchfahrt"||loc==="innerorts"){
-      baulast="Bund (Fahrbahn und Radwege) / Gemeinde (Gehwege, Parkplätze)";
-      baulastDetail="§ 5 Abs. 2 und 3 FStrG – Gemeinden ≤ 80.000 EW: Gemeinde trägt nur Gehwege und Parkplätze; Saarbrücken (> 80.000 EW): volle Baulast für OD";
-      notes.push("Wichtig: Radwege in der Ortsdurchfahrt gehören zur Baulast des Bundes – nicht der Gemeinde (§ 5 Abs. 3 FStrG; ODR Nr. 12a: Baulastträger für Radwege ist der Baulastträger der Fahrbahn). Bau und Unterhaltung straßenbegleitender Radwege an der B-Straße in der OD sind Sache des Bundes (Auftragsverwaltung: Landesbetrieb für Straßenbau).");
-      notes.push("Kosten-Falle gemeinsamer Geh-/Radweg (ODR 2008): Ein gemeinsamer Geh- und Radweg kommt nur in Betracht, wenn die Gemeinde per Vereinbarung die HÄLFTE der Bau- und Unterhaltungskosten übernimmt (ARS 14/2008). Ein getrennt geführter Radweg liegt dagegen voll in der Baulast des Bundes – getrennte Führung ist für die Gemeinde finanziell deutlich günstiger.");
-      notes.push("Gehweg-Mehrbreite: Wünscht die Gemeinde einen Gehweg breiter als 1,50 m, trägt sie die Mehrkosten anteilig (Nr. 16 Abs. 2 ODR).");
-      notes.push("Die Landeshauptstadt Saarbrücken trägt als einzige saarländische Gemeinde (> 80.000 EW) die volle Straßenbaulast für Ortsdurchfahrten im Zuge von Bundesstraßen (§ 5 Abs. 2 FStrG).");
+      if(k&&k.odBaulast){
+        baulast="Stadt "+k.name+" (volle Straßenbaulast in der Ortsdurchfahrt)";
+        baulastDetail="§ 5 Abs. 2 FStrG – Gemeinde > 80.000 EW trägt die OD-Baulast vollständig (Fahrbahn sowie Geh- und Radwege)";
+        notes.push("Die Landeshauptstadt Saarbrücken trägt als einzige saarländische Gemeinde (> 80.000 EW) die volle Straßenbaulast für Ortsdurchfahrten im Zuge von Bundesstraßen (§ 5 Abs. 2 FStrG).");
+      }else{
+        baulast="Bund (Fahrbahn und Radwege) / "+(k?("Stadt/Gemeinde "+k.name):"Gemeinde")+" (Gehwege, Parkplätze)";
+        baulastDetail="§ 5 Abs. 2 und 3 FStrG – die Gemeinde trägt in der OD nur Gehwege und Parkplätze; Fahrbahn und straßenbegleitende Radwege bleiben beim Bund";
+        notes.push("Wichtig: Radwege in der Ortsdurchfahrt gehören zur Baulast des Bundes – nicht der Gemeinde (§ 5 Abs. 3 FStrG; ODR Nr. 12a: Baulastträger für Radwege ist der Baulastträger der Fahrbahn). Bau und Unterhaltung straßenbegleitender Radwege an der B-Straße in der OD sind Sache des Bundes (Auftragsverwaltung: Landesbetrieb für Straßenbau).");
+        notes.push("Kosten-Falle gemeinsamer Geh-/Radweg (ODR 2008): Ein gemeinsamer Geh- und Radweg kommt nur in Betracht, wenn die Gemeinde per Vereinbarung die HÄLFTE der Bau- und Unterhaltungskosten übernimmt (ARS 14/2008). Ein getrennt geführter Radweg liegt dagegen voll in der Baulast des Bundes – getrennte Führung ist für die Gemeinde finanziell deutlich günstiger.");
+        notes.push("Gehweg-Mehrbreite: Wünscht die Gemeinde einen Gehweg breiter als 1,50 m, trägt sie die Mehrkosten anteilig (Nr. 16 Abs. 2 ODR).");
+        if(!k)notes.push("Hinweis zur Baulast: Nur die Landeshauptstadt Saarbrücken (> 80.000 EW) trägt die volle OD-Baulast; alle übrigen Gemeinden tragen in der OD nur Gehwege und Parkplätze. Tipp: Kommune oben auswählen für ein konkretes Ergebnis.");
+      }
     }else{baulast="Bund (Landesbetrieb für Straßenbau)";baulastDetail="§ 5 Abs. 1 FStrG";}
   }else if(s==="landesstrasse1"||s==="landesstrasse2"){
     if(loc==="ausserorts"){baulast="Land Saarland (Landesbetrieb für Straßenbau)";baulastDetail="§ 46 SaarlStrG";}
-    else{baulast="Land Saarland (LfS, Fahrbahn und Radwege) / Gemeinde (Gehwege, Parkplätze)";baulastDetail="§ 46, § 47 Abs. 2 SaarlStrG – Gemeinde trägt in der OD nur Gehwege und Parkplätze";
-    notes.push("Wichtig: Radwege in der Ortsdurchfahrt einer Landstraße gehören zur Baulast des Landes – nicht der Gemeinde (§ 47 Abs. 2 SaarlStrG nennt nur Gehwege und Parkplätze).");
-    notes.push("Bei gemeinsamen Geh-/Radwegen in der OD werden die Grundsätze der Ortsdurchfahrtenrichtlinien (hälftige Kostenteilung per Vereinbarung) in der Praxis entsprechend angewendet – Kostenteilung vorab mit dem LfS klären. Ein getrennt geführter Radweg liegt voll in der Baulast des Landes.");
-    notes.push("Im Saarland gibt es keine Kreisstraßen – Landstraßen beider Ordnungen liegen in der Baulast des Landes. Ausnahme: Ortsdurchfahrten in Gemeinden > 80.000 EW (nur Saarbrücken, § 47 Abs. 1 SaarlStrG).");}
+    else{
+      if(k&&k.odBaulast){
+        baulast="Stadt "+k.name+" (volle Straßenbaulast in der Ortsdurchfahrt)";
+        baulastDetail="§ 47 Abs. 1 SaarlStrG – Gemeinde > 80.000 EW trägt die OD-Baulast vollständig";
+      }else{
+        baulast="Land Saarland (LfS, Fahrbahn und Radwege) / "+(k?("Stadt/Gemeinde "+k.name):"Gemeinde")+" (Gehwege, Parkplätze)";
+        baulastDetail="§ 46, § 47 Abs. 2 SaarlStrG – die Gemeinde trägt in der OD nur Gehwege und Parkplätze";
+        notes.push("Wichtig: Radwege in der Ortsdurchfahrt einer Landstraße gehören zur Baulast des Landes – nicht der Gemeinde (§ 47 Abs. 2 SaarlStrG nennt nur Gehwege und Parkplätze).");
+        notes.push("Bei gemeinsamen Geh-/Radwegen in der OD werden die Grundsätze der Ortsdurchfahrtenrichtlinien (hälftige Kostenteilung per Vereinbarung) in der Praxis entsprechend angewendet – Kostenteilung vorab mit dem LfS klären. Ein getrennt geführter Radweg liegt voll in der Baulast des Landes.");
+      }
+      notes.push("Im Saarland gibt es keine Kreisstraßen – Landstraßen beider Ordnungen liegen in der Baulast des Landes.");
+    }
   }else{baulast="Gemeinde";baulastDetail="§ 50 SaarlStrG";}
 
   /* Zuständige Behörde (verkehrsrechtliche Anordnung) */
   if(m.type==="anordnung"||m.type==="anordnung_bau"){
     if(s==="gemeindestrasse"||s==="sonstige"){authority="Gemeinde (eigene Zuständigkeit nach § 12 StVZustG)";authorityDetail="§ 12 Abs. 1 StVZustG Saarland";notes.push("Auf Gemeindestraßen und sonstigen öffentlichen Straßen sind die Gemeinden selbst zuständig für: Verkehrsbeschränkungen aller Art (§ 45 Abs. 1 bis 1d StVO – damit auch Fahrradstraßen, Tempo-30-Zonen und Maßnahmen der Flächenbereitstellung nach § 45 Abs. 1 S. 2 Nr. 7), Fußgängerüberwege, Vorfahrtsregelungen und Spielstraßen (§ 12 Abs. 1 Nr. 1–4 StVZustG). Nicht übertragen sind Maßnahmen nach § 45 Abs. 1e ff. StVO – insbesondere Fahrradzonen (Abs. 1i).");}
-    else{authority="Straßenverkehrsbehörde (Landkreis / Regionalverband Saarbrücken)";authorityDetail="§ 7 Abs. 1 StVZustG Saarland";notes.push("Eigene Straßenverkehrsbehörden haben: die Landeshauptstadt Saarbrücken (§ 7 Abs. 1 StVZustG) sowie die Mittelstädte Völklingen und St. Ingbert. Den Mittelstädten sind die Befugnisse nach der StVO vollumfänglich als Auftragsangelegenheit übertragen (§ 1 Abs. 1 Nr. 8 Mittelstadtverordnung i. V. m. § 7 KSVG) – sie ordnen in ihrem Stadtgebiet daher auch auf Bundes- und Landstraßen selbst an.");
-    if(loc==="innerorts"||loc==="ortsdurchfahrt")notes.push("Bei Maßnahmen in Ortsdurchfahrten ist Einvernehmen mit der Gemeinde und dem Baulastträger herzustellen (§ 45 Abs. 1b StVO).");}
+    else{
+      if(k&&k.eigeneStVB){authority="Stadt "+k.name+" – eigene Straßenverkehrsbehörde";authorityDetail="§ 1 Abs. 1 Nr. 8 Mittelstadtverordnung bzw. § 7 Abs. 1 StVZustG – "+k.name+" ordnet auch auf Bundes- und Landstraßen im Stadtgebiet selbst an";}
+      else if(k){authority="Untere Straßenverkehrsbehörde: "+k.kreis;authorityDetail="§ 7 Abs. 1 StVZustG Saarland";}
+      else{authority="Straßenverkehrsbehörde (Landkreis / Regionalverband Saarbrücken)";authorityDetail="§ 7 Abs. 1 StVZustG Saarland";notes.push("Eigene Straßenverkehrsbehörden haben: die Landeshauptstadt Saarbrücken (§ 7 Abs. 1 StVZustG) sowie die Mittelstädte Völklingen und St. Ingbert. Den Mittelstädten sind die Befugnisse nach der StVO vollumfänglich als Auftragsangelegenheit übertragen (§ 1 Abs. 1 Nr. 8 Mittelstadtverordnung i. V. m. § 7 KSVG) – sie ordnen in ihrem Stadtgebiet daher auch auf Bundes- und Landstraßen selbst an. Tipp: Kommune oben auswählen für ein konkretes Ergebnis.");}
+      if(loc==="innerorts"||loc==="ortsdurchfahrt")notes.push("Bei Maßnahmen in Ortsdurchfahrten ist Einvernehmen mit der Gemeinde und dem Baulastträger herzustellen (§ 45 Abs. 1b StVO).");}
 
     /* VwV-StVO 2025: Tempo 30 */
     if(m.id==="tempo30_strecke"&&(s==="bundesstrasse"||s.startsWith("landesstrasse")))
@@ -274,7 +348,9 @@ function getResult(){
     /* Fahrradzone: eigene Rechtsgrundlage § 45 Abs. 1i – von § 12 StVZustG NICHT umfasst */
     if(m.id==="fahrradzone"){
       if(s==="gemeindestrasse"||s==="sonstige"){
-        authority="Straßenverkehrsbehörde (Landkreis / Regionalverband Saarbrücken) – im Einvernehmen mit der Gemeinde";
+        if(k&&k.eigeneStVB){authority="Stadt "+k.name+" (als eigene Straßenverkehrsbehörde – ordnet selbst an)";}
+        else if(k){authority="Untere Straßenverkehrsbehörde: "+k.kreis+" – im Einvernehmen mit der Gemeinde";}
+        else{authority="Straßenverkehrsbehörde (Landkreis / Regionalverband Saarbrücken) – im Einvernehmen mit der Gemeinde";}
         authorityDetail="§ 45 Abs. 1i StVO i. V. m. § 7 Abs. 1 StVZustG – die Übertragung auf die Gemeinden (§ 12 Abs. 1 Nr. 4 StVZustG) umfasst nur § 45 Abs. 1 bis 1d, nicht Abs. 1i";
         notes.push("Achtung Sonderfall Fahrradzone: Anders als die Fahrradstraße wird die Fahrradzone nach § 45 Abs. 1i StVO angeordnet – dieser Absatz ist von der Aufgabenübertragung auf die Gemeinden (§ 12 Abs. 1 Nr. 4 StVZustG: nur § 45 Abs. 1 bis 1d) nicht umfasst. Zuständig ist daher auch auf Gemeindestraßen die Straßenverkehrsbehörde (Landkreis/Regionalverband bzw. Saarbrücken, Völklingen, St. Ingbert); die Gemeinde wirkt über das Einvernehmen mit (§ 45 Abs. 1i S. 1 StVO).");
       }
@@ -344,7 +420,12 @@ function render(){
   const el=document.getElementById('content');
 
   if(state.step===0){
-    let h=`<h2>Welche Art von Maßnahme planen Sie?</h2>
+    let h='';
+    if(state.mapPrefill){
+      const stLabel=state.street==='bundeslandstrasse'?((BL_SUB.find(b=>b.id===state.blsub)||{label:'Bundes-/Landesstraße'}).label):(state.street?((STREETS.find(x=>x.id===state.street)||{label:state.street}).label):'—');
+      h+=`<div class="info-box" style="background:var(--blue-light);border-color:rgba(22,120,169,.3);margin-top:0"><div class="info-title" style="color:var(--blue-dark)">Aus Karte vorbelegt</div><div class="info-body">Kommune: <b>${state.kommune||'—'}</b> · Straße/Weg: <b>${stLabel}</b> · Lage: <b>${state.location?(state.location==='innerorts'?'innerorts':'außerorts'):'wird abgefragt'}</b><br>Wählen Sie nur noch die Maßnahme – Straße und Lage sind bereits gesetzt (im Assistenten änderbar).</div></div>`;
+    }
+    h+=`<h2>Welche Art von Maßnahme planen Sie?</h2>
     <p class="subtitle">Wählen Sie zunächst die Kategorie, dann die konkrete Maßnahme.</p>`;
     h+=renderCards(MEASURES.map(c=>({id:c.id,html:`<div class="card-row"><span class="card-icon">${c.icon}</span><div><div class="card-label">${c.label}</div><div class="card-count">${c.items.length} Maßnahmen</div></div></div>`})),state.category,'selectCategory');
     if(state.category){
@@ -353,7 +434,14 @@ function render(){
       h+=renderCards(cat.items.map(i=>({id:i.id,html:`<div class="card-label sm">${i.label}</div><div class="card-desc">${i.desc}</div>`})),state.measure,'selectMeasure',true);
       h+=`</div>`;
     }
-    if(state.measure)h+=`<button class="btn btn-primary" onclick="goStep(1)">Weiter → Straßenkategorie</button>`;
+    if(state.measure){
+      if(state.mapPrefill && state.street && (state.street!=='bundeslandstrasse'||state.blsub)){
+        if(needsLocation() && !state.location){ h+=`<button class="btn btn-primary" onclick="goStep(2)">Weiter → Lage (innerorts/außerorts)</button>`; }
+        else { h+=`<button class="btn btn-primary" onclick="goStep(3)">Ergebnis anzeigen →</button>`; }
+      } else {
+        h+=`<button class="btn btn-primary" onclick="goStep(1)">Weiter → Straßenkategorie</button>`;
+      }
+    }
     el.innerHTML=h;
   }
   else if(state.step===1){
@@ -400,6 +488,7 @@ function render(){
       <span class="badge" style="background:rgba(22,120,169,.09);color:#1678A9">${r.measure.label}</span>
       <span class="badge" style="background:${s.color}15;color:${s.color}">${s.label}</span>
       ${loc?`<span class="badge" style="background:rgba(101,148,68,.09);color:#659444">${loc.label}</span>`:''}
+      ${state.kommune?`<span class="badge" style="background:rgba(62,64,63,.08);color:#3E403F">${state.kommune}</span>`:''}
     </div>
     <div class="result-card">
       <div class="result-header">
@@ -438,7 +527,16 @@ function selectStreet(id){state.street=id;state.blsub=null;state.location=null;r
 function selectBlsub(id){state.blsub=id;render();}
 function selectLocation(id){state.location=id;render();}
 function goStep(n){state.step=n;render();}
-function resetAll(){state={step:0,category:null,measure:null,street:null,blsub:null,location:null};render();}
+function resetAll(){const km=state.kommune;state={step:0,category:null,measure:null,street:null,blsub:null,location:null,kommune:km,mapPrefill:false};render();}
+
+function renderKommuneBar(){
+  let h='<label for="kommuneSelect" class="kommune-label">Kommune (optional – macht das Ergebnis konkret):</label>';
+  h+='<select id="kommuneSelect" class="kommune-select" onchange="setKommune(this.value)"><option value="">— alle / nicht festgelegt —</option>';
+  KREISE.forEach(kr=>{h+='<optgroup label="'+kr.name+'">';kr.kommunen.forEach(name=>{h+='<option value="'+name+'"'+(state.kommune===name?' selected':'')+'>'+name+(EIGENE_STVB.includes(name)?' (eigene StVB)':'')+'</option>';});h+='</optgroup>';});
+  h+='</select>';
+  const el=document.getElementById('kommuneBar');if(el)el.innerHTML=h;
+}
+function setKommune(v){state.kommune=v||null;if(state.step===3)render();}
 
 /* URL-Parameter ?m=<measure-id> auswerten (Sprung aus dem VwV-StVO-Tool) */
 (function applyUrlParam(){
@@ -452,6 +550,7 @@ function resetAll(){state={step:0,category:null,measure:null,street:null,blsub:n
   state.measure = target;
 })();
 
+renderKommuneBar();
 render();
 </script>
 </body>
