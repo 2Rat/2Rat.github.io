@@ -81,7 +81,7 @@ body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);ba
   </div>
 
   <div class="footer">
-    Prototyp · 2Rat – Büro für Radverkehrsplanung · Armin Jung · <a href="https://www.2rat.org">www.2rat.org</a><br>
+    Prototyp <b>v8</b> · 2Rat – Büro für Radverkehrsplanung · Armin Jung · <a href="https://www.2rat.org">www.2rat.org</a><br>
     Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende · Gemeinde-Erkennung über <a href="https://overpass-api.de">Overpass-API</a> (amtliche Verwaltungsgrenzen, admin_level 8) · Nutzungsrichtlinien beachten
   </div>
 </div>
@@ -221,6 +221,8 @@ function renderResult(d,lat,lon){
   if(rels.length){
     const rn=rels.map(function(r){const typ=ROUTE_LABELS[r.tags.route]||'Route';return (r.tags.name||r.tags.ref||typ)+' ('+typ+')'+(r.tags.network?(' ['+String(r.tags.network).toUpperCase()+']'):'');}).filter(function(v,i,a){return a.indexOf(v)===i;});
     h+='<div class="stvb-box" style="background:var(--blue-light);border-color:rgba(22,120,169,.3);margin-top:14px"><b>Route(n) an dieser Stelle</b><br>🚴 '+rn.map(esc).join('<br>🚴 ')+'<br><span style="color:var(--gray-light);font-size:11.5px">Bei Maßnahmen an touristischen Routen die SaarRadland-/Tourismus-Abstimmung beachten (Falltyp „Touristische Route").</span></div>';
+  } else {
+    h+='<div class="res-line" style="color:var(--gray-light);margin-top:12px;font-size:12px">Routen im 100-m-Umkreis: <b>keine in OpenStreetMap gefunden</b> (Rad-, MTB-, Wander- oder Fußroute).</div>';
   }
   const nwt=nw?nw.way.tags:{};
   const dbg='Klick: '+lat+', '+lon
