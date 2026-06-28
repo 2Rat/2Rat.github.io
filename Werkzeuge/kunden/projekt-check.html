@@ -101,6 +101,10 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
 .dot{width:11px;height:11px;border-radius:3px;display:inline-block;border:1px solid}
 .dot.green{background:var(--green-light);border-color:rgba(101,148,68,.4)}
 .dot.blue{background:var(--blue-light);border-color:rgba(22,120,169,.4)}
+.kommune-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--white);border:1.5px solid var(--gray-border);border-radius:8px;padding:10px 14px;margin-bottom:18px}
+.kommune-label{font-size:12px;font-weight:600;color:var(--gray-light)}
+.kommune-select{flex:1;min-width:200px;padding:8px 10px;border-radius:6px;border:1px solid var(--gray-border);font-size:13px;font-family:inherit;color:var(--gray);background:var(--white);cursor:pointer}
+.kommune-select:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 @media (max-width:520px){
   .cards{grid-template-columns:1fr}
   .header-inner{flex-direction:column;align-items:flex-start;gap:10px}
@@ -131,10 +135,11 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
 </div>
 
 <main class="main">
+  <div class="kommune-bar" id="kommuneBar"></div>
   <div class="steps" id="steps"></div>
   <div id="content"></div>
   <div class="footer">
-    Orientierungshilfe für kommunale Radverkehrsvorhaben – ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der Behörden.
+    <b>Orientierungshilfe, keine Rechtsberatung.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. Stand 06/2026.
     Datengrundlage: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL, Stand 05/2026) sowie StVO, VwV-StVO 2025, StVZustG Saarland, SaarlStrG, FStrG.<br>
     Entwickelt von 2Rat – Büro für Radverkehrsplanung · <a href="https://www.2rat.org">www.2rat.org</a>
   </div>
@@ -271,7 +276,37 @@ const EXTRAS=[
  pruef:[]}
 ];
 
-let state={step:0,falltyp:null,lage:null,extras:[]};
+/* ====== Saarländische Kommunen nach Kreis (52 Gemeinden) ====== */
+const KREISE=[
+ {id:"rv",name:"Regionalverband Saarbrücken",kommunen:["Saarbrücken","Völklingen","Püttlingen","Riegelsberg","Heusweiler","Quierschied","Sulzbach/Saar","Friedrichsthal","Großrosseln","Kleinblittersdorf"]},
+ {id:"sls",name:"Landkreis Saarlouis",kommunen:["Saarlouis","Dillingen/Saar","Lebach","Schmelz","Schwalbach","Bous","Ensdorf","Saarwellingen","Wadgassen","Wallerfangen","Überherrn","Nalbach","Rehlingen-Siersburg"]},
+ {id:"mzg",name:"Landkreis Merzig-Wadern",kommunen:["Merzig","Wadern","Losheim am See","Mettlach","Beckingen","Perl","Weiskirchen"]},
+ {id:"nk",name:"Landkreis Neunkirchen",kommunen:["Neunkirchen","Ottweiler","Illingen","Eppelborn","Merchweiler","Schiffweiler","Spiesen-Elversberg"]},
+ {id:"wnd",name:"Landkreis St. Wendel",kommunen:["St. Wendel","Tholey","Marpingen","Nohfelden","Nonnweiler","Oberthal","Namborn","Freisen"]},
+ {id:"spk",name:"Saarpfalz-Kreis",kommunen:["Homburg","St. Ingbert","Blieskastel","Bexbach","Kirkel","Mandelbachtal","Gersheim"]}
+];
+const EIGENE_STVB=["Saarbrücken","Völklingen","St. Ingbert"];
+const OD_BAULAST=["Saarbrücken"];
+/* Straßenverkehrsbehörden-Kontakte (recherchiert 06/2026, offizielle Behördenseiten).
+   Zuordnung: eigene StVB nur Saarbrücken/Völklingen/St. Ingbert, sonst Landkreis/RV. */
+const KONTAKTE={
+ "rv":{name:"Regionalverband Saarbrücken – Straßenverkehrsbehörde",tel:"0681 506-3350",mail:"strassenverkehr@rvsbr.de",web:"regionalverband-saarbruecken.de"},
+ "sls":{name:"Landkreis Saarlouis – Straßenverkehrsbehörde",tel:"06831 444-0",mail:"",web:"kreis-saarlouis.de"},
+ "mzg":{name:"Landkreis Merzig-Wadern – Straßenverkehrsbehörde",tel:"06861 80-2440",mail:"strassenverkehr@merzig-wadern.de",web:"merzig-wadern.de"},
+ "nk":{name:"Landkreis Neunkirchen – Straßenverkehrsbehörde",tel:"06824 906-7011",mail:"kfz@landkreis-neunkirchen.de",web:"landkreis-neunkirchen.de"},
+ "wnd":{name:"Landkreis St. Wendel – Straßenverkehrsbehörde",tel:"06851 801-2804",mail:"strassenverkehrsbehoerde@lkwnd.de",web:"landkreis-st-wendel.de"},
+ "spk":{name:"Saarpfalz-Kreis – Straßenverkehrsbehörde",tel:"06841 104-7162",mail:"verkehr@saarpfalz-kreis.de",web:"saarpfalz-kreis.de"},
+ "Saarbrücken":{name:"Landeshauptstadt Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 905-0",mail:"ordnungsamt@saarbruecken.de",web:"saarbruecken.de"},
+ "Völklingen":{name:"Stadt Völklingen – Straßenverkehrsbehörde",tel:"06898 13-0",mail:"",web:"voelklingen.de"},
+ "St. Ingbert":{name:"Stadt St. Ingbert – Straßenverkehrsbehörde",tel:"06894 13-0",mail:"",web:"st-ingbert.de"}
+};
+function kontaktFor(k){if(!k)return null;return k.eigeneStVB?(KONTAKTE[k.name]||null):(KONTAKTE[k.kreisId]||null);}
+function findKommune(name){
+  for(const kr of KREISE){ if(kr.kommunen.includes(name)) return {name:name,kreis:kr.name,kreisId:kr.id,eigeneStVB:EIGENE_STVB.includes(name),odBaulast:OD_BAULAST.includes(name)}; }
+  return null;
+}
+
+let state={step:0,falltyp:null,lage:null,extras:[],kommune:null};
 
 /* Tastaturbedienung für die als Buttons ausgezeichneten Karten */
 function cardKey(e){
@@ -303,6 +338,7 @@ function render(){
 function viewVorhaben(){
   let h='<h2>Was möchten Sie tun?</h2>'+
     '<div class="intro-line">In wenigen Schritten zeigt Ihnen dieses Werkzeug, <b>wer mit an den Tisch muss</b>, woran Sie denken müssen und welche Schritte anstehen – auch wenn Sie mit dem Thema noch nicht vertraut sind.</div>'+
+    '<div style="font-size:11.5px;color:var(--gray-light);margin:-8px 0 18px;line-height:1.5">Orientierungshilfe, <b>keine Rechtsberatung</b> – die formelle Zuständigkeit und Entscheidung liegt bei den zuständigen Behörden. Stand 06/2026.</div>'+
     '<div class="cards">';
   FALLTYPEN.forEach(f=>{
     h+='<div class="card'+(state.falltyp===f.id?' selected':'')+'" role="button" tabindex="0" aria-pressed="'+(state.falltyp===f.id)+'" onkeydown="cardKey(event)" onclick="pickFalltyp(\''+f.id+'\')">'+
@@ -418,6 +454,22 @@ function viewErgebnis(){
   }
   h+='</div></div>';
 
+  // Vor Ort: konkrete Straßenverkehrsbehörde der gewählten Kommune
+  if(state.kommune){
+    const k=findKommune(state.kommune);
+    if(k){
+      const stvb=k.eigeneStVB?("Stadt "+k.name+" – eigene Straßenverkehrsbehörde"):(k.kreis+" (untere Straßenverkehrsbehörde)");
+      const kt=kontaktFor(k);
+      let kontaktHtml='';
+      if(kt){
+        kontaktHtml='<br><b>'+kt.name+'</b><br>'+(kt.tel?('📞 '+kt.tel):'');
+        if(kt.mail)kontaktHtml+=(kt.tel?' · ':'')+'✉️ <a href="mailto:'+kt.mail+'">'+kt.mail+'</a>';
+        kontaktHtml+='<br>🌐 <a href="https://www.'+kt.web+'" target="_blank" rel="noopener">www.'+kt.web+'</a> <span style="color:var(--gray-light);font-size:11px">(Kontakt recherchiert 06/2026 – im Zweifel auf der Behördenseite prüfen)</span>';
+      }
+      h+='<div class="info-box" style="background:var(--green-light);border-color:rgba(101,148,68,.3)"><div class="info-title" style="color:var(--green-dark)">Vor Ort – '+k.name+'</div><div class="info-body">Landkreis / Regionalverband: '+k.kreis+'<br>Zuständige Straßenverkehrsbehörde: '+stvb+kontaktHtml+'</div></div>';
+    }
+  }
+
   // Hinweis
   if(d.hinweis){
     h+='<div class="info-box"><div class="info-title">Gut zu wissen</div><div class="info-body">'+d.hinweis+'</div></div>';
@@ -430,7 +482,11 @@ function viewErgebnis(){
   // Projektvermerk
   h+='<div class="copy-box"><div class="copy-head"><span class="copy-head-title">Projektvermerk (für E-Mail / Akte)</span>'+
      '<button class="copy-btn" id="copyBtn" onclick="copyVermerk()">Kopieren</button></div>'+
-     '<div class="copy-body" id="vermerk">'+escapeHtml(buildVermerk())+'</div></div>';
+     '<div class="copy-body" id="vermerk">'+escapeHtml(buildVermerk())+'</div>'+
+     '<div style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--gray-border)">'+
+     '<button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="sendMail()">✉️ Als E-Mail</button>'+
+     '<button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="downloadTxt()">⬇️ Als Text speichern</button>'+
+     '</div></div>';
 
   // Cross-Links – Fördermittel-Finder immer anbieten, wenn der Falltyp förderrelevant ist
   const links=(f.links||[]).slice();
@@ -456,6 +512,7 @@ function buildVermerk(){
   t+='Vorhaben: '+f.label;
   if(f.askLage&&state.lage)t+=' ('+(state.lage==="ortsdurchfahrt"?"Ortsdurchfahrt":"außerorts")+')';
   t+='\n';
+  if(state.kommune){const k=findKommune(state.kommune);t+='Kommune: '+state.kommune+(k?(' · Straßenverkehrsbehörde: '+(k.eigeneStVB?("Stadt "+k.name):k.kreis)):'')+'\n';const kt=kontaktFor(k);if(kt){t+='Kontakt StVB: '+kt.name+(kt.tel?(' · Tel. '+kt.tel):'')+(kt.mail?(' · '+kt.mail):'')+' · www.'+kt.web+'\n';}}
   if(state.extras.length)t+='Zusätzlich: '+state.extras.map(id=>{const e=EXTRAS.find(x=>x.id===id);return e?e.label:id;}).join('; ')+'\n';
   t+='\nWer hat den Hut auf?\n'+d.lead+'\n';
   t+='\nWer sollte mit an den Tisch?\n';
@@ -476,8 +533,19 @@ function copyVermerk(){
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>fb(text,done));}else{fb(text,done);}
 }
 function fb(text,done){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}
-function resetAll(){state={step:0,falltyp:null,lage:null,extras:[]};render();}
+function sendMail(){const t=buildVermerk();window.location.href='mailto:?subject='+encodeURIComponent('Projekt-Check Radverkehr Saarland')+'&body='+encodeURIComponent(t);}
+function downloadTxt(){const t=buildVermerk();const blob=new Blob([t],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='projektcheck-radverkehr.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(a.href);}
+function resetAll(){const km=state.kommune;state={step:0,falltyp:null,lage:null,extras:[],kommune:km};render();}
+function renderKommuneBar(){
+  let h='<label for="kommuneSelect" class="kommune-label">Kommune (optional – nennt die zuständige Behörde):</label>';
+  h+='<select id="kommuneSelect" class="kommune-select" onchange="setKommune(this.value)"><option value="">— nicht festgelegt —</option>';
+  KREISE.forEach(kr=>{h+='<optgroup label="'+kr.name+'">';kr.kommunen.forEach(name=>{h+='<option value="'+name+'"'+(state.kommune===name?' selected':'')+'>'+name+(EIGENE_STVB.includes(name)?' (eigene StVB)':'')+'</option>';});h+='</optgroup>';});
+  h+='</select>';
+  const el=document.getElementById('kommuneBar');if(el)el.innerHTML=h;
+}
+function setKommune(v){state.kommune=v||null;if(state.step>=2)render();}
 
+renderKommuneBar();
 render();
 </script>
 </body>
