@@ -100,11 +100,23 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
   .header-inner{flex-direction:column;align-items:flex-start;gap:10px}
   .header-right{text-align:left}
 }
+.copy-box{margin-top:16px;background:#fff;border:1.5px solid #d9d9d9;border-radius:10px;overflow:hidden}
+.copy-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;background:#e8f4fa;border-bottom:1px solid #d9d9d9}
+.copy-head-title{font-size:12px;font-weight:700;color:#115d85;text-transform:uppercase;letter-spacing:.05em}
+.copy-btn{background:#1678A9;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:12.5px;font-weight:600;cursor:pointer}
+.copy-btn.copied{background:#659444}
+.copy-btn:focus-visible{outline:3px solid #1678A9;outline-offset:2px}
+.copy-body{padding:12px 14px;font-size:12px;line-height:1.6;white-space:pre-wrap;font-family:ui-monospace,Consolas,monospace;max-height:260px;overflow:auto;color:#3E403F}
+.crosslinks{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.crosslink{display:block;padding:11px 14px;border:1.5px solid #d9d9d9;border-radius:8px;background:#fff;text-decoration:none;color:#3E403F;font-size:13px;line-height:1.5;transition:border-color .15s}
+.crosslink:hover{border-color:#1678A9;background:#e8f4fa}
+.crosslink b{color:#115d85}
 @media print{
-  .steps,.btn,.btn-back,.header-right{display:none!important}
+  .steps,.btn,.btn-back,.header-right,.copy-btn,.copy-actions,.crosslinks{display:none!important}
   body{background:#fff}
   .main{padding-top:12px}
-  .result-card,.notes,.praxis-box,.info-box,.scope-note,.quota-grid{break-inside:avoid;page-break-inside:avoid;box-shadow:none}
+  .result-card,.notes,.praxis-box,.info-box,.scope-note,.quota-grid,.copy-box{break-inside:avoid;page-break-inside:avoid;box-shadow:none}
+  .copy-body{max-height:none;overflow:visible}
 }
 </style>
 </head>
@@ -119,7 +131,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
         <div class="header-title">Fördermittel-Finder <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>FRL-NMOB-Rad-Fuß<br>Stand 06/2026</div>
+    <div class="header-right">Saarland<br>FRL-NMOB-Rad-Fuß<br>Stand 07/2026 · v2</div>
   </div>
 </div>
 
@@ -257,6 +269,13 @@ const APPLICANTS=[
   {id:"unternehmen",label:"Unternehmen",icon:"🏢"}
 ];
 
+const STD_NOTES=[
+  "Eigenanteil = nicht geförderter Anteil (bei 75 % Förderung also 25 %). Bei Kumulation mit anderen Mitteln müssen mindestens 10 % Eigenanteil verbleiben (§6.5)",
+  "Nicht förderfähig: Eigenleistungen, laufende Betriebs-/Versicherungskosten, Finanzierung/Zinsen, Werbung. Grunderwerb ist dagegen zuwendungsfähig (außer bei 100 %-Förderung)",
+  "Vorhabenbeginn: Schriftlicher Zuwendungsantrag vor Vorhabenbeginn erforderlich",
+  "Bei besonderem Landesinteresse bis zu 100 % möglich – Kriterien (§6.4): Modell-/Pilotcharakter, zukunftsfähige Verknüpfung mit dem Umweltverbund oder Schließung wichtiger Netzlücken; dann entfällt die Förderung des Grunderwerbs"
+];
+
 let state={step:0,category:null,foerder:null,applicant:null};
 
 function isEligible(fid,aid){
@@ -273,7 +292,7 @@ function getEligibleItems(catId,appId){
 function renderSteps(){
   const el=document.getElementById('steps');
   const total=3;
-  const t=state.step>=3?3:state.step;
+  const t=state.step>=2?3:state.step;
   let h='';
   for(let i=0;i<total;i++){
     const cls=i<t?'done':i===t?'active':'pending';
@@ -401,13 +420,8 @@ function render(){
     h+=`</div></div>`;
 
     /* Hinweise */
-    let allNotes=[
-      "Eigenanteil = nicht geförderter Anteil (bei 75 % Förderung also 25 %). Bei Kumulation mit anderen Mitteln müssen mindestens 10 % Eigenanteil verbleiben (§6.5)",
-      "Nicht förderfähig: Eigenleistungen, laufende Betriebs-/Versicherungskosten, Finanzierung/Zinsen, Werbung. Grunderwerb ist dagegen zuwendungsfähig (außer bei 100 %-Förderung)",
-      "Vorhabenbeginn: Schriftlicher Zuwendungsantrag vor Vorhabenbeginn erforderlich",
-      "Bei besonderem Landesinteresse bis zu 100 % möglich – Kriterien (§6.4): Modell-/Pilotcharakter, zukunftsfähige Verknüpfung mit dem Umweltverbund oder Schließung wichtiger Netzlücken; dann entfällt die Förderung des Grunderwerbs"
-    ];
-    if(f.hinweise.length)allNotes=[...f.hinweise,...allNotes];
+    let allNotes=[...STD_NOTES];
+    if(f.hinweise.length)allNotes=[...f.hinweise,...STD_NOTES];
 
     h+=`<div class="notes"><div class="notes-title">⚠ Wichtige Hinweise</div>${allNotes.map(n=>`<div class="notes-item">• ${n}</div>`).join('')}</div>`;
     h+=`</div></div>`;
@@ -428,10 +442,19 @@ function render(){
       <strong>Richtlinie:</strong> FRL-NMOB-Rad-Fuß · gültig 17.11.2025 – 17.11.2030
     </div></div>`;
 
+    /* Ergebnis-Vermerk */
+    h+='<div class="copy-box"><div class="copy-head"><span class="copy-head-title">Ergebnis-Vermerk (für E-Mail / Akte)</span><button class="copy-btn" id="copyBtn" onclick="copyFVermerk()">Kopieren</button></div><div class="copy-body">'+escF(buildFVermerk())+'</div><div class="copy-actions" style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid #d9d9d9"><button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="sendFMail()">✉️ Als E-Mail</button><button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="downloadFTxt()">⬇️ Als Text speichern</button></div></div>';
+
     /* Weitere Förderquellen (Bund) */
     h+=bundBox();
 
-    h+=`<button class="btn btn-outline" onclick="resetAll()">Neue Abfrage starten</button>`;
+    /* Passende weitere Werkzeuge */
+    h+='<div class="field-label" style="margin-top:18px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a8a8a">Passende weitere Werkzeuge</div><div class="crosslinks">'+
+       '<a class="crosslink" href="zustaendigkeiten.html"><b>Zuständigkeiten Radverkehr</b> – Wer ordnet an, wer trägt die Baulast?</a>'+
+       '<a class="crosslink" href="vergabe-assistent.html"><b>Vergabe-Assistent</b> – Nach der Förderzusage: korrektes Vergabeverfahren bestimmen</a>'+
+       '</div>';
+
+    h+=`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-outline" style="width:auto;flex:1;min-width:160px" onclick="window.print()">🖨️ Drucken</button><button class="btn btn-outline" style="width:auto;flex:1;min-width:160px" onclick="resetAll()">Neue Abfrage starten</button></div>`;
     el.innerHTML=h;
   }
 }
@@ -442,6 +465,37 @@ function selectCategory(id){state.category=id;state.foerder=null;render();}
 function selectFoerder(id){state.foerder=id;render();}
 function goStep(n){state.step=n;render();}
 function resetAll(){state={step:0,category:null,foerder:null,applicant:null};render();}
+
+/* ===== Ergebnis-Vermerk (für E-Mail / Akte) ===== */
+function escF(s){return String(s).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
+function buildFVermerk(){
+  const f=FOERDER[state.foerder];if(!f)return '';
+  const app=APPLICANTS.find(a=>a.id===state.applicant);
+  let t='FÖRDERMITTEL-CHECK RADVERKEHR SAARLAND (FRL-NMOB-Rad-Fuß)\n';
+  t+='Erstellt am: '+new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})+'\n';
+  if(app)t+='Antragsteller: '+app.label+'\n';
+  t+='Fördergegenstand: Nr. '+f.nr+' – '+f.label+'\n\n';
+  t+='Regelförderquote: '+f.quote+'\n';
+  if(f.quoteFinanzschwach)t+='Finanzschwache Kommunen: '+f.quoteFinanzschwach+' (Nachweis Landesverwaltungsamt)\n';
+  if(f.quoteSchule)t+='Anbindung Schule/Kita: '+f.quoteSchule+'\n';
+  if(f.quoteLandesinteresse)t+='Besonderes Landesinteresse: '+f.quoteLandesinteresse+' (§6.4; kein Grunderwerb)\n';
+  t+='Mindestinvestition: '+f.mindest+'\n';
+  t+='Maximale Fördersumme: '+(f.maxFoerder||'Keine Obergrenze')+'\n';
+  if(f.zweckbindung)t+='Zweckbindungsfrist: '+f.zweckbindung+'\n';
+  t+='Antragsfrist: 30. September des jeweiligen Jahres\n';
+  t+='Beispiele: '+f.beispiele+'\n';
+  let allNotes=[...STD_NOTES];if(f.hinweise.length)allNotes=[...f.hinweise,...STD_NOTES];
+  t+='\nWichtige Hinweise:\n';allNotes.forEach(n=>{t+='- '+n+'\n';});
+  t+='\nBewilligungsbehörde: MUKMAV, Referat A/4, Keplerstraße 18, 66117 Saarbrücken\n';
+  t+='Fachliche Rückfragen: fahrrad@umwelt.saarland.de · Tel. (0681) 501-1426\n';
+  t+='Richtlinie: FRL-NMOB-Rad-Fuß · gültig 17.11.2025 – 17.11.2030\n';
+  t+='\nOrientierungshilfe, keine Rechts- oder Förderberatung – maßgeblich ist die Richtlinie.\nQuelle: Fördermittel-Finder Radverkehr Saarland · 2Rat – www.2rat.org';
+  return t;
+}
+function copyFVermerk(){const text=buildFVermerk();const done=()=>{const b=document.getElementById('copyBtn');if(!b)return;b.textContent='Kopiert ✓';b.classList.add('copied');setTimeout(()=>{b.textContent='Kopieren';b.classList.remove('copied');},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>ffb(text,done));}else{ffb(text,done);}}
+function ffb(text,done){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}
+function sendFMail(){window.location.href='mailto:?subject='+encodeURIComponent('Fördermittel-Check Radverkehr Saarland')+'&body='+encodeURIComponent(buildFVermerk());}
+function downloadFTxt(){const t=buildFVermerk();const blob=new Blob([t],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='foerdermittel-check.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(a.href);}
 
 /* URL-Parameter ?f=<foerder-id> auswerten (Sprung aus dem VwV-StVO-Tool).
    Wir springen direkt zur Ergebnis-Seite mit "Gemeinde" als Default-Antragsteller

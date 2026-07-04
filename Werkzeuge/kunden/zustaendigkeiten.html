@@ -103,15 +103,23 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .mapwrap.open .map-tip{display:block}
 .map-status .ok{background:var(--green-light);border:1px solid rgba(101,148,68,.3);border-radius:8px;padding:11px 14px;font-size:12.5px;line-height:1.55}
 .map-status .ok b{color:var(--green-dark)}
+.copy-box{margin-top:16px;background:var(--white);border:1.5px solid var(--gray-border);border-radius:10px;overflow:hidden}
+.copy-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;background:var(--blue-light);border-bottom:1px solid var(--gray-border)}
+.copy-head-title{font-size:12px;font-weight:700;color:var(--blue-dark);text-transform:uppercase;letter-spacing:.05em}
+.copy-btn{background:var(--blue);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:12.5px;font-weight:600;cursor:pointer}
+.copy-btn.copied{background:var(--green)}
+.copy-btn:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.copy-body{padding:12px 14px;font-size:12px;line-height:1.6;white-space:pre-wrap;font-family:ui-monospace,Consolas,monospace;max-height:260px;overflow:auto;color:var(--gray)}
 @media (max-width:520px){
   .header-inner{flex-direction:column;align-items:flex-start;gap:10px}
   .header-right{text-align:left}
 }
 @media print{
-  .steps,.btn,.btn-back,.header-right{display:none!important}
+  .steps,.btn,.btn-back,.header-right,.copy-btn,.copy-actions{display:none!important}
   body{background:#fff}
   .main{padding-top:12px}
-  .result-card,.notes,.praxis-box,.info-box,.agfk-contact{break-inside:avoid;page-break-inside:avoid;box-shadow:none}
+  .result-card,.notes,.praxis-box,.info-box,.agfk-contact,.copy-box{break-inside:avoid;page-break-inside:avoid;box-shadow:none}
+  .copy-body{max-height:none;overflow:visible}
 }
 </style>
 </head>
@@ -126,7 +134,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>Stand 06/2026 · v12</div>
+    <div class="header-right">Saarland<br>Stand 06/2026 · v15</div>
   </div>
 </div>
 
@@ -212,6 +220,19 @@ function findKommune(name){
   for(const kr of KREISE){ if(kr.kommunen.includes(name)) return {name:name,kreis:kr.name,kreisId:kr.id,eigeneStVB:EIGENE_STVB.includes(name),odBaulast:OD_BAULAST.includes(name)}; }
   return null;
 }
+/* Straßenverkehrsbehörden-Kontakte (recherchiert 06-07/2026, offizielle Behördenseiten). */
+const KONTAKTE={
+ "rv":{name:"Regionalverband Saarbrücken – Straßenverkehrsbehörde",tel:"0681 506-3350",mail:"strassenverkehr@rvsbr.de",web:"regionalverband-saarbruecken.de"},
+ "sls":{name:"Landkreis Saarlouis – Straßenverkehrsbehörde (Amt für öffentliche Sicherheit und Ordnung)",tel:"06831 444-0",mail:"amt32@kreis-saarlouis.de",web:"kreis-saarlouis.de"},
+ "mzg":{name:"Landkreis Merzig-Wadern – Straßenverkehrsbehörde",tel:"06861 80-2440",mail:"strassenverkehr@merzig-wadern.de",web:"merzig-wadern.de"},
+ "nk":{name:"Landkreis Neunkirchen – Straßenverkehrsbehörde",tel:"06824 906-7011",mail:"kfz@landkreis-neunkirchen.de",web:"landkreis-neunkirchen.de"},
+ "wnd":{name:"Landkreis St. Wendel – Straßenverkehrsbehörde",tel:"06851 801-2804",mail:"strassenverkehrsbehoerde@lkwnd.de",web:"landkreis-st-wendel.de"},
+ "spk":{name:"Saarpfalz-Kreis – Straßenverkehrsbehörde",tel:"06841 104-7162",mail:"verkehr@saarpfalz-kreis.de",web:"saarpfalz-kreis.de"},
+ "Saarbrücken":{name:"Landeshauptstadt Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 905-0",mail:"ordnungsamt@saarbruecken.de",web:"saarbruecken.de"},
+ "Völklingen":{name:"Stadt Völklingen – Straßenverkehrsbehörde",tel:"06898 13-0",mail:"",web:"voelklingen.de"},
+ "St. Ingbert":{name:"Stadt St. Ingbert – Straßenverkehrsbehörde",tel:"06894 13-0",mail:"",web:"st-ingbert.de"}
+};
+function kontaktFor(k){if(!k)return null;return k.eigeneStVB?(KONTAKTE[k.name]||null):(KONTAKTE[k.kreisId]||null);}
 
 /* ===== Karten-Modus (optional): Klick belegt Kommune / Straße / Lage vor ===== */
 function normK(s){return (s||'').replace(/^Sankt\s+/i,'St. ').replace(/\s*\(\s*Saar\s*\)/ig,'').replace(/\/Saar\b/ig,'').replace(/\s+/g,' ').trim().toLowerCase();}
@@ -507,7 +528,10 @@ function render(){
     const r=getResult();if(!r){el.innerHTML='';return;}
     let s=STREETS.find(x=>x.id===state.street);
     if(state.street==="bundeslandstrasse"&&state.blsub){const sub=BL_SUB.find(b=>b.id===state.blsub);s={label:sub.label.replace(/ \(.*\)/,""),color:"#dc2626"};}
-    const loc=LOCATIONS.find(l=>l.id===state.location);
+    let locId=state.location;
+    const sEff=(state.street==="bundeslandstrasse")?state.blsub:state.street;
+    if((sEff==="bundesstrasse"||sEff==="landesstrasse1"||sEff==="landesstrasse2")&&locId==="innerorts")locId="ortsdurchfahrt";
+    const loc=LOCATIONS.find(l=>l.id===locId);
     const back=needsLocation()?2:1;
 
     let h=`<button class="btn-back" onclick="goStep(${back})">← Zurück</button>
@@ -537,6 +561,16 @@ function render(){
       h+=`<div class="praxis-box"><div class="praxis-title">📐 Maße & Planungshinweise (ERA 2010 / MuLöS BW)</div>${r.praxis.map(p=>`<div class="praxis-item">• ${p}</div>`).join('')}</div>`;
     }
     h+=`</div></div>`;
+    h+='<div class="copy-box"><div class="copy-head"><span class="copy-head-title">Ergebnis-Vermerk (für E-Mail / Akte)</span><button class="copy-btn" id="copyBtn" onclick="copyZVermerk()">Kopieren</button></div><div class="copy-body">'+escH(buildZVermerk())+'</div><div class="copy-actions" style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--gray-border)"><button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="sendZMail()">✉️ Als E-Mail</button><button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="downloadZTxt()">⬇️ Als Text speichern</button></div></div>';
+    if(state.kommune){
+      const kk=findKommune(state.kommune);const kt=kontaktFor(kk);
+      if(kk&&kt){
+        let kontaktHtml='<b>'+kt.name+'</b>'+(kt.tel?('<br>📞 '+kt.tel):'');
+        if(kt.mail)kontaktHtml+=' · ✉️ <a href="mailto:'+kt.mail+'">'+kt.mail+'</a>';
+        kontaktHtml+='<br>🌐 <a href="https://www.'+kt.web+'" target="_blank" rel="noopener">www.'+kt.web+'</a> <span style="color:var(--gray-light);font-size:11px">(Kontakt recherchiert 06-07/2026 – im Zweifel auf der Behördenseite prüfen)</span>';
+        h+='<div class="info-box" style="background:var(--green-light);border-color:rgba(101,148,68,.3)"><div class="info-title" style="color:var(--green-dark)">Vor Ort – '+kk.name+'</div><div class="info-body">Landkreis / Regionalverband: '+kk.kreis+'<br>'+kontaktHtml+'</div></div>';
+      }
+    }
     h+=`<div class="info-box"><div class="info-title">Straßenverkehrsbehörden im Saarland</div><div class="info-body">
       <strong>Landkreise:</strong> Merzig-Wadern, Neunkirchen, Saarlouis, Saarpfalz-Kreis (ohne St. Ingbert), St. Wendel<br>
       <strong>Regionalverband:</strong> Regionalverband Saarbrücken (ohne LH Saarbrücken & Völklingen)<br>
@@ -544,7 +578,7 @@ function render(){
       <strong>Oberste Behörde:</strong> Ministerium für Umwelt, Klima, Mobilität, Agrar und Verbraucherschutz (MUKMAV)
     </div></div>`;
     h+=`<div class="agfk-contact" style="margin-top:16px;background:#eef5e6;border:1px solid rgba(101,148,68,.3);border-radius:8px;padding:13px 16px;font-size:12.5px;line-height:1.6">Fragen offen geblieben? Die <strong style="color:#4a7332">Geschäftsstelle der AGFK-SL</strong> hilft weiter.<br>Europaallee 27, 66113 Saarbrücken<br>Tel.: +49 (0)681 4109 6482 · E-Mail: geschaeftstelle@agfk-sl.de</div>`;
-    h+=`<button class="btn btn-outline" onclick="resetAll()">Neue Abfrage starten</button>`;
+    h+=`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-outline" style="width:auto;flex:1;min-width:160px" onclick="window.print()">🖨️ Drucken</button><button class="btn btn-outline" style="width:auto;flex:1;min-width:160px" onclick="resetAll()">Neue Abfrage starten</button></div>`;
     el.innerHTML=h;
   }
 }
@@ -556,6 +590,35 @@ function selectBlsub(id){state.blsub=id;render();}
 function selectLocation(id){state.location=id;render();}
 function goStep(n){state.step=n;render();}
 function resetAll(){const km=state.kommune;state={step:0,category:null,measure:null,street:null,blsub:null,location:null,kommune:km,mapPrefill:false};render();}
+
+/* ===== Ergebnis-Vermerk (für E-Mail / Akte) ===== */
+function buildZVermerk(){
+  const r=getResult();if(!r)return '';
+  let sL=STREETS.find(x=>x.id===state.street);let sLabel=sL?sL.label:'';
+  if(state.street==="bundeslandstrasse"&&state.blsub){const sub=BL_SUB.find(b=>b.id===state.blsub);if(sub)sLabel=sub.label;}
+  let locId=state.location;
+  const sEff=(state.street==="bundeslandstrasse")?state.blsub:state.street;
+  if((sEff==="bundesstrasse"||sEff==="landesstrasse1"||sEff==="landesstrasse2")&&locId==="innerorts")locId="ortsdurchfahrt";
+  const loc=LOCATIONS.find(l=>l.id===locId);
+  let t='ZUSTÄNDIGKEITEN RADVERKEHR SAARLAND\n';
+  t+='Erstellt am: '+new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})+'\n';
+  t+='Maßnahme: '+r.measure.label+'\n';
+  t+='Straße: '+sLabel+(loc?(' · '+loc.label):'')+'\n';
+  if(state.kommune){t+='Kommune: '+state.kommune+'\n';const kk=findKommune(state.kommune);const kt=kontaktFor(kk);if(kt){t+='Kontakt StVB: '+kt.name+(kt.tel?(' · Tel. '+kt.tel):'')+(kt.mail?(' · '+kt.mail):'')+' · www.'+kt.web+'\n';}}
+  t+='\n'+(r.measure.type==='bau'?'Zuständiger Baulastträger':'Zuständige Behörde (verkehrsrechtliche Anordnung)')+':\n'+r.authority+'\n('+r.authorityDetail+')\n';
+  if(r.measure.type!=='bau')t+='\nStraßenbaulastträger:\n'+r.baulast+'\n('+r.baulastDetail+')\n';
+  t+='\nRechtsgrundlage: '+r.legal+'\n';
+  t+='Aufsichtsbehörde: '+r.aufsicht+'\n';
+  if(r.warnings.length){t+='\nACHTUNG – in dieser Lage nicht vorgesehen:\n';r.warnings.forEach(w=>{t+='- '+w+'\n';});}
+  if(r.notes.length){t+='\nRechtliche Hinweise & Praxistipps:\n';r.notes.forEach(n=>{t+='- '+n+'\n';});}
+  if(r.praxis.length){t+='\nMaße & Planungshinweise (ERA 2010 / MuLöS BW):\n';r.praxis.forEach(p=>{t+='- '+p+'\n';});}
+  t+='\nOrientierungshilfe, keine Rechtsberatung – Zuständigkeit im Einzelfall mit der Behörde klären.\nQuelle: Zuständigkeiten Radverkehr Saarland · 2Rat – www.2rat.org';
+  return t;
+}
+function copyZVermerk(){const text=buildZVermerk();const done=()=>{const b=document.getElementById('copyBtn');if(!b)return;b.textContent='Kopiert ✓';b.classList.add('copied');setTimeout(()=>{b.textContent='Kopieren';b.classList.remove('copied');},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>zfb(text,done));}else{zfb(text,done);}}
+function zfb(text,done){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}
+function sendZMail(){window.location.href='mailto:?subject='+encodeURIComponent('Zuständigkeiten Radverkehr Saarland')+'&body='+encodeURIComponent(buildZVermerk());}
+function downloadZTxt(){const t=buildZVermerk();const blob=new Blob([t],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='zustaendigkeiten-radverkehr.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(a.href);}
 
 function renderKommuneBar(){
   let h='<label for="kommuneSelect" class="kommune-label">Kommune (optional – macht das Ergebnis konkret):</label>';

@@ -165,7 +165,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px;color:var(--gray)}
         <div class="header-title">VwV-StVO 2025 <span>Maßnahmen-Übersicht Radverkehr</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br>Stand 06/2026</div>
+    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br>Stand 07/2026 · v2</div>
   </div>
 </div>
 
@@ -186,6 +186,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px;color:var(--gray)}
     </select>
     <button id="expandAllBtn">Alle aufklappen</button>
     <button id="collapseAllBtn">Alle zuklappen</button>
+      <button id="printBtn">🖨️ Druckfassung</button>
   </div>
 
   <div id="measuresContainer"></div>
@@ -298,8 +299,8 @@ const TOOL_LINKS = {
   "t30_querungen":            { zust: "tempo30_strecke",   fm: "2_4" },
   "t30_lueckenschluss":       { zust: "tempo30_strecke",   fm: "2_1" },
   "einbahn_oeffnung":         { zust: "einbahn_oeffnung",  fm: "2_1" },
-  "verkehrsversuch":          { zust: "beschilderung",     fm: "2_10" },
-  "fgu":                      { zust: "beschilderung",     fm: "2_4" },
+  "verkehrsversuch":          { zust: null,                fm: "2_10" },
+  "fgu":                      { zust: null,                fm: "2_4" },
   "bewohnerparken":           { zust: null,                fm: null }
 };
 
@@ -438,7 +439,7 @@ const MEASURES = {
     rn: "VwV zu Zeichen 220",
     legal: "§ 45 Abs. 1 StVO, VwV-StVO zu Z 220",
     explanation: "In Einbahnstraßen mit Tempo 30 soll der Radverkehr in Gegenrichtung zugelassen werden, wenn die örtlichen Verhältnisse dies erlauben (insbesondere ausreichende Fahrbahn- bzw. Begegnungsbreite, übersichtliche Knoten). Der Verzicht ist nur in begründeten Ausnahmefällen sachgerecht.",
-    arg: "Die Einbahnstraße [Name] wird nach § 45 Abs. 1 StVO i. V. m. der VwV-StVO zu Z 220 für den Radverkehr in Gegenrichtung freigegeben (Zeichen 1000-32 / 1022-10). Die Voraussetzungen (insbesondere Fahrbahnbreite und Knotensicherheit) wurden geprüft und sind gegeben.",
+    arg: "Die Einbahnstraße wird nach § 45 Abs. 1 StVO i. V. m. der VwV-StVO zu Z 220 für den Radverkehr in Gegenrichtung freigegeben (Zeichen 1000-32 / 1022-10). Die Voraussetzungen (insbesondere Fahrbahnbreite und Knotensicherheit) wurden geprüft und sind gegeben.",
     practice: "Erforderliche Beschilderung: am Anfang Z 220 + Z 1000-32 'Radverkehr frei in Gegenrichtung'; am Ende Z 267 + Z 1022-10. Knotensicherung durch Furtmarkierungen oder Aufstellbereiche prüfen."
   },
   "verkehrsversuch": {
@@ -590,6 +591,7 @@ document.getElementById('collapseAllBtn').addEventListener('click', () => {
   document.querySelectorAll('.measure-card').forEach(c => c.classList.remove('open'));
   document.querySelectorAll('.measure-header').forEach(h => h.setAttribute('aria-expanded','false'));
 });
+document.getElementById('printBtn').addEventListener('click', () => window.print());
 
 /* ── Tool-Generatoren ── */
 function fillMeasureSelects(){
@@ -639,7 +641,7 @@ Ort: ${ort}
 
 Sehr geehrte Damen und Herren,
 
-hiermit beantrage ich die verkehrsrechtliche Anordnung der oben genannten Maßnahme in der ${ort}.
+hiermit beantrage ich die verkehrsrechtliche Anordnung der oben genannten Maßnahme im Bereich „${ort}“.
 
 Begründung:
 ${m.arg}
@@ -658,10 +660,10 @@ Mit freundlichen Grüßen
 function buildRat(m, kommune, ort){
   return `Vorlage für den Gemeinde-/Stadtrat – ${kommune}
 
-TOP: ${m.name} in der ${ort}
+TOP: ${m.name} – ${ort}
 
 1. Sachverhalt
-Die Verwaltung plant die Anordnung folgender Maßnahme in der ${ort}: ${m.name}.
+Die Verwaltung plant die Anordnung folgender Maßnahme im Bereich „${ort}“: ${m.name}.
 
 ${m.explanation}
 
@@ -690,7 +692,7 @@ ${m.name} – ${ort}
 
 Liebe Anwohnerinnen und Anwohner,
 
-die ${kommune} plant in der ${ort} folgende Maßnahme: ${m.name}.
+die ${kommune} plant im Bereich „${ort}“ folgende Maßnahme: ${m.name}.
 
 Was bedeutet das?
 ${m.desc}. ${m.explanation}

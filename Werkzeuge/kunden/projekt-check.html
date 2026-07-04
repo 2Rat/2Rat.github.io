@@ -168,7 +168,7 @@ const FALLTYPEN=[
  pruef:["Haushalt und Förderfähigkeit klären","Grundstücke und Widmung prüfen","Knotenpunkte und Querungen planen","Beleuchtung und Entwässerung mitdenken","Wer unterhält den Weg später?"],
  steps:["Ausgangspunkt und Ziel festhalten","Baulast und Eigentum klären","Förderung prüfen","Beteiligte einbinden","Planung beauftragen"],
  hinweis:"Gemeint ist hier ein Radweg an einer Gemeinde- oder Ortsstraße. Liegt der Radweg an einer Bundes- oder Landesstraße (auch in der Ortsdurchfahrt)? Dann passt der Falltyp „Etwas an einer Durchgangsstraße“ besser – dort hat meist das Land (LfS) die Federführung.",
- links:["zustaendigkeiten","vergabe"], askFoerder:true, askStrasse:false},
+ links:["zustaendigkeiten","vergabe"], askFoerder:true},
 {id:"fahrradstrasse",icon:"🛣️",label:"Fahrradstraße oder -zone einrichten",
  desc:"Eine einzelne Fahrradstraße oder eine ganze Fahrradzone",
  lead:"Auf einer Gemeindestraße kann Ihre Kommune die Fahrradstraße im Saarland selbst anordnen – bei einer Fahrradzone wirkt sie über das Einvernehmen mit.",
@@ -176,7 +176,7 @@ const FALLTYPEN=[
  pruef:["Netzfunktion und Eignung prüfen","Einzelne Fahrradstraße oder zusammenhängende Zone? (unterschiedliche Rechtsgrundlage)","Begleitmaßnahmen festlegen (Bevorrechtigung, Markierung)","Beschilderung und Markierung","Anlieger informieren","Wirkung später prüfen (Evaluation)"],
  steps:["Netzfunktion und Eignung prüfen","Klären, ob Fahrradstraße (einzeln) oder Fahrradzone","Anordnung durch die zuständige Straßenverkehrsbehörde","Beteiligte informieren","Umsetzen und evaluieren"],
  hinweis:"Wichtig ist der Unterschied zwischen Straße und Zone: Eine einzelne Fahrradstraße (Z 244.1) wird über § 45 Abs. 1 StVO angeordnet. Im Saarland ist diese Befugnis auf die Gemeinden übertragen (§ 12 StVZustG umfasst § 45 Abs. 1 bis 1d) – auf ihren eigenen Gemeindestraßen kann die Gemeinde die Fahrradstraße also selbst anordnen. Eine Fahrradzone (Z 244.3) dagegen läuft über § 45 Abs. 1i StVO, der nicht auf die Gemeinden übertragen ist: Hier ordnet die Straßenverkehrsbehörde (Kreis/Regionalverband bzw. Saarbrücken, Völklingen, St. Ingbert) im Einvernehmen mit der Gemeinde an. Die Zone darf sich nicht auf Bundes-, Landes-, Kreis- oder Vorfahrtstraßen erstrecken.",
- links:["zustaendigkeiten"], askFoerder:true, askStrasse:false},
+ links:["zustaendigkeiten"], askFoerder:true},
 {id:"markierung",icon:"🚧",label:"Schilder, Markierung oder Tempo ändern",
  desc:"Schutzstreifen, Tempo 30, Einbahn-Öffnung, Beschilderung",
  lead:"Die Straßenverkehrsbehörde ordnet an – das ist meist der Landkreis bzw. Regionalverband, in Saarbrücken, Völklingen und St. Ingbert die Stadt selbst. Der Baulastträger setzt um.",
@@ -184,21 +184,21 @@ const FALLTYPEN=[
  pruef:["Fahrbahnbreite und Sichtbeziehungen","VwV-StVO 2025 beachten","Beschilderung und Markierung","auf Musterlösungen zurückgreifen"],
  steps:["Genaue Maßnahme festlegen","Mit Straßenverkehrsbehörde klären","Anordnung einholen","Umsetzung durch Bauhof/Baulastträger"],
  hinweis:"Eine Roteinfärbung mit Piktogrammkette hat unterstützenden Charakter und ist Sache des Baulastträgers – sie ersetzt nicht die Anordnung der zugrunde liegenden Führung. Mit Straßenverkehrsbehörde und Polizei abstimmen.",
- links:["zustaendigkeiten"], askFoerder:false, askStrasse:true},
+ links:["zustaendigkeiten"], askFoerder:false},
 {id:"abstellanlage",icon:"🅿️",label:"Fahrräder abstellen ermöglichen",
  desc:"Bügel, überdachte Anlagen, Abstellplätze",
  lead:"Ihre Kommune plant und baut.",
  beteiligte:["Bau-/Tiefbauamt","Verkehrsplanung","Flächeneigentümer"],
  pruef:["Standort und Flächenverfügbarkeit","Förderfähigkeit prüfen","Diebstahlschutz und Beleuchtung","Reinigung und Unterhaltung klären"],
  steps:["Bedarf und Standort festlegen","Fläche und Eigentum klären","Förderung prüfen","Anlage beschaffen und aufstellen"],
- links:["vergabe"], askFoerder:true, askStrasse:false},
+ links:["vergabe"], askFoerder:true},
 {id:"schulweg",icon:"🎒",label:"Schulweg sicherer machen",
  desc:"Sichere Schulwege, Hol-/Bringzonen, Schulstraße",
  lead:"Das läuft gemeinsam: Schule, Schulträger und Kommune stimmen sich ab – eine Stelle allein hat hier nicht den Hut auf.",
  beteiligte:["Schulträger","Schule","Straßenverkehrsbehörde","Polizei","Bau-/Tiefbauamt","Eltern"],
  pruef:["Querungen und Bringverkehr","Hol-/Bringzonen einrichten","Schulstraße prüfen (temporäre Sperrung zu Bring-/Holzeiten)","Abstellanlagen an der Schule","mit Eltern und Schule kommunizieren"],
  steps:["Problemstellen mit Schule aufnehmen","Beteiligte an einen Tisch holen","Maßnahmen festlegen","Förderung prüfen","Umsetzen und begleiten"],
- links:["zustaendigkeiten"], askFoerder:true, askStrasse:false},
+ links:["zustaendigkeiten"], askFoerder:true},
 {id:"bundlandstrasse",icon:"🤝",label:"Etwas an einer Durchgangsstraße",
  desc:"Vorhaben an einer Bundes- oder Landesstraße",
  lead:"DYNAMIC", /* wird je nach Lage gesetzt */
@@ -209,7 +209,7 @@ const FALLTYPEN=[
      beteiligte:["Eigene Verkehrsplanung / Bauamt","Straßenverkehrsbehörde (örtlich)","Landesbetrieb für Straßenbau (LfS) als Baulastträger","Polizei"],
      pruef:["Einvernehmen der Gemeinde sichern (§ 45 Abs. 1b StVO)","Baulast klären: Fahrbahn (inkl. abmarkierter Parkstreifen auf der Fahrbahn) und straßenbegleitende Radwege beim Land/Bund, selbständige Gehwege und eigene Parkflächen bei der Kommune","Kostenteilung bei gemeinsamen Geh-/Radwegen früh mit dem LfS klären","Anordnung mit Straßenverkehrsbehörde abstimmen"],
      steps:["Frühzeitig Kontakt zum LfS aufnehmen","Eigene Position und Wünsche klären","Baulast- und Kostenfragen klären","Anordnung abstimmen","Umsetzung begleiten"],
-     hinweis:"In der Ortsdurchfahrt redet die Kommune mit: Sie hat Einvernehmensrecht (§ 45 Abs. 1b StVO) und trägt die Baulast für selbständige Gehwege und eigene Parkflächen. Die Fahrbahn – einschließlich eines nur darauf abmarkierten Parkstreifens – sowie straßenbegleitende Radwege bleiben in der Baulast des Landes/Bundes."
+     hinweis:"In der Ortsdurchfahrt redet die Kommune mit: Sie hat Einvernehmensrecht (§ 45 Abs. 1b StVO) und trägt die Baulast für selbständige Gehwege und eigene Parkflächen. Die Fahrbahn – einschließlich eines nur darauf abmarkierten Parkstreifens – sowie straßenbegleitende Radwege bleiben in der Baulast des Landes/Bundes. Ausnahme: Städte mit mehr als 80.000 Einwohnern (im Saarland nur Saarbrücken) tragen die Baulast der Ortsdurchfahrt selbst – dort oben die Kommune auswählen, dann zeigt das Ergebnis den Sonderfall."
    },
    ausserorts:{
      lead:"Das Land (LfS) hat den Hut auf – die Kommune bringt sich ein.",
@@ -227,7 +227,7 @@ const FALLTYPEN=[
  pruef:["Flächenverfügbarkeit und Gestattung klären","Förderfähigkeit prüfen","Beleuchtung und Diebstahlschutz","Reinigung und Unterhaltung sichern"],
  steps:["Standort und Bedarf klären","Flächeneigentümer (oft DB/ÖPNV) ansprechen","Förderung prüfen","Anlage planen und bauen"],
  hinweis:"Bahnhofsflächen gehören oft der DB InfraGO oder dem ÖPNV-Träger – die Flächenfrage früh klären.",
- links:["vergabe"], askFoerder:true, askStrasse:false},
+ links:["vergabe"], askFoerder:true},
 {id:"tourroute",icon:"🧭",label:"Touristische Route",
  desc:"Routenabschnitt, Wegweisung, SaarRadland",
  lead:"Wer baulich zuständig ist, hängt vom konkreten Wegabschnitt ab.",
@@ -235,7 +235,7 @@ const FALLTYPEN=[
  pruef:["Konkreten Wegabschnitt und Baulast klären","Wegweisung nach FGSV-Standard","mit SaarRadland / TZS abstimmen","Mängelmanagement und Unterhaltung"],
  steps:["Wegabschnitt genau bestimmen","Baulast klären","Mit SaarRadland/TZS abstimmen","Maßnahme umsetzen"],
  hinweis:"Touristische Routenverantwortung und bauliche Baulast fallen oft auseinander – maßgeblich ist der konkrete Wegabschnitt (Gemeindestraße, Wirtschaftsweg, Waldweg, private Fläche …).",
- links:["zustaendigkeiten"], askFoerder:true, askStrasse:false},
+ links:["zustaendigkeiten"], askFoerder:true},
 {id:"unfall",icon:"⚠️",label:"Gefahrenstelle entschärfen",
  desc:"Unfallhäufung oder Sicherheitsproblem",
  lead:"Die Unfallkommission ist der zentrale Akteur.",
@@ -244,14 +244,14 @@ const FALLTYPEN=[
  steps:["Stelle und Unfalllage dokumentieren","Unfallkommission einbinden","Maßnahmen beschließen lassen","Umsetzen","Wirkung evaluieren"],
  unfallkommission:true,
  hinweis:"Bei Unfallhäufungen ist die Unfallkommission zentral. Im Saarland gibt es zehn örtliche Unfallkommissionen (mit Straßenverkehrsbehörde, Straßenbaubehörde und Polizei). Sie beschließt die Gegenmaßnahmen.",
- links:[], askFoerder:false, askStrasse:false},
+ links:[], askFoerder:false},
 {id:"aktion",icon:"📣",label:"Aktion oder Kampagne",
  desc:"STADTRADELN, Mobilitätswoche, Aktionstag",
  lead:"Ihre Kommune organisiert – mehrere Stellen wirken mit.",
  beteiligte:["Ordnungsamt","Straßenverkehrsbehörde","Polizei","Schulen / Vereine","Pressestelle"],
  pruef:["Genehmigung und Sondernutzung","Sicherheit und Versicherung","Kommunikation und Presse","ggf. Sperrungen anmelden"],
  steps:["Konzept und Termin festlegen","Genehmigungen einholen","Partner und Presse einbinden","Durchführen und auswerten"],
- links:[], askFoerder:false, askStrasse:false}
+ links:[], askFoerder:false}
 ];
 
 /* ====== ZUSATZFAKTOREN aus Kap. 3.7 ====== */
@@ -291,7 +291,7 @@ const OD_BAULAST=["Saarbrücken"];
    Zuordnung: eigene StVB nur Saarbrücken/Völklingen/St. Ingbert, sonst Landkreis/RV. */
 const KONTAKTE={
  "rv":{name:"Regionalverband Saarbrücken – Straßenverkehrsbehörde",tel:"0681 506-3350",mail:"strassenverkehr@rvsbr.de",web:"regionalverband-saarbruecken.de"},
- "sls":{name:"Landkreis Saarlouis – Straßenverkehrsbehörde",tel:"06831 444-0",mail:"",web:"kreis-saarlouis.de"},
+ "sls":{name:"Landkreis Saarlouis – Straßenverkehrsbehörde (Amt für öffentliche Sicherheit und Ordnung)",tel:"06831 444-0",mail:"amt32@kreis-saarlouis.de",web:"kreis-saarlouis.de"},
  "mzg":{name:"Landkreis Merzig-Wadern – Straßenverkehrsbehörde",tel:"06861 80-2440",mail:"strassenverkehr@merzig-wadern.de",web:"merzig-wadern.de"},
  "nk":{name:"Landkreis Neunkirchen – Straßenverkehrsbehörde",tel:"06824 906-7011",mail:"kfz@landkreis-neunkirchen.de",web:"landkreis-neunkirchen.de"},
  "wnd":{name:"Landkreis St. Wendel – Straßenverkehrsbehörde",tel:"06851 801-2804",mail:"strassenverkehrsbehoerde@lkwnd.de",web:"landkreis-st-wendel.de"},
@@ -395,7 +395,24 @@ function viewExtras(){
 }
 
 function effData(f){
-  if(f.varianten&&state.lage&&f.varianten[state.lage])return f.varianten[state.lage];
+  if(f.varianten&&state.lage&&f.varianten[state.lage]){
+    const v=f.varianten[state.lage];
+    /* Sonderfall: Stadt >80.000 EW trägt die Baulast der Ortsdurchfahrt selbst
+       (§ 5 Abs. 2 FStrG / § 47 Abs. 2 SaarlStrG) – im Saarland nur Saarbrücken. */
+    if(state.lage==="ortsdurchfahrt"&&state.kommune){
+      const k=findKommune(state.kommune);
+      if(k&&k.odBaulast){
+        return Object.assign({},v,{
+          lead:"Ihre Stadt hat den Hut auf – als Stadt mit mehr als 80.000 Einwohnern trägt "+k.name+" die Baulast der Ortsdurchfahrt selbst.",
+          beteiligte:["Eigene Verkehrsplanung / Bauamt","Eigene Straßenverkehrsbehörde","Polizei","ggf. LfS (angrenzende freie Strecke)"],
+          pruef:["Baulast der Ortsdurchfahrt liegt bei der Stadt selbst (§ 5 Abs. 2 FStrG / § 47 Abs. 1 SaarlStrG)","Planung, Finanzierung und Förderfähigkeit im eigenen Haus klären","Anordnung über die eigene Straßenverkehrsbehörde","Übergang zur freien Strecke früh mit dem LfS abstimmen"],
+          steps:["Vorhaben intern abstimmen","Baulast- und Finanzierungsfragen im Haus klären","Anordnung durch die eigene Straßenverkehrsbehörde","Umsetzung planen und beauftragen"],
+          hinweis:"Sonderfall "+k.name+": Städte mit mehr als 80.000 Einwohnern tragen die Straßenbaulast für die Ortsdurchfahrten von Bundes- und Landesstraßen selbst (§ 5 Abs. 2 FStrG; für Landstraßen I./II. Ordnung § 47 Abs. 1 SaarlStrG). Fahrbahn, Radwege und Gehwege der Ortsdurchfahrt liegen damit bei der Stadt – der LfS führt erst auf der freien Strecke außerhalb. Ein gesondertes Einvernehmen nach § 45 Abs. 1b StVO spielt hier keine Rolle, da die Stadt zugleich eigene Straßenverkehrsbehörde ist."
+        });
+      }
+    }
+    return v;
+  }
   return f;
 }
 
@@ -476,7 +493,7 @@ function viewErgebnis(){
   }
   // Unfallkommission-Anlaufstelle
   if(f.unfallkommission){
-    h+='<div class="info-box"><div class="info-title">Örtliche Unfallkommission finden</div><div class="info-body">Die zuständige Unfallkommission läuft über den Landkreis bzw. Regionalverband gemeinsam mit der Polizei. Einstieg über das Land: www.saarland.de → Mobilität → Verkehrssicherheit → Unfallkommission</div></div>';
+    h+='<div class="info-box"><div class="info-title">Örtliche Unfallkommission finden</div><div class="info-body">Die zuständige Unfallkommission läuft über den Landkreis bzw. Regionalverband gemeinsam mit der Polizei. Einstieg über das Land: auf www.saarland.de nach „Unfallkommission" suchen – oder direkt bei der Straßenverkehrsbehörde des Kreises nachfragen</div></div>';
   }
 
   // Projektvermerk
@@ -486,6 +503,7 @@ function viewErgebnis(){
      '<div style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--gray-border)">'+
      '<button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="sendMail()">✉️ Als E-Mail</button>'+
      '<button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="downloadTxt()">⬇️ Als Text speichern</button>'+
+     '<button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="window.print()">🖨️ Drucken</button>'+
      '</div></div>';
 
   // Cross-Links – Fördermittel-Finder immer anbieten, wenn der Falltyp förderrelevant ist
@@ -509,6 +527,7 @@ function buildVermerk(){
   const f=FALLTYPEN.find(x=>x.id===state.falltyp);
   const d=effData(f);
   let t='PROJEKT-CHECK RADVERKEHR\n';
+  t+='Erstellt am: '+new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})+'\n';
   t+='Vorhaben: '+f.label;
   if(f.askLage&&state.lage)t+=' ('+(state.lage==="ortsdurchfahrt"?"Ortsdurchfahrt":"außerorts")+')';
   t+='\n';
