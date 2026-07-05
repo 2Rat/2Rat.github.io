@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /Werkzeuge/
+Disallow: /cockpit.html
+Disallow: /cmd/
