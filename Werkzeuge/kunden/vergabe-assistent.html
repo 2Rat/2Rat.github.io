@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>Vergabe-Assistent Saarland – 2Rat</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -304,6 +305,10 @@ function App() {
             }),
             e("div", { style: { padding: "10px 14px", fontSize: 14, fontWeight: 600, color: "#94a3b8", background: "#f8fafc", borderLeft: "1px solid #e2e8f0", display: "flex", alignItems: "center" }}, "€")
           ),
+          e("div", { style: { marginTop: 8, padding: "9px 12px", borderRadius: 8, background: "#fef9ec", border: "1px solid #f0e0b0", fontSize: 12, lineHeight: 1.55, color: "#7a6420" }},
+            e("b", null, "Auftragswert richtig schätzen (§ 3 VgV): "),
+            "Alle Lose und Teilaufträge desselben Vorhabens zusammenrechnen. Eine Aufteilung in kleinere Aufträge, um Wertgrenzen oder den EU-Schwellenwert zu umgehen, ist unzulässig."
+          ),
           e("div", { style: { display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }},
             [5000, 50000, 100000, 150000, 250000].map(function(v) {
               return e("button", {
@@ -398,7 +403,7 @@ function App() {
       ),
       e("div", { style: { marginTop: 16, padding: "12px 16px", borderRadius: 10, background: "rgba(0,0,0,0.02)", border: "1px solid #e2e8f0" }},
         e("p", { style: { fontSize: 10, color: "#a1a1aa", margin: 0, lineHeight: 1.6 }},
-          "Orientierungshilfe, keine Rechtsberatung. Grundlage: Vergabeerlass SL 2025 (Amtsbl. 26/2025, ab 01.07.2025 unbefristet) – Direktauftrag bis 100.000 €, darüber Freihändige Vergabe oder Beschränkte Ausschreibung bis zum EU-Schwellenwert (2026/27: Bau 5.404.000 €, Liefer/DL 216.000 €). KSVG §§ 82 ff. Alle Werte netto. Bei Fördermitteln ggf. strengere Vorgaben. Stand 07/2026."
+          "Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall. Grundlage: Vergabeerlass SL 2025 (Amtsbl. 26/2025, ab 01.07.2025 unbefristet) – Direktauftrag bis 100.000 €, darüber Freihändige Vergabe oder Beschränkte Ausschreibung bis zum EU-Schwellenwert (2026/27: Bau 5.404.000 €, Liefer/DL 216.000 €). KSVG §§ 82 ff. Alle Werte netto. Bei Fördermitteln ggf. strengere Vorgaben. Stand 07/2026."
         ),
         e("p", { style: { fontSize: 10, color: "#a1a1aa", margin: "6px 0 0", lineHeight: 1.6 }},
           "© 2Rat · Armin Jung · Radverkehrsplaner EIPOS · www.2rat.org"

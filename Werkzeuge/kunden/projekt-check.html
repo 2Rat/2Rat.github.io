@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>Projekt-Check Radverkehr Saarland – 2Rat</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -139,7 +140,7 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
   <div class="steps" id="steps"></div>
   <div id="content"></div>
   <div class="footer">
-    <b>Orientierungshilfe, keine Rechtsberatung.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. Stand 06/2026.
+    <b>Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. Stand 06/2026.
     Datengrundlage: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL, Stand 05/2026) sowie StVO, VwV-StVO 2025, StVZustG Saarland, SaarlStrG, FStrG.<br>
     Entwickelt von 2Rat – Büro für Radverkehrsplanung · <a href="https://www.2rat.org">www.2rat.org</a>
   </div>
@@ -338,7 +339,7 @@ function render(){
 function viewVorhaben(){
   let h='<h2>Was möchten Sie tun?</h2>'+
     '<div class="intro-line">In wenigen Schritten zeigt Ihnen dieses Werkzeug, <b>wer mit an den Tisch muss</b>, woran Sie denken müssen und welche Schritte anstehen – auch wenn Sie mit dem Thema noch nicht vertraut sind.</div>'+
-    '<div style="font-size:11.5px;color:var(--gray-light);margin:-8px 0 18px;line-height:1.5">Orientierungshilfe, <b>keine Rechtsberatung</b> – die formelle Zuständigkeit und Entscheidung liegt bei den zuständigen Behörden. Stand 06/2026.</div>'+
+    '<div style="font-size:11.5px;color:var(--gray-light);margin:-8px 0 18px;line-height:1.5">Orientierungshilfe, <b>keine Rechts- oder Fachberatung</b> – die formelle Zuständigkeit und Entscheidung liegt bei den zuständigen Behörden. Stand 06/2026.</div>'+
     '<div class="cards">';
   FALLTYPEN.forEach(f=>{
     h+='<div class="card'+(state.falltyp===f.id?' selected':'')+'" role="button" tabindex="0" aria-pressed="'+(state.falltyp===f.id)+'" onkeydown="cardKey(event)" onclick="pickFalltyp(\''+f.id+'\')">'+
@@ -552,7 +553,18 @@ function copyVermerk(){
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>fb(text,done));}else{fb(text,done);}
 }
 function fb(text,done){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}
-function sendMail(){const t=buildVermerk();window.location.href='mailto:?subject='+encodeURIComponent('Projekt-Check Radverkehr Saarland')+'&body='+encodeURIComponent(t);}
+function sendMail(){
+  const t=buildVermerk();const body=encodeURIComponent(t);
+  if(body.length>1800){
+    /* mailto wird von manchen Mailprogrammen bei ~2000 Zeichen gekappt:
+       Volltext in die Zwischenablage, Kurzfassung + Hinweis in den Body. */
+    fb(t,function(){});
+    const kurz=t.split('\n').slice(0,6).join('\n')+'\n[…]\n\nDer vollständige Vermerk wurde in die Zwischenablage kopiert – bitte hier mit Strg+V einfügen.';
+    window.location.href='mailto:?subject='+encodeURIComponent('Projekt-Check Radverkehr Saarland')+'&body='+encodeURIComponent(kurz);
+  }else{
+    window.location.href='mailto:?subject='+encodeURIComponent('Projekt-Check Radverkehr Saarland')+'&body='+body;
+  }
+}
 function downloadTxt(){const t=buildVermerk();const blob=new Blob([t],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='projektcheck-radverkehr.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(a.href);}
 function resetAll(){const km=state.kommune;state={step:0,falltyp:null,lage:null,extras:[],kommune:km};render();}
 function renderKommuneBar(){

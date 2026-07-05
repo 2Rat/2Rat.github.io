@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>Fördermittel-Finder Radverkehr Saarland – 2Rat</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -139,7 +140,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
   <div class="steps" id="steps"></div>
   <div id="content"></div>
   <div class="footer">
-    Dieses Tool dient als Orientierungshilfe und ersetzt keine Fördermittelberatung.
+    Dieses Tool dient als Orientierungshilfe und ersetzt keine Rechts- oder Fachberatung im Einzelfall.
     Grundlage: Förderrichtlinie Rad- und Fußverkehr Saarland (FRL-NMOB-Rad-Fuß), gültig 17.11.2025 – 17.11.2030.
     Verbindlich ist ausschließlich der Richtlinientext der Bewilligungsbehörde.
     <br>
@@ -489,12 +490,23 @@ function buildFVermerk(){
   t+='\nBewilligungsbehörde: MUKMAV, Referat A/4, Keplerstraße 18, 66117 Saarbrücken\n';
   t+='Fachliche Rückfragen: fahrrad@umwelt.saarland.de · Tel. (0681) 501-1426\n';
   t+='Richtlinie: FRL-NMOB-Rad-Fuß · gültig 17.11.2025 – 17.11.2030\n';
-  t+='\nOrientierungshilfe, keine Rechts- oder Förderberatung – maßgeblich ist die Richtlinie.\nQuelle: Fördermittel-Finder Radverkehr Saarland · 2Rat – www.2rat.org';
+  t+='\nOrientierungshilfe, keine Rechts- oder Fachberatung – maßgeblich ist die Richtlinie.\nQuelle: Fördermittel-Finder Radverkehr Saarland · 2Rat – www.2rat.org';
   return t;
 }
 function copyFVermerk(){const text=buildFVermerk();const done=()=>{const b=document.getElementById('copyBtn');if(!b)return;b.textContent='Kopiert ✓';b.classList.add('copied');setTimeout(()=>{b.textContent='Kopieren';b.classList.remove('copied');},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>ffb(text,done));}else{ffb(text,done);}}
 function ffb(text,done){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}
-function sendFMail(){window.location.href='mailto:?subject='+encodeURIComponent('Fördermittel-Check Radverkehr Saarland')+'&body='+encodeURIComponent(buildFVermerk());}
+function sendFMail(){
+  const t=buildFVermerk();const body=encodeURIComponent(t);
+  if(body.length>1800){
+    /* mailto wird von manchen Mailprogrammen bei ~2000 Zeichen gekappt:
+       Volltext in die Zwischenablage, Kurzfassung + Hinweis in den Body. */
+    ffb(t,function(){});
+    const kurz=t.split('\n').slice(0,6).join('\n')+'\n[…]\n\nDer vollständige Vermerk wurde in die Zwischenablage kopiert – bitte hier mit Strg+V einfügen.';
+    window.location.href='mailto:?subject='+encodeURIComponent('Fördermittel-Check Radverkehr Saarland')+'&body='+encodeURIComponent(kurz);
+  }else{
+    window.location.href='mailto:?subject='+encodeURIComponent('Fördermittel-Check Radverkehr Saarland')+'&body='+body;
+  }
+}
 function downloadFTxt(){const t=buildFVermerk();const blob=new Blob([t],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='foerdermittel-check.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(a.href);}
 
 /* URL-Parameter ?f=<foerder-id> auswerten (Sprung aus dem VwV-StVO-Tool).

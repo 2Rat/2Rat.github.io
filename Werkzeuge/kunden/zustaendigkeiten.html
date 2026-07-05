@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>Zuständigkeiten Radverkehr Saarland – 2Rat</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -149,7 +150,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
   <div class="steps" id="steps"></div>
   <div id="content"></div>
   <div class="footer">
-    Dieses Tool dient als Orientierungshilfe und ersetzt keine Rechtsberatung.
+    Dieses Tool dient als Orientierungshilfe und ersetzt keine Rechts- oder Fachberatung im Einzelfall.
     Grundlagen: StVZustG Saarland, StVO, VwV-StVO 2025, SaarlStrG, FStrG, ERA 2010, Musterlösungen BW (Okt. 2025).
     Im Einzelfall bitte Zuständigkeit mit der jeweiligen Behörde prüfen.
     <br>
@@ -612,12 +613,23 @@ function buildZVermerk(){
   if(r.warnings.length){t+='\nACHTUNG – in dieser Lage nicht vorgesehen:\n';r.warnings.forEach(w=>{t+='- '+w+'\n';});}
   if(r.notes.length){t+='\nRechtliche Hinweise & Praxistipps:\n';r.notes.forEach(n=>{t+='- '+n+'\n';});}
   if(r.praxis.length){t+='\nMaße & Planungshinweise (ERA 2010 / MuLöS BW):\n';r.praxis.forEach(p=>{t+='- '+p+'\n';});}
-  t+='\nOrientierungshilfe, keine Rechtsberatung – Zuständigkeit im Einzelfall mit der Behörde klären.\nQuelle: Zuständigkeiten Radverkehr Saarland · 2Rat – www.2rat.org';
+  t+='\nOrientierungshilfe, keine Rechts- oder Fachberatung – Zuständigkeit im Einzelfall mit der Behörde klären.\nQuelle: Zuständigkeiten Radverkehr Saarland · 2Rat – www.2rat.org';
   return t;
 }
 function copyZVermerk(){const text=buildZVermerk();const done=()=>{const b=document.getElementById('copyBtn');if(!b)return;b.textContent='Kopiert ✓';b.classList.add('copied');setTimeout(()=>{b.textContent='Kopieren';b.classList.remove('copied');},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>zfb(text,done));}else{zfb(text,done);}}
 function zfb(text,done){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}
-function sendZMail(){window.location.href='mailto:?subject='+encodeURIComponent('Zuständigkeiten Radverkehr Saarland')+'&body='+encodeURIComponent(buildZVermerk());}
+function sendZMail(){
+  const t=buildZVermerk();const body=encodeURIComponent(t);
+  if(body.length>1800){
+    /* mailto wird von manchen Mailprogrammen bei ~2000 Zeichen gekappt:
+       Volltext in die Zwischenablage, Kurzfassung + Hinweis in den Body. */
+    zfb(t,function(){});
+    const kurz=t.split('\n').slice(0,6).join('\n')+'\n[…]\n\nDer vollständige Vermerk wurde in die Zwischenablage kopiert – bitte hier mit Strg+V einfügen.';
+    window.location.href='mailto:?subject='+encodeURIComponent('Zuständigkeiten Radverkehr Saarland')+'&body='+encodeURIComponent(kurz);
+  }else{
+    window.location.href='mailto:?subject='+encodeURIComponent('Zuständigkeiten Radverkehr Saarland')+'&body='+body;
+  }
+}
 function downloadZTxt(){const t=buildZVermerk();const blob=new Blob([t],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='zustaendigkeiten-radverkehr.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(a.href);}
 
 function renderKommuneBar(){
