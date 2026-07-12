@@ -135,7 +135,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>Stand 06/2026 · v15</div>
+    <div class="header-right">Saarland<br>Stand 07/2026 · v16</div>
   </div>
 </div>
 
@@ -151,7 +151,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
   <div id="content"></div>
   <div class="footer">
     Dieses Tool dient als Orientierungshilfe und ersetzt keine Rechts- oder Fachberatung im Einzelfall.
-    Grundlagen: StVZustG Saarland, StVO, VwV-StVO 2025, SaarlStrG, FStrG, ERA 2010, Musterlösungen BW (Okt. 2025).
+    Grundlagen: StVZustG Saarland, StVO, VwV-StVO 2025, SaarlStrG, FStrG, ERA 2010; ergänzend Musterlösungen BW (Okt. 2025, im Saarland nicht verbindlich).
     Im Einzelfall bitte Zuständigkeit mit der jeweiligen Behörde prüfen.
     <br>
     <strong style="color:var(--gray)">© 2Rat</strong> · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
@@ -260,7 +260,7 @@ function initZmap(){if(zmap)return;zmap=L.map('zmap').setView([49.38,6.95],9);L.
 function zmapClick(ev){const lat=ev.latlng.lat.toFixed(6),lon=ev.latlng.lng.toFixed(6);if(zmarker)zmarker.setLatLng(ev.latlng);else zmarker=L.marker(ev.latlng).addTo(zmap);setMapStatus('<div class="ok">⏳ Stelle wird ausgewertet …</div>');const q='[out:json][timeout:25];is_in('+lat+','+lon+');out tags;way(around:60,'+lat+','+lon+')["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road|track|service|cycleway|path|footway)$"];out geom;way(around:100,'+lat+','+lon+')["highway"];rel(bw)["route"~"^(bicycle|mtb|hiking|foot|running|inline_skates)$"];out geom;';queryOverpass(q).then(function(d){applyMap(d,parseFloat(lat),parseFloat(lon));}).catch(function(){setMapStatus('<div class="ok" style="background:#fef3cd;border-color:#e0c067;color:#7a5b00">Abfrage nicht erreichbar – die Karte braucht Internet und läuft nur über einen Webserver / GitHub Pages (nicht per Doppelklick als lokale Datei). Bitte unten manuell wählen.</div>');});}
 function applyMap(d,lat,lon){const els=(d&&d.elements)||[];const areas=els.filter(function(e){return e.type==='area'&&e.tags;});const ways=els.filter(function(e){return e.type==='way'&&e.tags&&e.geometry;});const inRes=areas.some(function(e){return e.tags.landuse==='residential';});const gem=areas.find(function(e){return e.tags.boundary==='administrative'&&e.tags.admin_level==='8';});const gemName=gem?(gem.tags['name:de']||gem.tags.name||''):'';const km=gemName?matchKommuneName(gemName):null;const nw=pickMainWay(ways,lat,lon);if(km)state.kommune=km;let cls=null,lg=null;if(nw){cls=strKlasseMap(nw.way.tags);lg=lageGuessMap(nw.way.tags,inRes);state.street=cls.street;state.blsub=cls.blsub;state.location=lg;}const ROUTE_LABELS={bicycle:'Radroute',mtb:'MTB-Route',hiking:'Wanderweg',foot:'Fußroute',running:'Laufroute',inline_skates:'Skate-Route'};function routeMinDist(r){let md=Infinity;(r.members||[]).forEach(function(m){const g=m.geometry||[];for(let i=0;i+1<g.length;i++){const dd=segDist(lat,lon,g[i].lat,g[i].lon,g[i+1].lat,g[i+1].lon);if(dd<md)md=dd;}});return md;}const rels=els.filter(function(e){return e.type==='relation'&&e.tags&&ROUTE_LABELS[e.tags.route];}).map(function(r){return {r:r,d:routeMinDist(r)};}).filter(function(o){return o.d<=60;}).sort(function(a,b){return a.d-b.d;});let routeHtml='';if(rels.length){routeHtml='<br><b>Route(n):</b><br>'+rels.map(function(o){var r=o.r;var lbl=(r.tags.name||r.tags.ref||'Route')+' ('+ROUTE_LABELS[r.tags.route]+')'+(r.tags.network?(' ['+r.tags.network+']'):'');var prox=o.d<=20?'an dieser Stelle':('in der Nähe (~'+Math.round(o.d)+' m)');return '🚴 '+escH(lbl)+' – <span style="color:var(--gray-light)">'+prox+'</span>';}).join('<br>');}var rtc=nw?radwegTyp(nw.way.tags||{}):null;var wegLine;if(cls){if(rtc){var showRi=/Radweg/.test(rtc);wegLine='Straße/Weg: '+rtc+(showRi?((nw.way.tags.oneway==='yes')?' · Einrichtungsverkehr':' · Zweirichtungsverkehr'):'')+' <span style="color:var(--gray-light);font-size:11.5px">(lt. OSM)</span>';}else{wegLine='Straße/Weg: '+cls.klasse;}}else{wegLine='Straße: — (keine in der Nähe gefunden)';}var radHint='';var clickedIsPath=nw?/^(cycleway|path|footway)$/.test(nw.way.tags.highway||''):false;if(!rtc&&!clickedIsPath){var chosenId=nw?nw.way.id:null;var bestRad=null,bestRadD=Infinity,bestRadTyp=null;ways.forEach(function(w){if(chosenId&&w.id===chosenId)return;var typ=begleitTyp(w.tags||{});if(!typ)return;var g=w.geometry||[];var md=Infinity;for(var i=0;i+1<g.length;i++){var dd=segDist(lat,lon,g[i].lat,g[i].lon,g[i+1].lat,g[i+1].lon);if(dd<md)md=dd;}if(md<bestRadD){bestRadD=md;bestRad=w;bestRadTyp=typ;}});if(bestRad&&bestRadD<=50){var showRi2=/Radweg/.test(bestRadTyp);var ri=showRi2?((bestRad.tags.oneway==='yes')?' · Einrichtungsverkehr':' · Zweirichtungsverkehr'):'';radHint='<br><b>Begleitende Radinfrastruktur:</b><br>🚲 '+escH(bestRadTyp)+' – '+(bestRadD<=20?'an dieser Stelle':('in der Nähe (~'+Math.round(bestRadD)+' m)'))+ri+' <span style="color:var(--gray-light)">(lt. OSM)</span>';}if(!radHint&&nw){var rc=roadCycleway(nw.way.tags||{});if(rc){radHint='<br><b>Begleitende Radinfrastruktur:</b><br>🚲 '+escH(rc)+' – an dieser Straße <span style="color:var(--gray-light)">(lt. OSM)</span>';}}}state.mapPrefill=true;state.step=0;state.category=null;state.measure=null;renderKommuneBar();setMapStatus('<div class="ok"><b>Aus Karte übernommen</b><br>Kommune: '+(km||'— (nicht erkannt – bitte unten wählen)')+'<br>'+wegLine+'<br>Lage: '+(lg?(lg==='innerorts'?'innerorts':'außerorts'):'unbekannt (wird abgefragt)')+routeHtml+radHint+'<br><span style="color:var(--gray-light);font-size:11.5px">Kommune, Straße und Lage sind schon eingetragen – Sie wählen nur noch die Maßnahme (alles änderbar).</span></div>');render();}
 
-/* Praxishinweise nach ERA 2010 und Musterlösungen BW (Okt. 2025) */
+/* Praxishinweise: primär ERA 2010; ergänzend Musterlösungen BW (Okt. 2025, im Saarland nicht verbindlich) */
 const PRAXIS={
   schutzstreifen:[
     "Regelbreite: 1,50 m inkl. Markierung (ERA 2010)",
@@ -282,8 +282,9 @@ const PRAXIS={
     "Kombiniert bauliche Trennung mit verkehrsrechtlicher Anordnung"
   ],
   fahrradstrasse:[
-    "Fahrbahnbreite: ≥ 4,10 m bei ≤ 1.500 Kfz/24h (MuLöS BW)",
-    "Fahrbahnbreite: ≥ 4,60 m bei ≤ 2.500 Kfz/24h (MuLöS BW)",
+    "Nutzbare Fahrgasse: ≥ 4,00 m – Begegnungsfall Rad/Rad (ERA 2010)",
+    "Bei zugelassenem Kfz-Verkehr: in der Praxis ≥ 4,60 m (Begegnung Kfz/Rad)",
+    "Ergänzend MuLöS BW 10/2025 (im Saarland nicht verbindlich): mit Kfz ≥ 3,50 m zzgl. Sicherheitstrennstreifen bei < 1.500 Kfz/24h; Fahrbahn nicht breiter als 5,50 m (Geschwindigkeitsdämpfung)",
     "Sicherheitstrennstreifen zum Parken: ≥ 0,75 m",
     "Bevorrechtigung an Knotenpunkten empfohlen (Beschilderung + ggf. Gehweganhebung)",
     "Bei Kfz-Freigabe: Diagonalsperren zur Unterbindung von Durchgangsverkehr prüfen (MuLöS BW RVR 3a-4)"
