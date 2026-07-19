@@ -221,6 +221,9 @@
     }
     .ticker__bar:hover { background: linear-gradient(90deg, #1a4a28, #1a3a1e, #2d5a22); }
     .ticker__bar:hover .ticker__track { animation-play-state: paused; }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker__track { animation: none; }
+    }
 
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
