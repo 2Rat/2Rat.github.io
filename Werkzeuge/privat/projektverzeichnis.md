@@ -6,8 +6,8 @@
 # 2RAT – Gesamt-Projektverzeichnis
 
 **Stand:** 19.07.2026
-**Anzahl Vorhaben (konsolidiert):** 33
-**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Portal-Stand (5 Tools) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment)
+**Anzahl Vorhaben (konsolidiert):** 36
+**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp)
 
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Claude liefert die komplette Datei neu → Armin committet. Fertig.
 
@@ -19,12 +19,12 @@
 |---|---|---|
 | ~~15.07.2026~~ **abgelaufen** | JGF FL1 – Skizzen-Frist verstrichen, Ausgang nachtragen (Skizze eingereicht?) | Förderung-Projekt |
 | **31.07.2026 (12 Tage!)** | JGF FL2 – Antrags-Frist | Förderung-Projekt |
-| **30.09.2026** | FRL-NMOB Jahres-Stichtag | Förderung-Projekt |
-| offen | Portal-Patch Admin-Code (2 Zeilen, am PC) | Tool-Portal |
-| wartet | AGFK-Logo → dann Portal-Refactoring | Tool-Portal |
+| **30.09.2026** | FRL-NMOB Jahres-Stichtag **+ AGFK-Kennenlern-Tools laufen ab (Upsell-Chance!)** **+ RAD-Lab-Testrunde endet** | Förderung / Tool-Portal |
+| wartet | AGFK-Logo → dann `agfk-sl/`-Tool-Varianten erstellen (Routing steht bereits) | Tool-Portal |
 
-**Status nachziehen (Fristen überholt, Ausgang hier nicht dokumentiert):**
-AGFK-Code (lief 15.05. ab – verlängert?) · Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai) · Demo-Code (lief 30.06. ab)
+**Status nachziehen (Ausgang hier nicht dokumentiert):**
+Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
+**Geklärt 19.07.:** AGFK-Code → neue Lizenz bis 15.05.2027 aktiv ✓ · Demo-Code → am 24.06. bewusst deaktiviert ✓ · Admin-Code → **aktiv** als „2Rat intern"-Lizenz (Hash identisch, im Array bis 2099 verlängert) ✓ – veralteten Kommentar im Array bei Gelegenheit löschen
 
 ---
 
@@ -72,11 +72,12 @@ AGFK-Code (lief 15.05. ab – verlängert?) · Wadgassen `date_to` (31.05.) · W
 - **Status:** vorbereitet
 - **Nächster Schritt:** Anschreiben „Radsaison 2026" gemäß Excel-Liste rausschicken
 
-### 1.5 AGFK-SL Pilotkunde (Tool-Lizenzierung)
+### 1.5 AGFK-SL Kunde (Tool-Lizenzierung) 🎉
 - **Kunde / Partner:** AGFK-SL (Irene & Nicole, geschaeftstelle@agfk-sl.de)
-- **Zweck:** Erste kommerzielle Lizenzierung der Tools „Zuständigkeiten" + „Fördermittel-Finder" – 1.900 € Ersteinrichtung + 700 €/Jahr Pflege (ohne USt.).
-- **Status:** vorbereitet (Angebot als DOCX raus) · Code-Status prüfen (lief 15.05. ab)
-- **Nächster Schritt:** Rückmeldung nachfassen · **Pflege-Nachweis:** Zuständigkeiten-Update v16 (12.07.) kommunizieren
+- **Zweck:** Erste kommerzielle Tool-Lizenzierung – **erfolgreich konvertiert:** Projekt-Check **beauftragt & bezahlt** (dauerhafte Lizenz). Übrige 4 Tools (Fördermittel-Finder, Zuständigkeiten, VwV-StVO 2025, Vergabe-Assistent) als Kennenlern-Zugang befristet bis **30.09.2026**.
+- **Lizenzen im Portal:** „AGFK Saarland" bis 15.05.2027 · „AGFK Honorarkraft" bis 27.05.2027 (5-Tool-Suite)
+- **Status:** läuft (zahlender Kunde)
+- **Nächster Schritt:** Vor 30.09.2026 Upsell-Gespräch zu den Kennenlern-Tools; nach AGFK-Logo: `agfk-sl/`-Varianten erstellen
 
 ---
 
@@ -85,22 +86,22 @@ AGFK-Code (lief 15.05. ab – verlängert?) · Wadgassen `date_to` (31.05.) · W
 
 ### 2.1 Werkzeuge-Portal (Login & Lizenzverwaltung)
 - **Kunde / Partner:** eigen (Infrastruktur)
-- **Zweck:** Passwortgeschütztes Portal auf GitHub Pages (`Werkzeuge/index.html`) mit SHA-256-gehashten Zugangscodes für die Tool-Distribution.
-- **Repo:** github.com/2Rat/2Rat.github.io *(Ordner `Werkzeuge/`)*
+- **Zweck:** Passwortgeschütztes Portal auf GitHub Pages (`Werkzeuge/index.html`). **Architektur seit 06–07/2026:** zentrales `TOOLS`-Array (6 Tools) + `PATHS`-Routing in Varianten-Ordner (`kunden/` = Vollversionen · `agfk-sl/` = AGFK-Fassungen, noch leer · `demo/` = Trial) + `LICENSES` mit `target` (Ordner-Variante), `tools`-Filter (Sichtbarkeit pro Kunde) und `toolExpires` (Ablauf pro Einzeltool). Neue Kundenlizenz = eine Zeile im Array.
+- **Repo:** github.com/2Rat/2Rat.github.io *(Ordner `Werkzeuge/`, Tools in `Werkzeuge/kunden/`)*
 - **Status:** läuft / produktiv · **Accessibility-Politur (7 Dateien) am 19.07.2026 deployed & verifiziert – Live-Stand = gepatchter Stand**
-- **Nächster Schritt:** Admin-Code-Patch einspielen (2-Zeilen-Edit LICENSES-Array, am PC); nach AGFK-Logo: Portal-Refactoring
+- **Nächster Schritt:** veralteten Array-Kommentar zur intern-Lizenz löschen; nach AGFK-Logo: `agfk-sl/`-Varianten befüllen
 
 ### 2.2 Zuständigkeiten Radverkehr Saarland
 - **Kunde / Partner:** eigen (Tool, lizenzpflichtig)
 - **Zweck:** Interaktive Entscheidungshilfe zur Bestimmung der zuständigen Behörde (Gemeinde / Landkreis / Regionalverband / Land-LfS) nach StVO/SaarlStrG.
-- **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/zustaendigkeiten.html`)*
+- **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/zustaendigkeiten.html`)*
 - **Status:** live · **v16 (12.07.2026)** – Fahrradstraße auf ERA-Werte korrigiert (4,00 m Fahrgasse statt alter MuLöS-2016-Wert 4,10 m), MuLöS BW als „ergänzend, im Saarland nicht verbindlich" gekennzeichnet
 - **Nächster Schritt:** Pflege bei VwV-Änderungen; Update als Pflege-Nachweis an AGFK-SL
 
 ### 2.3 Fördermittel-Finder (FRL-NMOB-Rad-Fuß)
 - **Kunde / Partner:** eigen (Tool, lizenzpflichtig)
 - **Zweck:** Entscheidungshilfe zur Förderkulisse für Rad- und Fußverkehrsmaßnahmen mit Praxis-Hinweisen pro Fördergegenstand.
-- **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/foerdermittel-finder.html`)*
+- **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/foerdermittel-finder.html`)*
 - **Status:** live
 - **Nächster Schritt:** Aktualisierung bei neuer FRL-Fassung
 
@@ -118,9 +119,9 @@ AGFK-Code (lief 15.05. ab – verlängert?) · Wadgassen `date_to` (31.05.) · W
 
 ### 2.6 Demo- und Trial-Versionen
 - **Kunde / Partner:** eigen (Vertrieb)
-- **Zweck:** Demo mit gesperrter Praxis-Box als Kaufanreiz; Trial mit konfigurierbarem Ablaufdatum als Vertriebshebel.
-- **Status:** vorbereitet · Demo-Code lief 30.06.2026 ab → neu setzen oder bewusst auslaufen lassen
-- **Nächster Schritt:** Demo-Ordner (`Werkzeuge/demo/`) vollständig befüllen; Code-Entscheidung
+- **Zweck:** Demo mit gesperrter Praxis-Box als Kaufanreiz; Trial über `target:"demo"` + befristete Lizenz.
+- **Status:** Alter Demo-Code am **24.06.2026 bewusst deaktiviert** (Altlast: gab Vollzugang ohne `tools`-Filter). Neues Demo-Konzept über Portal-Architektur möglich (Lizenz mit `tools`-Filter + `demo/`-Ordner).
+- **Nächster Schritt:** Bei Bedarf: `demo/`-Ordner befüllen + neuen Demo-Code MIT `tools`-Filter anlegen
 
 ### 2.7 Hash-Generator (Admin-Tool)
 - **Kunde / Partner:** intern
@@ -137,16 +138,36 @@ AGFK-Code (lief 15.05. ab – verlängert?) · Wadgassen `date_to` (31.05.) · W
 ### 2.9 Vergabe-Assistent Saarland
 - **Kunde / Partner:** eigen (Tool, Portal)
 - **Zweck:** Entscheidungshilfe zu Vergabeverfahren für Kommunen nach Vergabeerlass Saarland 2025.
-- **Repo:** github.com/2Rat/2Rat.github.io *(Ordner `Werkzeuge/`)*
+- **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/vergabe-assistent.html`)*
 - **Status:** live (Portal-Tool)
 - **Nächster Schritt:** Pflege bei Erlass-Änderungen
 
 ### 2.10 Förderrichtlinien & Förder-Matcher
 - **Kunde / Partner:** eigen (Tool, Portal)
 - **Zweck:** Übersicht der Förderrichtlinien (FRL-NMOB-Rad-Fuß, Bundesaufruf JGF u. a.) mit Matcher zur Zuordnung Maßnahme → Fördertopf.
-- **Repo:** github.com/2Rat/2Rat.github.io *(Ordner `Werkzeuge/`)*
+- **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/foerderrichtlinien.html`)*
 - **Status:** live (Portal-Tool)
 - **Nächster Schritt:** Pflege der Fristen (JGF FL1 15.07. / FL2 31.07. / FRL-NMOB 30.09.); inhaltliche Weiterarbeit im Projekt „2RAT Förderung Radverkehr"
+
+### 2.11 Projekt-Check Radverkehr ⭐
+- **Kunde / Partner:** eigen (Tool, Portal) · **beauftragt & bezahlt von AGFK-SL** (dauerhafte Lizenz, siehe 1.5)
+- **Zweck:** „Wer muss an den Tisch?" – 3-Schritte-Wizard (Vorhaben → Lage → Sonderfälle, ~9 Falltypen von Radweg über Fahrradstraße bis Schulweg) → liefert Federführung, einzubindende Stellen, Prüfpunkte und einen **kopier-/downloadbaren Projektvermerk**. Verlinkt auf die übrigen Portal-Tools. Datengrundlage: AGFK-SL (Stand 06/2026).
+- **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/projekt-check.html`)*
+- **Status:** live (Portal-Tool, im Dashboard als Einstiegs-Tool erstgereiht) · erstes fremdfinanziertes Tool 🎉
+- **Nächster Schritt:** Pflege bei Änderung der AGFK-Datengrundlage
+
+### 2.12 Karten-Prototyp „Kommune per Klick"
+- **Kunde / Partner:** eigen (Experiment)
+- **Zweck:** Leaflet/OSM-Prototyp – Kommune per Klick auf der Karte wählen. Liegt in `kunden/`, ist aber **nicht** im TOOLS-Array (nicht im Dashboard sichtbar).
+- **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/karte-prototyp.html`)*
+- **Status:** Experiment / Prototyp
+- **Nächster Schritt:** Entscheiden: ausbauen (z.B. als Einstieg für Projekt-Check/Zuständigkeiten) oder löschen
+
+### 2.13 RAD-Lab (Beta-Test-Programm)
+- **Kunde / Partner:** ausgewählte Vertraute aus Armins Umfeld (Tester)
+- **Zweck:** Qualitätssicherung vor breiter Vermarktung – ausgewählte Tools werden an bekannte Personen verteilt, die sie auf Herz und Nieren prüfen. Aktuell: Fördermittel-Finder, Zuständigkeiten, Projekt-Check (Lizenz „RAD-Lab", `target:"test"`).
+- **Status:** läuft (Testrunde bis 30.09.2026)
+- **Nächster Schritt:** Feedback der Tester einsammeln und in die Tools einarbeiten; nach 30.09. Lizenz-Zeile aus dem Array entfernen; entscheiden, ob eine zweite Testrunde folgt
 
 ---
 
@@ -171,7 +192,7 @@ AGFK-Code (lief 15.05. ab – verlängert?) · Wadgassen `date_to` (31.05.) · W
 - **Nächster Schritt:** Beim nächsten QGIS-Auftrag: Prüflogik verfeinern **+ ERA-Konsistenz-Check** (wie 3.1)
 
 ### 3.4 VwV-StVO 2025 – Maßnahmen-Übersicht
-- **Kunde / Partner:** intern → jetzt Portal-Tool
+- **Kunde / Partner:** intern → jetzt Portal-Tool *(`Werkzeuge/kunden/vwv-stvo-2025.html`)*
 - **Zweck:** Interaktive HTML-Wissensbasis aller VwV-Neuerungen mit Alt-Neu-Vergleich.
 - **Status:** live (als Tool im Werkzeuge-Portal eingebunden)
 - **Nächster Schritt:** Pflege bei VwV-Änderungen
@@ -326,6 +347,8 @@ AGFK-Code (lief 15.05. ab – verlängert?) · Wadgassen `date_to` (31.05.) · W
 |---|---|
 | 2RAT Website | www.2rat.org |
 | Werkzeuge-Portal (Login) | www.2rat.org/Werkzeuge |
+| Tool-Dateien (Vollversionen) | www.2rat.org/Werkzeuge/kunden/ *(6 Tools + Karten-Prototyp)* |
+| AGFK-Varianten (geplant) | www.2rat.org/Werkzeuge/agfk-sl/ *(noch leer)* |
 | Demo-Ordner | www.2rat.org/Werkzeuge/demo/ |
 | **Kommandozentrale** | **www.2rat.org/cmd** |
 | Radwegemelder-Ergebnisse | www.2rat.org/cockpit.html |
@@ -350,12 +373,17 @@ AGFK-Code (lief 15.05. ab – verlängert?) · Wadgassen `date_to` (31.05.) · W
 
 | Datum | Kontext | Aktion |
 |---|---|---|
-| **15.07.2026** | Förderung (JGF FL1) | Skizzen-Frist – nur junge Menschen bis 25, Raumbezug Bildungs-/Jugendeinrichtungen! |
-| **31.07.2026** | Förderung (JGF FL2) | Antrags-Frist – gleiche Zielgruppen-Einschränkung |
+| ~~15.07.2026~~ | Förderung (JGF FL1) | Skizzen-Frist **verstrichen** – Ausgang nachtragen |
+| **31.07.2026** | Förderung (JGF FL2) | Antrags-Frist – nur junge Menschen bis 25, Raumbezug Bildungs-/Jugendeinrichtungen! |
 | **30.09.2026** | Förderung (FRL-NMOB) | Jahres-Stichtag |
+| **30.09.2026** | 1.5 AGFK-SL | Kennenlern-Tools laufen ab (`toolExpires`) → vorher Upsell-Gespräch |
+| **30.09.2026** | 2.1 Tool-Portal | RAD-Lab-Testrunde endet (→ 2.13) – Lizenz-Zeile entfernen |
 | **Sep 2026** | 4.3 Schulweg-Detektive | Android-Entwicklerbestätigung für PWA-APK prüfen |
+| **15.05.2027** | 1.5 AGFK-SL | Lizenz „AGFK Saarland" läuft ab → Verlängerung |
+| **27.05.2027** | 1.5 AGFK-SL | Lizenz „AGFK Honorarkraft" läuft ab |
 
-**Überholte Fristen – Ausgang nachtragen:** AGFK-Code 15.05. · Wadgassen `date_to` 31.05. · Wadern Mai-Sitzung · Demo-Code 30.06.
+**Überholte Fristen – Ausgang nachtragen:** Wadgassen `date_to` 31.05. · Wadern Mai-Sitzung
+**Geklärt 19.07.:** AGFK-Code (neue Lizenz bis 15.05.2027) · Demo-Code (deaktiviert 24.06.)
 
 ---
 
@@ -363,11 +391,12 @@ AGFK-Code (lief 15.05. ab – verlängert?) · Wadgassen `date_to` (31.05.) · W
 
 | Status | Anzahl | Vorhaben |
 |---|---|---|
-| **läuft / live / produktiv / stabil / aktiv** | 20 | 1.2*, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.10, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1 *(1.2: Laufzeit prüfen)* |
+| **läuft / live / produktiv / stabil / aktiv** | 23 | 1.2*, 1.5, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.10, **2.11**, **2.13**, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1 *(1.2: Laufzeit prüfen)* |
 | **teils läuft** | 1 | 1.1 |
 | **abgeschlossen** | 3 | 2.8, 3.5, 7.3 |
-| **vorbereitet** | 4 | 1.4, 1.5, 2.6, 3.2 |
+| **vorbereitet** | 3 | 1.4, 2.6 *(Demo-Konzept)*, 3.2 |
 | **in Entwicklung / im Aufbau** | 2 | 2.5, 7.1 |
+| **Experiment / Prototyp** | 1 | 2.12 |
 | **ruht** | 1 | 1.3 |
 | **offen** | 1 | 7.2 |
 | **verworfen** | 1 | 8.1 |
@@ -381,9 +410,11 @@ AGFK-Code (lief 15.05. ab – verlängert?) · Wadgassen `date_to` (31.05.) · W
 | Zugang | Code-Wert | Gültig bis / Status |
 |---|---|---|
 | **Kommandozentrale** (`2rat.org/cmd`) | → Passwortmanager | 31.12.2028 |
-| **Admin-Code Portal** | → Passwortmanager | 31.12.2028 · **noch nicht aktiv** – 2-Zeilen-Patch am LICENSES-Array ausstehend |
-| AGFK-SL Tool-Portal | → Passwortmanager | lief 15.05.2026 ab – Status prüfen |
-| Demo Tool-Portal | → Passwortmanager | lief 30.06.2026 ab – neu setzen? |
+| **„2Rat intern"** (Portal, Vollzugang) | → Passwortmanager *(= Admin-Code aus 05/2026)* | im Array bis 2099 · **aktiv** ✓ |
+| AGFK Saarland (Portal) | → Passwortmanager | **15.05.2027** · Projekt-Check dauerhaft, übrige 4 Tools bis 30.09.2026 |
+| AGFK Honorarkraft (Portal) | → Passwortmanager | **27.05.2027** · 5-Tool-Suite |
+| RAD-Lab (Portal, Beta-Test → 2.13) | → Passwortmanager | 30.09.2026 · danach Lizenz-Zeile entfernen |
+| Demo Tool-Portal | *(deaktiviert)* | am 24.06.2026 auskommentiert (Altlast ohne `tools`-Filter) |
 | Cockpit (`cockpit.html`) | → Passwortmanager | — |
 | RadPlan Pro | → Passwortmanager | — |
 
