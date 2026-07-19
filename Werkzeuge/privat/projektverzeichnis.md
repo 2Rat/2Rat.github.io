@@ -20,11 +20,12 @@
 | ~~15.07.2026~~ **abgelaufen** | JGF FL1 – Skizzen-Frist verstrichen, Ausgang nachtragen (Skizze eingereicht?) | Förderung-Projekt |
 | **31.07.2026 (12 Tage!)** | JGF FL2 – Antrags-Frist | Förderung-Projekt |
 | **30.09.2026** | FRL-NMOB Jahres-Stichtag **+ AGFK-Kennenlern-Tools laufen ab (Upsell-Chance!)** **+ RAD-Lab-Testrunde endet** | Förderung / Tool-Portal |
+| prüfen | RadPlan Pro: 19.07.-Deployment (JSON-Pipeline) erfolgt – ist die Login-bereinigte Version mit drin? | RadPlan-Projekt |
+| prüfen | Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den **Passwortmanager** übertragen, bevor die 30-Tage-Session abläuft | Tool-Portal / RadPlan |
+| offen | Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe + Rechnung | Tool-Portal |
 | wartet | AGFK-Logo → dann `agfk-sl/`-Tool-Varianten erstellen (Routing steht bereits) | Tool-Portal |
 
-**Status nachziehen (Ausgang hier nicht dokumentiert):**
-Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
-**Geklärt 19.07.:** AGFK-Code → neue Lizenz bis 15.05.2027 aktiv ✓ · Demo-Code → am 24.06. bewusst deaktiviert ✓ · Admin-Code → **aktiv** als „2Rat intern"-Lizenz (Hash identisch, im Array bis 2099 verlängert) ✓ – veralteten Kommentar im Array bei Gelegenheit löschen
+**Geklärt 19.07.:** Demo läuft als Freemium OHNE Code unter `2rat.org/demo/` (alter Code bleibt deaktiviert) ✓ · Wadgassen-Pilot → abgeschlossen mit Abschlussbericht ✓ · Wadern → keine Rückmeldung, ruht ✓ · AGFK-Code → neue Lizenz bis 15.05.2027 aktiv ✓ · Admin-Code → **aktiv** als „2Rat intern"-Lizenz (Hash identisch, im Array bis 2099 verlängert) ✓ – veralteten Kommentar im Array bei Gelegenheit löschen
 
 ---
 
@@ -49,22 +50,23 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 # 1️⃣ Kundenprojekte & Akquise
 
 ### 1.1 Radverkehrsplanung Hostenbach
-- **Kunde / Partner:** Gemeinde Wadgassen (Christian Schnadinger)
-- **Zweck:** Gesamtprojekt – LP1 (Konzept Hauptachse Schulstraße → Weberstraße → Turnerstraße, 13 Maßnahmenblätter, Kostenschätzung ~205.200 €) ✓ · Klimabeirat-Präsentation ✓ · LP1-Rechnung 4.714 € · LP2-Angebot 5.214 € offen.
-- **Status:** teils läuft (LP1 abgeschlossen · LP2 offen · Rechnung läuft)
-- **Nächster Schritt:** Geldeingang LP1 prüfen; Entscheidung zu LP2-Beauftragung abwarten / nachfassen
+- **Kunde / Partner:** Gemeinde Wadgassen
+- **Zweck:** Gesamtprojekt – LP1 (Konzept Hauptachse Schulstraße → Weberstraße → Turnerstraße, 13 Maßnahmenblätter) ✓ · Klimabeirat-Präsentation ✓ · LP2-Angebot liegt vor.
+- **Status:** LP1 **abgeschlossen & bezahlt** ✓ (19.07.2026) · LP2 ungewiss (Haushaltslage der Kommune)
+- **Nächster Schritt:** LP2 ruhen lassen; zum Haushalt 2027 gezielt nachfassen
+- **Details (Beträge, Ansprechpartner):** → Projekt „Hostenbach" / Rechnungsablage
 
 ### 1.2 Radwegemelder-Pilot Wadgassen
 - **Kunde / Partner:** Gemeinde Wadgassen
-- **Zweck:** Erste Saarland-Pilotkommune mit echter Bürgerbeteiligung – Referenzprojekt für 52-Kommunen-Akquise.
-- **Status:** Laufzeit-Status prüfen (`date_to` war 31.05.2026)
-- **Nächster Schritt:** Klären: verlängert oder beendet? Bei Ende: Konzept-Check-Auswertung (siehe 2.4)
+- **Zweck:** Erste Saarland-Pilotkommune mit echter Bürgerbeteiligung – Referenzprojekt für die Kommunen-Kampagne (1.4).
+- **Status:** **abgeschlossen** ✓ – Abschlussbericht erstellt und an die Gemeinde versendet, positives Feedback; Rechnung bezahlt. Umsetzungsphase in Aussicht (haushaltsabhängig).
+- **Nächster Schritt:** Konzept-Check-Auswertung starten (→ 2.4); Wadgassen ist zum RAD-Lab eingeladen (→ 2.13); als Referenz in der Radherbst-Kampagne nutzen
 
 ### 1.3 Radverkehrskonzept Stadt Wadern
-- **Kunde / Partner:** Stadt Wadern (M. Vorreiter)
+- **Kunde / Partner:** Stadt Wadern
 - **Zweck:** Umsetzungsbegleitung zum bestehenden RVK plus Radwegemelder als niederschwelliger Vorlauf.
-- **Status:** ruht
-- **Nächster Schritt:** Ergebnis der Mai-Rats-Sitzung nachtragen; ggf. nachhaken
+- **Status:** ruht (nach Mai-Rats-Sitzung keine Rückmeldung erhalten)
+- **Nächster Schritt:** Aktiv nachhaken – ggf. gekoppelt an die Radherbst-Kampagne (1.4) als Wiedereinstieg
 
 ### 1.4 Kommunen-Kampagne „Radherbst 2026"
 - **Kunde / Partner:** intern (Vertriebskampagne)
@@ -74,10 +76,10 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 - **Details (Preise, Strategie, Material, Rechtliches):** → Claude-Projekt **„BÜRO 2Rat"** (Session-Notizen)
 
 ### 1.5 AGFK-SL Kunde (Tool-Lizenzierung) 🎉
-- **Kunde / Partner:** AGFK-SL (Irene & Nicole, geschaeftstelle@agfk-sl.de)
-- **Zweck:** Erste kommerzielle Tool-Lizenzierung – **erfolgreich konvertiert:** Projekt-Check **beauftragt & bezahlt** (dauerhafte Lizenz). Übrige 4 Tools (Fördermittel-Finder, Zuständigkeiten, VwV-StVO 2025, Vergabe-Assistent) als Kennenlern-Zugang befristet bis **30.09.2026**.
-- **Lizenzen im Portal:** „AGFK Saarland" bis 15.05.2027 · „AGFK Honorarkraft" bis 27.05.2027 (5-Tool-Suite)
-- **Status:** läuft (zahlender Kunde)
+- **Kunde / Partner:** AGFK-SL (geschaeftstelle@agfk-sl.de)
+- **Zweck:** Erste kommerzielle Tool-Lizenzierung. **Beauftragt ist ausschließlich der Projekt-Check** – Abrechnung: Pauschale bei Übergabe, **Zahlung noch nicht erfolgt** (fällig bei Übergabe). Die fachliche Letztabnahme erfolgt durch einen externen Prüfer, **den die AGFK bezahlt** (→ Lizenz „AGFK Honorarkraft"). Die übrigen 4 Tools (Fördermittel-Finder, Zuständigkeiten, VwV-StVO 2025, Vergabe-Assistent) sind **kein Auftrag**, sondern Kennenlern-Zugang befristet bis 30.09.2026.
+- **Lizenzen im Portal:** „AGFK Saarland" bis 15.05.2027 · „AGFK Honorarkraft" (externer Prüfer) bis 27.05.2027 (5-Tool-Suite)
+- **Status:** läuft (Auftrag Projekt-Check; Übergabe + Zahlung ausstehend)
 - **Nächster Schritt:** Vor 30.09.2026 Upsell-Gespräch zu den Kennenlern-Tools; nach AGFK-Logo: `agfk-sl/`-Varianten erstellen
 
 ---
@@ -89,28 +91,28 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 - **Kunde / Partner:** eigen (Infrastruktur)
 - **Zweck:** Passwortgeschütztes Portal auf GitHub Pages (`Werkzeuge/index.html`). **Architektur seit 06–07/2026:** zentrales `TOOLS`-Array (6 Tools) + `PATHS`-Routing in Varianten-Ordner (`kunden/` = Vollversionen · `agfk-sl/` = AGFK-Fassungen, noch leer · `demo/` = Trial) + `LICENSES` mit `target` (Ordner-Variante), `tools`-Filter (Sichtbarkeit pro Kunde) und `toolExpires` (Ablauf pro Einzeltool). Neue Kundenlizenz = eine Zeile im Array.
 - **Repo:** github.com/2Rat/2Rat.github.io *(Ordner `Werkzeuge/`, Tools in `Werkzeuge/kunden/`)*
-- **Status:** läuft / produktiv · **Accessibility-Politur (7 Dateien) am 19.07.2026 deployed & verifiziert – Live-Stand = gepatchter Stand**
+- **Status:** läuft / produktiv · **Accessibility-Politur (7 Dateien) am 19.07.2026 deployed & verifiziert – Live-Stand = gepatchter Stand** · **Sichtbarkeitsschutz seit 11.07.2026:** `noindex` in allen `kunden/`-Tools + `robots.txt` im Repo-Root (sperrt `Werkzeuge/`, Cockpit, `cmd` für Suchmaschinen) · Wartungskalender-Dokument vorhanden (→ Tool-Portal-Projekt)
 - **Nächster Schritt:** veralteten Array-Kommentar zur intern-Lizenz löschen; nach AGFK-Logo: `agfk-sl/`-Varianten befüllen
 
 ### 2.2 Zuständigkeiten Radverkehr Saarland
 - **Kunde / Partner:** eigen (Tool, lizenzpflichtig)
 - **Zweck:** Interaktive Entscheidungshilfe zur Bestimmung der zuständigen Behörde (Gemeinde / Landkreis / Regionalverband / Land-LfS) nach StVO/SaarlStrG.
 - **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/zustaendigkeiten.html`)*
-- **Status:** live · **v16 (12.07.2026)** – Fahrradstraße auf ERA-Werte korrigiert (4,00 m Fahrgasse statt alter MuLöS-2016-Wert 4,10 m), MuLöS BW als „ergänzend, im Saarland nicht verbindlich" gekennzeichnet
+- **Status:** live · **v16 (12.07.2026)** – Fahrradstraße auf ERA-Werte korrigiert (4,00 m Fahrgasse statt alter MuLöS-2016-Wert 4,10 m), MuLöS BW als „ergänzend, im Saarland nicht verbindlich" gekennzeichnet · v15 (11.07.): Saarbrücken-Baulast-Fix § 47 Abs. 1 SaarlStrG, StVB-Kontakte, Ergebnis-Vermerke, Cross-Links · **Update 19.07.2026 deployed:** Fahrradzonen-Sonderfall, ODR-Ergänzungen
 - **Nächster Schritt:** Pflege bei VwV-Änderungen; Update als Pflege-Nachweis an AGFK-SL
 
 ### 2.3 Fördermittel-Finder (FRL-NMOB-Rad-Fuß)
 - **Kunde / Partner:** eigen (Tool, lizenzpflichtig)
-- **Zweck:** Entscheidungshilfe zur Förderkulisse für Rad- und Fußverkehrsmaßnahmen mit Praxis-Hinweisen pro Fördergegenstand.
+- **Zweck:** Entscheidungshilfe zur Förderkulisse für Rad- und Fußverkehrsmaßnahmen mit Praxis-Hinweisen pro Fördergegenstand. Mit Hinweis-Block: Abdeckung nur Landesförderung NMOB (inkl. Stadt-und-Land), Verweis auf Bundestöpfe (Kommunalrichtlinie, Bike+Ride, Junge Generation Fahrrad).
 - **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/foerdermittel-finder.html`)*
-- **Status:** live
+- **Status:** live · **v2 (11.07.2026)** – Ergebnis-Vermerke, Cross-Links, einheitlicher Disclaimer · **Update 19.07.2026 deployed:** Förderquoten nach FRL-NMOB korrigiert (Schule/Kita 90/95 %, Landesinteresse bis 100 %, neue Quoten-Datenfelder) · **Freemium-Demo live** unter `2rat.org/demo/` (frei ohne Code, 3 von 13 Fördergegenständen, Export gesperrt)
 - **Nächster Schritt:** Aktualisierung bei neuer FRL-Fassung
 
 ### 2.4 Konzept-Check
 - **Kunde / Partner:** eigen (Service-Erweiterung)
 - **Zweck:** Bürgermeldungen werden gegen kommunale RVK-Maßnahmen abgeglichen und liefern eine priorisierte Handlungsempfehlung.
-- **Status:** läuft (Tool live)
-- **Nächster Schritt:** Nach Wadgassen-Ende: PDF-Maßnahmentabellen importieren, Abgleich rechnen, Bericht für Gemeinderat
+- **Status:** läuft (Tool live) · Wadgassen-Pilot ist beendet → Auswertung kann starten
+- **Nächster Schritt:** JETZT: PDF-Maßnahmentabellen importieren, Abgleich rechnen, Bericht für den Gemeinderat Wadgassen
 
 ### 2.5 Mängelmelder
 - **Kunde / Partner:** eigen (Tool-Portal)
@@ -118,16 +120,16 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 - **Status:** in Entwicklung
 - **Nächster Schritt:** Funktionsumfang & Datenablage finalisieren
 
-### 2.6 Demo- und Trial-Versionen
+### 2.6 Demo- und Trial-Versionen (Freemium)
 - **Kunde / Partner:** eigen (Vertrieb)
-- **Zweck:** Demo mit gesperrter Praxis-Box als Kaufanreiz; Trial über `target:"demo"` + befristete Lizenz.
-- **Status:** Alter Demo-Code am **24.06.2026 bewusst deaktiviert** (Altlast: gab Vollzugang ohne `tools`-Filter). Neues Demo-Konzept über Portal-Architektur möglich (Lizenz mit `tools`-Filter + `demo/`-Ordner).
-- **Nächster Schritt:** Bei Bedarf: `demo/`-Ordner befüllen + neuen Demo-Code MIT `tools`-Filter anlegen
+- **Zweck:** Freemium-Demos als Kaufanreiz, verlinkt über Startseiten-Sektion „Testen".
+- **Status:** **Fördermittel-Finder-Demo live** unter **`2rat.org/demo/`** (Repo-Root, NICHT `Werkzeuge/demo/`) seit 11.07.2026 – **frei zugänglich ohne Code** (3 von 13 Fördergegenständen offen, Export gesperrt, „Vollversion anfragen"-CTA). Alter Demo-Vollzugangs-Code am 24.06.2026 deaktiviert – für die Freemium-Demo irrelevant. *(Geklärt 19.07. per Repo-Analyse.)*
+- **Nächster Schritt:** 3 weitere Demos erstellen (geplant); 1-Byte-Datei-Leiche `demo/foerdermittelfinder.html` (ohne Bindestrich) löschen
 
 ### 2.7 Hash-Generator (Admin-Tool)
 - **Kunde / Partner:** intern
 - **Zweck:** Lokales HTML-Werkzeug zur Erzeugung von SHA-256-Hashes für neue Kundenzugänge; nicht veröffentlicht. Kunden-/Cockpit-Codes werden hierüber erzeugt und extern abgelegt.
-- **Status:** läuft
+- **Status:** läuft · 19.07.: neues `hash-generator-lokal.html` mit zwei Modi (Portal-normalisiert / RadPlan-exakt) – **bleibt offline, nie ins Repo**
 - **Nächster Schritt:** —
 
 ### 2.8 Lizenzkonzept-Dokument
@@ -140,8 +142,8 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 - **Kunde / Partner:** eigen (Tool, Portal)
 - **Zweck:** Entscheidungshilfe zu Vergabeverfahren für Kommunen nach Vergabeerlass Saarland 2025.
 - **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/vergabe-assistent.html`)*
-- **Status:** live (Portal-Tool)
-- **Nächster Schritt:** Pflege bei Erlass-Änderungen
+- **Status:** live (Portal-Tool) · **v2 (11.07.2026)** – § 3-VgV-Hinweis, Ergebnis-Vermerke, Cross-Links
+- **Nächster Schritt:** Pflege bei Erlass-Änderungen; **Ende 2027: neue EU-Schwellenwerte einpflegen**
 
 ### 2.10 Förderrichtlinien & Förder-Matcher
 - **Kunde / Partner:** eigen (Tool, Portal)
@@ -151,11 +153,11 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 - **Nächster Schritt:** Pflege der Fristen (JGF FL1 15.07. / FL2 31.07. / FRL-NMOB 30.09.); inhaltliche Weiterarbeit im Projekt „2RAT Förderung Radverkehr"
 
 ### 2.11 Projekt-Check Radverkehr ⭐
-- **Kunde / Partner:** eigen (Tool, Portal) · **beauftragt & bezahlt von AGFK-SL** (dauerhafte Lizenz, siehe 1.5)
-- **Zweck:** „Wer muss an den Tisch?" – 3-Schritte-Wizard (Vorhaben → Lage → Sonderfälle, ~9 Falltypen von Radweg über Fahrradstraße bis Schulweg) → liefert Federführung, einzubindende Stellen, Prüfpunkte und einen **kopier-/downloadbaren Projektvermerk**. Verlinkt auf die übrigen Portal-Tools. Datengrundlage: AGFK-SL (Stand 06/2026).
+- **Kunde / Partner:** eigen (Tool, Portal) · **von AGFK-SL beauftragt** (Pauschale bei Übergabe, Zahlung ausstehend – siehe 1.5)
+- **Zweck:** „Wer muss an den Tisch?" – laienfreundlicher Wegweiser auf Basis der **AGFK-Zuständigkeitslandkarte**: 3-Schritte-Wizard (Vorhaben → Lage → Sonderfälle, ~9 Falltypen von Radweg über Fahrradstraße bis Schulweg) → liefert Federführung, einzubindende Stellen, Prüfpunkte und einen **kopier-/downloadbaren Projektvermerk**. Fahrradstraße/-zone-Logik nach § 12 StVZustG. Verlinkt auf die übrigen Portal-Tools. Datengrundlage: AGFK-SL (Stand 06/2026).
 - **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/projekt-check.html`)*
-- **Status:** live (Portal-Tool, im Dashboard als Einstiegs-Tool erstgereiht) · erstes fremdfinanziertes Tool 🎉
-- **Nächster Schritt:** Pflege bei Änderung der AGFK-Datengrundlage
+- **Status:** live (Portal-Tool, im Dashboard als Einstiegs-Tool erstgereiht) · erstes beauftragtes Tool 🎉
+- **Nächster Schritt:** Pflege bei Änderung der AGFK-Datengrundlage · ⚠️ fachliche Letztabnahme durch AGFK-bezahlten externen Prüfer (v. a. § 12 StVZustG) **noch offen** → Voraussetzung für Übergabe + Abrechnung
 
 ### 2.12 Karten-Prototyp „Kommune per Klick"
 - **Kunde / Partner:** eigen (Experiment)
@@ -165,10 +167,10 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 - **Nächster Schritt:** Entscheiden: ausbauen (z.B. als Einstieg für Projekt-Check/Zuständigkeiten) oder löschen
 
 ### 2.13 RAD-Lab (Beta-Test-Programm)
-- **Kunde / Partner:** ausgewählte Vertraute aus Armins Umfeld (Tester)
-- **Zweck:** Qualitätssicherung vor breiter Vermarktung – ausgewählte Tools werden an bekannte Personen verteilt, die sie auf Herz und Nieren prüfen. Aktuell: Fördermittel-Finder, Zuständigkeiten, Projekt-Check (Lizenz „RAD-Lab", `target:"test"`).
-- **Status:** läuft (Testrunde bis 30.09.2026)
-- **Nächster Schritt:** Feedback der Tester einsammeln und in die Tools einarbeiten; nach 30.09. Lizenz-Zeile aus dem Array entfernen; entscheiden, ob eine zweite Testrunde folgt
+- **Kunde / Partner:** ausgewählte Tester aus Armins Umfeld
+- **Zweck:** Qualitätssicherung vor breiter Vermarktung – ausgewählte Tools werden an bekannte Personen verteilt, die sie auf Herz und Nieren prüfen. Getestet werden: Fördermittel-Finder, Zuständigkeiten, Projekt-Check (Lizenz „RAD-Lab", `target:"test"`).
+- **Status:** läuft – Testzugänge am **11.07.2026 an 10 Personen aus 6 Kommunen + 1 privat** verschickt (u. a. Wadgassen als frischer Referenzkunde eingeladen; Namensliste → Tool-Portal-Projekt, nicht öffentlich) · 19.07.: Tool-Umfang final auf 3 Werkzeuge reduziert, deployed & live verifiziert · Testrunden-Einladung erstellt (Fokus: Fachtest Projekt-Check im Zusammenspiel mit Zuständigkeiten + Fördermittel-Finder – Methode zur Zuständigkeitsklärung Radverkehr Saarland)
+- **Nächster Schritt:** RAD-Lab-Code-Wert in Passwortmanager dokumentieren (Doku-Lücke); Feedback einsammeln bis 30.09.2026; danach Lizenz-Zeile entfernen; zweite Testrunde entscheiden
 
 ---
 
@@ -195,7 +197,7 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 ### 3.4 VwV-StVO 2025 – Maßnahmen-Übersicht
 - **Kunde / Partner:** intern → jetzt Portal-Tool *(`Werkzeuge/kunden/vwv-stvo-2025.html`)*
 - **Zweck:** Interaktive HTML-Wissensbasis aller VwV-Neuerungen mit Alt-Neu-Vergleich.
-- **Status:** live (als Tool im Werkzeuge-Portal eingebunden)
+- **Status:** live (als Tool im Werkzeuge-Portal eingebunden) · **Update 19.07.2026 deployed:** Rechtsgrundlagen Fahrradstraße/-zone, § 45 Abs. 1i StVO
 - **Nächster Schritt:** Pflege bei VwV-Änderungen
 
 ### 3.5 Inkscape-Planrahmen-Vorlage A1/A2/A3
@@ -219,8 +221,10 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 - **Kunde / Partner:** eigen (Profi-Tool)
 - **Zweck:** GPS-Felderfassung für Planer mit ERA-Konformitätscheck via Claude API. PWA, Daten nur lokal (localStorage), KI-API mit User-eigenem Anthropic-Key.
 - **Repo:** github.com/2Rat/radplan-pro *(privat)* · **Live:** radplan-pro.netlify.app
-- **Status:** läuft · **v3.2 (12.07.2026)** – Regelwerks-Hierarchie Saarland (ERA maßgeblich, MuLöS BW nur ergänzend), DTV→Kfz/h-Umrechnung im KI-Prompt, Tempo bis 100 (außerorts), max_tokens 2000, Datenschutz auf Netlify korrigiert. Impressum-Mail ✓ erledigt.
-- **Nächster Schritt:** Feldtest inkl. Probe-KI-Analyse mit DTV-Wert; Linien-Erfassung verfeinern
+- **Status:** läuft · **v3.2 (12.07.2026)** – Regelwerks-Hierarchie Saarland (ERA maßgeblich, MuLöS BW nur ergänzend), DTV→Kfz/h-Umrechnung im KI-Prompt, Tempo bis 100 (außerorts), max_tokens 2000, Datenschutz auf Netlify korrigiert. Impressum-Mail ✓ erledigt. · 19.07.: **bereinigte Version** (neuer Login, localStorage-Überlauf-Schutz), Zugang rotiert · 19.07.: **KI-Analyse auf JSON-first-Pipeline umgestellt** (Whitelist-Validierung, editierbares Feld „Fachliche Bewertung"), EXIF-GPS/Datum-Bugs behoben, **Bericht-Paket-Export** (JSON inkl. Fotos) – **deployed, Testphase läuft**
+- **Festlegung:** Das KI-Feld heißt in allen Dokumenten immer **„Fachliche Bewertung"**; bei fachlich falscher KI-Analyse wird das Feld vor Export vollständig überschrieben (KI liefert Entwurf, Verantwortung bleibt beim Planer)
+- **Begleit-Skill:** Claude-Skill `radplan-bericht` erstellt & paketiert – erzeugt DOCX-Berichte aus dem Bericht-Paket (Ortstermin / Maßnahmenblätter / Hybrid; 2Rat- und Neutral-Modus); Karten dort aktuell Platzhalter, Testphase
+- **Nächster Schritt:** Testphase abschließen (Feldtest inkl. Probe-KI-Analyse mit DTV-Wert); danach: Import-Button für Bericht-Paket, KI-Prompt-Erweiterung (Klassifikation Strecke/Querung/Knoten), Karten-Workflow klären; Linien-Erfassung verfeinern
 
 ### 4.3 Schulweg-Detektive
 - **Kunde / Partner:** Jugendpflege Kirkel + 2RAT (Technik)
@@ -263,7 +267,7 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 ### 5.4 Persönliche Kommandozentrale
 - **Kunde / Partner:** eigen (Büro-intern)
 - **Zweck:** Privates HTML-Cockpit mit Schnellzugriff auf alle Claude-Projekte, Web-Tools, Repos, Fristen und Wartet-auf-Liste. SHA-256-Login, 30-Tage-Session, QR-Code-Funktion je Kachel.
-- **Zugang:** Code → Passwortmanager (gültig bis 31.12.2028)
+- **Zugang:** Code → Passwortmanager · **am 19.07.2026 sicherheitsbereinigt und Zugang rotiert** (alter Code ungültig); Kurz-URL `2rat.org/cmd/` als Weiterleitung live
 - **URLs:** `2rat.org/cmd` · `2rat.org/Werkzeuge/privat/`
 - **Status:** live
 - **Nächster Schritt:** Bei Status-Änderungen Datei-Update; Fristen mit diesem Verzeichnis synchron halten
@@ -335,6 +339,7 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 | **2RAT Förderung Radverkehr** | Förder-Wissensbasis · JGF-Fristen · Zuarbeit zu 2.10 | Förderberatung |
 | **2rat.org Website** | 5.1 · 5.2 · 5.3 · 5.4 | Marketing |
 | **Mobilitätsstationen Wadgassen** | eigenes Kundenprojekt | Kundenprojekt |
+| **RadPlan Pro** (Cowork) | 4.2 RadPlan Pro · Skill `radplan-bericht` | App-Entwicklung |
 | **Kirkel-Projekte** (Bauhof · Castle Race · Bike and Ride) | 4.4 u. a. | Arbeit Gemeinde Kirkel |
 
 > **Regel:** Vor jedem Arbeiten kurz prüfen, in welchem Projekt man ist. Tools → Tool-Portal · Radwegemelder → Kernprodukt · Förderfragen → Förderung-Projekt.
@@ -351,7 +356,7 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 | Werkzeuge-Portal (Login) | www.2rat.org/Werkzeuge |
 | Tool-Dateien (Vollversionen) | www.2rat.org/Werkzeuge/kunden/ *(6 Tools + Karten-Prototyp)* |
 | AGFK-Varianten (geplant) | www.2rat.org/Werkzeuge/agfk-sl/ *(noch leer)* |
-| Demo-Ordner | www.2rat.org/Werkzeuge/demo/ |
+| Freemium-Demos (ohne Code) | www.2rat.org/demo/ |
 | **Kommandozentrale** | **www.2rat.org/cmd** |
 | Radwegemelder-Ergebnisse | www.2rat.org/cockpit.html |
 | Velomeld (Bürger-App) | 2rat.org/velomeld/#home |
@@ -387,8 +392,9 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 | **15.05.2027** | 1.5 AGFK-SL | Lizenz „AGFK Saarland" läuft ab → Verlängerung |
 | **27.05.2027** | 1.5 AGFK-SL | Lizenz „AGFK Honorarkraft" läuft ab |
 
-**Überholte Fristen – Ausgang nachtragen:** Wadgassen `date_to` 31.05. · Wadern Mai-Sitzung
-**Geklärt 19.07.:** AGFK-Code (neue Lizenz bis 15.05.2027) · Demo-Code (deaktiviert 24.06.)
+| **Ende 2027** | 2.9 Vergabe-Assistent | Neue EU-Schwellenwerte einpflegen |
+
+**Geklärt 19.07.:** AGFK-Code (neue Lizenz bis 15.05.2027) · Wadgassen-Pilot (abgeschlossen) · Wadern (ruht, nachhaken) · Demo-Code (Freemium ohne Code, geklärt)
 
 ---
 
@@ -396,9 +402,9 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 
 | Status | Anzahl | Vorhaben |
 |---|---|---|
-| **läuft / live / produktiv / stabil / aktiv** | 23 | 1.2*, 1.5, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.10, **2.11**, **2.13**, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1 *(1.2: Laufzeit prüfen)* |
-| **teils läuft** | 1 | 1.1 |
-| **abgeschlossen** | 3 | 2.8, 3.5, 7.3 |
+| **läuft / live / produktiv / stabil / aktiv** | 22 | 1.5, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.10, **2.11**, **2.13**, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1 |
+| **teils läuft** | 1 | 1.1 *(LP1 bezahlt ✓ · LP2 ungewiss)* |
+| **abgeschlossen** | 4 | **1.2**, 2.8, 3.5, 7.3 |
 | **vorbereitet** | 3 | 1.4, 2.6 *(Demo-Konzept)*, 3.2 |
 | **in Entwicklung / im Aufbau** | 2 | 2.5, 7.1 |
 | **Experiment / Prototyp** | 1 | 2.12 |
@@ -410,18 +416,18 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 
 # 1️⃣3️⃣ Zugänge & Codes
 
-*Diese Datei liegt im **öffentlichen** Repo – deshalb hier keine Klartext-Codes. Alle Code-Werte: → Passwortmanager (KeePassXC/Bitwarden). Merkhilfe: alle 2RAT-eigenen Codes laufen bis 31.12.2028.*
+*Diese Datei liegt im **öffentlichen** Repo – deshalb hier keine Klartext-Codes. Alle Code-Werte: → Passwortmanager (KeePassXC/Bitwarden).*
 
 | Zugang | Code-Wert | Gültig bis / Status |
 |---|---|---|
-| **Kommandozentrale** (`2rat.org/cmd`) | → Passwortmanager | 31.12.2028 |
+| **Kommandozentrale** (`2rat.org/cmd`) | → Passwortmanager *(Wert vermutlich im Chat des Tool-Portal-Projekts – übertragen!)* | **rotiert 19.07.2026** (alter Code ungültig) |
 | **„2Rat intern"** (Portal, Vollzugang) | → Passwortmanager *(= Admin-Code aus 05/2026)* | im Array bis 2099 · **aktiv** ✓ |
 | AGFK Saarland (Portal) | → Passwortmanager | **15.05.2027** · Projekt-Check dauerhaft, übrige 4 Tools bis 30.09.2026 |
 | AGFK Honorarkraft (Portal) | → Passwortmanager | **27.05.2027** · 5-Tool-Suite |
-| RAD-Lab (Portal, Beta-Test → 2.13) | → Passwortmanager | 30.09.2026 · danach Lizenz-Zeile entfernen |
+| RAD-Lab (Portal, Beta-Test → 2.13) | → Passwortmanager *(Wert dort noch nachtragen!)* | 30.09.2026 · danach Lizenz-Zeile entfernen |
 | Demo Tool-Portal | *(deaktiviert)* | am 24.06.2026 auskommentiert (Altlast ohne `tools`-Filter) |
 | Cockpit (`cockpit.html`) | → Passwortmanager | — |
-| RadPlan Pro | → Passwortmanager | — |
+| RadPlan Pro | → Passwortmanager *(Wert vermutlich im Chat des RadPlan-Pro-Projekts – übertragen!)* | **rotiert 19.07.2026** |
 
 **Passwortmanager-Verweise:** Gmail · Supabase (Velomeld) · Netlify · GitHub-Token · Anthropic API-Key · kundenspezifische Cockpit-Codes (via Hash-Generator erzeugt, extern abgelegt)
 
