@@ -66,11 +66,12 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 - **Status:** ruht
 - **Nächster Schritt:** Ergebnis der Mai-Rats-Sitzung nachtragen; ggf. nachhaken
 
-### 1.4 52-Kommunen-Outreach Saarland
+### 1.4 Kommunen-Kampagne „Radherbst 2026"
 - **Kunde / Partner:** intern (Vertriebskampagne)
-- **Zweck:** Systematische Ansprache aller saarländischen Kommunen mit Radwegemelder + Konzept-Check, Wadgassen als Referenz.
-- **Status:** vorbereitet
-- **Nächster Schritt:** Anschreiben „Radsaison 2026" gemäß Excel-Liste rausschicken
+- **Zweck:** Systematische Ansprache der saarländischen Kommunen mit dem Radwegemelder. Frühjahrsaktion verschoben → Neuauflage als „Radherbst 2026" (Aktionszeitraum 01.09.–15.10.2026, inkl. Europäische Mobilitätswoche).
+- **Status:** vorbereitet (Material fertig, wartet auf Versand)
+- **Nächster Schritt:** Versand Anfang August 2026 (vorher Flyer-Datum aktualisieren, Test-Versand)
+- **Details (Preise, Strategie, Material, Rechtliches):** → Claude-Projekt **„BÜRO 2Rat"** (Session-Notizen)
 
 ### 1.5 AGFK-SL Kunde (Tool-Lizenzierung) 🎉
 - **Kunde / Partner:** AGFK-SL (Irene & Nicole, geschaeftstelle@agfk-sl.de)
@@ -325,6 +326,7 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 | Claude-Projekt | Behandelte Vorhaben | Rolle |
 |---|---|---|
 | **2RAT Büro** *(dieses Projekt)* | Büroverwaltung, Stammdaten, **dieses Verzeichnis**, Steuer, Standardtexte | **HUB** |
+| **BÜRO 2Rat** | 1.4 Radherbst-Kampagne · Geschäftsinterna (Preise, Strategie, Session-Notizen) – **bleiben dort, nicht ins öffentliche Verzeichnis!** | Vertrieb & Geschäftliches |
 | **Hostenbach** | 1.1 · 3.2 QAD · 3.5 Planrahmen | Kundenprojekt |
 | **2Rat Radwegemelder Webseite Dashboard** | 4.1 · 1.2 · Supabase | Produkt-Hauptprojekt |
 | **Schulweg-Detektive** | 4.3 | Kooperation Kirkel |
@@ -375,6 +377,9 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 |---|---|---|
 | ~~15.07.2026~~ | Förderung (JGF FL1) | Skizzen-Frist **verstrichen** – Ausgang nachtragen |
 | **31.07.2026** | Förderung (JGF FL2) | Antrags-Frist – nur junge Menschen bis 25, Raumbezug Bildungs-/Jugendeinrichtungen! |
+| **Anfang Aug 2026** | 1.4 Radherbst-Kampagne | Versand (Flyer-Datum aktualisieren → Test → Batches) |
+| **25.08.2026** | 1.4 Radherbst-Kampagne | Rückmelde-Frist der Kommunen |
+| **01.09.–15.10.2026** | 1.4 Radherbst-Kampagne | Aktionszeitraum (EMW 16.–22.09.) |
 | **30.09.2026** | Förderung (FRL-NMOB) | Jahres-Stichtag |
 | **30.09.2026** | 1.5 AGFK-SL | Kennenlern-Tools laufen ab (`toolExpires`) → vorher Upsell-Gespräch |
 | **30.09.2026** | 2.1 Tool-Portal | RAD-Lab-Testrunde endet (→ 2.13) – Lizenz-Zeile entfernen |
@@ -427,6 +432,7 @@ Wadgassen `date_to` (31.05.) · Wadern Rats-Sitzung (Mai)
 1. **Eine Datei, eine Wahrheit – und die liegt auf GitHub.** `Werkzeuge/privat/projektverzeichnis.md` im Repo `2Rat/2Rat.github.io` ist die einzige gültige Fassung. Claude liest zu Sitzungsbeginn die raw-URL: `https://raw.githubusercontent.com/2Rat/2Rat.github.io/main/Werkzeuge/privat/projektverzeichnis.md`. Im Projektwissen liegt **keine** Kopie (veraltet sonst).
 2. **Updates immer über Claude, immer komplett.** „Claude, Vorhaben X ist jetzt Y" → Claude holt die Live-Version, patcht, liefert die komplette Datei → Armin committet. Auch 📮-Meldungen aus anderen Claude-Projekten laufen so ein – dieses Dokument ist der zentrale Ablageplatz, die anderen Projekte sind Werkstätten.
 3. **Wöchentlicher Blick auf 🔥 AKUT.** Der Block oben ist das Erste, was man sieht. Fristen erledigt → raus. Neues Dringendes → rein. Wenn AKUT länger als 8 Zeilen wird: aufräumen. **Keine Klartext-Codes in diese Datei** – das Repo ist öffentlich.
+4. **Geschäftsinterna bleiben draußen.** Preise, Vertriebsstrategie, Rechtliches, Kundeninterna → nur im Projekt „BÜRO 2Rat". Ins zentrale Verzeichnis wandern ausschließlich **Status + Fristen + Verweis** – nie Inhalte.
 
 ---
 
