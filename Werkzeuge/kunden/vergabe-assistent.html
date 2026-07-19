@@ -14,6 +14,10 @@
   .art-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important; }
   .result-enter { animation: fadeUp 0.35s ease-out; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .result-enter { animation: none; }
+    .art-btn:hover { transform: none; }
+  }
   .quick-btn { transition: all 0.12s; }
   .quick-btn:hover { background: #e8f4fa !important; }
   .step-row:hover { background: #f9fafb; }
@@ -401,7 +405,7 @@ function App() {
         e("a", { href: "zustaendigkeiten.html", style: { display: "block", padding: "11px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, background: "#fff", textDecoration: "none", color: "#3E403F", fontSize: 13, lineHeight: 1.5 }},
           e("b", { style: { color: "#115d85" }}, "Zuständigkeiten Radverkehr"), " – Wer ordnet an, wer trägt die Baulast?")
       ),
-      e("div", { style: { marginTop: 16, padding: "12px 16px", borderRadius: 10, background: "rgba(0,0,0,0.02)", border: "1px solid #e2e8f0" }},
+      e("footer", { style: { display: "block", marginTop: 16, padding: "12px 16px", borderRadius: 10, background: "rgba(0,0,0,0.02)", border: "1px solid #e2e8f0" }},
         e("p", { style: { fontSize: 10, color: "#a1a1aa", margin: 0, lineHeight: 1.6 }},
           "Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall. Grundlage: Vergabeerlass SL 2025 (Amtsbl. 26/2025, ab 01.07.2025 unbefristet) – Direktauftrag bis 100.000 €, darüber Freihändige Vergabe oder Beschränkte Ausschreibung bis zum EU-Schwellenwert (2026/27: Bau 5.404.000 €, Liefer/DL 216.000 €). KSVG §§ 82 ff. Alle Werte netto. Bei Fördermitteln ggf. strengere Vorgaben. Stand 07/2026."
         ),
