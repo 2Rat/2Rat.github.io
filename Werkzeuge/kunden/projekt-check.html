@@ -131,7 +131,7 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
         <div class="header-title">Projekt-Check <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right"><a class="portal-link" href="index.html">← Zum Portal</a><br>Saarland · Kommunale Vorhaben<br>Werkzeug-Stand 06/2026</div>
+    <div class="header-right"><a class="portal-link" href="index.html">← Zum Portal</a><br>Saarland · Kommunale Vorhaben<br>Werkzeug-Stand 07/2026</div>
   </div>
 </div>
 
@@ -140,7 +140,7 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
   <div class="steps" id="steps"></div>
   <div id="content"></div>
   <footer class="footer">
-    <b>Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. Stand 06/2026.
+    <b>Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. Stand 07/2026.
     Datengrundlage: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL, Stand 05/2026) sowie StVO, VwV-StVO 2025, StVZustG Saarland, SaarlStrG, FStrG.<br>
     Entwickelt von 2Rat – Büro für Radverkehrsplanung · <a href="https://www.2rat.org">www.2rat.org</a>
   </footer>
@@ -173,7 +173,7 @@ const FALLTYPEN=[
 {id:"fahrradstrasse",icon:"🛣️",label:"Fahrradstraße oder -zone einrichten",
  desc:"Eine einzelne Fahrradstraße oder eine ganze Fahrradzone",
  lead:"Auf einer Gemeindestraße kann Ihre Kommune die Fahrradstraße im Saarland selbst anordnen – bei einer Fahrradzone wirkt sie über das Einvernehmen mit.",
- beteiligte:["Straßenverkehrsbehörde","Polizei","Baulastträger / Bauhof","ÖPNV / Rettungsdienste","Anlieger"],
+ beteiligte:["Straßenverkehrsbehörde","Polizei","Bau-/Tiefbauamt (Baulastträger)","Bauhof / Betriebshof (Umsetzung)","ÖPNV / Rettungsdienste","Anlieger"],
  pruef:["Netzfunktion und Eignung prüfen","Einzelne Fahrradstraße oder zusammenhängende Zone? (unterschiedliche Rechtsgrundlage)","Begleitmaßnahmen festlegen (Bevorrechtigung, Markierung)","Beschilderung und Markierung","Anlieger informieren","Wirkung später prüfen (Evaluation)"],
  steps:["Netzfunktion und Eignung prüfen","Klären, ob Fahrradstraße (einzeln) oder Fahrradzone","Anordnung durch die zuständige Straßenverkehrsbehörde","Beteiligte informieren","Umsetzen und evaluieren"],
  hinweis:"Wichtig ist der Unterschied zwischen Straße und Zone: Eine einzelne Fahrradstraße (Z 244.1) wird über § 45 Abs. 1 StVO angeordnet. Im Saarland ist diese Befugnis auf die Gemeinden übertragen (§ 12 StVZustG umfasst § 45 Abs. 1 bis 1d) – auf ihren eigenen Gemeindestraßen kann die Gemeinde die Fahrradstraße also selbst anordnen. Eine Fahrradzone (Z 244.3) dagegen läuft über § 45 Abs. 1i StVO, der nicht auf die Gemeinden übertragen ist: Hier ordnet die Straßenverkehrsbehörde (Kreis/Regionalverband bzw. Saarbrücken, Völklingen, St. Ingbert) im Einvernehmen mit der Gemeinde an. Die Zone darf sich nicht auf Bundes-, Landes-, Kreis- oder Vorfahrtstraßen erstrecken.",
@@ -181,10 +181,10 @@ const FALLTYPEN=[
 {id:"markierung",icon:"🚧",label:"Schilder, Markierung oder Tempo ändern",
  desc:"Schutzstreifen, Tempo 30, Einbahn-Öffnung, Beschilderung",
  lead:"Die Straßenverkehrsbehörde ordnet an – das ist meist der Landkreis bzw. Regionalverband, in Saarbrücken, Völklingen und St. Ingbert die Stadt selbst. Der Baulastträger setzt um.",
- beteiligte:["Straßenverkehrsbehörde","Polizei","Baulastträger / Bauhof"],
+ beteiligte:["Straßenverkehrsbehörde","Polizei","Bau-/Tiefbauamt (Baulastträger)","Bauhof / Betriebshof (Umsetzung)"],
  pruef:["Fahrbahnbreite und Sichtbeziehungen","VwV-StVO 2025 beachten","Beschilderung und Markierung","auf Musterlösungen zurückgreifen"],
- steps:["Genaue Maßnahme festlegen","Mit Straßenverkehrsbehörde klären","Anordnung einholen","Umsetzung durch Bauhof/Baulastträger"],
- hinweis:"Eine Roteinfärbung mit Piktogrammkette hat unterstützenden Charakter und ist Sache des Baulastträgers – sie ersetzt nicht die Anordnung der zugrunde liegenden Führung. Mit Straßenverkehrsbehörde und Polizei abstimmen.",
+ steps:["Genaue Maßnahme festlegen","Mit Straßenverkehrsbehörde klären","Anordnung einholen","Umsetzen: Beschilderung und Markierung über den Bauhof/Betriebshof, bauliche Anpassungen über das Tiefbauamt"],
+ hinweis:"Rollenverteilung in der Verwaltung: Planung und bauliche Umgestaltung laufen über das Bau- bzw. Tiefbauamt als Baulastträger, das Aufstellen von Schildern und das Aufbringen von Markierungen übernimmt in der Regel der Bauhof bzw. Betriebshof. Wie weit der Bauhof selbst umsetzt, ist von Kommune zu Kommune verschieden – in kleineren Gemeinden oft deutlich mehr als in größeren Städten. Eine Roteinfärbung mit Piktogrammkette hat unterstützenden Charakter und ist Sache des Baulastträgers – sie ersetzt nicht die Anordnung der zugrunde liegenden Führung. Mit Straßenverkehrsbehörde und Polizei abstimmen.",
  links:["zustaendigkeiten"], askFoerder:false},
 {id:"abstellanlage",icon:"🅿️",label:"Fahrräder abstellen ermöglichen",
  desc:"Bügel, überdachte Anlagen, Abstellplätze",
@@ -240,7 +240,7 @@ const FALLTYPEN=[
 {id:"unfall",icon:"⚠️",label:"Gefahrenstelle entschärfen",
  desc:"Unfallhäufung oder Sicherheitsproblem",
  lead:"Die Unfallkommission ist der zentrale Akteur.",
- beteiligte:["Unfallkommission","Straßenverkehrsbehörde","Polizei","Baulastträger / Bauhof","eigene Verkehrsplanung"],
+ beteiligte:["Unfallkommission","Straßenverkehrsbehörde","Polizei","Bau-/Tiefbauamt (Baulastträger)","Bauhof / Betriebshof (Umsetzung)","eigene Verkehrsplanung"],
  pruef:["Unfalldaten und Örtlichkeit auswerten","Sofortmaßnahmen prüfen","bauliche und verkehrsrechtliche Maßnahmen abwägen","Wirkung nachher prüfen"],
  steps:["Stelle und Unfalllage dokumentieren","Unfallkommission einbinden","Maßnahmen beschließen lassen","Umsetzen","Wirkung evaluieren"],
  unfallkommission:true,
@@ -291,16 +291,17 @@ const OD_BAULAST=["Saarbrücken"];
 /* Straßenverkehrsbehörden-Kontakte (recherchiert 06/2026, offizielle Behördenseiten).
    Zuordnung: eigene StVB nur Saarbrücken/Völklingen/St. Ingbert, sonst Landkreis/RV. */
 const KONTAKTE={
- "rv":{name:"Regionalverband Saarbrücken – Straßenverkehrsbehörde",tel:"0681 506-3350",mail:"strassenverkehr@rvsbr.de",web:"regionalverband-saarbruecken.de"},
- "sls":{name:"Landkreis Saarlouis – Straßenverkehrsbehörde (Amt für öffentliche Sicherheit und Ordnung)",tel:"06831 444-0",mail:"amt32@kreis-saarlouis.de",web:"kreis-saarlouis.de"},
- "mzg":{name:"Landkreis Merzig-Wadern – Straßenverkehrsbehörde",tel:"06861 80-2440",mail:"strassenverkehr@merzig-wadern.de",web:"merzig-wadern.de"},
- "nk":{name:"Landkreis Neunkirchen – Straßenverkehrsbehörde",tel:"06824 906-7011",mail:"kfz@landkreis-neunkirchen.de",web:"landkreis-neunkirchen.de"},
- "wnd":{name:"Landkreis St. Wendel – Straßenverkehrsbehörde",tel:"06851 801-2804",mail:"strassenverkehrsbehoerde@lkwnd.de",web:"landkreis-st-wendel.de"},
- "spk":{name:"Saarpfalz-Kreis – Straßenverkehrsbehörde",tel:"06841 104-7162",mail:"verkehr@saarpfalz-kreis.de",web:"saarpfalz-kreis.de"},
- "Saarbrücken":{name:"Landeshauptstadt Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 905-0",mail:"ordnungsamt@saarbruecken.de",web:"saarbruecken.de"},
- "Völklingen":{name:"Stadt Völklingen – Straßenverkehrsbehörde",tel:"06898 13-0",mail:"",web:"voelklingen.de"},
- "St. Ingbert":{name:"Stadt St. Ingbert – Straßenverkehrsbehörde",tel:"06894 13-0",mail:"",web:"st-ingbert.de"}
+ "rv":{name:"Regionalverband Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 506-3350",mail:"strassenverkehr@rvsbr.de",web:"regionalverband-saarbruecken.de",url:"https://www.regionalverband-saarbruecken.de/ordnungsamt/strassenverkehrsbehoerde/"},
+ "sls":{name:"Landkreis Saarlouis – Straßenverkehrsbehörde (Amt für öffentliche Sicherheit und Ordnung)",tel:"06831 444-0",mail:"amt32@kreis-saarlouis.de",web:"kreis-saarlouis.de",url:"https://www.kreis-saarlouis.de/Sicherheit-Ordnung/Strassenverkehr.htm"},
+ "mzg":{name:"Landkreis Merzig-Wadern – Straßenverkehrsbehörde",tel:"06861 80-2440",mail:"strassenverkehr@merzig-wadern.de",web:"merzig-wadern.de",url:"https://www.merzig-wadern.de/Zulassung-Verkehr/Stra%C3%9Fenverkehr/"},
+ "nk":{name:"Landkreis Neunkirchen – Straßenverkehrsbehörde",tel:"06824 906-7011",mail:"",web:"landkreis-neunkirchen.de",url:"https://www.landkreis-neunkirchen.de/kfz-fuehrerschein/strassenverkehrsbehoerde/verkehr",note:"Kein eigenes Funktionspostfach veröffentlicht – die allgemeine Kfz-Adresse führt zur Zulassungsstelle. Ansprechperson und Durchwahl stehen auf der Kontaktseite."},
+ "wnd":{name:"Landkreis St. Wendel – Straßenverkehrsbehörde (Kreisordnungsamt)",tel:"06851 801-2804",mail:"strassenverkehrsbehoerde@lkwnd.de",web:"landkreis-st-wendel.de",url:"https://www.landkreis-st-wendel.de/kontakt"},
+ "spk":{name:"Saarpfalz-Kreis – Straßenverkehrsbehörde (Verkehrswesen)",tel:"06841 104-7162",mail:"verkehr@saarpfalz-kreis.de",web:"saarpfalz-kreis.de",url:"https://www.saarpfalz-kreis.de/verkehrswesen/verkehrsbeschraenkungen"},
+ "Saarbrücken":{name:"Landeshauptstadt Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 905-0",mail:"ordnungsamt@saarbruecken.de",web:"saarbruecken.de",url:""},
+ "Völklingen":{name:"Stadt Völklingen – Straßenverkehrsbehörde",tel:"06898 13-0",mail:"",web:"voelklingen.de",url:""},
+ "St. Ingbert":{name:"Stadt St. Ingbert – Straßenverkehrsbehörde",tel:"06894 13-0",mail:"",web:"st-ingbert.de",url:""}
 };
+
 function kontaktFor(k){if(!k)return null;return k.eigeneStVB?(KONTAKTE[k.name]||null):(KONTAKTE[k.kreisId]||null);}
 function findKommune(name){
   for(const kr of KREISE){ if(kr.kommunen.includes(name)) return {name:name,kreis:kr.name,kreisId:kr.id,eigeneStVB:EIGENE_STVB.includes(name),odBaulast:OD_BAULAST.includes(name)}; }
@@ -482,10 +483,23 @@ function viewErgebnis(){
       if(kt){
         kontaktHtml='<br><b>'+kt.name+'</b><br>'+(kt.tel?('📞 '+kt.tel):'');
         if(kt.mail)kontaktHtml+=(kt.tel?' · ':'')+'✉️ <a href="mailto:'+kt.mail+'">'+kt.mail+'</a>';
-        kontaktHtml+='<br>🌐 <a href="https://www.'+kt.web+'" target="_blank" rel="noopener">www.'+kt.web+'</a> <span style="color:var(--gray-light);font-size:11px">(Kontakt recherchiert 06/2026 – im Zweifel auf der Behördenseite prüfen)</span>';
+        if(kt.url)kontaktHtml+='<br>\ud83d\udc64 <a href="'+kt.url+'" target="_blank" rel="noopener">Kontaktseite der Stra\u00dfenverkehrsbeh\u00f6rde \u2013 Ansprechperson, Durchwahlen, Formulare</a>';
+        if(kt.note)kontaktHtml+='<br><span style="font-size:11.5px">'+kt.note+'</span>';
+        kontaktHtml+='<br>🌐 <a href="https://www.'+kt.web+'" target="_blank" rel="noopener">www.'+kt.web+'</a> <span style="color:var(--gray-light);font-size:11px">(Kontakt recherchiert 07/2026 – im Zweifel auf der Behördenseite prüfen)</span>';
       }
       h+='<div class="info-box" style="background:var(--green-light);border-color:rgba(101,148,68,.3)"><div class="info-title" style="color:var(--green-dark)">Vor Ort – '+k.name+'</div><div class="info-body">Landkreis / Regionalverband: '+k.kreis+'<br>Zuständige Straßenverkehrsbehörde: '+stvb+kontaktHtml+'</div></div>';
     }
+  }
+
+  // Baulasttraeger Bundes-/Landesstrasse: LfS-Kontakt (identisch zum Werkzeug Zustaendigkeiten)
+  if(f.id==="radweg"||f.id==="bundlandstrasse"){
+    h+='<div class="info-box"><div class="info-title">Erste Anlaufstelle beim Land \u2013 Landesbetrieb f\u00fcr Stra\u00dfenbau (LfS)</div><div class="info-body">'+
+       'Sobald eine Bundes- oder Landesstra\u00dfe im Spiel ist, ist der LfS Tr\u00e4ger der Stra\u00dfenbaulast \u2013 fr\u00fchzeitig einbinden.<br>'+
+       '<b>LfS \u2013 Fachbereich 42 Stra\u00dfenplanung</b><br>Peter-Neuber-Allee 1, 66538 Neunkirchen<br>'+
+       '\u2709\ufe0f <a href="mailto:radwege@lfs.saarland.de">radwege@lfs.saarland.de</a> \u00b7 \ud83d\udcde 06821 100-0 (Zentrale)<br>'+
+       '\ud83c\udf10 <a href="https://www.saarland.de/lfs/DE/home" target="_blank" rel="noopener">www.saarland.de/lfs</a> '+
+       '<span style="color:var(--gray-light);font-size:11px">(Kontakt recherchiert 07/2026)</span>'+
+       '</div></div>';
   }
 
   // Hinweis
