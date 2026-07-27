@@ -135,7 +135,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>Stand 07/2026 · v16</div>
+    <div class="header-right">Saarland<br>Stand 07/2026 · v17</div>
   </div>
 </div>
 
@@ -223,16 +223,17 @@ function findKommune(name){
 }
 /* Straßenverkehrsbehörden-Kontakte (recherchiert 06-07/2026, offizielle Behördenseiten). */
 const KONTAKTE={
- "rv":{name:"Regionalverband Saarbrücken – Straßenverkehrsbehörde",tel:"0681 506-3350",mail:"strassenverkehr@rvsbr.de",web:"regionalverband-saarbruecken.de"},
- "sls":{name:"Landkreis Saarlouis – Straßenverkehrsbehörde (Amt für öffentliche Sicherheit und Ordnung)",tel:"06831 444-0",mail:"amt32@kreis-saarlouis.de",web:"kreis-saarlouis.de"},
- "mzg":{name:"Landkreis Merzig-Wadern – Straßenverkehrsbehörde",tel:"06861 80-2440",mail:"strassenverkehr@merzig-wadern.de",web:"merzig-wadern.de"},
- "nk":{name:"Landkreis Neunkirchen – Straßenverkehrsbehörde",tel:"06824 906-7011",mail:"kfz@landkreis-neunkirchen.de",web:"landkreis-neunkirchen.de"},
- "wnd":{name:"Landkreis St. Wendel – Straßenverkehrsbehörde",tel:"06851 801-2804",mail:"strassenverkehrsbehoerde@lkwnd.de",web:"landkreis-st-wendel.de"},
- "spk":{name:"Saarpfalz-Kreis – Straßenverkehrsbehörde",tel:"06841 104-7162",mail:"verkehr@saarpfalz-kreis.de",web:"saarpfalz-kreis.de"},
- "Saarbrücken":{name:"Landeshauptstadt Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 905-0",mail:"ordnungsamt@saarbruecken.de",web:"saarbruecken.de"},
- "Völklingen":{name:"Stadt Völklingen – Straßenverkehrsbehörde",tel:"06898 13-0",mail:"",web:"voelklingen.de"},
- "St. Ingbert":{name:"Stadt St. Ingbert – Straßenverkehrsbehörde",tel:"06894 13-0",mail:"",web:"st-ingbert.de"}
+ "rv":{name:"Regionalverband Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 506-3350",mail:"strassenverkehr@rvsbr.de",web:"regionalverband-saarbruecken.de",url:"https://www.regionalverband-saarbruecken.de/ordnungsamt/strassenverkehrsbehoerde/"},
+ "sls":{name:"Landkreis Saarlouis – Straßenverkehrsbehörde (Amt für öffentliche Sicherheit und Ordnung)",tel:"06831 444-0",mail:"amt32@kreis-saarlouis.de",web:"kreis-saarlouis.de",url:"https://www.kreis-saarlouis.de/Sicherheit-Ordnung/Strassenverkehr.htm",note:"Auf der Kontaktseite stehen die Sachbearbeitung mit Durchwahl sowie das Antragsformular für Anordnungen nach § 45 StVO."},
+ "mzg":{name:"Landkreis Merzig-Wadern – Straßenverkehrsbehörde",tel:"06861 80-2440",mail:"strassenverkehr@merzig-wadern.de",web:"merzig-wadern.de",url:"https://www.merzig-wadern.de/Zulassung-Verkehr/Stra%C3%9Fenverkehr/"},
+ "nk":{name:"Landkreis Neunkirchen – Straßenverkehrsbehörde",tel:"06824 906-7011",mail:"",web:"landkreis-neunkirchen.de",url:"https://www.landkreis-neunkirchen.de/kfz-fuehrerschein/strassenverkehrsbehoerde/verkehr",note:"Kein eigenes Funktionspostfach veröffentlicht – die allgemeine Kfz-Adresse führt zur Zulassungsstelle, nicht zur Straßenverkehrsbehörde. Ansprechperson und Durchwahl stehen auf der Kontaktseite."},
+ "wnd":{name:"Landkreis St. Wendel – Straßenverkehrsbehörde (Kreisordnungsamt)",tel:"06851 801-2804",mail:"strassenverkehrsbehoerde@lkwnd.de",web:"landkreis-st-wendel.de",url:"https://www.landkreis-st-wendel.de/kontakt"},
+ "spk":{name:"Saarpfalz-Kreis – Straßenverkehrsbehörde (Verkehrswesen)",tel:"06841 104-7162",mail:"verkehr@saarpfalz-kreis.de",web:"saarpfalz-kreis.de",url:"https://www.saarpfalz-kreis.de/verkehrswesen/verkehrsbeschraenkungen"},
+ "Saarbrücken":{name:"Landeshauptstadt Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 905-0",mail:"ordnungsamt@saarbruecken.de",web:"saarbruecken.de",url:""},
+ "Völklingen":{name:"Stadt Völklingen – Straßenverkehrsbehörde",tel:"06898 13-0",mail:"",web:"voelklingen.de",url:""},
+ "St. Ingbert":{name:"Stadt St. Ingbert – Straßenverkehrsbehörde",tel:"06894 13-0",mail:"",web:"st-ingbert.de",url:""}
 };
+
 function kontaktFor(k){if(!k)return null;return k.eigeneStVB?(KONTAKTE[k.name]||null):(KONTAKTE[k.kreisId]||null);}
 
 /* ===== Karten-Modus (optional): Klick belegt Kommune / Straße / Lage vor ===== */
@@ -267,7 +268,7 @@ const PRAXIS={
     "Mindestbreite: 1,25 m in Engstellen (ERA 2010)",
     "Schutzstreifen sind Fahrbahnmarkierungen – sie erhöhen nicht die Gesamtfahrbahnbreite",
     "Verbleibende Kernfahrbahn: ≥ 4,50 m bei Gegenverkehr (ohne Parken) (MuLöS BW)",
-    "Kein Einsatz bei Vzul > 50 km/h oder DTV > 15.000 Kfz/24h"
+    "Kein Einsatz bei zulässiger Höchstgeschwindigkeit über 50 km/h oder mehr als 15.000 Kfz in 24 h (DTV)"
   ],
   radfahrstreifen:[
     "Regelbreite: 1,85 m inkl. Breitstrich (ERA 2010)",
@@ -306,7 +307,7 @@ const PRAXIS={
   ],
   einbahn_oeffnung:[
     "Mindestbreite Fahrgasse: 3,50 m (bei Gegenverkehr Rad/Kfz)",
-    "Empfohlen bei Vzul ≤ 30 km/h",
+    "Empfohlen bei zulässiger Höchstgeschwindigkeit von höchstens 30 km/h",
     "Schutzstreifen in Gegenrichtung bei Breite ≥ 4,50 m prüfen"
   ],
   querungshilfe:[
@@ -419,14 +420,14 @@ function getResult(){
   /* Bauliche Maßnahmen */
   if(m.type==="bau"||m.type==="anordnung_bau"){
     let ba=baulast;
-    if(m.id==="abstellanlage"){ba="Gemeinde (oder privater Grundstückseigentümer)";if(isBL)notes.push("Sondernutzung an Bundes-/Landstraßen: Die Erlaubnis erteilt der Träger der Straßenbaulast (Bund bzw. Land – Landesbetrieb für Straßenbau), nicht die Gemeinde (§ 8 FStrG bzw. § 18 SaarlStrG).");else notes.push("Auf öffentlichem Straßengrund: Sondernutzungserlaubnis erforderlich.");}
+    if(m.id==="abstellanlage"){ba="Gemeinde (oder privater Grundstückseigentümer)";if(isBL)notes.push("Sondernutzung an Bundes-/Landstraßen: Die Erlaubnis erteilt der Träger der Straßenbaulast (Bund bzw. Land – Landesbetrieb für Straßenbau), nicht die Gemeinde (§ 8 FStrG bzw. § 18 SaarlStrG).");else{notes.push("Außerhalb des öffentlichen Verkehrsraums (Schulhof, Rathausvorplatz, Bauhofgelände, privates Grundstück): keine Beteiligung der Straßenverkehrsbehörde – es gilt Bauordnungsrecht, ggf. die kommunale Stellplatzsatzung.");notes.push("Im öffentlichen Straßenraum, errichtet durch die Gemeinde selbst: keine Sondernutzungserlaubnis erforderlich – die Gemeinde ist selbst Trägerin der Straßenbaulast.");notes.push("Aber: Entfallen dafür Kfz-Stellplätze oder ändert sich Beschilderung bzw. Markierung, ist zusätzlich eine verkehrsrechtliche Anordnung nötig (§ 45 StVO) – dann ist die Straßenverkehrsbehörde einzubinden.");notes.push("Errichtet ein Dritter (Gewerbe, Verein) die Anlage auf öffentlichem Straßengrund, braucht er eine Sondernutzungserlaubnis der Gemeinde (§ 18 SaarlStrG).");}}
     else if(m.id==="radschnellweg"){ba="Land Saarland / ggf. interkommunale Zusammenarbeit";notes.push("Fördermöglichkeiten über Bundes- und Landesprogramme prüfen (u. a. FRL-NMOB-Rad-Fuß).");}
     if(m.type==="bau"){authority=ba+(/\)\s*$/.test(ba)?"":" (als Baulastträger)");authorityDetail=baulastDetail;}
     if(m.type==="anordnung_bau")notes.push("Erfordert sowohl bauliche Umsetzung (Baulastträger) als auch verkehrsrechtliche Anordnung (Straßenverkehrsbehörde).");
     if(m.id!=="abstellanlage"&&m.id!=="radschnellweg")notes.push("Abstimmung zwischen Baulastträger und Straßenverkehrsbehörde erforderlich.");
   }
 
-  if(s==="gemeindestrasse"||s==="sonstige")notes.push("Mitteilungspflicht: Gemeinden müssen u. a. Verkehrsbeschränkungen, Fußgängerüberwege und Vorfahrtsregelungen der nach § 7 Abs. 3 StVZustG zuständigen Behörde (Landkreis bzw. Regionalverband Saarbrücken) mitteilen (§ 12 Abs. 3 StVZustG).");
+  if((s==="gemeindestrasse"||s==="sonstige")&&(m.type==="anordnung"||m.type==="anordnung_bau"))notes.push("Mitteilungspflicht: Gemeinden müssen u. a. Verkehrsbeschränkungen, Fußgängerüberwege und Vorfahrtsregelungen der nach § 7 Abs. 3 StVZustG zuständigen Behörde (Landkreis bzw. Regionalverband Saarbrücken) mitteilen (§ 12 Abs. 3 StVZustG).");
 
   /* Praxishinweise aus ERA/MuLöS */
   if(PRAXIS[m.id])praxis=PRAXIS[m.id];
@@ -554,8 +555,11 @@ function render(){
     if(r.measure.type!=='bau'){
       h+=`<div class="field"><div class="field-label">Straßenbaulastträger</div><div class="field-value">${r.baulast}</div><div class="field-detail">${r.baulastDetail}</div></div>`;
     }
-    h+=`<div class="field"><div class="field-label">Rechtsgrundlage</div><div class="field-value">${r.legal}</div></div>`;
-    h+=`<div class="field" style="margin-bottom:${(r.notes.length||r.praxis.length)?'14px':'0'}"><div class="field-label">Aufsichtsbehörde</div><div class="field-value">${r.aufsicht}</div><div class="field-detail">${r.aufsichtDetail}</div></div>`;
+    const lastMb=(r.notes.length||r.praxis.length)?'14px':'0';
+    h+=`<div class="field"${r.measure.type==='bau'?' style="margin-bottom:'+lastMb+'"':''}><div class="field-label">Rechtsgrundlage</div><div class="field-value">${r.legal}</div></div>`;
+    if(r.measure.type!=='bau'){
+      h+=`<div class="field" style="margin-bottom:${lastMb}"><div class="field-label">Aufsichtsbehörde</div><div class="field-value">${r.aufsicht}</div><div class="field-detail">${r.aufsichtDetail}</div></div>`;
+    }
     if(r.notes.length){
       h+=`<div class="notes"><div class="notes-title">⚖ Rechtliche Hinweise & Praxistipps</div>${r.notes.map(n=>`<div class="notes-item">• ${n}</div>`).join('')}</div>`;
     }
@@ -567,11 +571,28 @@ function render(){
     if(state.kommune){
       const kk=findKommune(state.kommune);const kt=kontaktFor(kk);
       if(kk&&kt){
-        let kontaktHtml='<b>'+kt.name+'</b>'+(kt.tel?('<br>📞 '+kt.tel):'');
-        if(kt.mail)kontaktHtml+=' · ✉️ <a href="mailto:'+kt.mail+'">'+kt.mail+'</a>';
-        kontaktHtml+='<br>🌐 <a href="https://www.'+kt.web+'" target="_blank" rel="noopener">www.'+kt.web+'</a> <span style="color:var(--gray-light);font-size:11px">(Kontakt recherchiert 06-07/2026 – im Zweifel auf der Behördenseite prüfen)</span>';
-        h+='<div class="info-box" style="background:var(--green-light);border-color:rgba(101,148,68,.3)"><div class="info-title" style="color:var(--green-dark)">Vor Ort – '+kk.name+'</div><div class="info-body">Landkreis / Regionalverband: '+kk.kreis+'<br>'+kontaktHtml+'</div></div>';
+        let kontaktHtml='<b>'+kt.name+'</b>'+(kt.tel?('<br>\ud83d\udcde '+kt.tel):'');
+        if(kt.mail)kontaktHtml+=' \u00b7 \u2709\ufe0f <a href="mailto:'+kt.mail+'">'+kt.mail+'</a>';
+        if(kt.url)kontaktHtml+='<br>\ud83d\udc64 <a href="'+kt.url+'" target="_blank" rel="noopener">Kontaktseite der Stra\u00dfenverkehrsbeh\u00f6rde \u2013 Ansprechperson, Durchwahlen, Formulare</a>';
+        if(kt.note)kontaktHtml+='<br><span style="font-size:11.5px">'+kt.note+'</span>';
+        kontaktHtml+='<br>\ud83c\udf10 <a href="https://www.'+kt.web+'" target="_blank" rel="noopener">www.'+kt.web+'</a> <span style="color:var(--gray-light);font-size:11px">(Kontakt recherchiert 07/2026 \u2013 im Zweifel auf der Beh\u00f6rdenseite pr\u00fcfen)</span>';
+        let boxTitle='Vor Ort \u2013 '+kk.name;
+        let vorspann='Landkreis / Regionalverband: '+kk.kreis+'<br>';
+        if(r.measure.type==='bau'){
+          boxTitle='Falls eine verkehrsrechtliche Anordnung dazukommt \u2013 '+kk.name;
+          vorspann='F\u00fcr den Bau selbst brauchen Sie diese Beh\u00f6rde nicht. Sie wird erst zust\u00e4ndig, wenn daf\u00fcr Kfz-Stellpl\u00e4tze entfallen oder Beschilderung bzw. Markierung ge\u00e4ndert wird.<br>Landkreis / Regionalverband: '+kk.kreis+'<br>';
+        }
+        h+='<div class="info-box" style="background:var(--green-light);border-color:rgba(101,148,68,.3)"><div class="info-title" style="color:var(--green-dark)">'+boxTitle+'</div><div class="info-body">'+vorspann+kontaktHtml+'</div></div>';
       }
+    }
+    if(sEff==="bundesstrasse"||sEff==="landesstrasse1"||sEff==="landesstrasse2"){
+      h+='<div class="info-box"><div class="info-title">Erste Anlaufstelle Bundes-/Landesstra\u00dfe \u2013 Landesbetrieb f\u00fcr Stra\u00dfenbau (LfS)</div><div class="info-body">'+
+         'Der LfS ist Tr\u00e4ger der Stra\u00dfenbaulast und f\u00fcr Radverkehrsanlagen an Bundes- und Landesstra\u00dfen zust\u00e4ndig \u2013 fr\u00fchzeitig einbinden.<br>'+
+         '<b>LfS \u2013 Fachbereich 42 Stra\u00dfenplanung</b><br>Peter-Neuber-Allee 1, 66538 Neunkirchen<br>'+
+         '\u2709\ufe0f <a href="mailto:radwege@lfs.saarland.de">radwege@lfs.saarland.de</a> \u00b7 \ud83d\udcde 06821 100-0 (Zentrale)<br>'+
+         '\ud83c\udf10 <a href="https://www.saarland.de/lfs/DE/home" target="_blank" rel="noopener">www.saarland.de/lfs</a> '+
+         '<span style="color:var(--gray-light);font-size:11px">(Kontakt recherchiert 07/2026)</span>'+
+         '</div></div>';
     }
     h+=`<div class="info-box"><div class="info-title">Straßenverkehrsbehörden im Saarland</div><div class="info-body">
       <strong>Landkreise:</strong> Merzig-Wadern, Neunkirchen, Saarlouis, Saarpfalz-Kreis (ohne St. Ingbert), St. Wendel<br>
@@ -606,11 +627,12 @@ function buildZVermerk(){
   t+='Erstellt am: '+new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})+'\n';
   t+='Maßnahme: '+r.measure.label+'\n';
   t+='Straße: '+sLabel+(loc?(' · '+loc.label):'')+'\n';
+  if((sEff==='bundesstrasse'||sEff==='landesstrasse1'||sEff==='landesstrasse2'))t+='Baulastträger: LfS – Fachbereich 42 Straßenplanung, Peter-Neuber-Allee 1, 66538 Neunkirchen · radwege@lfs.saarland.de · Tel. 06821 100-0\n';
   if(state.kommune){t+='Kommune: '+state.kommune+'\n';const kk=findKommune(state.kommune);const kt=kontaktFor(kk);if(kt){t+='Kontakt StVB: '+kt.name+(kt.tel?(' · Tel. '+kt.tel):'')+(kt.mail?(' · '+kt.mail):'')+' · www.'+kt.web+'\n';}}
   t+='\n'+(r.measure.type==='bau'?'Zuständiger Baulastträger':'Zuständige Behörde (verkehrsrechtliche Anordnung)')+':\n'+r.authority+'\n('+r.authorityDetail+')\n';
   if(r.measure.type!=='bau')t+='\nStraßenbaulastträger:\n'+r.baulast+'\n('+r.baulastDetail+')\n';
   t+='\nRechtsgrundlage: '+r.legal+'\n';
-  t+='Aufsichtsbehörde: '+r.aufsicht+'\n';
+  if(r.measure.type!=='bau')t+='Aufsichtsbehörde: '+r.aufsicht+'\n';
   if(r.warnings.length){t+='\nACHTUNG – in dieser Lage nicht vorgesehen:\n';r.warnings.forEach(w=>{t+='- '+w+'\n';});}
   if(r.notes.length){t+='\nRechtliche Hinweise & Praxistipps:\n';r.notes.forEach(n=>{t+='- '+n+'\n';});}
   if(r.praxis.length){t+='\nMaße & Planungshinweise (ERA 2010 / MuLöS BW):\n';r.praxis.forEach(p=>{t+='- '+p+'\n';});}
