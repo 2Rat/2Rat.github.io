@@ -24,7 +24,8 @@
 | prüfen | Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den **Passwortmanager** übertragen, bevor die 30-Tage-Session abläuft | Tool-Portal / RadPlan |
 | offen | Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe + Rechnung | Tool-Portal |
 | **jetzt** | Projekt-Check: Freigabe für **Referenznennung + Zitate** aus der Testrunde bei der AGFK-SL einholen – solange die Testphase läuft, ist es eine Formsache | Tool-Portal |
-| **prüfen** | Deployment offen: Vergabe-Assistent v3 + Projekt-Check (beide nach `Werkzeuge/kunden/`) | Tool-Portal |
+| **offen** | Upload: Vergabe-Assistent v3 nach `Werkzeuge/kunden/` (Projekt-Check und Zuständigkeiten sind live und gegengeprüft) | Tool-Portal |
+| **erledigt 27.07.** | `quoteAGFK` geprüft – Feld ist sachlich falsch, muss vor jeder Auslieferung raus (→ 2.3) | Tool-Portal |
 | nach Urlaub | Gespräch AGFK-SL: Nutzungsrechte Projekt-Check, Pflegevereinbarung, Lizenzmodell übrige Tools → Eckpunktepapier liegt vor | Tool-Portal / BÜRO 2Rat |
 | wartet | AGFK-Logo → dann `agfk-sl/`-Tool-Varianten erstellen (Routing steht bereits) | Tool-Portal |
 
@@ -84,6 +85,7 @@
 - **Lizenzen im Portal:** „AGFK Saarland" bis 15.05.2027 · „AGFK Honorarkraft" (externer Prüfer) bis 27.05.2027 (5-Tool-Suite)
 - **Status:** läuft (Auftrag Projekt-Check; Übergabe + Zahlung ausstehend)
 - **Offen (27.07.2026):** Nutzungsrechte am Projekt-Check ungeklärt (gemeinsame Leistung – Fachinhalt AGFK-SL, Umsetzung 2Rat) · Freigabe für Referenznennung und Zitate aus der Testrunde steht aus · Abgrenzung Mängelbeseitigung / Weiterentwicklung noch nicht schriftlich · Entscheidung Beistellung oder Lizenzierung der übrigen Werkzeuge
+- **Achtung Vertriebsargument:** Der erhöhte Fördersatz von 90 % taugt **nicht** als Argument für eine AGFK-Mitgliedschaft – er hängt an der Finanzschwäche der Kommune, nicht an der Mitgliedschaft (→ 2.3). Falls das gegenüber Geschäftsstelle oder Mitgliedern schon so angeklungen ist, beiläufig geraderücken, bevor es in eine Präsentation oder ein Rundschreiben wandert.
 - **Grundlage:** Eckpunktepapier „Eckpunkte zur vertraglichen Regelung" (27.07.2026) erstellt – Leistungsarten, Rechte, Referenz, Pflege · Inhalte → Projekt „BÜRO 2Rat"
 - **Nächster Schritt:** Referenzfreigabe kurzfristig einholen; Gespräch nach der Urlaubszeit; vor 30.09.2026 Upsell-Gespräch zu den Kennenlern-Tools; nach AGFK-Logo: `agfk-sl/`-Varianten erstellen
 
@@ -111,7 +113,12 @@
 - **Zweck:** Entscheidungshilfe zur Förderkulisse für Rad- und Fußverkehrsmaßnahmen mit Praxis-Hinweisen pro Fördergegenstand. Mit Hinweis-Block: Abdeckung nur Landesförderung NMOB (inkl. Stadt-und-Land), Verweis auf Bundestöpfe (Kommunalrichtlinie, Bike+Ride, Junge Generation Fahrrad).
 - **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/foerdermittel-finder.html`)*
 - **Status:** live · **v2 (11.07.2026)** – Ergebnis-Vermerke, Cross-Links, einheitlicher Disclaimer · **Update 19.07.2026 deployed:** Förderquoten nach FRL-NMOB korrigiert (Schule/Kita 90/95 %, Landesinteresse bis 100 %, neue Quoten-Datenfelder) · **Freemium-Demo live** unter `2rat.org/demo/` (frei ohne Code, 3 von 13 Fördergegenständen, Export gesperrt)
-- **Nächster Schritt:** Aktualisierung bei neuer FRL-Fassung
+- **Zwei Live-Fassungen (geprüft 27.07.2026):** `Werkzeuge/kunden/foerdermittel-finder.html` und `demo/foerdermittel-finder.html` – getrennte Dateien mit eigenem Datenblock, **Fördersätze derzeit deckungsgleich**. Jede inhaltliche Änderung muss in beiden gepflegt werden. Die 1-Byte-Leiche `demo/foerdermittelfinder.html` (ohne Bindestrich) liegt weiterhin im Repo.
+- **AGFK-Entwürfe:** liegen nur lokal, `Werkzeuge/agfk-sl/` im Repo weiterhin nicht vorhanden. Die beiden Entwurfsfassungen weichen voneinander ab – **eine davon ohne 2Rat-Urhebervermerk in der Fußzeile** („© AGFK-SL" statt „Entwickelt und gepflegt von 2Rat"). Verbindliche Fassung vor dem Portal-Umbau festlegen; Stand-Angaben (03/2026 bzw. 2026) veraltet.
+- ⚠️ **`quoteAGFK` geprüft (27.07.2026) – Ergebnis: sachlich falsch.** Der erhöhte Satz von bis zu 90 % gilt für **finanzschwache** Gemeinden, Städte und Landkreise; die Finanzschwäche stellt das Landesverwaltungsamt als Kommunalaufsichtsbehörde fest und muss bei Antragstellung nachgewiesen werden. Die Systematik lautet bis zu 75 % / 90 % bei Finanzschwäche / bis zu 100 % bei besonderem Landesinteresse. **Eine AGFK-Mitgliedschaft ist in keiner Fundstelle Fördervoraussetzung.** Das Feld enthält in jeder Zeile exakt den höchsten alternativen Satz der Kundenfassung (mal Finanzschwäche, mal Schule/Kita, bei den Abstellanlagen beide zusammengefasst) – also eine Umetikettierung, keinen eigenen Fördertatbestand.
+- **Folge:** `quoteAGFK` ersatzlos streichen. Die AGFK-Fassung darf keinen eigenen Datenstand führen, sondern nur eine Co-Branding-Hülle über demselben Datenblock sein – sonst wiederholt sich das Auseinanderlaufen wie bei den Kontaktdaten in Projekt-Check und Zuständigkeiten. **Risiko entschärft:** Die Entwürfe waren nie live, Kunden- und Demofassung sind korrekt.
+- **Änderungsvorschläge v3 (noch nicht beauftragt):** Antragsfrist dynamisch statt statisch („30.09.2026 – noch X Tage", nach dem Stichtag automatisch aufs Folgejahr) – dabei die Ausnahme **31.05.2030** berücksichtigen, sonst zeigt das Werkzeug 2030 ein falsches Datum · Hinweis „Zuwendungsantrag vor Vorhabenbeginn" als rotes Warnfeld nach oben ziehen. Beides in `kunden/` **und** `demo/`.
+- **Nächster Schritt:** `quoteAGFK` aus den AGFK-Entwürfen entfernen; Aktualisierung bei neuer FRL-Fassung
 
 ### 2.4 Konzept-Check
 - **Kunde / Partner:** eigen (Service-Erweiterung)
@@ -161,11 +168,11 @@
 - **Kunde / Partner:** eigen (Tool, Portal) · **von AGFK-SL beauftragt** (Pauschale bei Übergabe, Zahlung ausstehend – siehe 1.5)
 - **Zweck:** „Wer muss an den Tisch?" – laienfreundlicher Wegweiser auf Basis der **AGFK-Zuständigkeitslandkarte**: 3-Schritte-Wizard (Vorhaben → Lage → Sonderfälle, ~9 Falltypen von Radweg über Fahrradstraße bis Schulweg) → liefert Federführung, einzubindende Stellen, Prüfpunkte und einen **kopier-/downloadbaren Projektvermerk**. Fahrradstraße/-zone-Logik nach § 12 StVZustG. Verlinkt auf die übrigen Portal-Tools. Datengrundlage: AGFK-SL (Stand 06/2026).
 - **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/projekt-check.html`)*
-- **Status:** live (Portal-Tool, im Dashboard als Einstiegs-Tool erstgereiht) · erstes beauftragtes Tool 🎉 · **Patch 27.07.2026 gepatcht, Deployment offen:** Rollentrennung Bau-/Tiefbauamt (Baulastträger) gegenüber Bauhof/Betriebshof (Umsetzung), Kontaktblock an die Zuständigkeiten angeglichen (derselbe Neunkirchen-Fehler steckte auch hier), LfS-Kontaktbox ergänzt, Stand vereinheitlicht
+- **Status:** live (Portal-Tool, im Dashboard als Einstiegs-Tool erstgereiht) · erstes beauftragtes Tool 🎉 · **Patch 27.07.2026 deployed & live verifiziert (byte-identisch):** Rollentrennung Bau-/Tiefbauamt (Baulastträger) gegenüber Bauhof/Betriebshof (Umsetzung), Kontaktblock an die Zuständigkeiten angeglichen (derselbe Neunkirchen-Fehler steckte auch hier), LfS-Kontaktbox ergänzt, Stand vereinheitlicht
 - **Soll Referenzprojekt werden** – dafür nötig: Freigabe zur Nennung der AGFK-SL, Bildschirmfotos, Zitate aus der Testrunde, Fortbestand des 2Rat-Hinweises in der Fußzeile
 - **Version-2-Themen (nicht beauftragt, geparkt):** Freitextfeld „Vorhaben / Standort" für den Projektvermerk · Verknüpfung mit dem GeoPortal Saarland beim Zusatzfaktor „fremde Grundstücke" · schlanke Kartenansicht auf OSM-Basis. **Ausgeschlossen:** ZORA (Login, räumlich begrenzter Nutzungsvertrag, personenbezogene Daten) und eingebettete Google-Maps-Ansicht (Datenschutz)
 - **Bekannte Schwächen:** keine Versionsnummer im Kopf (als einziges Werkzeug) · Kommunen-, Kreis- und Kontaktdaten liegen doppelt in Projekt-Check und Zuständigkeiten – jede Behördenänderung kostet zwei Commits, in der Pflege einkalkulieren
-- **Nächster Schritt:** Patch hochladen; Versionsnummer vergeben; Pflege bei Änderung der AGFK-Datengrundlage · ⚠️ fachliche Letztabnahme durch AGFK-bezahlten externen Prüfer (v. a. § 12 StVZustG) **noch offen** → Voraussetzung für Übergabe + Abrechnung
+- **Nächster Schritt:** Versionsnummer vergeben; Pflege bei Änderung der AGFK-Datengrundlage · ⚠️ fachliche Letztabnahme durch AGFK-bezahlten externen Prüfer (v. a. § 12 StVZustG) **noch offen** → Voraussetzung für Übergabe + Abrechnung
 
 ### 2.12 Karten-Prototyp „Kommune per Klick"
 - **Kunde / Partner:** eigen (Experiment)
@@ -206,7 +213,8 @@
 ### 3.4 VwV-StVO 2025 – Maßnahmen-Übersicht
 - **Kunde / Partner:** intern → jetzt Portal-Tool *(`Werkzeuge/kunden/vwv-stvo-2025.html`)*
 - **Zweck:** Interaktive HTML-Wissensbasis aller VwV-Neuerungen mit Alt-Neu-Vergleich.
-- **Status:** live (als Tool im Werkzeuge-Portal eingebunden) · **Update 19.07.2026 deployed:** Rechtsgrundlagen Fahrradstraße/-zone, § 45 Abs. 1i StVO
+- **Status:** live (als Tool im Werkzeuge-Portal eingebunden) · **Update 19.07.2026 deployed:** Rechtsgrundlagen Fahrradstraße/-zone, § 45 Abs. 1i StVO · Umfang: 13 Maßnahmen in 4 Kategorien, je mit Rechtsgrundlage, Randnummern, fertigem Begründungstext und drei Textgeneratoren (Ordnungsamt / Rat / Bürger)
+- **Änderungsvorschläge v3 (noch nicht beauftragt, Durchsicht 27.07.2026):** Maßnahme **Bussonderfahrstreifen mit Radverkehrsfreigabe** fehlt – gehört zur selben Reform (Wegfall der 20-Busse-Mindestgrenze, Radverkehr im Benehmen mit den Verkehrsunternehmen zulassen) und ist bei engen Hauptstraßen oft die einzige realistische Lösung · Maßnahme **Gehwegparken** fehlt (BVerwG-Urteil vom 06.06.2024, in die VwV übernommen) · **Fassungsdatum im Kopf ergänzen** (StVO-Novelle 11.10.2024, VwV-StVO rechtskräftig 10.04.2025) · optional Schulstraßen als Praxishinweis beim Verkehrsversuch
 - **Nächster Schritt:** Pflege bei VwV-Änderungen
 
 ### 3.5 Inkscape-Planrahmen-Vorlage A1/A2/A3
@@ -308,7 +316,7 @@
 
 ### 7.1 2Rat Büroverwaltung / Stammdatendokument
 - **Kunde / Partner:** intern
-- **Zweck:** Claude-Projekt „2RAT Büro" mit Stammdaten, Vorlagen, Projekt-Register. Logo liegt vor (`Logo_2Rat_clean__1_.png`).
+- **Zweck:** Claude-Projekt „BÜRO 2Rat" mit Stammdaten, Vorlagen, Projekt-Register. Logo liegt vor (`Logo_2Rat_clean__1_.png`).
 - **Offizielle Büro-E-Mail:** `fahr2rat@gmail.com` · **Anschrift:** Ritter-von-Hagen-Str. 13, 66822 Lebach
 - **Status:** im Aufbau
 - **Nächster Schritt:** Steuernummer / IBAN eintragen; einheitliche Briefkopf-DOCX-Vorlage erstellen (offen)
@@ -338,8 +346,8 @@
 
 | Claude-Projekt | Behandelte Vorhaben | Rolle |
 |---|---|---|
-| **2RAT Büro** *(dieses Projekt)* | Büroverwaltung, Stammdaten, **dieses Verzeichnis**, Steuer, Standardtexte | **HUB** |
-| **BÜRO 2Rat** | 1.4 Radherbst-Kampagne · Geschäftsinterna (Preise, Strategie, Session-Notizen) – **bleiben dort, nicht ins öffentliche Verzeichnis!** | Vertrieb & Geschäftliches |
+| **Projektübersicht 2Rat** | Pflege und Fortschreibung **dieses Verzeichnisses** – zentrale Statusübersicht aller Vorhaben. Hier laufen alle 📮-Meldungen aus den Werkstatt-Projekten ein. | **HUB** |
+| **BÜRO 2Rat** | Zentrales Büro- und Steuerungsprojekt: Stammdaten, Vorlagen, Steuer, Standardtexte · 1.4 Radherbst-Kampagne · Geschäftsinterna (Preise, Strategie, Rechtliches, Session-Notizen) – **bleiben dort, nicht ins öffentliche Verzeichnis!** | Büro & Vertrieb |
 | **Hostenbach** | 1.1 · 3.2 QAD · 3.5 Planrahmen | Kundenprojekt |
 | **2Rat Radwegemelder Webseite Dashboard** | 4.1 · 1.2 · Supabase | Produkt-Hauptprojekt |
 | **Schulweg-Detektive** | 4.3 | Kooperation Kirkel |
@@ -351,7 +359,7 @@
 | **RadPlan Pro** (Cowork) | 4.2 RadPlan Pro · Skill `radplan-bericht` | App-Entwicklung |
 | **Kirkel-Projekte** (Bauhof · Castle Race · Bike and Ride) | 4.4 u. a. | Arbeit Gemeinde Kirkel |
 
-> **Regel:** Vor jedem Arbeiten kurz prüfen, in welchem Projekt man ist. Tools → Tool-Portal · Radwegemelder → Kernprodukt · Förderfragen → Förderung-Projekt.
+> **Regel:** Vor jedem Arbeiten kurz prüfen, in welchem Projekt man ist. Verzeichnispflege → „Projektübersicht 2Rat" · Kaufmännisches und Administratives → „BÜRO 2Rat" · Werkzeugarbeit → „2Rat Werkzeuge / Tool-Portal". Tools → Tool-Portal · Radwegemelder → Kernprodukt · Förderfragen → Förderung-Projekt.
 
 ---
 
