@@ -19,15 +19,16 @@
 |---|---|---|
 | ~~15.07.2026~~ **abgelaufen** | JGF FL1 – Skizzen-Frist verstrichen, Ausgang nachtragen (Skizze eingereicht?) | Förderung-Projekt |
 | **31.07.2026 (4 Tage!)** | JGF FL2 – Antrags-Frist | Förderung-Projekt |
-| **30.09.2026** | FRL-NMOB Jahres-Stichtag **+ AGFK-Kennenlern-Tools laufen ab (Upsell-Chance!)** **+ RAD-Lab-Testrunde endet** | Förderung / Tool-Portal |
+| **30.09.2026** | FRL-NMOB Jahres-Stichtag **+ AGFK-Kennenlern-Zugänge laufen ab (vorher Gespräch führen)** **+ RAD-Lab-Testrunde endet** | Förderung / Tool-Portal |
 | prüfen | RadPlan Pro: 19.07.-Deployment (JSON-Pipeline) erfolgt – ist die Login-bereinigte Version mit drin? | RadPlan-Projekt |
 | prüfen | Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den **Passwortmanager** übertragen, bevor die 30-Tage-Session abläuft | Tool-Portal / RadPlan |
-| offen | Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe + Rechnung | Tool-Portal |
+| offen | Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe und Abrechnung | Tool-Portal |
 | **jetzt** | Projekt-Check: Freigabe für **Referenznennung + Zitate** aus der Testrunde bei der AGFK-SL einholen – solange die Testphase läuft, ist es eine Formsache | Tool-Portal |
-| **offen** | Upload: Vergabe-Assistent v3 nach `Werkzeuge/kunden/` (Projekt-Check und Zuständigkeiten sind live und gegengeprüft) | Tool-Portal |
+| **offen** | Uploads: `projekt-check.html` (v2), `foerdermittel-finder.html` (v3), `vwv-stvo-2025.html` (v3) nach `Werkzeuge/kunden/` sowie `demo/foerdermittel-finder.html` (v3). Zuständigkeiten v17 und Vergabe-Assistent v3 sind live und gegengeprüft | Tool-Portal |
+| **offen** | 1-Byte-Datei `demo/foerdermittelfinder.html` (ohne Bindestrich) im Repo löschen – am 27.07. bestätigt vorhanden | Tool-Portal |
 | **erledigt 27.07.** | `quoteAGFK` geprüft – Feld ist sachlich falsch, muss vor jeder Auslieferung raus (→ 2.3) | Tool-Portal |
 | nach Urlaub | Gespräch AGFK-SL: Nutzungsrechte Projekt-Check, Pflegevereinbarung, Lizenzmodell übrige Tools → Eckpunktepapier liegt vor | Tool-Portal / BÜRO 2Rat |
-| wartet | AGFK-Logo → dann `agfk-sl/`-Tool-Varianten erstellen (Routing steht bereits) | Tool-Portal |
+| wartet | AGFK-Logo → dann Branding zur Laufzeit einbauen (kein eigener Ordner, siehe 2.1) | Tool-Portal |
 
 **Geklärt 19.07.:** Demo läuft als Freemium OHNE Code unter `2rat.org/demo/` (alter Code bleibt deaktiviert) ✓ · Wadgassen-Pilot → abgeschlossen mit Abschlussbericht ✓ · Wadern → keine Rückmeldung, ruht ✓ · AGFK-Code → neue Lizenz bis 15.05.2027 aktiv ✓ · Admin-Code → **aktiv** als „2Rat intern"-Lizenz (Hash identisch, im Array bis 2099 verlängert) ✓ – veralteten Kommentar im Array bei Gelegenheit löschen
 
@@ -56,20 +57,20 @@
 ### 1.1 Radverkehrsplanung Hostenbach
 - **Kunde / Partner:** Gemeinde Wadgassen
 - **Zweck:** Gesamtprojekt – LP1 (Konzept Hauptachse Schulstraße → Weberstraße → Turnerstraße, 13 Maßnahmenblätter) ✓ · Klimabeirat-Präsentation ✓ · LP2-Angebot liegt vor.
-- **Status:** LP1 **abgeschlossen & bezahlt** ✓ (19.07.2026) · LP2 ungewiss (Haushaltslage der Kommune)
+- **Status:** LP1 **abgeschlossen** ✓ (19.07.2026) · LP2 offen (Entscheidung der Gemeinde steht aus)
 - **Nächster Schritt:** LP2 ruhen lassen; zum Haushalt 2027 gezielt nachfassen
 - **Details (Beträge, Ansprechpartner):** → Projekt „Hostenbach" / Rechnungsablage
 
 ### 1.2 Radwegemelder-Pilot Wadgassen
 - **Kunde / Partner:** Gemeinde Wadgassen
 - **Zweck:** Erste Saarland-Pilotkommune mit echter Bürgerbeteiligung – Referenzprojekt für die Kommunen-Kampagne (1.4).
-- **Status:** **abgeschlossen** ✓ – Abschlussbericht erstellt und an die Gemeinde versendet, positives Feedback; Rechnung bezahlt. Umsetzungsphase in Aussicht (haushaltsabhängig).
+- **Status:** **abgeschlossen** ✓ – Abschlussbericht erstellt und an die Gemeinde versendet, positives Feedback; Abrechnung erledigt. Umsetzungsphase in Aussicht (haushaltsabhängig).
 - **Nächster Schritt:** Konzept-Check-Auswertung starten (→ 2.4); Wadgassen ist zum RAD-Lab eingeladen (→ 2.13); als Referenz in der Radherbst-Kampagne nutzen
 
 ### 1.3 Radverkehrskonzept Stadt Wadern
 - **Kunde / Partner:** Stadt Wadern
 - **Zweck:** Umsetzungsbegleitung zum bestehenden RVK plus Radwegemelder als niederschwelliger Vorlauf.
-- **Status:** ruht (nach Mai-Rats-Sitzung keine Rückmeldung erhalten)
+- **Status:** ruht (Rückmeldung nach der Mai-Rats-Sitzung steht aus)
 - **Nächster Schritt:** Aktiv nachhaken – ggf. gekoppelt an die Radherbst-Kampagne (1.4) als Wiedereinstieg
 
 ### 1.4 Kommunen-Kampagne „Radherbst 2026"
@@ -81,13 +82,13 @@
 
 ### 1.5 AGFK-SL Kunde (Tool-Lizenzierung) 🎉
 - **Kunde / Partner:** AGFK-SL (geschaeftstelle@agfk-sl.de)
-- **Zweck:** Erste kommerzielle Tool-Lizenzierung. **Beauftragt ist ausschließlich der Projekt-Check** – Abrechnung: Pauschale bei Übergabe, **Zahlung noch nicht erfolgt** (fällig bei Übergabe). Die fachliche Letztabnahme erfolgt durch einen externen Prüfer, **den die AGFK bezahlt** (→ Lizenz „AGFK Honorarkraft"). Die übrigen 4 Tools (Fördermittel-Finder, Zuständigkeiten, VwV-StVO 2025, Vergabe-Assistent) sind **kein Auftrag**, sondern Kennenlern-Zugang befristet bis 30.09.2026.
+- **Zweck:** Erste kommerzielle Tool-Lizenzierung. **Beauftragt ist ausschließlich der Projekt-Check** – Abrechnung: Pauschale bei Übergabe, **Abrechnung offen**. Die fachliche Letztabnahme erfolgt durch einen externen Prüfer, **beauftragt durch die AGFK-SL** (→ Lizenz „AGFK Honorarkraft"). Die übrigen 4 Tools (Fördermittel-Finder, Zuständigkeiten, VwV-StVO 2025, Vergabe-Assistent) sind **kein Auftrag**, sondern Kennenlern-Zugang befristet bis 30.09.2026.
 - **Lizenzen im Portal:** „AGFK Saarland" bis 15.05.2027 · „AGFK Honorarkraft" (externer Prüfer) bis 27.05.2027 (5-Tool-Suite)
-- **Status:** läuft (Auftrag Projekt-Check; Übergabe + Zahlung ausstehend)
+- **Status:** läuft (Auftrag Projekt-Check; Übergabe und Abrechnung offen)
 - **Offen (27.07.2026):** Nutzungsrechte am Projekt-Check ungeklärt (gemeinsame Leistung – Fachinhalt AGFK-SL, Umsetzung 2Rat) · Freigabe für Referenznennung und Zitate aus der Testrunde steht aus · Abgrenzung Mängelbeseitigung / Weiterentwicklung noch nicht schriftlich · Entscheidung Beistellung oder Lizenzierung der übrigen Werkzeuge
 - **Achtung Vertriebsargument:** Der erhöhte Fördersatz von 90 % taugt **nicht** als Argument für eine AGFK-Mitgliedschaft – er hängt an der Finanzschwäche der Kommune, nicht an der Mitgliedschaft (→ 2.3). Falls das gegenüber Geschäftsstelle oder Mitgliedern schon so angeklungen ist, beiläufig geraderücken, bevor es in eine Präsentation oder ein Rundschreiben wandert.
 - **Grundlage:** Eckpunktepapier „Eckpunkte zur vertraglichen Regelung" (27.07.2026) erstellt – Leistungsarten, Rechte, Referenz, Pflege · Inhalte → Projekt „BÜRO 2Rat"
-- **Nächster Schritt:** Referenzfreigabe kurzfristig einholen; Gespräch nach der Urlaubszeit; vor 30.09.2026 Upsell-Gespräch zu den Kennenlern-Tools; nach AGFK-Logo: `agfk-sl/`-Varianten erstellen
+- **Nächster Schritt:** Referenzfreigabe kurzfristig einholen; Gespräch nach der Urlaubszeit; vor 30.09.2026 Gespräch über die Fortsetzung der Kennenlern-Zugänge; nach AGFK-Logo: `agfk-sl/`-Varianten erstellen
 
 ---
 
@@ -117,7 +118,7 @@
 - **AGFK-Entwürfe:** liegen nur lokal, `Werkzeuge/agfk-sl/` im Repo weiterhin nicht vorhanden. Die beiden Entwurfsfassungen weichen voneinander ab – **eine davon ohne 2Rat-Urhebervermerk in der Fußzeile** („© AGFK-SL" statt „Entwickelt und gepflegt von 2Rat"). Verbindliche Fassung vor dem Portal-Umbau festlegen; Stand-Angaben (03/2026 bzw. 2026) veraltet.
 - ⚠️ **`quoteAGFK` geprüft (27.07.2026) – Ergebnis: sachlich falsch.** Der erhöhte Satz von bis zu 90 % gilt für **finanzschwache** Gemeinden, Städte und Landkreise; die Finanzschwäche stellt das Landesverwaltungsamt als Kommunalaufsichtsbehörde fest und muss bei Antragstellung nachgewiesen werden. Die Systematik lautet bis zu 75 % / 90 % bei Finanzschwäche / bis zu 100 % bei besonderem Landesinteresse. **Eine AGFK-Mitgliedschaft ist in keiner Fundstelle Fördervoraussetzung.** Das Feld enthält in jeder Zeile exakt den höchsten alternativen Satz der Kundenfassung (mal Finanzschwäche, mal Schule/Kita, bei den Abstellanlagen beide zusammengefasst) – also eine Umetikettierung, keinen eigenen Fördertatbestand.
 - **Folge:** `quoteAGFK` ersatzlos streichen. Die AGFK-Fassung darf keinen eigenen Datenstand führen, sondern nur eine Co-Branding-Hülle über demselben Datenblock sein – sonst wiederholt sich das Auseinanderlaufen wie bei den Kontaktdaten in Projekt-Check und Zuständigkeiten. **Risiko entschärft:** Die Entwürfe waren nie live, Kunden- und Demofassung sind korrekt.
-- **Änderungsvorschläge v3 (noch nicht beauftragt):** Antragsfrist dynamisch statt statisch („30.09.2026 – noch X Tage", nach dem Stichtag automatisch aufs Folgejahr) – dabei die Ausnahme **31.05.2030** berücksichtigen, sonst zeigt das Werkzeug 2030 ein falsches Datum · Hinweis „Zuwendungsantrag vor Vorhabenbeginn" als rotes Warnfeld nach oben ziehen. Beides in `kunden/` **und** `demo/`.
+- **v3 (27.07.2026) gebaut, Deployment offen – in beiden Fassungen:** Antragsfrist rechnet jetzt dynamisch („30.09.2026 – noch X Tage", ab sechs Wochen Restlauf rot, am Stichtag „heute!", danach automatisch aufs Folgejahr); Ausnahme **31.05.2030** berücksichtigt, nach Ablauf der Richtlinie erscheint ein Hinweis statt eines falschen Datums (über acht Stichtage inkl. Jahreswechsel durchgerechnet) · Hinweis zum Vorhabenbeginn als rotes Warnfeld oben im Ergebnis mit Erläuterung, dass bereits der Abschluss eines Lieferungs- oder Leistungsvertrags als Beginn gilt – aus den Standardhinweisen entfernt, damit er nicht doppelt erscheint · beides ebenfalls im Ergebnis-Vermerk · Demo-Fassung trägt jetzt ebenfalls eine Versionsangabe im Kopf.
 - **Nächster Schritt:** `quoteAGFK` aus den AGFK-Entwürfen entfernen; Aktualisierung bei neuer FRL-Fassung
 
 ### 2.4 Konzept-Check
@@ -165,14 +166,14 @@
 - **Nächster Schritt:** Pflege der Fristen (JGF FL1 15.07. / FL2 31.07. / FRL-NMOB 30.09.); inhaltliche Weiterarbeit im Projekt „2RAT Förderung Radverkehr"
 
 ### 2.11 Projekt-Check Radverkehr ⭐
-- **Kunde / Partner:** eigen (Tool, Portal) · **von AGFK-SL beauftragt** (Pauschale bei Übergabe, Zahlung ausstehend – siehe 1.5)
+- **Kunde / Partner:** eigen (Tool, Portal) · **von AGFK-SL beauftragt** (Pauschale bei Übergabe, Abrechnung offen – siehe 1.5)
 - **Zweck:** „Wer muss an den Tisch?" – laienfreundlicher Wegweiser auf Basis der **AGFK-Zuständigkeitslandkarte**: 3-Schritte-Wizard (Vorhaben → Lage → Sonderfälle, ~9 Falltypen von Radweg über Fahrradstraße bis Schulweg) → liefert Federführung, einzubindende Stellen, Prüfpunkte und einen **kopier-/downloadbaren Projektvermerk**. Fahrradstraße/-zone-Logik nach § 12 StVZustG. Verlinkt auf die übrigen Portal-Tools. Datengrundlage: AGFK-SL (Stand 06/2026).
 - **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/projekt-check.html`)*
-- **Status:** live (Portal-Tool, im Dashboard als Einstiegs-Tool erstgereiht) · erstes beauftragtes Tool 🎉 · **Patch 27.07.2026 deployed & live verifiziert (byte-identisch):** Rollentrennung Bau-/Tiefbauamt (Baulastträger) gegenüber Bauhof/Betriebshof (Umsetzung), Kontaktblock an die Zuständigkeiten angeglichen (derselbe Neunkirchen-Fehler steckte auch hier), LfS-Kontaktbox ergänzt, Stand vereinheitlicht
+- **Status:** live (Portal-Tool, im Dashboard als Einstiegs-Tool erstgereiht) · erstes beauftragtes Tool 🎉 · **v2 (27.07.2026), Deployment offen:** zentrale Konstante `STAND` eingeführt, die Kopfzeile, Fußzeile, Startseitenhinweis und Ergebnis-Vermerk speist – künftig nur diese eine Zeile hochzählen. Der Vermerk nennt jetzt selbst die Fassung, aus der er stammt. Datumsangabe bei der Datengrundlage entfernt (stand im Widerspruch zu diesem Verzeichnis), Werkzeug-Stand vereinheitlicht · **Patch vom Vormittag deployed & live verifiziert:** Rollentrennung Bau-/Tiefbauamt (Baulastträger) gegenüber Bauhof/Betriebshof (Umsetzung), Kontaktblock an die Zuständigkeiten angeglichen (derselbe Neunkirchen-Fehler steckte auch hier), LfS-Kontaktbox ergänzt, Stand vereinheitlicht
 - **Soll Referenzprojekt werden** – dafür nötig: Freigabe zur Nennung der AGFK-SL, Bildschirmfotos, Zitate aus der Testrunde, Fortbestand des 2Rat-Hinweises in der Fußzeile
 - **Version-2-Themen (nicht beauftragt, geparkt):** Freitextfeld „Vorhaben / Standort" für den Projektvermerk · Verknüpfung mit dem GeoPortal Saarland beim Zusatzfaktor „fremde Grundstücke" · schlanke Kartenansicht auf OSM-Basis. **Ausgeschlossen:** ZORA (Login, räumlich begrenzter Nutzungsvertrag, personenbezogene Daten) und eingebettete Google-Maps-Ansicht (Datenschutz)
-- **Bekannte Schwächen:** keine Versionsnummer im Kopf (als einziges Werkzeug) · Kommunen-, Kreis- und Kontaktdaten liegen doppelt in Projekt-Check und Zuständigkeiten – jede Behördenänderung kostet zwei Commits, in der Pflege einkalkulieren
-- **Nächster Schritt:** Versionsnummer vergeben; Pflege bei Änderung der AGFK-Datengrundlage · ⚠️ fachliche Letztabnahme durch AGFK-bezahlten externen Prüfer (v. a. § 12 StVZustG) **noch offen** → Voraussetzung für Übergabe + Abrechnung
+- **Bekannte Schwächen:** Kommunen-, Kreis- und Kontaktdaten liegen doppelt in Projekt-Check und Zuständigkeiten – jede Behördenänderung kostet zwei Commits, in der Pflege einkalkulieren
+- **Nächster Schritt:** v2 hochladen; Pflege bei Änderung der AGFK-Datengrundlage · ⚠️ fachliche Letztabnahme durch einen von der AGFK-SL beauftragten externen Prüfer (v. a. § 12 StVZustG) **noch offen** → Voraussetzung für Übergabe + Abrechnung
 
 ### 2.12 Karten-Prototyp „Kommune per Klick"
 - **Kunde / Partner:** eigen (Experiment)
@@ -186,6 +187,7 @@
 - **Zweck:** Qualitätssicherung vor breiter Vermarktung – ausgewählte Tools werden an bekannte Personen verteilt, die sie auf Herz und Nieren prüfen. Getestet werden: Fördermittel-Finder, Zuständigkeiten, Projekt-Check (Lizenz „RAD-Lab", `target:"test"`).
 - **Status:** läuft – Testzugänge am **11.07.2026 an 10 Personen aus 6 Kommunen + 1 privat** verschickt (u. a. Wadgassen als frischer Referenzkunde eingeladen; Namensliste → Tool-Portal-Projekt, nicht öffentlich) · 19.07.: Tool-Umfang final auf 3 Werkzeuge reduziert, deployed & live verifiziert · Testrunden-Einladung erstellt (Fokus: Fachtest Projekt-Check im Zusammenspiel mit Zuständigkeiten + Fördermittel-Finder – Methode zur Zuständigkeitsklärung Radverkehr Saarland)
 - **Rückmeldungen 27.07.2026:** zwei ausführliche Rückmeldungen eingegangen und vollständig abgearbeitet (drei Werkzeuge betroffen: Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check). Trefferquote hoch – ein gemeldeter Punkt war sachlich unzutreffend (EU-Vergaberecht bei 250.000 € Bau), hat aber eine echte Verständlichkeitslücke aufgedeckt.
+- **Dokumentation:** Rückmeldungen sind einzeln erfasst (Anmerkung, Bewertung, Umsetzung, Status) im Dokument „RAD-Lab_Rueckmeldungen" – liegt im Claude-Projekt „2Rat Werkzeuge / Tool-Portal", **nicht im Repo** (enthält Namen von Testpersonen). Antwort an die erste Testperson formuliert.
 - **Nächster Schritt:** Freigabe zum Zitieren der Rückmeldungen einholen (→ 2.11 Referenzprojekt); RAD-Lab-Code-Wert in Passwortmanager dokumentieren (Doku-Lücke); weiteres Feedback einsammeln bis 30.09.2026; danach Lizenz-Zeile entfernen; zweite Testrunde entscheiden
 
 ---
@@ -214,7 +216,9 @@
 - **Kunde / Partner:** intern → jetzt Portal-Tool *(`Werkzeuge/kunden/vwv-stvo-2025.html`)*
 - **Zweck:** Interaktive HTML-Wissensbasis aller VwV-Neuerungen mit Alt-Neu-Vergleich.
 - **Status:** live (als Tool im Werkzeuge-Portal eingebunden) · **Update 19.07.2026 deployed:** Rechtsgrundlagen Fahrradstraße/-zone, § 45 Abs. 1i StVO · Umfang: 13 Maßnahmen in 4 Kategorien, je mit Rechtsgrundlage, Randnummern, fertigem Begründungstext und drei Textgeneratoren (Ordnungsamt / Rat / Bürger)
-- **Änderungsvorschläge v3 (noch nicht beauftragt, Durchsicht 27.07.2026):** Maßnahme **Bussonderfahrstreifen mit Radverkehrsfreigabe** fehlt – gehört zur selben Reform (Wegfall der 20-Busse-Mindestgrenze, Radverkehr im Benehmen mit den Verkehrsunternehmen zulassen) und ist bei engen Hauptstraßen oft die einzige realistische Lösung · Maßnahme **Gehwegparken** fehlt (BVerwG-Urteil vom 06.06.2024, in die VwV übernommen) · **Fassungsdatum im Kopf ergänzen** (StVO-Novelle 11.10.2024, VwV-StVO rechtskräftig 10.04.2025) · optional Schulstraßen als Praxishinweis beim Verkehrsversuch
+- **v3 (27.07.2026) gebaut, Deployment offen:** Zwei neue Maßnahmen, damit 15 insgesamt. **Bussonderfahrstreifen mit Radverkehrsfreigabe** (Kategorie Flächenbereitstellung) mit vollständigem Begründungstext, Zeichen 245 und Zusatzzeichen 1022-10 – die genaue VwV-Randnummer zu Zeichen 245 ist nicht belegt und daher nicht in der Rechtsgrundlage genannt, sondern als Prüfhinweis in der Praxis-Spalte · **Gehwegparken** (Kategorie Weitere Erleichterungen) mit BVerwG, Urteil vom 06.06.2024 – 3 C 5.23; die VwV nennt keine Zahl für die Restbreite, daher Verweis auf die EFA statt einer erfundenen Zahl · dafür dritte Kennzeichnung „KLARGESTELLT" ergänzt, das Werkzeug kannte nur „NEU" und „ERLEICHTERT"
+- **Korrektur einer früheren Notiz:** Das Fassungsdatum ist bereits enthalten – Kopfzeile „VwV-StVO 04/2025", Fußzeile mit 12. Änderung der VwV-StVO, BAnz AT 09.04.2025 B2. Nichts zu ergänzen.
+- **Offen (optional):** Schulstraßen als Praxishinweis beim Verkehrsversuch – es gibt kein eigenes Verkehrszeichen, Umsetzung läuft über zeitlich begrenzte Durchfahrtverbote
 - **Nächster Schritt:** Pflege bei VwV-Änderungen
 
 ### 3.5 Inkscape-Planrahmen-Vorlage A1/A2/A3
@@ -403,7 +407,7 @@
 | **25.08.2026** | 1.4 Radherbst-Kampagne | Rückmelde-Frist der Kommunen |
 | **01.09.–15.10.2026** | 1.4 Radherbst-Kampagne | Aktionszeitraum (EMW 16.–22.09.) |
 | **30.09.2026** | Förderung (FRL-NMOB) | Jahres-Stichtag |
-| **30.09.2026** | 1.5 AGFK-SL | Kennenlern-Tools laufen ab (`toolExpires`) → vorher Upsell-Gespräch |
+| **30.09.2026** | 1.5 AGFK-SL | Kennenlern-Tools laufen ab (`toolExpires`) → vorher Gespräch über die Fortsetzung |
 | **30.09.2026** | 2.1 Tool-Portal | RAD-Lab-Testrunde endet (→ 2.13) – Lizenz-Zeile entfernen |
 | **Sep 2026** | 4.3 Schulweg-Detektive | Android-Entwicklerbestätigung für PWA-APK prüfen |
 | **15.05.2027** | 1.5 AGFK-SL | Lizenz „AGFK Saarland" läuft ab → Verlängerung |
@@ -424,7 +428,7 @@
 | Status | Anzahl | Vorhaben |
 |---|---|---|
 | **läuft / live / produktiv / stabil / aktiv** | 22 | 1.5, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.10, **2.11**, **2.13**, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1 |
-| **teils läuft** | 1 | 1.1 *(LP1 bezahlt ✓ · LP2 ungewiss)* |
+| **teils läuft** | 1 | 1.1 *(LP1 abgeschlossen ✓ · LP2 offen)* |
 | **abgeschlossen** | 4 | **1.2**, 2.8, 3.5, 7.3 |
 | **vorbereitet** | 3 | 1.4, 2.6 *(Demo-Konzept)*, 3.2 |
 | **in Entwicklung / im Aufbau** | 2 | 2.5, 7.1 |
@@ -459,7 +463,7 @@
 1. **Eine Datei, eine Wahrheit – und die liegt auf GitHub.** `Werkzeuge/privat/projektverzeichnis.md` im Repo `2Rat/2Rat.github.io` ist die einzige gültige Fassung. Claude liest zu Sitzungsbeginn die raw-URL: `https://raw.githubusercontent.com/2Rat/2Rat.github.io/main/Werkzeuge/privat/projektverzeichnis.md`. Im Projektwissen liegt **keine** Kopie (veraltet sonst).
 2. **Updates immer über Claude, immer komplett.** „Claude, Vorhaben X ist jetzt Y" → Claude holt die Live-Version, patcht, liefert die komplette Datei → Armin committet. Auch 📮-Meldungen aus anderen Claude-Projekten laufen so ein – dieses Dokument ist der zentrale Ablageplatz, die anderen Projekte sind Werkstätten.
 3. **Wöchentlicher Blick auf 🔥 AKUT.** Der Block oben ist das Erste, was man sieht. Fristen erledigt → raus. Neues Dringendes → rein. Wenn AKUT länger als 8 Zeilen wird: aufräumen. **Keine Klartext-Codes in diese Datei** – das Repo ist öffentlich.
-4. **Geschäftsinterna bleiben draußen.** Preise, Vertriebsstrategie, Rechtliches, Kundeninterna → nur im Projekt „BÜRO 2Rat". Ins zentrale Verzeichnis wandern ausschließlich **Status + Fristen + Verweis** – nie Inhalte.
+4. **Geschäftsinterna bleiben draußen – auch in der Formulierung.** Preise, Vertriebsstrategie, Rechtliches, Kundeninterna → nur im Projekt „BÜRO 2Rat". Ins zentrale Verzeichnis wandern ausschließlich **Status + Fristen + Verweis** – nie Inhalte. Diese Datei ist über die raw-URL **ohne Anmeldung öffentlich lesbar** (der Ordnername `privat` schützt nichts). Deshalb auch keine Angaben zum Zahlungsstand, zu Verhandlungsabsichten oder zur Finanzlage einer Kommune – Kunden können hier mitlesen. Neutral formulieren: „Abrechnung offen" statt „Zahlung ausstehend", „Gespräch über Fortsetzung" statt „Upsell".
 
 ---
 
