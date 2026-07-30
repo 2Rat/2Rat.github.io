@@ -5,7 +5,7 @@
 
 # 2Rat – Gesamt-Projektverzeichnis
 
-**Stand:** 27.07.2026
+**Stand:** 30.07.2026
 **Anzahl Vorhaben (konsolidiert):** 36
 **Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check)
 
@@ -18,7 +18,7 @@
 | Wann | Was | Wo |
 |---|---|---|
 | ~~15.07.2026~~ **abgelaufen** | JGF FL1 – Skizzen-Frist verstrichen, Ausgang nachtragen (Skizze eingereicht?) | Förderung-Projekt |
-| **31.07.2026 (4 Tage!)** | JGF FL2 – Antrags-Frist | Förderung-Projekt |
+| **31.07.2026 – morgen!** | JGF FL2 – Antrags-Frist | Förderung-Projekt |
 | **30.09.2026** | FRL-NMOB Jahres-Stichtag **+ AGFK-Kennenlern-Zugänge laufen ab (vorher Gespräch führen)** **+ RAD-Lab-Testrunde endet** | Förderung / Tool-Portal |
 | prüfen | RadPlan Pro: 19.07.-Deployment (JSON-Pipeline) erfolgt – ist die Login-bereinigte Version mit drin? | RadPlan-Projekt |
 | prüfen | Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den **Passwortmanager** übertragen, bevor die 30-Tage-Session abläuft | Tool-Portal / RadPlan |
@@ -26,7 +26,6 @@
 | **jetzt** | Projekt-Check: Freigabe für **Referenznennung + Zitate** aus der Testrunde bei der AGFK-SL einholen – solange die Testphase läuft, ist es eine Formsache | Tool-Portal |
 | **offen** | Uploads: `projekt-check.html` (v2), `foerdermittel-finder.html` (v3), `vwv-stvo-2025.html` (v3) nach `Werkzeuge/kunden/` sowie `demo/foerdermittel-finder.html` (v3). Zuständigkeiten v17 und Vergabe-Assistent v3 sind live und gegengeprüft | Tool-Portal |
 | **offen** | 1-Byte-Datei `demo/foerdermittelfinder.html` (ohne Bindestrich) im Repo löschen – am 27.07. bestätigt vorhanden | Tool-Portal |
-| **erledigt 27.07.** | `quoteAGFK` geprüft – Feld ist sachlich falsch, muss vor jeder Auslieferung raus (→ 2.3) | Tool-Portal |
 | nach Urlaub | Gespräch AGFK-SL: Nutzungsrechte Projekt-Check, Pflegevereinbarung, Lizenzmodell übrige Tools → Eckpunktepapier liegt vor | Tool-Portal / BÜRO 2Rat |
 | wartet | AGFK-Logo → dann Branding zur Laufzeit einbauen (kein eigener Ordner, siehe 2.1) | Tool-Portal |
 
@@ -467,4 +466,4 @@
 
 ---
 
-*2Rat – Büro für Radverkehrsplanung · Stand: 27.07.2026*
+*2Rat – Büro für Radverkehrsplanung · Stand: 30.07.2026*
