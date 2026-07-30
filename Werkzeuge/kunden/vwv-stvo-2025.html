@@ -66,6 +66,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px;color:var(--gray)}
 .badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.04em;margin-left:6px;white-space:nowrap;display:inline-block;vertical-align:middle}
 .badge-new{background:var(--green-light);color:var(--green-dark)}
 .badge-changed{background:var(--blue-light);color:var(--blue-dark)}
+.badge-clarified{background:#fef9ec;color:#a3730b}
 .badge-rn{background:#f3f4f6;color:var(--gray);font-weight:600}
 .expand-symbol{font-size:11px;color:var(--gray-light);transition:transform .2s;margin-left:6px}
 .measure-card.open .expand-symbol{transform:rotate(90deg)}
@@ -166,7 +167,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px;color:var(--gray)}
         <div class="header-title">VwV-StVO 2025 <span>Maßnahmen-Übersicht Radverkehr</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br>Stand 07/2026 · v2</div>
+    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br>Stand 07/2026 · v3</div>
   </div>
 </div>
 
@@ -316,7 +317,7 @@ const CATEGORIES = [
     id: "flaechen",
     label: "Flächenbereitstellung für Radverkehr",
     icon: "🛣️",
-    items: ["fahrradstrasse", "fahrradzone", "radfahrstreifen", "schutzstreifen"]
+    items: ["fahrradstrasse", "fahrradzone", "radfahrstreifen", "schutzstreifen", "bus_radfrei"]
   },
   {
     id: "tempo30",
@@ -328,7 +329,7 @@ const CATEGORIES = [
     id: "weitere",
     label: "Weitere Erleichterungen",
     icon: "↔️",
-    items: ["einbahn_oeffnung", "verkehrsversuch", "fgu", "bewohnerparken"]
+    items: ["einbahn_oeffnung", "verkehrsversuch", "fgu", "bewohnerparken", "gehwegparken"]
   }
 ];
 
@@ -387,6 +388,17 @@ const MEASURES = {
     explanation: "Der Radfahrstreifen ist in Rn. 14e ausdrücklich als Instrument der Flächenbereitstellung gelistet. Die Anordnung kann ohne den Nachweis einer qualifizierten Gefahrenlage erfolgen, wenn sie der Förderung des Radverkehrs dient.",
     arg: "Der Radfahrstreifen wird gemäß § 45 Abs. 1 S. 2 Nr. 7 StVO i. V. m. Rn. 14e VwV-StVO als Maßnahme der Flächenbereitstellung angeordnet. Die Markierung dient der sicheren und durchgehenden Führung des Radverkehrs. Nachteile für den Kfz-Verkehr sind nach Rn. 14c hinnehmbar.",
     practice: "Empfohlene Breite ERA 2010: 1,85 m Regelmaß, 1,60 m Mindestmaß; Sicherheitstrennstreifen zum ruhenden Kfz-Verkehr von mindestens 0,75 m. Bei beengten Verhältnissen ggf. geschützter Radfahrstreifen prüfen."
+  },
+  "bus_radfrei": {
+    name: "Bussonderfahrstreifen mit Radverkehrsfreigabe",
+    icon: "🚌",
+    desc: "Mindestbusanzahl entfallen \u2013 Radverkehr soll zugelassen werden",
+    type: "changed",
+    rn: "\u00a7 45 Abs. 9 S. 4 Nr. 7a",
+    legal: "\u00a7 45 Abs. 1 S. 2 Nr. 7 i. V. m. \u00a7 45 Abs. 9 S. 4 Nr. 7a StVO; Zeichen 245 StVO mit Zusatzzeichen 1022-10 (\u201eRadverkehr frei\u201c); VwV-StVO in der Fassung BAnz AT 09.04.2025 B2",
+    explanation: "Bussonderfahrstreifen sind vom Nachweis einer qualifizierten Gefahrenlage freigestellt. Die fr\u00fchere Vorgabe, dass ein solcher Streifen erst ab einer Mindestzahl von Linienbussen in der Spitzenstunde eingerichtet werden darf, ist entfallen. Zugleich sieht die VwV vor, den Radverkehr auf dem Bussonderfahrstreifen zuzulassen, wenn er nicht auf einem eigenen Radweg oder Radfahrstreifen gef\u00fchrt werden kann. Die Freigabe erfolgt im Benehmen mit den betroffenen Verkehrsunternehmen.",
+    arg: "Die Anordnung eines Bussonderfahrstreifens mit Freigabe f\u00fcr den Radverkehr st\u00fctzt sich auf \u00a7 45 Abs. 1 S. 2 Nr. 7 StVO; nach \u00a7 45 Abs. 9 S. 4 Nr. 7a StVO ist der Nachweis einer qualifizierten Gefahrenlage nicht erforderlich. Eine eigenst\u00e4ndige F\u00fchrung des Radverkehrs auf einem Radweg oder Radfahrstreifen ist im vorliegenden Querschnitt nicht m\u00f6glich. Die Mitnutzung des Bussonderfahrstreifens erm\u00f6glicht eine sichere und durchg\u00e4ngige F\u00fchrung des Radverkehrs ohne Eingriff in die Fahrbahnbreite des \u00fcbrigen Verkehrs. Die Freigabe wurde mit den betroffenen Verkehrsunternehmen abgestimmt. Die Beschilderung erfolgt mit Zeichen 245 StVO und Zusatzzeichen 1022-10.",
+    practice: "H\u00e4ufig die einzige realistische L\u00f6sung in engen Hauptstra\u00dfen, in denen f\u00fcr einen Radfahrstreifen kein Platz ist. Vor der Anordnung das Benehmen mit dem Verkehrsunternehmen schriftlich festhalten \u2013 Haltevorg\u00e4nge, Streifenbreite und Taktdichte sind die Punkte, an denen es scheitert. Bei Haltestellen ohne Busbucht die \u00dcberholsituation pr\u00fcfen. Randnummern der VwV zu Zeichen 245 vor dem Antrag in der aktuellen Fassung gegenlesen."
   },
   "schutzstreifen": {
     name: "Schutzstreifen (Z 340)",
@@ -465,6 +477,17 @@ const MEASURES = {
     arg: "Der Fußgängerüberweg wird in Höhe [Ort] nach § 45 Abs. 1 StVO i. V. m. § 45 Abs. 1 S. 2 Nr. 7 StVO als Angebotsplanung zur Förderung des Fußverkehrs angeordnet. Die Anforderungen der R-FGÜ 2001 hinsichtlich Sichtbeziehungen, Knotenpunktabstand, Beleuchtung und Verkehrsstärken sind eingehalten.",
     practice: "Beleuchtung des FGÜ ist Pflicht (R-FGÜ 2001). Im Bereich von Querungshilfen prüfen, ob LSA, FGÜ oder Mittelinsel der bessere Lösungsansatz ist – orientiert an Kfz-Stärke und Fußverkehrsfrequenz."
   },
+  "gehwegparken": {
+    name: "Gehwegparken \u2013 Zul\u00e4ssigkeit und Restbreite",
+    icon: "🚶",
+    desc: "Rechtsprechung des BVerwG in die VwV \u00fcbernommen",
+    type: "clarified",
+    rn: "\u00a7 12 StVO",
+    legal: "\u00a7 12 Abs. 4, 4a StVO; \u00a7 45 Abs. 1 S. 2 Nr. 7 StVO; VwV-StVO in der Fassung BAnz AT 09.04.2025 B2; BVerwG, Urteil vom 06.06.2024 \u2013 3 C 5.23",
+    explanation: "Die VwV hat die Rechtsprechung des Bundesverwaltungsgerichts vom 06.06.2024 aufgenommen. Aufgesetztes Parken auf Gehwegen bleibt erlaubnisf\u00e4hig, sofern dem Fu\u00dfverkehr eine ausreichende nutzbare Restbreite verbleibt. Reicht die Restbreite nicht aus, k\u00f6nnen unmittelbar betroffene Anwohnerinnen und Anwohner ein Einschreiten der Stra\u00dfenverkehrsbeh\u00f6rde verlangen; der Beh\u00f6rde steht insoweit kein freies Ermessen zu, ob sie \u00fcberhaupt t\u00e4tig wird.",
+    arg: "Die Anordnung st\u00fctzt sich auf \u00a7 12 Abs. 4 und 4a StVO in Verbindung mit \u00a7 45 Abs. 1 S. 2 Nr. 7 StVO. Auf dem betroffenen Abschnitt verbleibt bei aufgesetztem Parken keine f\u00fcr den Fu\u00dfverkehr ausreichende Restbreite; die gemessene nutzbare Breite betr\u00e4gt [Wert] m. Nach dem Urteil des Bundesverwaltungsgerichts vom 06.06.2024 \u2013 3 C 5.23 ist die Stra\u00dfenverkehrsbeh\u00f6rde in dieser Lage zum Einschreiten verpflichtet. Die Ma\u00dfnahme dient zugleich der Barrierefreiheit und der Sicherheit des Fu\u00df- und Radverkehrs.",
+    practice: "Die VwV nennt keine feste Zahl f\u00fcr die Restbreite \u2013 als Orientierung dienen die Empfehlungen f\u00fcr Fu\u00dfverkehrsanlagen (EFA). Entscheidend ist die tats\u00e4chlich nutzbare Breite: Baumscheiben, Schilderpfosten, Hauseing\u00e4nge und Kellerlichtsch\u00e4chte z\u00e4hlen nicht mit. Vor Ort messen und fotografisch dokumentieren, das tr\u00e4gt im Streitfall. Kommt das Thema bei einer Schutzstreifen- oder Querschnittsdiskussion auf, l\u00e4sst sich \u00fcber diese Norm h\u00e4ufig L\u00e4ngsparken neu ordnen, statt nur den Radverkehr zu verschieben."
+  },
   "bewohnerparken": {
     name: "Bewohnerparken (Z 314 mit Z 1044-30)",
     icon: "🅿️",
@@ -491,7 +514,9 @@ function renderMeasures(){
       if(!m) return;
       const badgeType = m.type === 'new'
         ? '<span class="badge badge-new">NEU</span>'
-        : '<span class="badge badge-changed">ERLEICHTERT</span>';
+        : m.type === 'clarified'
+          ? '<span class="badge badge-clarified">KLARGESTELLT</span>'
+          : '<span class="badge badge-changed">ERLEICHTERT</span>';
       const badgeRn = m.rn ? `<span class="badge badge-rn">${m.rn}</span>` : '';
       html += `<div class="measure-card" data-id="${mid}" data-type="${m.type}" data-search="${(m.name + ' ' + m.desc + ' ' + (m.rn||'')).toLowerCase()}">`;
       html += `<div class="measure-header" role="button" tabindex="0" aria-expanded="false"><div class="measure-icon">${m.icon}</div><div class="measure-title"><div class="measure-name">${m.name} ${badgeType} ${badgeRn}</div><div class="measure-desc">${m.desc}</div></div><span class="expand-symbol">▶</span></div>`;

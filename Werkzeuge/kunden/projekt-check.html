@@ -131,7 +131,7 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
         <div class="header-title">Projekt-Check <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right"><a class="portal-link" href="index.html">← Zum Portal</a><br>Saarland · Kommunale Vorhaben<br>Werkzeug-Stand 07/2026</div>
+    <div class="header-right"><a class="portal-link" href="index.html">← Zum Portal</a><br>Saarland · Kommunale Vorhaben<br><span id="standTop">Stand 07/2026 · v2</span></div>
   </div>
 </div>
 
@@ -140,8 +140,8 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
   <div class="steps" id="steps"></div>
   <div id="content"></div>
   <footer class="footer">
-    <b>Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. Stand 07/2026.
-    Datengrundlage: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL, Stand 05/2026) sowie StVO, VwV-StVO 2025, StVZustG Saarland, SaarlStrG, FStrG.<br>
+    <b>Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. <span id="standFoot">Stand 07/2026 · v2</span>.
+    Datengrundlage: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL) sowie StVO, VwV-StVO 2025, StVZustG Saarland, SaarlStrG, FStrG.<br>
     Entwickelt von 2Rat – Büro für Radverkehrsplanung · <a href="https://www.2rat.org">www.2rat.org</a>
   </footer>
 </main>
@@ -290,6 +290,10 @@ const EIGENE_STVB=["Saarbrücken","Völklingen","St. Ingbert"];
 const OD_BAULAST=["Saarbrücken"];
 /* Straßenverkehrsbehörden-Kontakte (recherchiert 06/2026, offizielle Behördenseiten).
    Zuordnung: eigene StVB nur Saarbrücken/Völklingen/St. Ingbert, sonst Landkreis/RV. */
+// Zentrale Versionsangabe – wird an allen sichtbaren Stellen und im Vermerk verwendet.
+// Bei jeder Änderung am Werkzeug NUR hier hochzählen.
+const STAND='Stand 07/2026 · v2';
+
 const KONTAKTE={
  "rv":{name:"Regionalverband Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 506-3350",mail:"strassenverkehr@rvsbr.de",web:"regionalverband-saarbruecken.de",url:"https://www.regionalverband-saarbruecken.de/ordnungsamt/strassenverkehrsbehoerde/"},
  "sls":{name:"Landkreis Saarlouis – Straßenverkehrsbehörde (Amt für öffentliche Sicherheit und Ordnung)",tel:"06831 444-0",mail:"amt32@kreis-saarlouis.de",web:"kreis-saarlouis.de",url:"https://www.kreis-saarlouis.de/Sicherheit-Ordnung/Strassenverkehr.htm"},
@@ -340,7 +344,7 @@ function render(){
 function viewVorhaben(){
   let h='<h2>Was möchten Sie tun?</h2>'+
     '<div class="intro-line">In wenigen Schritten zeigt Ihnen dieses Werkzeug, <b>wer mit an den Tisch muss</b>, woran Sie denken müssen und welche Schritte anstehen – auch wenn Sie mit dem Thema noch nicht vertraut sind.</div>'+
-    '<div style="font-size:11.5px;color:var(--gray-light);margin:-8px 0 18px;line-height:1.5">Orientierungshilfe, <b>keine Rechts- oder Fachberatung</b> – die formelle Zuständigkeit und Entscheidung liegt bei den zuständigen Behörden. Stand 06/2026.</div>'+
+    '<div style="font-size:11.5px;color:var(--gray-light);margin:-8px 0 18px;line-height:1.5">Orientierungshilfe, <b>keine Rechts- oder Fachberatung</b> – die formelle Zuständigkeit und Entscheidung liegt bei den zuständigen Behörden. '+STAND+'.</div>'+
     '<div class="cards">';
   FALLTYPEN.forEach(f=>{
     h+='<div class="card'+(state.falltyp===f.id?' selected':'')+'" role="button" tabindex="0" aria-pressed="'+(state.falltyp===f.id)+'" onkeydown="cardKey(event)" onclick="pickFalltyp(\''+f.id+'\')">'+
@@ -556,7 +560,8 @@ function buildVermerk(){
   if(d.steps&&d.steps.length){t+='\nNächste Schritte:\n';d.steps.forEach((st,i)=>{t+=(i+1)+'. '+st+'\n';});}
   if(d.hinweis)t+='\nGut zu wissen: '+d.hinweis+'\n';
   t+='\nFragen offen? Geschäftsstelle der AGFK-SL · Tel. '+AGFK_TEL+' · '+AGFK_MAIL+'\n';
-  t+='Quelle: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL) · Projekt-Check 2Rat · www.2rat.org';
+  t+='Quelle: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL) · Projekt-Check 2Rat · www.2rat.org\n';
+  t+='Werkzeug: Projekt-Check Radverkehr · '+STAND;
   return t;
 }
 
@@ -592,6 +597,9 @@ function setKommune(v){state.kommune=v||null;if(state.step>=2)render();}
 
 renderKommuneBar();
 render();
+
+// Kopf- und Fusszeile aus der zentralen Konstante setzen
+['standTop','standFoot'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=STAND;});
 </script>
 </body>
 </html>

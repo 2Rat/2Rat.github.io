@@ -65,6 +65,9 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .field-detail{font-size:12px;color:var(--gray-light)}
 .field-highlight{font-size:22px;font-weight:700;color:var(--green)}
 .notes{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:7px;padding:12px 14px}
+.alert{background:#fdecec;border:1px solid #f0b6b0;border-left:4px solid #b02a2a;border-radius:7px;padding:11px 14px;margin-bottom:14px}
+.alert-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8f1f1f;margin-bottom:4px}
+.alert-body{font-size:12.5px;line-height:1.55;color:var(--gray)}
 .notes-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--warn);margin-bottom:5px}
 .notes-item{font-size:12px;color:#6b5900;line-height:1.5;margin-bottom:5px}
 .notes-item:last-child{margin-bottom:0}
@@ -132,7 +135,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
         <div class="header-title">Fördermittel-Finder <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>FRL-NMOB-Rad-Fuß<br>Stand 07/2026 · v2</div>
+    <div class="header-right">Saarland<br>FRL-NMOB-Rad-Fuß<br>Stand 07/2026 · v3</div>
   </div>
 </div>
 
@@ -273,7 +276,6 @@ const APPLICANTS=[
 const STD_NOTES=[
   "Eigenanteil = nicht geförderter Anteil (bei 75 % Förderung also 25 %). Bei Kumulation mit anderen Mitteln müssen mindestens 10 % Eigenanteil verbleiben (§6.5)",
   "Nicht förderfähig: Eigenleistungen, laufende Betriebs-/Versicherungskosten, Finanzierung/Zinsen, Werbung. Grunderwerb ist dagegen zuwendungsfähig (außer bei 100 %-Förderung)",
-  "Vorhabenbeginn: Schriftlicher Zuwendungsantrag vor Vorhabenbeginn erforderlich",
   "Bei besonderem Landesinteresse bis zu 100 % möglich – Kriterien (§6.4): Modell-/Pilotcharakter, zukunftsfähige Verknüpfung mit dem Umweltverbund oder Schließung wichtiger Netzlücken; dann entfällt die Förderung des Grunderwerbs"
 ];
 
@@ -406,10 +408,13 @@ function render(){
     }
     h+=`</div>`;
 
+    h+=`<div class="alert"><div class="alert-title">\u26d4 Erst beantragen, dann beginnen</div><div class="alert-body">Der schriftliche Zuwendungsantrag muss der Bewilligungsbeh\u00f6rde <b>vor Beginn des Vorhabens</b> vorliegen. Wer vorher beauftragt, bestellt oder baut, verliert den F\u00f6rderanspruch f\u00fcr die gesamte Ma\u00dfnahme. Als Vorhabenbeginn gilt in der Regel bereits der Abschluss eines Lieferungs- oder Leistungsvertrags; Planungsleistungen sind davon \u00fcblicherweise ausgenommen \u2013 im Zweifel vorab mit der Bewilligungsbeh\u00f6rde kl\u00e4ren.</div></div>`;
+
     h+=`<div class="field"><div class="field-label">Mindestinvestition</div><div class="field-value">${f.mindest}</div></div>`;
     h+=`<div class="field"><div class="field-label">Maximale Fördersumme</div><div class="field-value">${f.maxFoerder||'Keine Obergrenze'}</div></div>`;
     if(f.zweckbindung) h+=`<div class="field"><div class="field-label">Zweckbindungsfrist</div><div class="field-value">${f.zweckbindung}</div></div>`;
-    h+=`<div class="field"><div class="field-label">Antragsfrist</div><div class="field-value">30. September des jeweiligen Jahres</div></div>`;
+    const fi=fristInfo();
+    h+=`<div class="field"><div class="field-label">N\u00e4chste Antragsfrist</div><div class="field-value"${fi.dringend?' style="color:#b02a2a"':''}>${fi.text}</div><div class="field-detail">${fi.detail}</div></div>`;
     h+=`<div class="field"><div class="field-label">Beispielhafte Maßnahmen</div><div class="field-detail">${f.beispiele}</div></div>`;
 
     /* Antragsberechtigung */
@@ -469,6 +474,27 @@ function resetAll(){state={step:0,category:null,foerder:null,applicant:null};ren
 
 /* ===== Ergebnis-Vermerk (für E-Mail / Akte) ===== */
 function escF(s){return String(s).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
+/* Antragsfrist dynamisch: jaehrlicher Stichtag 30.09., im Jahr 2030 abweichend 31.05.
+   Die FRL-NMOB-Rad-Fuss gilt bis 17.11.2030. */
+function fristInfo(){
+  const heute=new Date();heute.setHours(0,0,0,0);
+  const st=y=>(y===2030)?new Date(2030,4,31):new Date(y,8,30);
+  let jahr=heute.getFullYear();
+  let ziel=st(jahr);
+  if(heute>ziel){jahr++;ziel=st(jahr);}
+  if(jahr>2030){
+    return{text:'Richtlinie ausgelaufen',
+           detail:'Die FRL-NMOB-Rad-Fu\u00df galt bis 17.11.2030. Aktuelle Fristen bitte bei der Bewilligungsbeh\u00f6rde erfragen.',
+           dringend:true,datum:'\u2013',tage:null};
+  }
+  const p=n=>String(n).padStart(2,'0');
+  const datum=p(ziel.getDate())+'.'+p(ziel.getMonth()+1)+'.'+ziel.getFullYear();
+  const tage=Math.round((ziel-heute)/86400000);
+  return{text:datum+(tage===0?' \u2013 heute!':' \u2013 noch '+tage+(tage===1?' Tag':' Tage')),
+         detail:'J\u00e4hrlicher Stichtag ist der 30. September; im Jahr 2030 abweichend der 31. Mai.',
+         dringend:tage<=42,datum:datum,tage:tage};
+}
+
 function buildFVermerk(){
   const f=FOERDER[state.foerder];if(!f)return '';
   const app=APPLICANTS.find(a=>a.id===state.applicant);
@@ -476,6 +502,8 @@ function buildFVermerk(){
   t+='Erstellt am: '+new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})+'\n';
   if(app)t+='Antragsteller: '+app.label+'\n';
   t+='Fördergegenstand: Nr. '+f.nr+' – '+f.label+'\n\n';
+  t+='ACHTUNG: Der schriftliche Zuwendungsantrag muss der Bewilligungsbeh\u00f6rde vor Beginn des Vorhabens vorliegen.\n';
+  t+='Als Vorhabenbeginn gilt in der Regel bereits der Abschluss eines Lieferungs- oder Leistungsvertrags.\n\n';
   t+='Regelförderquote: '+f.quote+'\n';
   if(f.quoteFinanzschwach)t+='Finanzschwache Kommunen: '+f.quoteFinanzschwach+' (Nachweis Landesverwaltungsamt)\n';
   if(f.quoteSchule)t+='Anbindung Schule/Kita: '+f.quoteSchule+'\n';
@@ -483,7 +511,9 @@ function buildFVermerk(){
   t+='Mindestinvestition: '+f.mindest+'\n';
   t+='Maximale Fördersumme: '+(f.maxFoerder||'Keine Obergrenze')+'\n';
   if(f.zweckbindung)t+='Zweckbindungsfrist: '+f.zweckbindung+'\n';
-  t+='Antragsfrist: 30. September des jeweiligen Jahres\n';
+  const fi=fristInfo();
+  t+='N\u00e4chste Antragsfrist: '+fi.text+'\n';
+  t+='('+fi.detail+')\n';
   t+='Beispiele: '+f.beispiele+'\n';
   let allNotes=[...STD_NOTES];if(f.hinweise.length)allNotes=[...f.hinweise,...STD_NOTES];
   t+='\nWichtige Hinweise:\n';allNotes.forEach(n=>{t+='- '+n+'\n';});
