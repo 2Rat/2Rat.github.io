@@ -18,18 +18,87 @@
   <meta name="geo.region" content="DE-SL">
   <meta name="geo.placename" content="Lebach">
   <link rel="icon" type="image/png" href="Logo_2Rat_clean.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "2Rat – Büro für Radverkehrsplanung",
+    "description": "Planungsbüro für Radverkehr im Saarland: Radverkehrskonzepte, Bürgerbeteiligung, Bestandsaufnahmen und digitale Werkzeuge für Kommunen.",
+    "url": "https://www.2rat.org/",
+    "image": "https://www.2rat.org/Logo_2Rat_clean.png",
+    "email": "fahr2rat@gmail.com",
+    "telephone": "+49-151-29443794",
+    "founder": {
+      "@type": "Person",
+      "name": "Armin Jung",
+      "jobTitle": "Radverkehrsplaner EIPOS"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Antoniusstraße 44",
+      "postalCode": "66822",
+      "addressLocality": "Lebach",
+      "addressRegion": "Saarland",
+      "addressCountry": "DE"
+    },
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": "Saarland"
+    },
+    "knowsAbout": ["Radverkehrsplanung", "Radverkehrskonzept", "Bürgerbeteiligung", "Radinfrastruktur", "Fördermittelberatung"],
+    "priceRange": "€€"
+  }
+  </script>
+
+  <!-- ============================================================
+       DSGVO-HINWEIS ZU DEN SCHRIFTEN
+       Die folgende Zeile lädt Outfit + DM Sans von Googles Servern.
+       Dabei wird die IP-Adresse jedes Besuchers an Google übertragen
+       (vgl. LG München I, Urteil vom 20.01.2022, Az. 3 O 17493/20).
+
+       So wird daraus eine lokale Einbindung:
+       1. Schriften herunterladen (z.B. google-webfonts-helper),
+          Format woff2, Zeichensatz latin + latin-ext
+       2. Diese Dateien ins Repo-Wurzelverzeichnis in einen Ordner
+          "fonts/" legen:
+             outfit-400.woff2, outfit-500.woff2, outfit-600.woff2,
+             outfit-700.woff2, outfit-800.woff2
+             dmsans-400.woff2, dmsans-600.woff2, dmsans-700.woff2,
+             dmsans-800.woff2
+       3. Die <link>-Zeile unten löschen und stattdessen den
+          @font-face-Block am Anfang des <style>-Bereichs aktivieren
+          (dort als Kommentar hinterlegt).
+
+       Bis dahin bleibt die Google-Einbindung bestehen, damit das
+       Layout nicht bricht.
+       ============================================================ -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    /* --- LOKALE SCHRIFTEN: aktivieren, sobald die woff2-Dateien im Ordner
+           fonts/ liegen. Dann die Google-Fonts-<link>-Zeile im Head löschen.
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-500.woff2') format('woff2'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-600.woff2') format('woff2'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-700.woff2') format('woff2'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-800.woff2') format('woff2'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dmsans-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dmsans-600.woff2') format('woff2'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dmsans-700.woff2') format('woff2'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dmsans-800.woff2') format('woff2'); font-weight:800; font-display:swap; }
+    --- */
+
     :root {
-      --green: #689246;
-      --green-dark: #567A3A;
-      --blue: #1678A9;
-      --blue-dark: #0F5C84;
+      --green: #66A242;
+      --green-dark: #4F7F30;
+      --blue: #0671B9;
+      --blue-dark: #046091;
       --beige: #F5E6C8;
       --beige-light: #FAEFD8;
       --white: #FFFFFF;
       --text: #3D3D3D;
       --text-light: #6B6B6B;
+      --rh-warm: #A0722F;
       --font: 'Outfit', -apple-system, sans-serif;
     }
 
@@ -89,6 +158,51 @@
     .s-label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
     .s-title { font-size: clamp(24px, 3vw, 34px); font-weight: 800; line-height: 1.2; margin-bottom: 14px; color: var(--green); }
     .s-text { font-size: 15px; color: var(--text-light); line-height: 1.7; max-width: 520px; margin-bottom: 36px; }
+
+    /* --- RADHERBST 2026 (Kampagnen-Sektion, nach dem 31.10.2026 entfernbar) --- */
+    /* Farbgebung bewusst zurueckhaltend: Markengruen und -blau tragen die Sektion,
+       der warme Ton (--rh-warm) dient nur als schmaler Akzent an Preis und Frist. */
+    .rh { background: #FDFAF3; border-top: 1px solid rgba(0,0,0,0.08); }
+    .rh__badge { display: inline-block; background: transparent; color: var(--blue); font-size: 12px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+    .rh__title { font-size: clamp(24px, 3vw, 34px); font-weight: 800; line-height: 1.2; color: var(--green); margin-bottom: 14px; }
+    .rh__lead { font-size: 15px; color: var(--text); line-height: 1.7; max-width: 640px; margin-bottom: 30px; }
+    .rh__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 14px; }
+    .rh__stat { background: #fff; border: 1px solid #EBE6DA; border-radius: 12px; padding: 20px 18px; }
+    .rh__stat b { display: block; font-size: 28px; font-weight: 800; color: var(--blue); line-height: 1.1; margin-bottom: 6px; }
+    .rh__stat span { font-size: 13px; color: var(--text-light); line-height: 1.55; }
+    .rh__quelle { font-size: 11.5px; color: #9a9a9a; line-height: 1.6; margin-bottom: 30px; max-width: 760px; }
+    .rh__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+    .rh__box { background: #fff; border-radius: 14px; padding: 22px 24px; border: 1px solid #EBE6DA; }
+    .rh__box--in { border-left: 3px solid var(--green); }
+    .rh__box--up { border-left: 3px solid #D8D2C4; }
+    .rh__box h4 { font-size: 13px; font-weight: 800; margin-bottom: 12px; letter-spacing: 0.8px; text-transform: uppercase; }
+    .rh__box ul { list-style: none; }
+    .rh__box li { font-size: 14px; line-height: 1.6; padding-left: 20px; position: relative; margin-bottom: 9px; color: var(--text); }
+    .rh__box--in li::before { content: '\2713'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+    .rh__box--up li::before { content: '+'; position: absolute; left: 0; color: var(--text-light); font-weight: 700; }
+    .rh__preis { background: #fff; border: 1px solid #EBE6DA; border-left: 4px solid var(--rh-warm); border-radius: 14px;
+      padding: 24px 28px; margin-bottom: 16px;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 20px; justify-content: space-between; }
+    .rh__preis-tag { display: inline-block; color: var(--rh-warm); font-size: 12px; font-weight: 800;
+      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+    .rh__preis-zahl { font-size: 36px; font-weight: 800; color: var(--green-dark); line-height: 1; }
+    .rh__preis-alt { font-size: 16px; color: var(--text-light); text-decoration: line-through; margin-left: 10px; font-weight: 600; }
+    .rh__preis-fein { font-size: 12.5px; color: var(--text-light); margin-top: 8px; line-height: 1.55; }
+    .rh__frist { background: #fff; border: 1px solid #EBE6DA; border-left: 4px solid var(--rh-warm); border-radius: 12px;
+      padding: 16px 22px; font-size: 14.5px; color: var(--text); line-height: 1.6; margin-bottom: 26px; }
+    .rh__ref { background: #fff; border: 1px solid #EBE6DA; border-left: 3px solid var(--green); border-radius: 14px;
+      padding: 22px 24px; margin-bottom: 24px; }
+    .rh__ref-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--green); font-weight: 700; margin-bottom: 6px; }
+    .rh__zahlen { display: flex; flex-wrap: wrap; gap: 30px; margin: 16px 0 4px; }
+    .rh__zahl b { display: block; font-size: 22px; font-weight: 800; color: var(--green); line-height: 1.1; }
+    .rh__zahl span { font-size: 12.5px; color: var(--text-light); }
+    .rh__btns { display: flex; flex-wrap: wrap; gap: 12px; }
+    @media (max-width: 768px) {
+      .rh__stats { grid-template-columns: 1fr; }
+      .rh__cols { grid-template-columns: 1fr; }
+      .rh__preis { flex-direction: column; align-items: flex-start; }
+    }
 
     .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
     .card { background: var(--white); border-radius: 14px; padding: 24px 20px; border: 1px solid rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; }
@@ -150,7 +264,7 @@
     .db-action { font-size: 10px; background: #E8ECF0; padding: 4px 10px; border-radius: 6px; color: #3D4F58; font-weight: 600; }
 
     .kc-preview { background: #F8FAFC; border: 1px solid #E5E7EB; box-shadow: 0 4px 20px rgba(0,0,0,0.05); font-family: 'DM Sans', sans-serif; }
-    .kc-preview::before { background: linear-gradient(90deg, #2D8C28, #1678A9); }
+    .kc-preview::before { background: linear-gradient(90deg, #2D8C28, #0671B9); }
     .kc-header { text-align: center; margin-bottom: 14px; }
     .kc-title { font-size: 15px; font-weight: 800; letter-spacing: 2px; font-family: 'DM Sans', sans-serif; }
     .kc-title .t-b { color: #1A5FA8; }
@@ -203,9 +317,9 @@
 
     .ticker__bar {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 200;
-      background: linear-gradient(90deg, #1a3a1e, #2d5a22, #1a4a28);
+      background: linear-gradient(90deg, #2C3A23, #3E5230, #2F4026);
       height: 36px; overflow: hidden; display: flex; align-items: center;
-      border-bottom: 2px solid #7CDB7C;
+      border-bottom: 2px solid #C9A45C;
     }
     .ticker__track {
       display: flex; white-space: nowrap;
@@ -213,16 +327,76 @@
     }
     .ticker__text {
       font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
-      color: #7CDB7C; letter-spacing: 0.5px; padding: 0 40px;
+      color: #E8CE92; letter-spacing: 0.5px; padding: 0 40px;
     }
     @keyframes tickerScroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
-    .ticker__bar:hover { background: linear-gradient(90deg, #1a4a28, #1a3a1e, #2d5a22); }
+    .ticker__bar:hover { background: linear-gradient(90deg, #2F4026, #2C3A23, #3E5230); }
     .ticker__bar:hover .ticker__track { animation-play-state: paused; }
-    @media (prefers-reduced-motion: reduce) {
-      .ticker__track { animation: none; }
+    /* --- UMSETZUNG --- */
+    .um__wege { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 34px; }
+    .um__weg { background: var(--white); border: 1px solid rgba(0,0,0,0.06); border-top: 3px solid var(--green);
+      border-radius: 14px; padding: 24px 22px; }
+    .um__weg h3 { font-size: 16px; font-weight: 800; color: var(--green-dark); line-height: 1.3; margin-bottom: 10px; }
+    .um__weg p { font-size: 14px; color: var(--text-light); line-height: 1.65; }
+    .um__split { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
+    .um__liefer { background: var(--white); border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: 26px 28px; }
+    .um__liefer h3, .um__grenze h3 { font-size: 13px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.8px; margin-bottom: 14px; }
+    .um__liefer h3 { color: var(--blue); }
+    .um__liefer ul { list-style: none; }
+    .um__liefer li { font-size: 14px; line-height: 1.6; color: var(--text); padding-left: 22px;
+      position: relative; margin-bottom: 10px; }
+    .um__liefer li::before { content: '\2713'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+    .um__grenze { background: var(--white); border: 1px solid rgba(0,0,0,0.06); border-left: 4px solid var(--blue);
+      border-radius: 14px; padding: 26px 28px; }
+    .um__grenze h3 { color: var(--text-light); }
+    .um__grenze p { font-size: 14px; color: var(--text); line-height: 1.7; margin-bottom: 12px; }
+    .um__grenze p:last-child { margin-bottom: 0; }
+    .um__grenze strong { color: var(--green-dark); }
+    .um__stop { font-size: 13px; color: var(--text-light); border-top: 1px solid rgba(0,0,0,0.07);
+      padding-top: 12px; margin-top: 4px; }
+    @media (max-width: 900px) {
+      .um__wege { grid-template-columns: 1fr; }
+      .um__split { grid-template-columns: 1fr; }
+    }
+
+    /* --- Tablet-Korrekturen ---
+       Bis 1023px: Burger-Menue statt Desktop-Navigation (Tippziele zu klein
+       fuer Finger), Produktvorschau ueber die volle Breite statt auf 400px
+       gedeckelt (sonst steht daneben tote Flaeche). --- */
+    @media (max-width: 1023px) {
+      .nav__links { display: none; }
+      .hamburger { display: block; }
+      .produkt__preview { max-width: 100%; }
+    }
+    /* Mindestgroesse fuer Tippziele auf Touchgeraeten (Apple/Google: 44px) */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .produkt__btns a, .rh__btns a { min-height: 44px; }
+      .mobile-menu a { padding: 6px 0; }
+    }
+
+    /* --- Zweispaltige Produktbloecke ab 1024px (war im CSS angelegt, aber nie aktiv) --- */
+    @media (min-width: 1024px) {
+      .produkt { flex-direction: row; align-items: center; gap: 40px; padding: 40px 36px; }
+      .produkt--flip { flex-direction: row-reverse; }
+      .produkt__info { flex: 1 1 auto; min-width: 0; }
+      .produkt__preview { flex: 0 0 400px; max-width: 400px; align-self: stretch;
+        display: flex; flex-direction: column; justify-content: center; }
+    }
+
+    /* --- Breitere Inhaltsspalte auf grossen Bildschirmen.
+           1280px ist bewusst die Obergrenze: darueber werden die Textzeilen
+           in den Produktbloecken zu lang zum bequemen Lesen. --- */
+    @media (min-width: 1500px) {
+      .wrap { max-width: 1280px; }
+      .nav__inner { max-width: 1280px; }
+      .produkt__preview { flex: 0 0 460px; max-width: 460px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {      .ticker__track { animation: none; }
     }
 
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -254,10 +428,10 @@
 <body>
 
   <!-- Newsticker -->
-  <a href="fahrradfruehling.html" class="ticker" style="text-decoration:none;">
+  <a href="#radherbst" class="ticker" style="text-decoration:none;">
     <div class="ticker__bar">
       <div class="ticker__track">
-        <span class="ticker__text">🚲🌸 +++ NEU: Meldi im deutschen Fahrradfrühling – Jetzt ansehen ▶️ +++ Das Speichenerwachen hat begonnen! +++ 🚲🌸 +++ NEU: Meldi im deutschen Fahrradfrühling – Jetzt ansehen ▶️ +++ Das Speichenerwachen hat begonnen! +++</span>
+        <span class="ticker__text">+++ Radherbst 2026: Bürgerbeteiligung für Ihre Kommune – 500 € statt 990 € +++ Aktion 15.09.–31.10.2026 +++ Rückmeldung bis 01.09. +++ Radherbst 2026: Bürgerbeteiligung für Ihre Kommune – 500 € statt 990 € +++ Aktion 15.09.–31.10.2026 +++ Rückmeldung bis 01.09. </span>
       </div>
     </div>
   </a>
@@ -266,7 +440,9 @@
     <div class="nav__inner">
       <img src="Logo_2Rat_clean.png" alt="2Rat" class="nav__logo">
       <ul class="nav__links">
+        <li><a href="#radherbst" style="color:var(--green-dark);font-weight:700;">Radherbst 2026</a></li>
         <li><a href="#leistungen">Leistungen</a></li>
+        <li><a href="#umsetzung">Umsetzung</a></li>
         <li><a href="#produkte">Produkte</a></li>
         <li><a href="#testen">Testen</a></li>
         <li><a href="#kontakt">Kontakt</a></li>
@@ -277,7 +453,9 @@
   </nav>
 
   <div class="mobile-menu" id="mobileMenu">
+    <a href="#radherbst" onclick="toggleMenu()" style="color:var(--green-dark);font-weight:700;">Radherbst 2026</a>
     <a href="#leistungen" onclick="toggleMenu()">Leistungen</a>
+    <a href="#umsetzung" onclick="toggleMenu()">Umsetzung</a>
     <a href="#produkte" onclick="toggleMenu()">Produkte</a>
     <a href="#testen" onclick="toggleMenu()">Testen</a>
     <a href="#kontakt" onclick="toggleMenu()">Kontakt</a>
@@ -297,7 +475,7 @@
           <p class="hero__text">Individuelle, praxisnahe Beratung für Kommunen. Von der Idee bis zur Umsetzung – für sichere und attraktive Radinfrastruktur.</p>
           <div class="hero__btns">
             <a href="mailto:fahr2rat@gmail.com" class="btn btn--g">✉️ Kontakt aufnehmen</a>
-            <a href="#produkte" class="btn btn--b-o">Unsere Produkte</a>
+            <a href="#produkte" class="btn btn--b-o">Zu den Produkten</a>
           </div>
         </div>
         <div class="hero__right">
@@ -307,12 +485,109 @@
     </div>
   </section>
 
+  <!-- ============================================================
+       RADHERBST 2026 — Kampagnen-Sektion
+       Aktionszeitraum 15.09.–31.10.2026, Rückmeldefrist 01.09.2026.
+       Nach Aktionsende: Sektion entfernen oder auf Rückblick umstellen,
+       dazu auch Ticker und Navigationseintrag anpassen.
+       ============================================================ -->
+  <section class="section rh" id="radherbst">
+    <div class="wrap">
+      <div class="rh__badge">Aktion für Saarländische Kommunen</div>
+      <h2 class="rh__title">Radherbst 2026 –<br>Bürgerbeteiligung beim Radverkehr</h2>
+      <p class="rh__lead">
+        Mehr Menschen wollen aufs Rad – aber sie trauen sich nicht. Die Frage für jede Kommune lautet:
+        <strong>Wo genau hakt es bei uns?</strong> Im Radherbst richte ich Ihrer Kommune eine eigene
+        Aktionskarte ein. Ihre Bürgerinnen und Bürger melden Probleme, Wünsche und positive Erfahrungen
+        direkt vom Smartphone – anonym, ohne App-Installation, DSGVO-konform, Server in Deutschland.
+      </p>
+
+      <div class="rh__stats reveal">
+        <div class="rh__stat">
+          <b>55 %</b>
+          <span>der Deutschen wollen künftig häufiger Rad fahren (2021: 40 %)</span>
+        </div>
+        <div class="rh__stat">
+          <b>41 %</b>
+          <span>der Radfahrenden fühlen sich unsicher – bei Frauen sogar 49 %</span>
+        </div>
+        <div class="rh__stat">
+          <b>60 %</b>
+          <span>nennen rücksichtsloses Verhalten von Autofahrenden als Hauptgrund für Unsicherheit</span>
+        </div>
+      </div>
+      <p class="rh__quelle">Quelle: SINUS / Bundesministerium für Verkehr, Fahrrad-Monitor 2025 (Stand April 2026).
+        Der Deutsche Verkehrssicherheitsrat fordert seit April 2026 eine sofortige Infrastrukturoffensive –
+        Voraussetzung dafür sind belastbare Daten, wo in der Kommune Handlungsbedarf besteht.</p>
+
+      <div class="rh__preis reveal">
+        <div>
+          <div class="rh__preis-tag">Sonderpreis · −50 %</div>
+          <div><span class="rh__preis-zahl">500 €</span><span class="rh__preis-alt">990 €</span></div>
+          <div class="rh__preis-fein">Einrichtung + Datenexport für Ihre Kommune · pauschal ·
+            ohne Umsatzsteuer gem. §19 UStG<br>Gilt für Aktionen, die zwischen 15.09. und 31.10.2026 starten.</div>
+        </div>
+        <a href="mailto:fahr2rat@gmail.com?subject=Radherbst%202026%20%E2%80%93%20Anfrage%20unserer%20Kommune&amp;body=Guten%20Tag%20Herr%20Jung%2C%0A%0Awir%20interessieren%20uns%20f%C3%BCr%20den%20Radherbst%202026.%0A%0AKommune%3A%20%0AAnsprechperson%3A%20%0ATelefon%3A%20%0A%0AMit%20freundlichen%20Gr%C3%BC%C3%9Fen%0A"
+           class="btn btn--g">✉️ Aktion anfragen</a>
+      </div>
+
+      <div class="rh__frist reveal">
+        <strong>Rückmeldung bitte bis 01.09.2026</strong> – damit die Aktionskarte rechtzeitig zum
+        Aktionsstart am 15.09. steht. Kick-off ist die Europäische Mobilitätswoche (16.–22.09.).
+      </div>
+
+      <div class="rh__cols reveal">
+        <div class="rh__box rh__box--in">
+          <h4 style="color:var(--green-dark);">Im Sonderpreis enthalten</h4>
+          <ul>
+            <li>Eigene Aktionskarte für Ihr Gemeindegebiet + eigener Link zur Bewerbung</li>
+            <li>Aktionsphase 15.09.–31.10.2026, inklusive Europäischer Mobilitätswoche</li>
+            <li>Datenhoheit bei Ihrer Kommune – Export als GeoJSON und CSV</li>
+            <li>Kartenansicht bleibt für Ihre Bürger online</li>
+          </ul>
+        </div>
+        <div class="rh__box rh__box--up">
+          <h4 style="color:var(--text-light);">Optional als Upgrade</h4>
+          <ul>
+            <li>Bewerbungsmaterial: Flyer, Amtsblatt-Text, Social-Media-Bausteine</li>
+            <li>Auswertungsbericht mit Karten und GIS-Aufbereitung</li>
+            <li>Vorstellung im Gemeinderat oder Ausschuss</li>
+            <li>Abgleich mit Ihrem bestehenden Radverkehrskonzept</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rh__ref reveal">
+        <div class="rh__ref-label">Referenz: Gemeinde Wadgassen</div>
+        <div style="font-size:14.5px;color:var(--text);line-height:1.65;">
+          Wadgassen war die erste Kommune im Saarland, die den Radwegemelder eingesetzt hat –
+          als „Radwegecheck Wadgassen“ vom 19.03. bis 20.06.2026. Am Ende stand ein Bericht mit
+          Karten, Schwerpunkten und konkreten nächsten Schritten für den Gemeinderat.
+        </div>
+        <div class="rh__zahlen">
+          <div class="rh__zahl"><b>37</b><span>ausgewertete Meldungen</span></div>
+          <div class="rh__zahl"><b>3</b><span>räumliche Schwerpunkte</span></div>
+          <div class="rh__zahl"><b>1</b><span>Bericht für den Gemeinderat</span></div>
+        </div>
+      </div>
+
+      <div class="rh__btns">
+        <a href="https://2rat.github.io/velomeld/?kommune=Saarland" class="btn btn--sm"
+           style="background:#0671B9;color:#fff;" target="_blank" rel="noopener">📱 Demo-App öffnen</a>
+        <a href="https://2rat.github.io/velomeld/karte.html?kommune=Saarland&amp;modus=karte&amp;titel=Demo-Saarland"
+           class="btn btn--sm" style="background:#fff;color:#0671B9;border:2px solid #0671B9;" target="_blank" rel="noopener">🗺️ Demo-Karte ansehen</a>
+        <a href="erklaerfilm.html" class="btn btn--sm"
+           style="background:#fff;color:var(--green-dark);border:2px solid var(--green);" target="_blank">🎬 So funktioniert's</a>
+      </div>
+    </div>
+  </section>
+
   <!-- LEISTUNGEN -->
   <section class="section section--white" id="leistungen">
     <div class="wrap">
       <div class="s-label">Leistungen</div>
-      <h2 class="s-title">Was wir für Ihre Kommune tun können</h2>
-      <p class="s-text">Von der Bestandsaufnahme über die Fördermittelberatung bis zur fertigen Maßnahme.</p>
+      <h2 class="s-title">Was ich für Ihre Kommune tun kann</h2>
+      <p class="s-text">Von der Bestandsaufnahme über die Planung bis zur umsetzbaren Maßnahme.</p>
       <div class="cards">
         <div class="card reveal">
           <div class="card__top"><span class="card__icon">📋</span><h3 class="card__title">Radverkehrskonzepte</h3></div>
@@ -329,7 +604,51 @@
         <div class="card reveal reveal-delay-3">
           <div class="card__top"><span class="card__icon">👥</span><h3 class="card__title">Bürgerbeteiligung & Workshops</h3></div>
           <p class="card__text">Bürger einbinden, Akzeptanz schaffen. Beteiligungsformate von der Online-Umfrage bis zum Workshop vor Ort.</p>
-          <p class="card__text" style="margin-top:10px;">Mit unserem <strong>Radwegemelder</strong> erheben Bürger digital Daten – zugeschnitten auf Ihre Kommune, inklusive Auswertung und Kartenansicht.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UMSETZUNG -->
+  <section class="section section--white" id="umsetzung">
+    <div class="wrap">
+      <div class="s-label">Umsetzung</div>
+      <h2 class="s-title">Vom Problem zur umsetzbaren Maßnahme</h2>
+      <p class="s-text">Ein Radverkehrskonzept im Schrank verbessert keinen Meter Radweg. Ich arbeite genau an der Stelle, an der es meistens hakt – zwischen dem, was geplant wurde, und dem, was tatsächlich gebaut wird.</p>
+
+      <div class="um__wege reveal">
+        <div class="um__weg">
+          <h3>Eine Stelle, die nicht vorankommt</h3>
+          <p>Eine Kreuzung, ein Engpass, eine Lücke im Netz. Ortstermin, Aufnahme, Lösungsvorschlag mit Kosten. Überschaubarer Auftrag, klares Ergebnis.</p>
+        </div>
+        <div class="um__weg">
+          <h3>Ihr Konzept liegt vor, die Umsetzung stockt</h3>
+          <p>Ich prüfe die Maßnahmen Ihres bestehenden Radverkehrskonzepts auf Umsetzbarkeit und priorisiere sie: Was geht schnell, was braucht Vorlauf, was ist inzwischen überholt? Sie bekommen eine belastbare Reihenfolge – und ein Konzept, das wieder in Bewegung kommt.</p>
+        </div>
+        <div class="um__weg">
+          <h3>Ein Maßnahmenpaket abarbeiten</h3>
+          <p>Mehrere Stellen gebündelt planen statt einzeln. Das spart Abstimmung, Kosten und Ratssitzungen.</p>
+        </div>
+      </div>
+
+      <div class="um__split reveal">
+        <div class="um__liefer">
+          <h3>Was Sie am Ende in der Hand haben</h3>
+          <ul>
+            <li>Maßnahmenblatt je Stelle – mit Fotos, Lage und Beschreibung</li>
+            <li>Planunterlage für die Verwaltung – Varianten, Abwägung, Empfehlung</li>
+            <li>Beschilderungs- und Markierungsplan</li>
+            <li>Entwurf der verkehrsrechtlichen Anordnung, den Ihre Straßenverkehrsbehörde übernehmen kann</li>
+            <li>Kostenschätzung</li>
+            <li>Passendes Förderprogramm und Unterstützung beim Antrag</li>
+            <li>Bei Markierung und Beschilderung: Leistungsverzeichnis, mit dem Sie ausschreiben können</li>
+          </ul>
+        </div>
+        <div class="um__grenze">
+          <h3>Wo ich aufhöre – und warum Sie davon profitieren</h3>
+          <p>Bei baulichen Maßnahmen – neuer Radweg, Knotenpunktumbau, Querungsanlage – plane ich bis zur Entscheidungsreife und übergebe dann an Ihr Tiefbauamt oder ein Ingenieurbüro. <strong>Ich bin Radverkehrsplaner, kein Tiefbauingenieur.</strong> Für Statik und Entwässerung sollen Sie jemanden haben, der das täglich macht.</p>
+          <p>Ihr Vorteil dabei: Das Ingenieurbüro bekommt von mir eine durchdachte Vorlage statt einer vagen Idee – und braucht entsprechend weniger Stunden.</p>
+          <p class="um__stop">Vergabeverfahren und Bauüberwachung übernehme ich nicht.</p>
         </div>
       </div>
     </div>
@@ -346,13 +665,13 @@
       <div class="produkt reveal">
         <div class="produkt__info">
           <h3><span class="gr">Radwegemelder</span> –<br><span class="bl">Digitale Bürgerbeteiligung für Ihr Radverkehrskonzept</span></h3>
-          <p>Die Radwegemelder-App wurde von uns entwickelt, um Bürger digital bei der Erstellung von Radverkehrskonzepten oder Maßnahmen beteiligen zu können. Probleme, Wünsche und positive Erfahrungen zum Radverkehr können direkt vom Smartphone gemeldet werden – anonym, ohne Installation, ohne Registrierung.</p>
+          <p>Die Radwegemelder-App habe ich entwickelt, um Bürger digital bei der Erstellung von Radverkehrskonzepten oder Maßnahmen beteiligen zu können. Probleme, Wünsche und positive Erfahrungen zum Radverkehr können direkt vom Smartphone gemeldet werden – anonym, ohne Installation, ohne Registrierung.</p>
           <div class="feat-list">
             <div class="feat"><div class="feat__dot" style="background:#1A5FA8;"></div><div><strong>Eigene Aktionskarte</strong><br><span>Zugeschnitten auf Ihr Gemeindegebiet, mit Aktionszeitraum. Ein Link für Flyer, Website und Social Media.</span></div></div>
-            <div class="feat"><div class="feat__dot" style="background:#2D8C28;"></div><div><strong>Professionelle Auswertung</strong><br><span>Wir analysieren die Meldungen, erstellen Karten und Berichte für Ihre Gremien und die weitere Planung.</span></div></div>
-            <div class="feat"><div class="feat__dot" style="background:#E5A700;"></div><div><strong>Einbettung ins Radverkehrskonzept</strong><br><span>Die Bürgerdaten fließen direkt in unsere Bestandsanalyse und Maßnahmenempfehlungen ein.</span></div></div>
+            <div class="feat"><div class="feat__dot" style="background:#2D8C28;"></div><div><strong>Professionelle Auswertung</strong><br><span>Ich analysiere die Meldungen, erstellen Karten und Berichte für Ihre Gremien und die weitere Planung.</span></div></div>
+            <div class="feat"><div class="feat__dot" style="background:#E5A700;"></div><div><strong>Einbettung ins Radverkehrskonzept</strong><br><span>Die Bürgerdaten fließen direkt in meine Bestandsanalyse und Maßnahmenempfehlungen ein.</span></div></div>
           </div>
-          <p style="font-size:13px;color:var(--text-light);font-style:italic;margin-top:16px;">Die fachliche Auswertung und Einbindung in Ihre Planung ist Teil unserer Beratungsleistung.</p>
+          <p style="font-size:13px;color:var(--text-light);font-style:italic;margin-top:16px;">Die fachliche Auswertung und Einbindung in Ihre Planung ist Teil meiner Beratungsleistung.</p>
           <div class="produkt__btns">
             <a href="https://2rat.github.io/velomeld/" class="btn btn--sm" style="background:#1A5FA8;color:white;" target="_blank">📱 App testen</a>
             <a href="erklaerfilm.html" class="btn btn--sm" style="background:#fff;color:#1A5FA8;border:2px solid #1A5FA8;" target="_blank">🎬 So funktioniert's</a>
@@ -361,19 +680,19 @@
           </div>
 
           <!-- Live-Beispiel -->
-          <div style="margin-top:24px;padding:16px 20px;background:linear-gradient(135deg,#F0F7EC,#E8F4FD);border-radius:12px;border-left:4px solid #689246;">
-            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#689246;font-weight:700;margin-bottom:4px;">📍 Aktuelle Pilotkommune: Wadgassen</div>
-            <div style="font-size:14px;color:#3D3D3D;margin-bottom:10px;">So sieht die Bürgerkarte im Echtbetrieb aus – mit echten Meldungen aus dem laufenden Projekt.</div>
-            <a href="https://2rat.github.io/velomeld/karte.html?kommune=Wadgassen&titel=Radwegecheck+Wadgassen" target="_blank" style="display:inline-block;padding:8px 16px;background:#689246;color:white;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;">🗺️ Karte Wadgassen ansehen →</a>
+          <div style="margin-top:24px;padding:16px 20px;background:linear-gradient(135deg,#F0F7EC,#E8F4FD);border-radius:12px;border-left:4px solid #66A242;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#66A242;font-weight:700;margin-bottom:4px;">📍 Referenzprojekt: Gemeinde Wadgassen</div>
+            <div style="font-size:14px;color:#3D3D3D;margin-bottom:10px;">Erste Kommune im Saarland mit dem Radwegemelder: „Radwegecheck Wadgassen“, 19.03.–20.06.2026. Ergebnis: 37 ausgewertete Meldungen, 3 räumliche Schwerpunkte, ein Bericht für den Gemeinderat. Die Karte bleibt weiterhin online.</div>
+            <a href="https://2rat.github.io/velomeld/karte.html?kommune=Wadgassen&titel=Radwegecheck+Wadgassen" target="_blank" style="display:inline-block;padding:8px 16px;background:#66A242;color:white;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;">🗺️ Karte Wadgassen ansehen →</a>
           </div>
 
           <!-- Kostenlos testen -->
-          <div style="margin-top:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #1678A9;">
-            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#1678A9;font-weight:700;margin-bottom:4px;">🆓 Kostenlos ausprobieren</div>
+          <div style="margin-top:12px;padding:16px 20px;background:#fff;border-radius:12px;border:2px solid #0671B9;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#0671B9;font-weight:700;margin-bottom:4px;">🆓 Kostenlos ausprobieren</div>
             <div style="font-size:14px;color:#3D3D3D;margin-bottom:10px;">Geben Sie Ihren Gemeindenamen ein und sehen Sie, wie die Karte für Ihre Kommune aussehen würde:</div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               <input type="text" id="komTest" placeholder="z.B. Merzig, Homburg, Blieskastel…" style="flex:1;min-width:180px;padding:10px 14px;border:2px solid #E2E8F0;border-radius:8px;font-family:inherit;font-size:14px;color:#3D3D3D;" onkeydown="if(event.key==='Enter')testKom()">
-              <button onclick="testKom()" style="padding:10px 20px;background:#1678A9;color:white;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;">App testen →</button>
+              <button onclick="testKom()" style="padding:10px 20px;background:#0671B9;color:white;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;">App testen →</button>
             </div>
             <div style="margin-top:8px;font-size:12px;color:#6B6B6B;">Keine Installation, keine Registrierung – einfach ausprobieren.</div>
           </div>
@@ -394,10 +713,10 @@
       <div class="produkt-divider"></div>
 
       <!-- Auswertungs-Dashboard -->
-      <div class="produkt reveal">
+      <div class="produkt produkt--flip reveal">
         <div class="produkt__info">
           <h3><span class="bl">Auswertungs-Dashboard</span> –<br><span class="gr">Datenanalyse für Ihre Gremien</span></h3>
-          <p>Alle Bürgermeldungen übersichtlich auf einer Karte – gefiltert, analysiert und aufbereitet für Stadtrat, Ausschüsse und die weitere Planung. Das Dashboard ist exklusiver Bestandteil unserer Beratungsleistung.</p>
+          <p>Alle Bürgermeldungen übersichtlich auf einer Karte – gefiltert, analysiert und aufbereitet für Stadtrat, Ausschüsse und die weitere Planung. Das Dashboard ist exklusiver Bestandteil meiner Beratungsleistung.</p>
           <div class="feat-list">
             <div class="feat"><div class="feat__dot" style="background:#1A5FA8;"></div><div><strong>Kartenansicht mit Clustering</strong><br><span>Alle Meldungen auf einen Blick – filtern nach Kategorie, Zeitraum und Kommune.</span></div></div>
             <div class="feat"><div class="feat__dot" style="background:#2D8C28;"></div><div><strong>PDF-Berichte für den Stadtrat</strong><br><span>Professionelle Auswertungen mit Karte, Statistiken und Einzelmeldungen – druckfertig.</span></div></div>
@@ -440,15 +759,15 @@
       <div class="produkt reveal">
         <div class="produkt__info">
           <h3><span class="gr">Radverkehrskonzept-Check</span> –<br><span class="bl">Bürgermeldungen und Konzept im Abgleich</span></h3>
-          <p>Viele Kommunen haben bereits ein Radverkehrskonzept – aber wie gut deckt es sich mit den tatsächlichen Bedürfnissen der Bürger? Wir gleichen die Ergebnisse einer Radwegemelder-Aktion systematisch mit den geplanten Maßnahmen Ihres bestehenden Konzepts ab.</p>
+          <p>Viele Kommunen haben bereits ein Radverkehrskonzept – aber wie gut deckt es sich mit den tatsächlichen Bedürfnissen der Bürger? Ich gleiche die Ergebnisse einer Radwegemelder-Aktion systematisch mit den geplanten Maßnahmen Ihres bestehenden Konzepts ab.</p>
           <div class="feat-list">
             <div class="feat"><div class="feat__dot" style="background:#2D8C28;"></div><div><strong>Match: Hohe Priorität</strong><br><span>Maßnahmen die sowohl im Konzept stehen als auch von Bürgern gemeldet wurden – diese sollten zuerst umgesetzt werden.</span></div></div>
             <div class="feat"><div class="feat__dot" style="background:#E07800;"></div><div><strong>Lücke: Konzept prüfen</strong><br><span>Bürgermeldungen ohne entsprechende Konzept-Maßnahme – möglicherweise fehlt etwas im Konzept.</span></div></div>
             <div class="feat"><div class="feat__dot" style="background:#7B8A9A;"></div><div><strong>Geringere Priorität</strong><br><span>Geplante Maßnahmen ohne Bürgermeldungen – sachlich wichtig, aber aktuell weniger drängend.</span></div></div>
           </div>
-          <p style="font-size:13px;color:var(--text-light);font-style:italic;margin-top:16px;">Den Konzept-Check führen wir im Rahmen eines Beratungsauftrags für Ihre Kommune durch.</p>
+          <p style="font-size:13px;color:var(--text-light);font-style:italic;margin-top:16px;">Den Konzept-Check führe ich im Rahmen eines Beratungsauftrags für Ihre Kommune durch.</p>
           <div class="produkt__btns">
-            <a href="mailto:fahr2rat@gmail.com" class="btn btn--sm" style="background:#1678A9;color:white;">✉ Anfrage senden</a>
+            <a href="mailto:fahr2rat@gmail.com" class="btn btn--sm" style="background:#0671B9;color:white;">✉ Anfrage senden</a>
           </div>
         </div>
         <div class="produkt__preview kc-preview">
@@ -476,7 +795,7 @@
       <div class="produkt-divider"></div>
 
       <!-- Schulweg-Detektive -->
-      <div class="produkt reveal">
+      <div class="produkt produkt--flip reveal">
         <div class="produkt__info">
           <div style="display:inline-block;background:#FF9800;color:white;font-size:14px;font-weight:700;letter-spacing:1px;padding:10px 18px;border-radius:8px;margin-bottom:14px;">🆓 umsonst · free · gratuit · gratis · 無料 · 免费 · مجاني 🎓</div>
           <h3><span class="bl">Schulweg-Detektive</span> –<br><span class="gr">Schulwegsicherheit selber machen</span></h3>
@@ -520,7 +839,7 @@
       <div class="s-label">Kostenlos testen</div>
       <h2 class="s-title">Planungswerkzeuge direkt im Browser ausprobieren</h2>
       <div style="max-width:700px;margin-bottom:48px;">
-        <p style="font-size:15px;color:#6B6B6B;line-height:1.7;margin-bottom:20px;">Sie arbeiten in einer Kommune und wollen wissen, was unsere Werkzeuge können? Testen Sie sie – ohne Anmeldung, ohne Installation, direkt im Browser.</p>
+        <p style="font-size:15px;color:#6B6B6B;line-height:1.7;margin-bottom:20px;">Sie arbeiten in einer Kommune und wollen wissen, was meine Werkzeuge können? Testen Sie sie – ohne Anmeldung, ohne Installation, direkt im Browser.</p>
         <div style="background:#fff;border-radius:12px;padding:22px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 12px rgba(0,0,0,0.04);">
           <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;">
             <div style="font-size:30px;">💶</div>
@@ -531,7 +850,7 @@
             </div>
           </div>
         </div>
-        <p style="font-size:12.5px;color:#9a9a9a;margin-top:12px;line-height:1.6;">Weitere Demos folgen: Zuständigkeiten Radverkehr · VwV-StVO-Maßnahmen · Vergabe-Assistent. Vollversionen mit allen Inhalten, Ergebnis-Vermerk und der kompletten Werkzeug-Suite als Jahreslizenz für Kommunen – <a href="#kontakt" style="color:#689246;font-weight:600;">jetzt anfragen</a>.</p>
+        <p style="font-size:12.5px;color:#9a9a9a;margin-top:12px;line-height:1.6;">Weitere Demos folgen: Zuständigkeiten Radverkehr · VwV-StVO-Maßnahmen · Vergabe-Assistent. Vollversionen mit allen Inhalten, Ergebnis-Vermerk und der kompletten Werkzeug-Suite als Jahreslizenz für Kommunen – <a href="#kontakt" style="color:#66A242;font-weight:600;">jetzt anfragen</a>.</p>
       </div>
       <div class="s-label">Für ADFC, Schulen & Bürgerinitiativen</div>
       <h2 class="s-title">Radwegemelder kostenlos nutzen</h2>
@@ -554,7 +873,7 @@
             <div style="font-size:13px;color:#6B6B6B;line-height:1.5;">Dokumentieren Sie Radverkehrsprobleme in Ihrem Ort und zeigen Sie der Politik, wo Handlungsbedarf besteht.</div>
           </div>
         </div>
-        <div style="background:linear-gradient(135deg,#F0F7EC,#E8F4FD);border-radius:12px;padding:20px;border-left:4px solid #689246;">
+        <div style="background:linear-gradient(135deg,#F0F7EC,#E8F4FD);border-radius:12px;padding:20px;border-left:4px solid #66A242;">
           <div style="font-size:14px;font-weight:700;color:#3D3D3D;margin-bottom:8px;">So funktioniert's:</div>
           <div style="font-size:13px;color:#6B6B6B;line-height:1.8;">
             1. Schreiben Sie mir eine kurze Nachricht mit dem Namen Ihrer Gruppe und Gemeinde.<br>
@@ -631,7 +950,7 @@
     function checkReveal() {
       reveals.forEach(function(el) {
         var top = el.getBoundingClientRect().top;
-        if (top < window.innerHeight - 60) el.style.opacity = '1';
+        if (top < window.innerHeight - 60) el.classList.add('visible');
       });
     }
     window.addEventListener('scroll', checkReveal);
