@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planungswerkzeuge testen – Radverkehr Saarland | 2Rat</title>
+<meta name="description" content="Kostenlos testen: Planungswerkzeuge für den Radverkehr im Saarland. Fördermittel-Finder für die Landesförderung nachhaltige Mobilität – ohne Anmeldung, direkt im Browser.">
+<link rel="canonical" href="https://www.2rat.org/demo/">
+<style>
+:root{
+  --blue:#1678A9;--blue-dark:#115d85;--blue-light:#e8f4fa;
+  --green:#659444;--green-dark:#4a7332;--green-light:#eef5e6;
+  --gray:#3E403F;--gray-light:#8a8a8a;--gray-border:#d9d9d9;
+  --bg:#f9fafb;--white:#ffffff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);color:var(--gray);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:26px 20px 40px}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding-bottom:16px;border-bottom:2px solid var(--blue);margin-bottom:26px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:44px;width:auto;display:block}
+.brand-text .name{font-size:17px;font-weight:700;color:var(--blue)}
+.brand-text .sub{font-size:12px;color:var(--gray-light)}
+.header-right{font-size:11.5px;color:var(--gray-light);text-align:right;line-height:1.5}
+h1{font-size:25px;font-weight:700;color:var(--blue);margin-bottom:8px;line-height:1.3}
+.lead{font-size:15px;margin-bottom:24px}
+.card{background:var(--white);border:1px solid var(--gray-border);border-radius:9px;
+  padding:20px 22px;margin-bottom:16px}
+.card h2{font-size:18px;font-weight:700;color:var(--green-dark);margin-bottom:4px}
+.card .meta{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--gray-light);margin-bottom:10px}
+.card p{font-size:14px;margin-bottom:14px}
+.split{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.split>div{flex:1 1 240px;background:var(--bg);border-radius:7px;padding:11px 13px}
+.split .t{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px}
+.split .yes .t{color:var(--green-dark)}
+.split .no .t{color:var(--gray-light)}
+.split ul{list-style:none;font-size:12.5px;line-height:1.7}
+.btn{display:inline-block;background:var(--blue);color:var(--white);text-decoration:none;
+  font-size:14.5px;font-weight:600;padding:11px 22px;border-radius:7px}
+.btn:hover{background:var(--blue-dark)}
+.btn-outline{background:transparent;color:var(--blue);border:1.5px solid var(--blue);margin-left:8px}
+.btn-outline:hover{background:var(--blue-light)}
+.btn:focus-visible,.footer a:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.soon{background:var(--blue-light);border:1px solid rgba(22,120,169,.25);border-radius:9px;
+  padding:15px 18px;margin-bottom:16px}
+.soon .t{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--blue-dark);margin-bottom:5px}
+.soon p{font-size:13.5px;margin:0}
+.footer{margin-top:30px;padding-top:15px;border-top:1px solid var(--gray-border);
+  font-size:11.5px;color:var(--gray-light);line-height:1.7}
+.footer a{color:var(--blue);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+@media(max-width:520px){h1{font-size:21px}.wrap{padding:18px 15px 30px}.header-right{text-align:left}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="brand">
+      <img src="../Logo_2Rat_clean.png" alt="2Rat">
+      <div class="brand-text">
+        <div class="name">2Rat &ndash; B&uuml;ro f&uuml;r Radverkehrsplanung</div>
+        <div class="sub">Armin Jung &middot; Radverkehrsplaner EIPOS</div>
+      </div>
+    </div>
+    <div class="header-right">Saarland<br>Testversionen</div>
+  </div>
+
+  <h1>Planungswerkzeuge testen</h1>
+  <p class="lead">
+    Browserbasierte Werkzeuge f&uuml;r die Radverkehrsplanung im Saarland &ndash; entwickelt f&uuml;r
+    Kommunen, Fahrradbeauftragte und Planungsb&uuml;ros. Hier k&ouml;nnen Sie kostenlos und ohne
+    Anmeldung einen Teil des Funktionsumfangs ausprobieren.
+  </p>
+
+  <div class="card">
+    <div class="meta">Testversion &middot; ohne Anmeldung</div>
+    <h2>F&ouml;rdermittel-Finder Radverkehr</h2>
+    <p>
+      Welcher F&ouml;rdergegenstand passt zu Ihrem Vorhaben, wie hoch ist der F&ouml;rdersatz, wer ist
+      antragsberechtigt und bis wann muss der Antrag gestellt sein? Der F&ouml;rdermittel-Finder f&uuml;hrt
+      Sie in drei Schritten durch die Landesf&ouml;rderung nachhaltige Mobilit&auml;t und erzeugt am Ende
+      einen Vermerk zum Kopieren.
+    </p>
+    <div class="split">
+      <div class="yes">
+        <div class="t">In der Testversion enthalten</div>
+        <ul>
+          <li>&check; Drei F&ouml;rdergegenst&auml;nde vollst&auml;ndig</li>
+          <li>&check; F&ouml;rders&auml;tze und Antragsberechtigung</li>
+          <li>&check; Antragsfrist und Praxis-Hinweise</li>
+        </ul>
+      </div>
+      <div class="no">
+        <div class="t">Nur in der Vollversion</div>
+        <ul>
+          <li>&middot; Alle 13 F&ouml;rdergegenst&auml;nde</li>
+          <li>&middot; Ergebnis-Vermerk exportieren</li>
+          <li>&middot; Laufende Pflege bei Richtlinien&auml;nderungen</li>
+        </ul>
+      </div>
+    </div>
+    <a class="btn" href="foerdermittel-finder.html">Testversion &ouml;ffnen</a>
+    <a class="btn btn-outline" href="mailto:fahr2rat@gmail.com?subject=Anfrage%20Vollversion%20F%C3%B6rdermittel-Finder">Vollversion anfragen</a>
+  </div>
+
+  <div class="soon">
+    <div class="t">Weitere Werkzeuge</div>
+    <p>
+      Zur vollst&auml;ndigen Werkzeugsammlung geh&ouml;ren au&szlig;erdem Zust&auml;ndigkeiten Radverkehr,
+      Projekt-Check, Vergabe-Assistent und eine Übersicht zur VwV-StVO 2025. Testversionen davon folgen &ndash;
+      bei Interesse gerne direkt anfragen.
+    </p>
+  </div>
+
+  <footer class="footer">
+    Die Werkzeuge dienen als Orientierungshilfe und ersetzen keine Rechts- oder Fachberatung im
+    Einzelfall. Ma&szlig;geblich sind die jeweils geltenden Richtlinien und Vorschriften.
+    <br>
+    <strong>2Rat &ndash; B&uuml;ro f&uuml;r Radverkehrsplanung</strong> &middot; Armin Jung &middot;
+    Radverkehrsplaner EIPOS &middot;
+    <a href="https://www.2rat.org">www.2rat.org</a> &middot;
+    <a href="mailto:fahr2rat@gmail.com">fahr2rat@gmail.com</a>
+  </footer>
+
+</div>
+</body>
+</html>
