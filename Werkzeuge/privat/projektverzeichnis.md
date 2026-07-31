@@ -5,9 +5,9 @@
 
 # 2Rat – Gesamt-Projektverzeichnis
 
-**Stand:** 30.07.2026
-**Anzahl Vorhaben (konsolidiert):** 36
-**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check)
+**Stand:** 31.07.2026
+**Anzahl Vorhaben (konsolidiert):** 37
+**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 2 ×)
 
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Claude liefert die komplette Datei neu → Armin committet. Fertig.
 
@@ -18,7 +18,7 @@
 | Wann | Was | Wo |
 |---|---|---|
 | ~~15.07.2026~~ **abgelaufen** | JGF FL1 – Skizzen-Frist verstrichen, Ausgang nachtragen (Skizze eingereicht?) | Förderung-Projekt |
-| **31.07.2026 – morgen!** | JGF FL2 – Antrags-Frist | Förderung-Projekt |
+| **31.07.2026 – HEUTE!** | JGF FL2 – Antrags-Frist | Förderung-Projekt |
 | **30.09.2026** | FRL-NMOB Jahres-Stichtag **+ AGFK-Kennenlern-Zugänge laufen ab (vorher Gespräch führen)** **+ RAD-Lab-Testrunde endet** | Förderung / Tool-Portal |
 | prüfen | RadPlan Pro: 19.07.-Deployment (JSON-Pipeline) erfolgt – ist die Login-bereinigte Version mit drin? | RadPlan-Projekt |
 | prüfen | Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den **Passwortmanager** übertragen, bevor die 30-Tage-Session abläuft | Tool-Portal / RadPlan |
@@ -189,6 +189,14 @@
 - **Dokumentation:** Rückmeldungen sind einzeln erfasst (Anmerkung, Bewertung, Umsetzung, Status) im Dokument „RAD-Lab_Rueckmeldungen" – liegt im Claude-Projekt „2Rat Werkzeuge / Tool-Portal", **nicht im Repo** (enthält Namen von Testpersonen). Antwort an die erste Testperson formuliert.
 - **Nächster Schritt:** Freigabe zum Zitieren der Rückmeldungen einholen (→ 2.11 Referenzprojekt); RAD-Lab-Code-Wert in Passwortmanager dokumentieren (Doku-Lücke); weiteres Feedback einsammeln bis 30.09.2026; danach Lizenz-Zeile entfernen; zweite Testrunde entscheiden
 
+### 2.14 Bügelplaner (Fahrradabstellanlagen)
+- **Kunde / Partner:** eigen (Werkzeug)
+- **Claude-Projekt:** eigene Werkstatt **„Bügelplaner"** (nicht Tool-Portal) – Meldungen laufen von dort ein
+- **Zweck:** Werkzeug rund um Fahrradabstellanlagen – Maßeingabe, Modus-Umschaltung und maßstäbliche SVG-Skizze mit Mindestmaß-Prüfung. *(Zweckbeschreibung im Verzeichnis noch zu schärfen.)*
+- **Status:** in Entwicklung · **31.07.2026:** Schreibweise durchgängig auf „2Rat" umgestellt (7 Stellen, inkl. SVG-Kopf und Modus-Umschaltung) – offener Punkt vom selben Tag erledigt · Skizze gegen leere Maßfelder abgesichert, Zahlenformat vereinheitlicht, Mindestmaß-Hinweis greift jetzt auch bei manueller Eingabe · **Browser-Durchlauf mit 12 Prüfpunkten bestanden, Konsole sauber**
+- **Fachliche Erweiterung (31.07.2026):** neuer Parameter **„Versatz bei Doppelbelegung" (0,30 m)** – Bügelabstand = 2 × Stellplatzbreite − Versatz, **Untergrenze 1,20 m**. Die ausgewiesenen Stellplatzzahlen liegen dadurch rund **ein Viertel über der Vorversion**. Ergänzend: Rad/Pkw-Vergleich auf einen Satz gekürzt, Formulierung beim Überdachungshinweis angepasst, Versatz in der Skizze dargestellt
+- **Nächster Schritt:** Ablage im Repo und Aufnahme ins Portal (`TOOLS`-Array) klären – Pfad und Deployment-Stand hier noch nicht erfasst · ⚠️ mit der Vorversion erzeugte Stellplatzzahlen sind nicht mehr vergleichbar – falls bereits Ergebnisse weitergegeben wurden, nachziehen
+
 ---
 
 # 3️⃣ QGIS-Plugins & Planungs-Werkzeuge
@@ -355,7 +363,8 @@
 | **2Rat Radwegemelder Webseite Dashboard** | 4.1 · 1.2 · Supabase | Produkt-Hauptprojekt |
 | **Schulweg-Detektive** | 4.3 | Kooperation Kirkel |
 | **Plugin-Entwicklung (ANALYSE)** | 3.1 · 3.3 Begründungsgenerator | Werkzeugentwicklung |
-| **2Rat Werkzeuge / Tool-Portal** | 2.1–2.10 · 3.4 · 1.5 AGFK | Tool-Vertrieb |
+| **2Rat Werkzeuge / Tool-Portal** | 2.1–2.13 · 3.4 · 1.5 AGFK | Tool-Vertrieb |
+| **Bügelplaner** | 2.14 Bügelplaner | Werkzeugentwicklung |
 | **2RAT Förderung Radverkehr** | Förder-Wissensbasis · JGF-Fristen · Zuarbeit zu 2.10 | Förderberatung |
 | **2rat.org Website** | 5.1 · 5.2 · 5.3 · 5.4 | Marketing |
 | **Mobilitätsstationen Wadgassen** | eigenes Kundenprojekt | Kundenprojekt |
@@ -430,7 +439,7 @@
 | **teils läuft** | 1 | 1.1 *(LP1 abgeschlossen ✓ · LP2 offen)* |
 | **abgeschlossen** | 4 | **1.2**, 2.8, 3.5, 7.3 |
 | **vorbereitet** | 3 | 1.4, 2.6 *(Demo-Konzept)*, 3.2 |
-| **in Entwicklung / im Aufbau** | 2 | 2.5, 7.1 |
+| **in Entwicklung / im Aufbau** | 3 | 2.5, **2.14**, 7.1 |
 | **Experiment / Prototyp** | 1 | 2.12 |
 | **ruht** | 1 | 1.3 |
 | **offen** | 1 | 7.2 |
@@ -466,4 +475,4 @@
 
 ---
 
-*2Rat – Büro für Radverkehrsplanung · Stand: 30.07.2026*
+*2Rat – Büro für Radverkehrsplanung · Stand: 31.07.2026*
