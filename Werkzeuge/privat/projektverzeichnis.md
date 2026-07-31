@@ -7,7 +7,7 @@
 
 **Stand:** 31.07.2026
 **Anzahl Vorhaben (konsolidiert):** 37
-**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 2 ×)
+**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 3 × – zuletzt Werkzeugdokumentation) · **Repo-Prüfung 31.07.2026** (Bügelplaner live)
 
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Claude liefert die komplette Datei neu → Armin committet. Fertig.
 
@@ -192,10 +192,13 @@
 ### 2.14 Bügelplaner (Fahrradabstellanlagen)
 - **Kunde / Partner:** eigen (Werkzeug)
 - **Claude-Projekt:** eigene Werkstatt **„Bügelplaner"** (nicht Tool-Portal) – Meldungen laufen von dort ein
-- **Zweck:** Werkzeug rund um Fahrradabstellanlagen – Maßeingabe, Modus-Umschaltung und maßstäbliche SVG-Skizze mit Mindestmaß-Prüfung. *(Zweckbeschreibung im Verzeichnis noch zu schärfen.)*
-- **Status:** in Entwicklung · **31.07.2026:** Schreibweise durchgängig auf „2Rat" umgestellt (7 Stellen, inkl. SVG-Kopf und Modus-Umschaltung) – offener Punkt vom selben Tag erledigt · Skizze gegen leere Maßfelder abgesichert, Zahlenformat vereinheitlicht, Mindestmaß-Hinweis greift jetzt auch bei manueller Eingabe · **Browser-Durchlauf mit 12 Prüfpunkten bestanden, Konsole sauber**
+- **Zweck:** Überschlagswerkzeug für die **Vorplanung von Fahrrad-Anlehnbügeln**: Wie viele Bügel und Stellplätze passen auf eine gegebene Fläche? Zielgruppe Kommunen, Vereine und Planungsbüros in der Phase vor der Fachplanung (Beschlussvorlage, Förderanfrage). Ausgabe: Stellplatz- und Bügelzahl, Reihen/Gänge, Rad-zu-Rad- und Bügelabstand, Fläche je Stellplatz, Kostenspanne sowie maßstäbliche Aufstellskizze (SVG/Druck) und Überdachungshinweis nach Abstelldauer.
+- **Fachliche Grundlage:** Bezugsmaß ist die **Stellplatzbreite Rad zu Rad** (nicht der Bügelabstand) – dadurch gegen **DIN 79008** und **ADFC TR 6102** prüfbar; Mindestwert 1,20 m für Doppeleinstellung nach dem **Leitfaden Nahmobilität Hessen**. Beide Ausrichtungen werden gerechnet und die günstigere empfohlen. **Grenzen:** rechteckige Flächen ohne Hindernisse, keine Lastenräder/Sonderräder nach DIN 79010, keine Bedarfsermittlung; Kostenwerte sind eigene Markteinschätzung 2026 (verzinkt, freistehend, ohne Überdachung/Erdarbeiten) und ersetzen keine Angebotseinholung.
+- **Technik:** eine einzelne HTML-Datei ohne externe Abhängigkeiten, läuft offline per Doppelklick ebenso wie auf einem Webserver; keine Übertragung oder Speicherung von Eingaben, keine Registrierung; umschaltbar zwischen 2Rat-Kennzeichnung und **neutraler Darstellung** (für Skizzen in Verwaltungsvorlagen)
+- **Status:** **live** ✓ – am 31.07.2026 nach `buegelplaner/index.html` deployed (Repo-Root, nicht `Werkzeuge/`), erreichbar unter **`2rat.org/buegelplaner/`**; deployte Fassung gegengeprüft (Versatz-Parameter enthalten, Schreibweise „2Rat" sauber) · **31.07.2026:** Schreibweise durchgängig auf „2Rat" umgestellt (7 Stellen, inkl. SVG-Kopf und Modus-Umschaltung) – offener Punkt vom selben Tag erledigt · Skizze gegen leere Maßfelder abgesichert, Zahlenformat vereinheitlicht, Mindestmaß-Hinweis greift jetzt auch bei manueller Eingabe · **Browser-Durchlauf mit 12 Prüfpunkten bestanden, Konsole sauber** · **Werkzeugdokumentation (DOCX, Stand Juli 2026) erstellt** – Zweck, Rechenmodell, Regelwerte, Ausgabe, Grenzen, Technik
 - **Fachliche Erweiterung (31.07.2026):** neuer Parameter **„Versatz bei Doppelbelegung" (0,30 m)** – Bügelabstand = 2 × Stellplatzbreite − Versatz, **Untergrenze 1,20 m**. Die ausgewiesenen Stellplatzzahlen liegen dadurch rund **ein Viertel über der Vorversion**. Ergänzend: Rad/Pkw-Vergleich auf einen Satz gekürzt, Formulierung beim Überdachungshinweis angepasst, Versatz in der Skizze dargestellt
-- **Nächster Schritt:** Ablage im Repo und Aufnahme ins Portal (`TOOLS`-Array) klären – Pfad und Deployment-Stand hier noch nicht erfasst · ⚠️ mit der Vorversion erzeugte Stellplatzzahlen sind nicht mehr vergleichbar – falls bereits Ergebnisse weitergegeben wurden, nachziehen
+- **Adressierung:** **frei und ohne Registrierung nutzbar**, kein Login, keine Lizenzzeile → **kein Portal-Tool**, sondern freier Zugang wie die Freemium-Demos. Liegt im Repo-Root, nicht unter `Werkzeuge/kunden/`.
+- **Nächster Schritt:** Verlinkung von der Startseite (Sektion „Testen") entscheiden; Werkzeugdokumentation als PDF neben das Werkzeug legen oder verlinken; `noindex`/`robots.txt` **nicht** setzen – das Werkzeug soll gefunden werden · ⚠️ mit der Vorversion erzeugte Stellplatzzahlen sind nicht mehr vergleichbar – falls bereits Ergebnisse weitergegeben wurden, nachziehen
 
 ---
 
@@ -386,6 +389,7 @@
 | Tool-Dateien (Vollversionen) | www.2rat.org/Werkzeuge/kunden/ *(6 Tools + Karten-Prototyp)* |
 | AGFK-Varianten (geplant) | www.2rat.org/Werkzeuge/agfk-sl/ *(noch leer)* |
 | Freemium-Demos (ohne Code) | www.2rat.org/demo/ |
+| Bügelplaner (frei, ohne Code) | www.2rat.org/buegelplaner/ |
 | **Kommandozentrale** | **www.2rat.org/cmd** |
 | Radwegemelder-Ergebnisse | www.2rat.org/cockpit.html |
 | Velomeld (Bürger-App) | 2rat.org/velomeld/#home |
@@ -435,11 +439,11 @@
 
 | Status | Anzahl | Vorhaben |
 |---|---|---|
-| **läuft / live / produktiv / stabil / aktiv** | 22 | 1.5, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.10, **2.11**, **2.13**, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1 |
+| **läuft / live / produktiv / stabil / aktiv** | 23 | 1.5, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.10, **2.11**, **2.13**, **2.14**, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1 |
 | **teils läuft** | 1 | 1.1 *(LP1 abgeschlossen ✓ · LP2 offen)* |
 | **abgeschlossen** | 4 | **1.2**, 2.8, 3.5, 7.3 |
 | **vorbereitet** | 3 | 1.4, 2.6 *(Demo-Konzept)*, 3.2 |
-| **in Entwicklung / im Aufbau** | 3 | 2.5, **2.14**, 7.1 |
+| **in Entwicklung / im Aufbau** | 2 | 2.5, 7.1 |
 | **Experiment / Prototyp** | 1 | 2.12 |
 | **ruht** | 1 | 1.3 |
 | **offen** | 1 | 7.2 |
