@@ -1,8 +1,13 @@
-Copyright (c) 2026 2RAT - Buero fuer Radverkehrsplanung
+Copyright (c) 2026 2Rat - Buero fuer Radverkehrsplanung
 Armin Jung, Radverkehrsplaner EIPOS
 Lebach, Saarland, Deutschland
 
 LIZENZ - SOURCE AVAILABLE / PROPRIETAER
+
+GELTUNGSBEREICH
+   Diese Lizenz gilt fuer den gesamten Inhalt dieses Repositorys, also
+   fuer die unter 2rat.org veroeffentlichte Webseite einschliesslich
+   aller dort bereitgestellten Werkzeuge und Anwendungen.
 
 1. EINSICHTNAHME
    Der Quellcode dieses Projekts ist oeffentlich einsehbar.
@@ -19,21 +24,45 @@ LIZENZ - SOURCE AVAILABLE / PROPRIETAER
 3. GESTATTET:
    - Einsichtnahme des Quellcodes zu Lern- und Informationszwecken
    - Melden von Fehlern via GitHub Issues
-   - Nutzung der App unter velomeld.2rat.org durch Buerger und Kommunen
+   - Bestimmungsgemaesse Nutzung der oeffentlich bereitgestellten
+     Anwendungen im Browser ueber 2rat.org, insbesondere:
+       * Radwegemelder / Velomeld unter velomeld.2rat.org
+         (durch Buerger und Kommunen)
+       * Buegelplaner unter 2rat.org/buegelplaner
+         (kostenfrei, ohne Registrierung)
+   - Nutzung der zugangsbeschraenkten Werkzeuge unter 2rat.org/Werkzeuge
+     im Umfang einer gueltigen Zugangslizenz
+
+   Die Erlaubnis zur Nutzung umfasst nicht das Recht, die Anwendungen
+   herunterzuladen, zu veraendern oder selbst bereitzustellen.
 
 4. KOMMUNALE NUTZUNG
    Kommunen koennen eine Nutzungslizenz im Rahmen einer
-   Zusammenarbeit mit 2RAT erwerben. Kontakt: fahr2rat@gmail.com
+   Zusammenarbeit mit 2Rat erwerben. Zugangslizenzen fuer das
+   Werkzeug-Portal werden je Organisation und befristet vergeben.
+   Kontakt: fahr2rat@gmail.com
 
 5. MARKENRECHT
-   Velomeld, Radwegemelder, 2RAT und zugehoerige Logos sind
-   geschuetzte Geschaeftsbezeichnungen.
+   Velomeld, Radwegemelder, Buegelplaner, 2Rat und zugehoerige Logos
+   sind geschuetzte Geschaeftsbezeichnungen.
 
-6. HAFTUNGSAUSSCHLUSS
+6. RECHTE DRITTER
+   Eingebundene Bestandteile Dritter - insbesondere Schriften,
+   Kartendaten und Bildmaterial - unterliegen den Lizenzbedingungen
+   ihrer jeweiligen Rechteinhaber. Diese bleiben von dieser Lizenz
+   unberuehrt und gehen ihr vor.
+
+7. KEINE FACHPLANUNG
+   Die bereitgestellten Planungswerkzeuge liefern Ueberschlagswerte
+   fuer die Vorplanung. Sie ersetzen keine Fachplanung und begruenden
+   kein Beratungs- oder Auftragsverhaeltnis. Verbindliche Ergebnisse
+   ergeben sich erst aus einer geprueften Planung.
+
+8. HAFTUNGSAUSSCHLUSS
    DIE SOFTWARE WIRD WIE BESEHEN BEREITGESTELLT, OHNE JEGLICHE
    GEWAEHRLEISTUNG.
 
-7. GELTENDES RECHT
+9. GELTENDES RECHT
    Es gilt deutsches Recht. Gerichtsstand ist Saarbruecken.
 
 Fuer Lizenzanfragen: fahr2rat@gmail.com
