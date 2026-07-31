@@ -137,17 +137,17 @@
       <h2>1 · Fläche eingeben</h2>
       <div class="row2">
         <div><label>Breite <span class="hint">(m)</span></label>
-          <input type="number" id="breite" value="4.5" step="0.1" min="0.5" oninput="rechne()"></div>
+          <input type="number" id="breite" value="" placeholder="z. B. 4,50" step="0.1" min="0.5" autocomplete="off" oninput="rechne()"></div>
         <div><label>Tiefe <span class="hint">(m)</span></label>
-          <input type="number" id="tiefe" value="5.0" step="0.1" min="0.5" oninput="rechne()"></div>
+          <input type="number" id="tiefe" value="" placeholder="z. B. 5,00" step="0.1" min="0.5" autocomplete="off" oninput="rechne()"></div>
       </div>
 
       <div class="row2">
         <div><label>Abstand Rad zu Rad <span class="hint">(m)</span></label>
-          <input type="number" id="spb-main" value="0.75" step="0.05" min="0.75"
+          <input type="number" id="spb-main" value="0.75" step="0.05" min="0.75" autocomplete="off"
                  oninput="setSpb(this.value)" onchange="setSpb(this.value,true)"></div>
         <div><label>Gangbreite <span class="hint">(m)</span></label>
-          <input type="number" id="gang-main" value="1.80" step="0.05" min="1.60"
+          <input type="number" id="gang-main" value="1.80" step="0.05" min="1.60" autocomplete="off"
                  oninput="setGang(this.value)" onchange="setGang(this.value,true)"></div>
       </div>
       <div class="hint" style="margin-top:4px">Stellplatzbreite je Fahrrad, Mindestmaß 0,75 m. Bei beidseitiger Belegung stehen die Räder gegenläufig — der Bügelabstand ist deshalb kleiner als zwei Stellplatzbreiten, mindestens aber 1,20 m. Gang mindestens 1,60 m.</div>
@@ -219,6 +219,7 @@
       <div class="btnbar">
         <button class="btn btn-primary" onclick="downloadSVG()">Skizze speichern (SVG)</button>
         <button class="btn btn-sec" onclick="window.print()">Drucken / PDF</button>
+        <button class="btn btn-sec" onclick="resetAlles()">Zurücksetzen</button>
       </div>
     </div>
   </div>
@@ -265,12 +266,42 @@ const REF = {
 
 let state = { besch:'doppel', dichte:'standard', nutzung:'lang', wahl:null };
 
+/* Ausgangszustand sichern, damit sich das Werkzeug bei jedem Aufruf
+   sauber zurücksetzt — Browser stellen Formularwerte sonst wieder her. */
+const START = {
+  regeln: Object.fromEntries(Object.entries(REGELN).map(([k,r])=>[k,r.val])),
+  state:  Object.assign({},state),
+  breite: '',
+  tiefe:  ''
+};
+
+function segAktiv(id,v){
+  const seg=document.getElementById(id); if(!seg) return;
+  seg.querySelectorAll('button').forEach(b=>b.classList.toggle('active', b.dataset.v===v));
+}
+
+function resetAlles(){
+  for(const k in START.regeln) REGELN[k].val = START.regeln[k];
+  Object.assign(state, START.state);
+  spbUnterschritten = false; gangUnterschritten = false;
+  const setz=(id,v)=>{const e=document.getElementById(id); if(e) e.value=v;};
+  setz('breite',START.breite); setz('tiefe',START.tiefe);
+  setz('spb-main',REGELN.stellplatzbreite.val);
+  setz('gang-main',REGELN.gangbreite.val);
+  renderRules();
+  segAktiv('seg-besch',state.besch);
+  segAktiv('seg-dichte',state.dichte);
+  segAktiv('seg-nutzung',state.nutzung);
+  const d=document.querySelector('details.adv'); if(d) d.open=false;
+  rechne();
+}
+
 function renderRules(){
   const b=document.getElementById('rulebox'); b.innerHTML='';
   for(const k in REGELN){const r=REGELN[k];
     const d=document.createElement('div'); d.className='rl';
     d.innerHTML=`<span>${r.label}<br><span class="hint">${r.hint}</span></span>
-      <input type="number" id="rl-${k}" step="0.05"${r.min!==undefined?` min="${r.min}"`:''} value="${r.val}"
+      <input type="number" id="rl-${k}" step="0.05" autocomplete="off"${r.min!==undefined?` min="${r.min}"`:''} value="${r.val}"
         oninput="setRegel('${k}',this.value)" onchange="setRegel('${k}',this.value,true)">`;
     b.appendChild(d);
   }
@@ -364,6 +395,9 @@ function calc(ori){
 }
 
 function rechne(){
+  const B0=parseFloat(document.getElementById('breite').value)||0;
+  const T0=parseFloat(document.getElementById('tiefe').value)||0;
+  if(!(B0>0) || !(T0>0)){ leerzustand(); return; }
   const q=calc('quer'), l=calc('laengs');
   document.getElementById('vn-quer').textContent=q.stell;
   document.getElementById('vn-laengs').textContent=l.stell;
@@ -421,6 +455,22 @@ function rechne(){
 
   zeichne(r);
 }
+/* Noch keine Fläche eingegeben — Ergebnisbereich neutral halten. */
+function leerzustand(){
+  document.getElementById('r-stell').textContent='–';
+  document.getElementById('r-empf').textContent='';
+  document.getElementById('vn-quer').textContent='–';
+  document.getElementById('vn-laengs').textContent='–';
+  document.getElementById('v-quer').classList.remove('best');
+  document.getElementById('v-laengs').classList.remove('best');
+  document.getElementById('tag-quer').innerHTML='';
+  document.getElementById('tag-laengs').innerHTML='';
+  document.getElementById('specs').innerHTML='';
+  const notes=document.getElementById('notes'); notes.innerHTML='';
+  addNote(notes,'info','Breite und Tiefe der Fläche eingeben — das Werkzeug schlägt dann die günstigere Aufstellung vor.');
+  zeichne({B:0,T:0});
+}
+
 function fmt(n){return (isFinite(n)?n:0).toFixed(2).replace('.',',');}
 function addNote(parent,cls,html){const d=document.createElement('div');d.className='note '+cls;d.innerHTML=html;parent.appendChild(d);}
 
@@ -526,8 +576,9 @@ function setMode(m){
   rechne();
 }
 
-renderRules();
-rechne();
+resetAlles();
+window.addEventListener('load', resetAlles);
+window.addEventListener('pageshow', e => { if(e.persisted) resetAlles(); });
 </script>
 </body>
 </html>
