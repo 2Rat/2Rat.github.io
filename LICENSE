@@ -10,7 +10,6 @@ GELTUNGSBEREICH
    für die unter 2rat.org veröffentlichte Webseite einschließlich aller
    dort bereitgestellten Werkzeuge und Anwendungen, insbesondere des
    Bügelplaners und des Werkzeug-Portals.
-
    Der Radwegemelder / Velomeld liegt in einem eigenen Repository und
    unterliegt der dort hinterlegten Lizenz.
 
@@ -20,12 +19,17 @@ GELTUNGSBEREICH
    oder Weiterverbreitung dar.
 
 2. NICHT GESTATTET ohne schriftliche Genehmigung:
-   - Kommerzielle Nutzung jeder Art
-   - Verwertung des Quellcodes für eigene Projekte, gleich auf welchem
-     Weg er beschafft wurde. Ein über die Funktionen der Hosting-
-     Plattform angelegter Fork darf insbesondere nicht genutzt werden,
-     um daraus eigene Anwendungen weiterzuentwickeln, zu
-     veröffentlichen oder eigene Instanzen zu betreiben.
+   Die folgenden Beschränkungen beziehen sich auf den Quellcode und die
+   Software als solche. Die bestimmungsgemäße Nutzung der unter Punkt 3
+   genannten, öffentlich bereitgestellten Anwendungen im Browser bleibt
+   davon unberührt und ist auch im beruflichen Umfeld zulässig.
+
+   - Verwertung des Quellcodes für eigene Projekte oder für eine
+     gewerbliche Weiterverwendung, gleich auf welchem Weg er beschafft
+     wurde. Ein über die Funktionen der Hosting-Plattform angelegter
+     Fork darf insbesondere nicht genutzt werden, um daraus eigene
+     Anwendungen weiterzuentwickeln, zu veröffentlichen oder eigene
+     Instanzen zu betreiben.
    - Modifikation und Weiterverbreitung
    - Hosting eigener Instanzen dieser Software
    - Nutzung des Quellcodes als Vorlage für ähnliche Produkte
@@ -36,7 +40,7 @@ GELTUNGSBEREICH
    - Bestimmungsgemäße Nutzung der öffentlich bereitgestellten
      Anwendungen im Browser über 2rat.org, insbesondere:
        * Bügelplaner unter 2rat.org/buegelplaner
-         (kostenfrei, ohne Registrierung)
+         (kostenfrei, ohne Registrierung, auch zu beruflichen Zwecken)
    - Nutzung der zugangsbeschränkten Werkzeuge unter 2rat.org/Werkzeuge
      im Umfang einer gültigen Zugangslizenz
    - Der Radwegemelder / Velomeld unter
@@ -53,20 +57,24 @@ GELTUNGSBEREICH
    Werkzeug-Portal werden je Organisation und befristet vergeben.
    Kontakt: fahr2rat@gmail.com
 
-5. MARKENRECHT
-   Velomeld, Radwegemelder, Bügelplaner, 2Rat und zugehörige Logos
-   sind geschützte Geschäftsbezeichnungen.
+5. KENNZEICHEN
+   2Rat ist die Geschäftsbezeichnung des Betreibers; Velomeld und
+   Radwegemelder werden als Bezeichnungen der gleichnamigen Anwendung
+   geführt, Bügelplaner als Bezeichnung des Planungswerkzeugs.
+   Logos, Wort-Bild-Marken und Gestaltung sind urheberrechtlich
+   geschützt und dürfen nicht übernommen werden.
 
 6. RECHTE DRITTER
    Eingebundene Bestandteile Dritter unterliegen den Lizenzbedingungen
    ihrer jeweiligen Rechteinhaber. Diese bleiben von dieser Lizenz
    unberührt und gehen ihr vor. Das betrifft insbesondere:
 
-   - Schriften: Outfit und DM Sans stehen unter der SIL Open Font
-     License 1.1. Werden die Schriftdateien mit ausgeliefert, liegen
-     Lizenztext und Urhebervermerk im Ordner fonts/ bei.
+   - Schriften: Outfit, DM Sans und Source Sans 3 stehen unter der
+     SIL Open Font License 1.1. Lizenztext und Urhebervermerke liegen
+     im Ordner fonts/ bei. Source Sans 3 führt den Reserved Font Name
+     "Source"; "Source" ist eine Marke von Adobe.
    - Kartendaten: Kartendarstellungen beruhen auf Daten von
-     OpenStreetMap, © OpenStreetMap-Mitwirkende, veröffentlicht unter
+     OpenStreetMap, (c) OpenStreetMap-Mitwirkende, veröffentlicht unter
      der Open Database License (ODbL). Die Namensnennung erfolgt in
      der jeweiligen Anwendung.
    - Bildmaterial: unterliegt den Bedingungen der jeweiligen
