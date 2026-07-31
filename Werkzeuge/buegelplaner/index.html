@@ -126,7 +126,7 @@
           <input type="number" id="gang-main" value="1.80" step="0.05" min="1.60"
                  oninput="setGang(this.value)" onchange="setGang(this.value,true)"></div>
       </div>
-      <div class="hint" style="margin-top:4px">Stellplatzbreite je Fahrrad, Mindestmaß 0,75 m. Der Bügelabstand ergibt sich daraus: bei beidseitiger Belegung das Doppelte. Gang mindestens 1,60 m.</div>
+      <div class="hint" style="margin-top:4px">Stellplatzbreite je Fahrrad, Mindestmaß 0,75 m. Bei beidseitiger Belegung stehen die Räder gegenläufig — der Bügelabstand ist deshalb kleiner als zwei Stellplatzbreiten, mindestens aber 1,20 m. Gang mindestens 1,60 m.</div>
 
       <label>Räder pro Bügel</label>
       <div class="seg" id="seg-besch">
@@ -210,12 +210,13 @@
 const REGELN = {
   stellplatzbreite:{label:"Abstand Rad zu Rad",  val:0.75, min:0.75, hint:"Stellplatzbreite je Fahrrad, Mindestmaß 0,75 m"},
   gangbreite:      {label:"Gangbreite",          val:1.80, min:1.60, hint:"zwischen zwei Reihen, min. 1,60 / empf. 1,80 m"},
+  versatz:         {label:"Versatz bei Doppelbelegung", val:0.30, min:0.00, hint:"Überlappung der gegenläufig eingestellten Räder"},
   radlaenge:       {label:"Radlänge",            val:1.90, min:1.60, hint:"Bemessungsrad 1,90–2,00 m"},
   wandabstand:     {label:"Abstand zu Wand/Zaun",val:0.80, hint:"hinten zur festen Kante"},
   randabstand:     {label:"Seitlicher Rand",     val:0.30, hint:"links/rechts zur Begrenzung"}
 };
 /* Harte Untergrenzen — gelten auch im Dicht-Modus */
-const MIN_SPB = 0.75, MIN_GANG = 1.60;
+const MIN_SPB = 0.75, MIN_GANG = 1.60, MIN_PITCH_DOPPEL = 1.20;
 /* Merker: Nutzer hat einen Wert unter dem Mindestmaß eingegeben */
 let spbUnterschritten = false, gangUnterschritten = false;
 /* Hinweise je Nutzung — Fallgruppen nach ADFC TR 6102 und FGSV */
@@ -223,7 +224,7 @@ const NUTZUNG = {
   kurz:  {label:"kurze Abstelldauer",
           hinweis:"Kurze Abstelldauer: eine Überdachung ist nicht zwingend. Entscheidend ist die Nähe zum Eingang — für Einzelhandel gelten rund 10 bis 20 m Fußweg als akzeptiert."},
   lang:  {label:"längere Abstelldauer",
-          hinweis:"Längere Abstelldauer: Überdachung empfohlen. Für Arbeitsstätten sowie Schulen und Hochschulen wird Witterungsschutz regelmäßig vorgesehen."},
+          hinweis:"Längere Abstelldauer: Überdachung empfohlen — das gilt insbesondere für Arbeitsstätten sowie Schulen und Hochschulen."},
   dauer: {label:"dauerhaftes Abstellen",
           hinweis:"Dauerhaftes Abstellen: Überdachung und diebstahlhemmende Ausführung vorsehen — Fallgruppen Wohngebäude und Bike+Ride. Nur hier sind bei sehr beengten Flächen auch engere Bügelabstände vertretbar."}
 };
@@ -299,7 +300,10 @@ function calc(ori){
   const dicht=state.dichte==='dicht';
 
   const spb   = Math.max(MIN_SPB,  R.stellplatzbreite.val);
-  const pitch = doppel ? 2*spb : spb;
+  // Bei beidseitiger Belegung stehen die Räder gegenläufig, die Lenker greifen
+  // ineinander. Der Bügelabstand ist deshalb kleiner als zwei Stellplatzbreiten.
+  const versatz = Math.max(0, R.versatz.val);
+  const pitch = doppel ? Math.max(MIN_PITCH_DOPPEL, 2*spb - versatz) : spb;
   const gang  = Math.max(MIN_GANG, dicht ? Math.min(R.gangbreite.val,1.60) : R.gangbreite.val);
   const randW = dicht ? Math.min(R.randabstand.val,0.15) : R.randabstand.val;
   const wandW = dicht ? Math.min(R.wandabstand.val,0.30) : R.wandabstand.val;
@@ -325,7 +329,8 @@ function calc(ori){
 
   const buegel=proReihe*reihen, stell=buegel*(doppel?2:1);
   return {ori,buegel,reihen,proReihe,stell,B,T,doppel,
-          spb,pitch,gang,modul,randW,wandW,saum,
+          spb,pitch,gang,modul,randW,wandW,saum,versatz,
+          pitchAngehoben: doppel && (2*spb - versatz) < MIN_PITCH_DOPPEL - 1e-9,
           spbAngehoben:  spb  > R.stellplatzbreite.val + 1e-9,
           gangAngehoben: gang > R.gangbreite.val + 1e-9};
 }
@@ -362,7 +367,7 @@ function rechne(){
     <tr><td>Reihen</td><td>${r.reihen}${r.reihen>1?' · Gang '+fmt(r.gang)+' m':' · kein Gang nötig'}</td></tr>
     <tr><td>Bügel</td><td>${r.buegel}${r.reihen>1?' ('+r.reihen+' × '+r.proReihe+')':''}</td></tr>
     <tr><td>Abstand Rad zu Rad</td><td>${fmt(r.spb)} m</td></tr>
-    <tr><td>Bügelabstand (rechnerisch)</td><td>${fmt(r.pitch)} m</td></tr>
+    <tr><td>Bügelabstand (rechnerisch)</td><td>${fmt(r.pitch)} m${r.doppel?' · Versatz '+fmt(r.versatz)+' m':''}</td></tr>
     <tr><td>Stellplätze</td><td>${r.stell}</td></tr>
     <tr><td>Fläche je Stellplatz</td><td>${proStell>0?fmt(proStell)+' m²':'–'}</td></tr>
     <tr><td>Materialkosten Bügel*</td><td>${matMin.toLocaleString('de')}–${matMax.toLocaleString('de')} €</td></tr>
@@ -372,6 +377,8 @@ function rechne(){
   const notes=document.getElementById('notes'); notes.innerHTML='';
   if(r.spbAngehoben || spbUnterschritten)
     addNote(notes,'warn',`Der Abstand Rad zu Rad wurde auf das Mindestmaß von <b>${fmt(MIN_SPB)} m</b> angehoben. Enger lassen sich die Räder nicht mehr störungsfrei ein- und ausparken.`);
+  if(r.pitchAngehoben)
+    addNote(notes,'warn',`Der Bügelabstand wurde auf <b>${fmt(MIN_PITCH_DOPPEL)} m</b> angehoben — darunter lassen sich zwei Räder auch gegenläufig nicht mehr sauber einstellen.`);
   if(r.gangAngehoben || gangUnterschritten)
     addNote(notes,'warn',`Die Gangbreite wurde auf <b>${fmt(MIN_GANG)} m</b> angehoben — das ist der Mindestwert für die Bewegungsfläche bei Queraufstellung.`);
   addNote(notes,'info',`<b>Überdachung:</b> ${NUTZUNG[state.nutzung].hinweis}`);
@@ -379,7 +386,7 @@ function rechne(){
     addNote(notes,'warn','Mit diesen Maßen passt keine vollständige Reihe — Fläche, Radlänge oder Gangbreite prüfen.');
   } else {
     const raeder=Math.round(REF.pkwErschl/proStell);
-    addNote(notes,'info',`🚲 vs 🚗 — Ein Pkw-Stellplatz braucht mit Erschließung rund 23 m². Auf dieser Fläche (${fmt(flaeche)} m²) wären das etwa <b>${fmt(flaeche/REF.pkwErschl)} Pkw-Plätze</b> — als Radabstellanlage entstehen hier <b>${r.stell} Stellplätze</b>, also rund <b>${raeder} Fahrräder je Pkw-Platz</b>.`);
+    addNote(notes,'info',`🚲 vs 🚗 — Auf der Fläche eines Pkw-Stellplatzes stehen hier rund <b>${raeder} Fahrräder</b>.`);
     if(aktiv==='laengs' && q.stell>l.stell)
       addNote(notes,'warn',`Tipp: vertikal aufgestellt passen ${q.stell} statt ${l.stell} Plätze auf dieselbe Fläche.`);
   }
@@ -432,10 +439,11 @@ function zeichne(r){
         if(grob){
           p.push(`<text x="${cx}" y="${oy+fh/2}" font-size="10" fill="${ak2}" text-anchor="middle">${r.proReihe} Bügel</text>`);
         } else {
+          const vs=r.doppel?Math.min(r.versatz*sc*0.5,7):0;
           for(let j=0;j<r.proReihe;j++){
             const cy=oy+(r.wandW+j*r.pitch)*sc;
-            p.push(`<line x1="${cx-bq}" y1="${cy}" x2="${cx-rl}" y2="${cy}" stroke="#888" stroke-width="1.6"/>`);
-            if(r.doppel) p.push(`<line x1="${cx+bq}" y1="${cy}" x2="${cx+rl}" y2="${cy}" stroke="#888" stroke-width="1.6"/>`);
+            p.push(`<line x1="${cx-bq}" y1="${cy-vs}" x2="${cx-rl}" y2="${cy-vs}" stroke="#888" stroke-width="1.6"/>`);
+            if(r.doppel) p.push(`<line x1="${cx+bq}" y1="${cy+vs}" x2="${cx+rl}" y2="${cy+vs}" stroke="#888" stroke-width="1.6"/>`);
             p.push(`<ellipse cx="${cx}" cy="${cy}" rx="${bq}" ry="${bd}" fill="none" stroke="${ak2}" stroke-width="2.6"/>`);
           }
         }
@@ -449,10 +457,11 @@ function zeichne(r){
         if(grob){
           p.push(`<text x="${ox+fw/2}" y="${cy}" font-size="10" fill="${ak2}" text-anchor="middle">${r.proReihe} Bügel</text>`);
         } else {
+          const vs=r.doppel?Math.min(r.versatz*sc*0.5,7):0;
           for(let j=0;j<r.proReihe;j++){
             const cx=ox+(r.randW+j*r.pitch)*sc;
-            p.push(`<line x1="${cx}" y1="${cy-bq}" x2="${cx}" y2="${cy-rl}" stroke="#888" stroke-width="1.6"/>`);
-            if(r.doppel) p.push(`<line x1="${cx}" y1="${cy+bq}" x2="${cx}" y2="${cy+rl}" stroke="#888" stroke-width="1.6"/>`);
+            p.push(`<line x1="${cx-vs}" y1="${cy-bq}" x2="${cx-vs}" y2="${cy-rl}" stroke="#888" stroke-width="1.6"/>`);
+            if(r.doppel) p.push(`<line x1="${cx+vs}" y1="${cy+bq}" x2="${cx+vs}" y2="${cy+rl}" stroke="#888" stroke-width="1.6"/>`);
             p.push(`<ellipse cx="${cx}" cy="${cy}" rx="${bd}" ry="${bq}" fill="none" stroke="${ak2}" stroke-width="2.6"/>`);
           }
         }
