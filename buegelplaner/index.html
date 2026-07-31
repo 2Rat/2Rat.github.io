@@ -206,6 +206,7 @@
         </div>
       </div>
       <table class="specs" id="specs"></table>
+      <div class="hint" id="kostenfuss" style="margin-top:8px;line-height:1.5"></div>
       <div id="notes"></div>
     </div>
 
@@ -435,6 +436,11 @@ function rechne(){
     <tr><td>Materialkosten Bügel*</td><td>${matMin.toLocaleString('de')}–${matMax.toLocaleString('de')} €</td></tr>
     <tr><td>Vollkosten inkl. Montage*</td><td>${vMin.toLocaleString('de')}–${vMax.toLocaleString('de')} €</td></tr>`;
 
+  document.getElementById('kostenfuss').innerHTML=
+    '* Richtwerte für eine überschlägige Kostenschätzung, eigene Markteinschätzung Stand 2026: '
+    + 'verzinkte Anlehnbügel, freistehend auf befestigter Fläche, ohne Überdachung und ohne Erdarbeiten. '
+    + 'Sie ersetzen keine Angebotseinholung — für Ausschreibungen aktuelle Herstellerpreise abfragen.';
+
   // Hinweise + Auto-Vergleich
   const notes=document.getElementById('notes'); notes.innerHTML='';
   if(r.spbAngehoben || spbUnterschritten)
@@ -466,6 +472,7 @@ function leerzustand(){
   document.getElementById('tag-quer').innerHTML='';
   document.getElementById('tag-laengs').innerHTML='';
   document.getElementById('specs').innerHTML='';
+  document.getElementById('kostenfuss').innerHTML='';
   const notes=document.getElementById('notes'); notes.innerHTML='';
   addNote(notes,'info','Breite und Tiefe der Fläche eingeben — das Werkzeug schlägt dann die günstigere Aufstellung vor.');
   zeichne({B:0,T:0});
