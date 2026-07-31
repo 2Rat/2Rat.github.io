@@ -1,68 +1,88 @@
-Copyright (c) 2026 2Rat - Buero fuer Radverkehrsplanung
+Copyright (c) 2026 2Rat – Büro für Radverkehrsplanung
 Armin Jung, Radverkehrsplaner EIPOS
 Lebach, Saarland, Deutschland
 
-LIZENZ - SOURCE AVAILABLE / PROPRIETAER
+LIZENZ – SOURCE AVAILABLE / PROPRIETÄR
+Stand: Juli 2026
 
 GELTUNGSBEREICH
-   Diese Lizenz gilt fuer den gesamten Inhalt dieses Repositorys, also
-   fuer die unter 2rat.org veroeffentlichte Webseite einschliesslich
-   aller dort bereitgestellten Werkzeuge und Anwendungen.
+   Diese Lizenz gilt für den gesamten Inhalt dieses Repositorys, also
+   für die unter 2rat.org veröffentlichte Webseite einschließlich aller
+   dort bereitgestellten Werkzeuge und Anwendungen, insbesondere des
+   Bügelplaners und des Werkzeug-Portals.
+
+   Der Radwegemelder / Velomeld liegt in einem eigenen Repository und
+   unterliegt der dort hinterlegten Lizenz.
 
 1. EINSICHTNAHME
-   Der Quellcode dieses Projekts ist oeffentlich einsehbar.
-   Dies stellt KEINE Freigabe zur Nutzung, Vervielfaeltigung
+   Der Quellcode dieses Projekts ist öffentlich einsehbar.
+   Dies stellt KEINE Freigabe zur Nutzung, Vervielfältigung
    oder Weiterverbreitung dar.
 
 2. NICHT GESTATTET ohne schriftliche Genehmigung:
    - Kommerzielle Nutzung jeder Art
-   - Kopieren, Forken oder Klonen zum Zweck eigener Projekte
+   - Verwertung des Quellcodes für eigene Projekte, gleich auf welchem
+     Weg er beschafft wurde. Ein über die Funktionen der Hosting-
+     Plattform angelegter Fork darf insbesondere nicht genutzt werden,
+     um daraus eigene Anwendungen weiterzuentwickeln, zu
+     veröffentlichen oder eigene Instanzen zu betreiben.
    - Modifikation und Weiterverbreitung
    - Hosting eigener Instanzen dieser Software
-   - Nutzung des Quellcodes als Vorlage fuer aehnliche Produkte
+   - Nutzung des Quellcodes als Vorlage für ähnliche Produkte
 
 3. GESTATTET:
    - Einsichtnahme des Quellcodes zu Lern- und Informationszwecken
    - Melden von Fehlern via GitHub Issues
-   - Bestimmungsgemaesse Nutzung der oeffentlich bereitgestellten
-     Anwendungen im Browser ueber 2rat.org, insbesondere:
-       * Radwegemelder / Velomeld unter velomeld.2rat.org
-         (durch Buerger und Kommunen)
-       * Buegelplaner unter 2rat.org/buegelplaner
+   - Bestimmungsgemäße Nutzung der öffentlich bereitgestellten
+     Anwendungen im Browser über 2rat.org, insbesondere:
+       * Bügelplaner unter 2rat.org/buegelplaner
          (kostenfrei, ohne Registrierung)
-   - Nutzung der zugangsbeschraenkten Werkzeuge unter 2rat.org/Werkzeuge
-     im Umfang einer gueltigen Zugangslizenz
+   - Nutzung der zugangsbeschränkten Werkzeuge unter 2rat.org/Werkzeuge
+     im Umfang einer gültigen Zugangslizenz
+   - Der Radwegemelder / Velomeld unter
+     https://2rat.github.io/velomeld/ steht Bürgerinnen, Bürgern und
+     Kommunen bestimmungsgemäß zur Verfügung; maßgeblich ist die
+     Lizenz des dortigen Repositorys.
 
    Die Erlaubnis zur Nutzung umfasst nicht das Recht, die Anwendungen
-   herunterzuladen, zu veraendern oder selbst bereitzustellen.
+   herunterzuladen, zu verändern oder selbst bereitzustellen.
 
 4. KOMMUNALE NUTZUNG
-   Kommunen koennen eine Nutzungslizenz im Rahmen einer
-   Zusammenarbeit mit 2Rat erwerben. Zugangslizenzen fuer das
+   Kommunen können eine Nutzungslizenz im Rahmen einer
+   Zusammenarbeit mit 2Rat erwerben. Zugangslizenzen für das
    Werkzeug-Portal werden je Organisation und befristet vergeben.
    Kontakt: fahr2rat@gmail.com
 
 5. MARKENRECHT
-   Velomeld, Radwegemelder, Buegelplaner, 2Rat und zugehoerige Logos
-   sind geschuetzte Geschaeftsbezeichnungen.
+   Velomeld, Radwegemelder, Bügelplaner, 2Rat und zugehörige Logos
+   sind geschützte Geschäftsbezeichnungen.
 
 6. RECHTE DRITTER
-   Eingebundene Bestandteile Dritter - insbesondere Schriften,
-   Kartendaten und Bildmaterial - unterliegen den Lizenzbedingungen
+   Eingebundene Bestandteile Dritter unterliegen den Lizenzbedingungen
    ihrer jeweiligen Rechteinhaber. Diese bleiben von dieser Lizenz
-   unberuehrt und gehen ihr vor.
+   unberührt und gehen ihr vor. Das betrifft insbesondere:
+
+   - Schriften: Outfit und DM Sans stehen unter der SIL Open Font
+     License 1.1. Werden die Schriftdateien mit ausgeliefert, liegen
+     Lizenztext und Urhebervermerk im Ordner fonts/ bei.
+   - Kartendaten: Kartendarstellungen beruhen auf Daten von
+     OpenStreetMap, © OpenStreetMap-Mitwirkende, veröffentlicht unter
+     der Open Database License (ODbL). Die Namensnennung erfolgt in
+     der jeweiligen Anwendung.
+   - Bildmaterial: unterliegt den Bedingungen der jeweiligen
+     Rechteinhaber.
 
 7. KEINE FACHPLANUNG
-   Die bereitgestellten Planungswerkzeuge liefern Ueberschlagswerte
-   fuer die Vorplanung. Sie ersetzen keine Fachplanung und begruenden
-   kein Beratungs- oder Auftragsverhaeltnis. Verbindliche Ergebnisse
-   ergeben sich erst aus einer geprueften Planung.
+   Die bereitgestellten Planungswerkzeuge liefern Überschlagswerte
+   für die Vorplanung. Sie ersetzen keine Fachplanung und begründen
+   kein Beratungs- oder Auftragsverhältnis. Verbindliche Ergebnisse
+   ergeben sich erst aus einer geprüften Planung.
 
 8. HAFTUNGSAUSSCHLUSS
    DIE SOFTWARE WIRD WIE BESEHEN BEREITGESTELLT, OHNE JEGLICHE
-   GEWAEHRLEISTUNG.
+   GEWÄHRLEISTUNG.
 
 9. GELTENDES RECHT
-   Es gilt deutsches Recht. Gerichtsstand ist Saarbruecken.
+   Es gilt deutsches Recht. Gerichtsstand ist Saarbrücken.
 
-Fuer Lizenzanfragen: fahr2rat@gmail.com
+Für Lizenzanfragen: fahr2rat@gmail.com
