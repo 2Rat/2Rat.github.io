@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bügelplaner – Fahrradabstellanlagen | 2RAT</title>
+<title>Bügelplaner – Fahrradabstellanlagen | 2Rat</title>
 <meta name="description" content="Planungswerkzeug für Fahrrad-Anlehnbügel: Fläche eingeben, beste Aufstellung und Stellplatzzahl automatisch berechnen, Skizze erzeugen.">
 <style>
   :root{
@@ -96,12 +96,12 @@
 <body>
 <header>
   <div class="brand">
-    <span class="logo"><span class="b">2</span><span class="r">RAT</span></span>
+    <span class="logo"><span class="b">2</span><span class="r">Rat</span></span>
     <span class="sub" id="brandsub">Büro für Radverkehrsplanung</span>
     <span class="tool">· Bügelplaner</span>
   </div>
   <div class="modeswitch">Modus:
-    <button id="m2rat" class="active" onclick="setMode('2rat')">2RAT</button>
+    <button id="m2rat" class="active" onclick="setMode('2rat')">2Rat</button>
     <button id="mneutral" onclick="setMode('neutral')">Neutral</button>
   </div>
 </header>
@@ -118,17 +118,27 @@
           <input type="number" id="tiefe" value="5.0" step="0.1" min="0.5" oninput="rechne()"></div>
       </div>
 
+      <div class="row2">
+        <div><label>Abstand Rad zu Rad <span class="hint">(m)</span></label>
+          <input type="number" id="spb-main" value="0.75" step="0.05" min="0.75"
+                 oninput="setSpb(this.value)" onchange="setSpb(this.value,true)"></div>
+        <div><label>Gangbreite <span class="hint">(m)</span></label>
+          <input type="number" id="gang-main" value="1.80" step="0.05" min="1.60"
+                 oninput="setGang(this.value)" onchange="setGang(this.value,true)"></div>
+      </div>
+      <div class="hint" style="margin-top:4px">Stellplatzbreite je Fahrrad, Mindestmaß 0,75 m. Der Bügelabstand ergibt sich daraus: bei beidseitiger Belegung das Doppelte. Gang mindestens 1,60 m.</div>
+
       <label>Räder pro Bügel</label>
       <div class="seg" id="seg-besch">
         <button class="active" data-v="doppel" onclick="setSeg('besch',this)">2 (beidseitig)</button>
         <button data-v="einzel" onclick="setSeg('besch',this)">1 (einseitig)</button>
       </div>
 
-      <label>Platz zum Rangieren</label>
-      <div class="seg" id="seg-gasse">
-        <button data-v="voll" onclick="setSeg('gasse',this)">Eng</button>
-        <button class="active" data-v="normal" onclick="setSeg('gasse',this)">Normal</button>
-        <button data-v="komfort" onclick="setSeg('gasse',this)">Komfort</button>
+      <label>Nutzung / Abstelldauer</label>
+      <div class="seg" id="seg-nutzung">
+        <button data-v="kurz" onclick="setSeg('nutzung',this)">Kurz</button>
+        <button class="active" data-v="lang" onclick="setSeg('nutzung',this)">Lang</button>
+        <button data-v="dauer" onclick="setSeg('nutzung',this)">Dauerhaft</button>
       </div>
 
       <label>Packdichte</label>
@@ -141,7 +151,8 @@
         <summary>Für Profis: Maße anpassen</summary>
         <div id="rulebox"></div>
         <div class="note info" style="margin-top:6px;font-size:12px">
-          Werte nach DIN 79008 / ADFC, Bohle (EIPOS) und Landes-Planungstool. Richtwerte — vor Ort prüfen.
+          Werte nach DIN 79008 / ADFC TR 6102 und Leitfaden Nahmobilität Hessen. Richtwerte — vor Ort prüfen.
+          Rad zu Rad mindestens 0,75 m, Gang mindestens 1,60 m; beide Grenzen gelten auch bei Packdichte „Dicht".
         </div>
       </details>
     </div>
@@ -189,42 +200,84 @@
   </div>
 </div>
 
-<footer id="foot">2RAT – Büro für Radverkehrsplanung · www.2rat.org · Bügelplaner. Alle Angaben ohne Gewähr; Maße vor Ort prüfen.</footer>
+<footer id="foot">2Rat – Büro für Radverkehrsplanung · www.2rat.org · Bügelplaner. Alle Angaben ohne Gewähr; Maße vor Ort prüfen.</footer>
 
 <script>
 /* ====== REGELBASIS (editierbar) — alle Maße in Metern ======
    Quellen: DIN 79008/ADFC TR 6102 (Rad-Abstand 0,70/0,50 m),
-   Bohle/EIPOS (Bügelabstand beidseitig 1,1–1,5 m; Flächen/Kosten),
+   Leitfaden Nahmobilität Hessen (Doppeleinstellung mind. 1,20 m),
    ADFC (Wandabstand 0,80 m), Landes-Planungstool Radparken. */
 const REGELN = {
-  achsabstand:   {label:"Bügel-Achsabstand",   val:0.70, hint:"Abstand der Stellplätze nebeneinander"},
-  buegeltiefe:   {label:"Bügeltiefe",          val:0.70, hint:"Bauraum eines Bügels in Längsrichtung"},
-  radlaenge:     {label:"Radlänge",            val:1.00, hint:"Überstand eines angelehnten Rades"},
-  wandabstand:   {label:"Abstand zu Wand/Zaun",val:0.80, hint:"hinten/seitlich zur festen Kante"},
-  randabstand:   {label:"Seitlicher Rand",     val:0.30, hint:"links/rechts zur Begrenzung"},
-  reihenabstand: {label:"Lücke zw. Bügeln",    val:0.15, hint:"zwischen hintereinander stehenden Bügeln"}
+  stellplatzbreite:{label:"Abstand Rad zu Rad",  val:0.75, min:0.75, hint:"Stellplatzbreite je Fahrrad, Mindestmaß 0,75 m"},
+  gangbreite:      {label:"Gangbreite",          val:1.80, min:1.60, hint:"zwischen zwei Reihen, min. 1,60 / empf. 1,80 m"},
+  radlaenge:       {label:"Radlänge",            val:1.90, min:1.60, hint:"Bemessungsrad 1,90–2,00 m"},
+  wandabstand:     {label:"Abstand zu Wand/Zaun",val:0.80, hint:"hinten zur festen Kante"},
+  randabstand:     {label:"Seitlicher Rand",     val:0.30, hint:"links/rechts zur Begrenzung"}
 };
-/* Rangiergasse je Komfortstufe */
-const GASSE = { voll:0.0, normal:1.8, komfort:2.3 };
+/* Harte Untergrenzen — gelten auch im Dicht-Modus */
+const MIN_SPB = 0.75, MIN_GANG = 1.60;
+/* Merker: Nutzer hat einen Wert unter dem Mindestmaß eingegeben */
+let spbUnterschritten = false, gangUnterschritten = false;
+/* Hinweise je Nutzung — Fallgruppen nach ADFC TR 6102 und FGSV */
+const NUTZUNG = {
+  kurz:  {label:"kurze Abstelldauer",
+          hinweis:"Kurze Abstelldauer: eine Überdachung ist nicht zwingend. Entscheidend ist die Nähe zum Eingang — für Einzelhandel gelten rund 10 bis 20 m Fußweg als akzeptiert."},
+  lang:  {label:"längere Abstelldauer",
+          hinweis:"Längere Abstelldauer: Überdachung empfohlen. Für Arbeitsstätten sowie Schulen und Hochschulen wird Witterungsschutz regelmäßig vorgesehen."},
+  dauer: {label:"dauerhaftes Abstellen",
+          hinweis:"Dauerhaftes Abstellen: Überdachung und diebstahlhemmende Ausführung vorsehen — Fallgruppen Wohngebäude und Bike+Ride. Nur hier sind bei sehr beengten Flächen auch engere Bügelabstände vertretbar."}
+};
 /* Referenz für Auto-Vergleich & Kosten */
 const REF = {
-  pkwBox:12.5, pkwErschl:23.0,
+  pkwErschl:23.0,           // m² je Pkw-Stellplatz einschließlich Erschließung
   kostMaterial:[125,310],   // €/Bügel, Marktpreis 2025/26
   kostVoll:[210,305]        // €/Stellplatz inkl. Montage (indexiert)
 };
 
-let state = { besch:'doppel', gasse:'normal', dichte:'standard', wahl:null };
+let state = { besch:'doppel', dichte:'standard', nutzung:'lang', wahl:null };
 
 function renderRules(){
   const b=document.getElementById('rulebox'); b.innerHTML='';
   for(const k in REGELN){const r=REGELN[k];
     const d=document.createElement('div'); d.className='rl';
     d.innerHTML=`<span>${r.label}<br><span class="hint">${r.hint}</span></span>
-      <input type="number" step="0.05" value="${r.val}"
-        oninput="REGELN['${k}'].val=parseFloat(this.value)||0;rechne()">`;
+      <input type="number" id="rl-${k}" step="0.05"${r.min!==undefined?` min="${r.min}"`:''} value="${r.val}"
+        oninput="setRegel('${k}',this.value)" onchange="setRegel('${k}',this.value,true)">`;
     b.appendChild(d);
   }
 }
+/* Ein Regelwert wurde geändert. final=true (onchange/Blur) normalisiert das Feld,
+   damit man beim Tippen nicht gegen den Clamp anläuft. */
+const HAUPTFELD = { stellplatzbreite:'spb-main', gangbreite:'gang-main' };
+
+function setRegel(k,v,final){
+  const x=parseFloat(v);
+  REGELN[k].val = isFinite(x) ? x : 0;
+  const min=REGELN[k].min;
+  const drunter = (min!==undefined && isFinite(x) && x<min);
+  if(k==='stellplatzbreite') spbUnterschritten=drunter;
+  if(k==='gangbreite')       gangUnterschritten=drunter;
+  if(final){
+    if(min!==undefined && !(REGELN[k].val>=min)) REGELN[k].val=min;
+    syncFeld(k);
+  }
+  spiegelHaupt(k,final);
+  rechne();
+}
+function setSpb(v,final){ setRegel('stellplatzbreite',v,final); }
+function setGang(v,final){ setRegel('gangbreite',v,final); }
+
+function syncFeld(k){
+  const f=document.getElementById('rl-'+k);
+  if(f) f.value=REGELN[k].val;
+}
+function spiegelHaupt(k,final){
+  const id=HAUPTFELD[k]; if(!id) return;
+  const m=document.getElementById(id);
+  if(m && final) m.value=REGELN[k].val;
+  syncFeld(k);
+}
+
 function setSeg(group,btn){
   const seg=btn.parentElement;
   seg.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
@@ -235,43 +288,46 @@ function setSeg(group,btn){
 }
 function waehle(v){ state.wahl=v; rechne(); }
 
-/* Kernberechnung für eine Ausrichtung */
+/* Kernberechnung für eine Ausrichtung.
+   Bezugsmaß ist die Stellplatzbreite (Rad zu Rad). Der Bügelabstand folgt
+   daraus: beidseitig das Doppelte, einseitig identisch. Reihen werden
+   automatisch nebeneinander gelegt, getrennt durch Gänge. */
 function calc(ori){
   const B=parseFloat(document.getElementById('breite').value)||0;
   const T=parseFloat(document.getElementById('tiefe').value)||0;
   const R=REGELN, doppel=state.besch==='doppel';
-  const gasse=GASSE[state.gasse];
-  // Dichte Packung: DIN-Mindestwerte für Achs-, Rand- und Wandabstand
-  const dicht = state.dichte==='dicht';
-  const achsW = dicht ? Math.min(R.achsabstand.val,0.60) : R.achsabstand.val;
+  const dicht=state.dichte==='dicht';
+
+  const spb   = Math.max(MIN_SPB,  R.stellplatzbreite.val);
+  const pitch = doppel ? 2*spb : spb;
+  const gang  = Math.max(MIN_GANG, dicht ? Math.min(R.gangbreite.val,1.60) : R.gangbreite.val);
   const randW = dicht ? Math.min(R.randabstand.val,0.15) : R.randabstand.val;
   const wandW = dicht ? Math.min(R.wandabstand.val,0.30) : R.wandabstand.val;
+  const saum  = dicht ? 0.10 : 0.20;
+  const modul = (doppel ? 2*R.radlaenge.val : R.radlaenge.val);
 
-  let buegel=0, reihen=0, proReihe=0, achs=achsW;
-
-  if(ori==='quer'){
-    // Bügel waagerecht, gestapelt über die TIEFE. Räder ragen links/rechts (in die Breite).
-    // hinten Wandabstand, vorne kleiner Saum (Anfahrt frei)
-    const saum = dicht ? 0.10 : 0.20;
-    const tiefeFrei=T-wandW-saum;
-    proReihe=Math.max(0,Math.floor(tiefeFrei/achsW)+1);
-    // Breitencheck: Bügel + Räder links/rechts müssen in die Breite passen
-    const breiteBedarf=(doppel?2*R.radlaenge.val:R.radlaenge.val)+0.6+2*randW;
-    reihen=(B>=breiteBedarf)?1:0;
-    buegel=proReihe*reihen;
-  } else {
-    // Bügel längs: Räder zeigen zur Seite. Bügel hintereinander in einer Spur.
-    const tiefeFrei=T-R.wandabstand.val-gasse;
-    const proBuegel=R.buegeltiefe.val+R.reihenabstand.val;
-    proReihe=1;
-    reihen=Math.max(0,Math.floor((tiefeFrei+R.reihenabstand.val)/proBuegel));
-    // Breitencheck: Spur braucht beidseitig Radlänge
-    const breiteBedarf=(doppel?2*R.radlaenge.val:R.radlaenge.val)+0.4;
-    if(B<breiteBedarf) reihen=0;
-    buegel=reihen;
+  function reihenIn(mass,vorne,hinten){
+    let n=0;
+    while(((n+1)*modul + n*gang + vorne + hinten) <= mass + 1e-9) n++;
+    return n;
   }
-  const stell=buegel*(doppel?2:1);
-  return {ori,buegel,reihen,proReihe,achs,stell,B,T,gasse,doppel,randW};
+  let proReihe=0, reihen=0, laengsFrei=0;
+  if(ori==='quer'){
+    laengsFrei = T - wandW - saum;
+    proReihe   = laengsFrei>=0 ? Math.floor(laengsFrei/pitch)+1 : 0;
+    reihen     = reihenIn(B, randW, randW);
+  } else {
+    laengsFrei = B - 2*randW;
+    proReihe   = laengsFrei>=0 ? Math.floor(laengsFrei/pitch)+1 : 0;
+    reihen     = reihenIn(T, wandW, saum);
+  }
+  if(proReihe<1 || reihen<1){ proReihe=0; reihen=0; }
+
+  const buegel=proReihe*reihen, stell=buegel*(doppel?2:1);
+  return {ori,buegel,reihen,proReihe,stell,B,T,doppel,
+          spb,pitch,gang,modul,randW,wandW,saum,
+          spbAngehoben:  spb  > R.stellplatzbreite.val + 1e-9,
+          gangAngehoben: gang > R.gangbreite.val + 1e-9};
 }
 
 function rechne(){
@@ -302,8 +358,11 @@ function rechne(){
   const flaeche=r.B*r.T, proStell=r.stell>0?flaeche/r.stell:0;
   document.getElementById('specs').innerHTML=`
     <tr><td>Fläche</td><td>${fmt(r.B)} × ${fmt(r.T)} m</td></tr>
-    <tr><td>Gewählte Aufstellung</td><td>${aktiv==='quer'?'vertikal':'horizontal'}${r.reihen>1?', '+r.reihen+'-reihig':''}</td></tr>
-    <tr><td>Bügel</td><td>${r.buegel}${r.reihen>1?' ('+r.reihen+'×'+r.proReihe+')':''}</td></tr>
+    <tr><td>Gewählte Aufstellung</td><td>${aktiv==='quer'?'vertikal':'horizontal'}</td></tr>
+    <tr><td>Reihen</td><td>${r.reihen}${r.reihen>1?' · Gang '+fmt(r.gang)+' m':' · kein Gang nötig'}</td></tr>
+    <tr><td>Bügel</td><td>${r.buegel}${r.reihen>1?' ('+r.reihen+' × '+r.proReihe+')':''}</td></tr>
+    <tr><td>Abstand Rad zu Rad</td><td>${fmt(r.spb)} m</td></tr>
+    <tr><td>Bügelabstand (rechnerisch)</td><td>${fmt(r.pitch)} m</td></tr>
     <tr><td>Stellplätze</td><td>${r.stell}</td></tr>
     <tr><td>Fläche je Stellplatz</td><td>${proStell>0?fmt(proStell)+' m²':'–'}</td></tr>
     <tr><td>Materialkosten Bügel*</td><td>${matMin.toLocaleString('de')}–${matMax.toLocaleString('de')} €</td></tr>
@@ -311,68 +370,96 @@ function rechne(){
 
   // Hinweise + Auto-Vergleich
   const notes=document.getElementById('notes'); notes.innerHTML='';
+  if(r.spbAngehoben || spbUnterschritten)
+    addNote(notes,'warn',`Der Abstand Rad zu Rad wurde auf das Mindestmaß von <b>${fmt(MIN_SPB)} m</b> angehoben. Enger lassen sich die Räder nicht mehr störungsfrei ein- und ausparken.`);
+  if(r.gangAngehoben || gangUnterschritten)
+    addNote(notes,'warn',`Die Gangbreite wurde auf <b>${fmt(MIN_GANG)} m</b> angehoben — das ist der Mindestwert für die Bewegungsfläche bei Queraufstellung.`);
+  addNote(notes,'info',`<b>Überdachung:</b> ${NUTZUNG[state.nutzung].hinweis}`);
   if(r.stell===0){
-    addNote(notes,'warn','Mit diesen Maßen passt kein Bügel — Fläche oder Rangier-Einstellung prüfen.');
+    addNote(notes,'warn','Mit diesen Maßen passt keine vollständige Reihe — Fläche, Radlänge oder Gangbreite prüfen.');
   } else {
-    const raeder=Math.round(REF.pkwBox/proStell);
-    addNote(notes,'info',`🚲 vs 🚗 — Auf der Fläche eines Pkw-Stellplatzes (12,5 m²) parken hier rund <b>${raeder} Fahrräder</b>. Die ganze Fläche (${fmt(flaeche)} m²) entspricht etwa <b>${fmt(flaeche/REF.pkwErschl)} Pkw-Plätzen</b> — bietet aber <b>${r.stell} Radplätze</b>.`);
+    const raeder=Math.round(REF.pkwErschl/proStell);
+    addNote(notes,'info',`🚲 vs 🚗 — Ein Pkw-Stellplatz braucht mit Erschließung rund 23 m². Auf dieser Fläche (${fmt(flaeche)} m²) wären das etwa <b>${fmt(flaeche/REF.pkwErschl)} Pkw-Plätze</b> — als Radabstellanlage entstehen hier <b>${r.stell} Stellplätze</b>, also rund <b>${raeder} Fahrräder je Pkw-Platz</b>.`);
     if(aktiv==='laengs' && q.stell>l.stell)
-      addNote(notes,'warn',`Tipp: Quer aufgestellt passen ${q.stell} statt ${l.stell} Plätze auf dieselbe Fläche.`);
+      addNote(notes,'warn',`Tipp: vertikal aufgestellt passen ${q.stell} statt ${l.stell} Plätze auf dieselbe Fläche.`);
   }
 
   zeichne(r);
 }
-function fmt(n){return n.toFixed(n%1===0?0:2).replace('.',',');}
+function fmt(n){return (isFinite(n)?n:0).toFixed(2).replace('.',',');}
 function addNote(parent,cls,html){const d=document.createElement('div');d.className='note '+cls;d.innerHTML=html;parent.appendChild(d);}
 
-/* ====== SKIZZE mit Beschriftung ====== */
+/* ====== SKIZZE mit Reihen und Gängen ====== */
 function zeichne(r){
   const W=470,H=470,pad=58;
-  const s=Math.min((W-2*pad)/r.B,(H-2*pad)/r.T);
-  const fw=r.B*s,fh=r.T*s,ox=(W-fw)/2,oy=64;
+  if(!(r.B>0) || !(r.T>0)){
+    const leer=`<svg class="skizze" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" font-family="Arial,sans-serif">
+      <rect width="${W}" height="${H}" fill="#fff"/>
+      <text x="${W/2}" y="${H/2}" font-size="13" fill="#888" text-anchor="middle">Bitte Breite und Tiefe eingeben</text></svg>`;
+    document.getElementById('skizzebox').innerHTML=leer;
+    window._lastSVG=leer.replace('class="skizze" ','');
+    return;
+  }
+  const sc=Math.min((W-2*pad)/r.B,(H-2*pad)/r.T);
+  const fw=r.B*sc, fh=r.T*sc, ox=(W-fw)/2, oy=64;
   const ak=getComputedStyle(document.body).getPropertyValue('--akzent').trim();
   const ak2=getComputedStyle(document.body).getPropertyValue('--akzent2').trim();
   const R=REGELN; let p=[];
 
-  // Titelzeile
-  const titel=(document.body.classList.contains('neutral')?'':'2RAT · ')+'Aufstellskizze';
+  const titel=(document.body.classList.contains('neutral')?'':'2Rat · ')+'Aufstellskizze';
   p.push(`<text x="20" y="24" font-size="13" font-weight="bold" fill="${ak}">${titel}</text>`);
   p.push(`<text x="20" y="42" font-size="11" fill="#666">${r.buegel} Bügel · ${r.stell} Stellplätze · Aufstellung ${r.ori==='quer'?'vertikal':'horizontal'}</text>`);
 
-  // Flächenrahmen + Maße
   p.push(`<rect x="${ox}" y="${oy}" width="${fw}" height="${fh}" rx="5" fill="none" stroke="${ak}" stroke-width="1.3" stroke-dasharray="6 5"/>`);
   p.push(`<text x="${ox+fw/2}" y="${oy+fh+30}" font-size="12" fill="#444" text-anchor="middle">Breite ${fmt(r.B)} m</text>`);
   p.push(`<text x="${ox+fw+26}" y="${oy+fh/2}" font-size="12" fill="#444" text-anchor="middle" transform="rotate(90 ${ox+fw+26} ${oy+fh/2})">Tiefe ${fmt(r.T)} m</text>`);
-  // Rückkante
   p.push(`<line x1="${ox+5}" y1="${oy}" x2="${ox+fw-5}" y2="${oy}" stroke="#555" stroke-width="2"/>`);
   p.push(`<text x="${ox+fw/2}" y="${oy-7}" font-size="10" fill="#777" text-anchor="middle">Wand / Zaun (Rückkante)</text>`);
 
-  const bw=0.38*s, rl=R.radlaenge.val*s*0.55;
+  if(r.buegel>0){
+    const rl=R.radlaenge.val*sc, halb=r.modul*sc/2;
+    const grob = r.buegel>300;                 // sehr große Anlagen nur schematisch
+    const bq=Math.min(0.40*sc,26), bd=Math.max(Math.min(r.pitch*sc*0.26,8),2);
 
-  if(r.buegel>0 && r.ori==='quer'){
-    // Bügel als waagerechte Ellipsen, gleichmäßig über die Tiefe verteilt; Räder ragen links/rechts.
-    const cx=ox+fw/2;
-    const topY=oy+18, botY=oy+fh-26;     // nutzbarer Bereich im Rahmen
-    const n=r.proReihe;
-    const ery=Math.min(((botY-topY)/n)*0.38, 16);
-    const erx=Math.min(fw*0.30, 75);
-    for(let i=0;i<n;i++){
-      const cy = topY + (botY-topY) * (n===1?0.5:(i/(n-1)));
-      p.push(`<ellipse cx="${cx}" cy="${cy}" rx="${erx}" ry="${ery}" fill="none" stroke="${ak2}" stroke-width="4"/>`);
-      p.push(`<line x1="${cx-erx}" y1="${cy}" x2="${cx-erx-rl}" y2="${cy}" stroke="#888" stroke-width="2"/>`);
-      if(r.doppel) p.push(`<line x1="${cx+erx}" y1="${cy}" x2="${cx+erx+rl}" y2="${cy}" stroke="#888" stroke-width="2"/>`);
-    }
-    p.push(`<text x="${ox+fw/2}" y="${oy+fh+44}" font-size="11" fill="${ak2}" text-anchor="middle">${n} Bügel gestapelt · ${r.doppel?'2 Räder je Bügel':'1 Rad je Bügel'}</text>`);
-  } else if(r.buegel>0 && r.ori==='laengs'){
-    const bt=R.buegeltiefe.val*s, gap=R.reihenabstand.val*s;
-    const cx=ox+fw/2, startY=oy+R.wandabstand.val*s+8;
     for(let i=0;i<r.reihen;i++){
-      const y=startY+i*(bt+gap);
-      p.push(`<rect x="${cx-bw/2}" y="${y}" width="${bw}" height="${bt}" rx="3" fill="${ak2}" opacity="0.85"/>`);
-      p.push(`<line x1="${cx-bw/2}" y1="${y+bt*0.5}" x2="${cx-bw/2-rl}" y2="${y+bt*0.5}" stroke="#888" stroke-width="2"/>`);
-      if(r.doppel) p.push(`<line x1="${cx+bw/2}" y1="${y+bt*0.5}" x2="${cx+bw/2+rl}" y2="${y+bt*0.5}" stroke="#888" stroke-width="2"/>`);
+      if(r.ori==='quer'){
+        const cx=ox+(r.randW+r.modul/2+i*(r.modul+r.gang))*sc;
+        p.push(`<rect x="${cx-halb}" y="${oy+2}" width="${2*halb}" height="${fh-4}" rx="4" fill="${ak2}" opacity="0.10"/>`);
+        if(i>0){
+          const gx=cx-halb-r.gang*sc;
+          p.push(`<rect x="${gx}" y="${oy+2}" width="${r.gang*sc}" height="${fh-4}" rx="4" fill="#999" opacity="0.13"/>`);
+        }
+        if(grob){
+          p.push(`<text x="${cx}" y="${oy+fh/2}" font-size="10" fill="${ak2}" text-anchor="middle">${r.proReihe} Bügel</text>`);
+        } else {
+          for(let j=0;j<r.proReihe;j++){
+            const cy=oy+(r.wandW+j*r.pitch)*sc;
+            p.push(`<line x1="${cx-bq}" y1="${cy}" x2="${cx-rl}" y2="${cy}" stroke="#888" stroke-width="1.6"/>`);
+            if(r.doppel) p.push(`<line x1="${cx+bq}" y1="${cy}" x2="${cx+rl}" y2="${cy}" stroke="#888" stroke-width="1.6"/>`);
+            p.push(`<ellipse cx="${cx}" cy="${cy}" rx="${bq}" ry="${bd}" fill="none" stroke="${ak2}" stroke-width="2.6"/>`);
+          }
+        }
+      } else {
+        const cy=oy+(r.wandW+r.modul/2+i*(r.modul+r.gang))*sc;
+        p.push(`<rect x="${ox+2}" y="${cy-halb}" width="${fw-4}" height="${2*halb}" rx="4" fill="${ak2}" opacity="0.10"/>`);
+        if(i>0){
+          const gy=cy-halb-r.gang*sc;
+          p.push(`<rect x="${ox+2}" y="${gy}" width="${fw-4}" height="${r.gang*sc}" rx="4" fill="#999" opacity="0.13"/>`);
+        }
+        if(grob){
+          p.push(`<text x="${ox+fw/2}" y="${cy}" font-size="10" fill="${ak2}" text-anchor="middle">${r.proReihe} Bügel</text>`);
+        } else {
+          for(let j=0;j<r.proReihe;j++){
+            const cx=ox+(r.randW+j*r.pitch)*sc;
+            p.push(`<line x1="${cx}" y1="${cy-bq}" x2="${cx}" y2="${cy-rl}" stroke="#888" stroke-width="1.6"/>`);
+            if(r.doppel) p.push(`<line x1="${cx}" y1="${cy+bq}" x2="${cx}" y2="${cy+rl}" stroke="#888" stroke-width="1.6"/>`);
+            p.push(`<ellipse cx="${cx}" cy="${cy}" rx="${bd}" ry="${bq}" fill="none" stroke="${ak2}" stroke-width="2.6"/>`);
+          }
+        }
+      }
     }
-    p.push(`<text x="${ox+fw/2}" y="${oy+fh-8}" font-size="11" fill="${ak}" text-anchor="middle">${r.reihen} Bügel hintereinander, Räder zur Seite</text>`);
+    const gtxt = r.reihen>1 ? ` · Gang ${fmt(r.gang)} m` : '';
+    p.push(`<text x="${ox+fw/2}" y="${oy+fh+46}" font-size="11" fill="${ak2}" text-anchor="middle">${r.reihen} Reihe${r.reihen>1?'n':''} à ${r.proReihe} Bügel${gtxt}</text>`);
   }
 
   const svg=`<svg class="skizze" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" font-family="Arial,sans-serif">
@@ -396,8 +483,8 @@ function setMode(m){
   } else {
     document.body.classList.remove('neutral');b2.classList.add('active');bn.classList.remove('active');
     document.getElementById('brandsub').textContent='Büro für Radverkehrsplanung';
-    document.querySelector('.brand .logo').innerHTML='<span class="b">2</span><span class="r">RAT</span>';
-    document.getElementById('foot').textContent='2RAT – Büro für Radverkehrsplanung · www.2rat.org · Bügelplaner. Alle Angaben ohne Gewähr; Maße vor Ort prüfen.';
+    document.querySelector('.brand .logo').innerHTML='<span class="b">2</span><span class="r">Rat</span>';
+    document.getElementById('foot').textContent='2Rat – Büro für Radverkehrsplanung · www.2rat.org · Bügelplaner. Alle Angaben ohne Gewähr; Maße vor Ort prüfen.';
   }
   rechne();
 }
