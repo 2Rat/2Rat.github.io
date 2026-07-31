@@ -51,42 +51,20 @@
   }
   </script>
 
-  <!-- ============================================================
-       DSGVO-HINWEIS ZU DEN SCHRIFTEN
-       Die folgende Zeile lädt Outfit + DM Sans von Googles Servern.
-       Dabei wird die IP-Adresse jedes Besuchers an Google übertragen
-       (vgl. LG München I, Urteil vom 20.01.2022, Az. 3 O 17493/20).
-
-       So wird daraus eine lokale Einbindung:
-       1. Schriften herunterladen (z.B. google-webfonts-helper),
-          Format woff2, Zeichensatz latin + latin-ext
-       2. Diese Dateien ins Repo-Wurzelverzeichnis in einen Ordner
-          "fonts/" legen:
-             outfit-400.woff2, outfit-500.woff2, outfit-600.woff2,
-             outfit-700.woff2, outfit-800.woff2
-             dmsans-400.woff2, dmsans-600.woff2, dmsans-700.woff2,
-             dmsans-800.woff2
-       3. Die <link>-Zeile unten löschen und stattdessen den
-          @font-face-Block am Anfang des <style>-Bereichs aktivieren
-          (dort als Kommentar hinterlegt).
-
-       Bis dahin bleibt die Google-Einbindung bestehen, damit das
-       Layout nicht bricht.
-       ============================================================ -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Schriften werden lokal aus fonts/ geladen. Keine Verbindung zu
+       Google oder anderen Dritten. Lizenztext: fonts/OFL.txt -->
   <style>
-    /* --- LOKALE SCHRIFTEN: aktivieren, sobald die woff2-Dateien im Ordner
-           fonts/ liegen. Dann die Google-Fonts-<link>-Zeile im Head löschen.
-    @font-face { font-family:'Outfit'; src:url('fonts/outfit-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
-    @font-face { font-family:'Outfit'; src:url('fonts/outfit-500.woff2') format('woff2'); font-weight:500; font-display:swap; }
-    @font-face { font-family:'Outfit'; src:url('fonts/outfit-600.woff2') format('woff2'); font-weight:600; font-display:swap; }
-    @font-face { font-family:'Outfit'; src:url('fonts/outfit-700.woff2') format('woff2'); font-weight:700; font-display:swap; }
-    @font-face { font-family:'Outfit'; src:url('fonts/outfit-800.woff2') format('woff2'); font-weight:800; font-display:swap; }
-    @font-face { font-family:'DM Sans'; src:url('fonts/dmsans-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
-    @font-face { font-family:'DM Sans'; src:url('fonts/dmsans-600.woff2') format('woff2'); font-weight:600; font-display:swap; }
-    @font-face { font-family:'DM Sans'; src:url('fonts/dmsans-700.woff2') format('woff2'); font-weight:700; font-display:swap; }
-    @font-face { font-family:'DM Sans'; src:url('fonts/dmsans-800.woff2') format('woff2'); font-weight:800; font-display:swap; }
-    --- */
+    /* Lokale Schriften – keine Verbindung zu Google. Lizenz: fonts/OFL.txt */
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-v15-latin_latin-ext-regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-v15-latin_latin-ext-500.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-v15-latin_latin-ext-600.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-v15-latin_latin-ext-700.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-v15-latin_latin-ext-800.woff2') format('woff2'); font-weight:800; font-style:normal; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dm-sans-v17-latin_latin-ext-regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dm-sans-v17-latin_latin-ext-500.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dm-sans-v17-latin_latin-ext-600.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dm-sans-v17-latin_latin-ext-700.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dm-sans-v17-latin_latin-ext-800.woff2') format('woff2'); font-weight:800; font-style:normal; font-display:swap; }
 
     :root {
       --green: #66A242;
@@ -840,6 +818,17 @@
       <h2 class="s-title">Planungswerkzeuge direkt im Browser ausprobieren</h2>
       <div style="max-width:700px;margin-bottom:48px;">
         <p style="font-size:15px;color:#6B6B6B;line-height:1.7;margin-bottom:20px;">Sie arbeiten in einer Kommune und wollen wissen, was meine Werkzeuge können? Testen Sie sie – ohne Anmeldung, ohne Installation, direkt im Browser.</p>
+        <!-- Bügelplaner -->
+        <div style="background:#fff;border-radius:12px;padding:22px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 12px rgba(0,0,0,0.04);margin-bottom:14px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;">
+            <div style="font-size:30px;">🅿️</div>
+            <div style="flex:1;min-width:220px;">
+              <div style="font-size:16px;font-weight:700;margin-bottom:4px;">Bügelplaner – Fahrradabstellanlagen</div>
+              <div style="font-size:13.5px;color:#6B6B6B;line-height:1.6;margin-bottom:12px;">Wie viele Anlehnbügel passen auf die Fläche vor dem Rathaus, der Schule oder dem Bahnhof? Maße eingeben, Aufstellung und Stellplatzzahl berechnen, Aufstellskizze als SVG oder PDF mitnehmen. Rechnet nach DIN 79008 und den einschlägigen Empfehlungen. <strong>Vollständig nutzbar, keine Demo-Beschränkung.</strong></div>
+              <a href="buegelplaner/" class="btn btn--g" style="font-size:14px;">▶ Bügelplaner öffnen</a>
+            </div>
+          </div>
+        </div>
         <div style="background:#fff;border-radius:12px;padding:22px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 12px rgba(0,0,0,0.04);">
           <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;">
             <div style="font-size:30px;">💶</div>
