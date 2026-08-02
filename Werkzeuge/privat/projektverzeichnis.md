@@ -5,9 +5,9 @@
 
 # 2Rat – Gesamt-Projektverzeichnis
 
-**Stand:** 31.07.2026
+**Stand:** 02.08.2026
 **Anzahl Vorhaben (konsolidiert):** 37
-**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 3 × – zuletzt Werkzeugdokumentation) · **Repo-Prüfungen 31.07.2026** (Bügelplaner live · vier Tool-Uploads verifiziert · 1-Byte-Leiche gelöscht)
+**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 3 × – zuletzt Werkzeugdokumentation) · **Repo-Prüfungen 31.07.2026** (Bügelplaner live · vier Tool-Uploads verifiziert · 1-Byte-Leiche gelöscht) · **HUB-Entscheidung 02.08.2026** (Missbrauchsschutz Stufe 1–3 beauftragt)
 
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Claude liefert die komplette Datei neu → Armin committet. Fertig.
 
@@ -17,14 +17,14 @@
 
 | Wann | Was | Wo |
 |---|---|---|
-| ~~15.07.2026~~ **abgelaufen** | JGF FL1 – Skizzen-Frist verstrichen, Ausgang nachtragen (Skizze eingereicht?) | Förderung-Projekt |
-| **31.07.2026 – HEUTE!** | JGF FL2 – Antrags-Frist | Förderung-Projekt |
+| ~~15.07.~~ / ~~31.07.2026~~ **beide abgelaufen** | JGF FL1 + FL2 – Ausgang nachtragen (eingereicht ja/nein?), danach Zeile raus | Förderung-Projekt |
 | **30.09.2026** | FRL-NMOB Jahres-Stichtag **+ AGFK-Kennenlern-Zugänge laufen ab (vorher Gespräch führen)** **+ RAD-Lab-Testrunde endet** | Förderung / Tool-Portal |
 | prüfen | RadPlan Pro: 19.07.-Deployment (JSON-Pipeline) erfolgt – ist die Login-bereinigte Version mit drin? | RadPlan-Projekt |
 | prüfen | Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den **Passwortmanager** übertragen, bevor die 30-Tage-Session abläuft | Tool-Portal / RadPlan |
 | offen | Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe und Abrechnung | Tool-Portal |
 | **jetzt** | Projekt-Check: Freigabe für **Referenznennung + Zitate** aus der Testrunde bei der AGFK-SL einholen – solange die Testphase läuft, ist es eine Formsache | Tool-Portal |
 | nach Urlaub | Gespräch AGFK-SL: Nutzungsrechte Projekt-Check, Pflegevereinbarung, Lizenzmodell übrige Tools → Eckpunktepapier liegt vor | Tool-Portal / BÜRO 2Rat |
+| **beauftragt 02.08.** | Missbrauchsschutz Stufe 1–3 (Urhebervermerk-Audit · Nutzungshinweis · Lizenznehmer sichtbar · Code-Policy) – Auftrag liegt beim Tool-Portal, 📮-Meldung zurück | Tool-Portal |
 | wartet | AGFK-Logo → dann Branding zur Laufzeit einbauen (kein eigener Ordner, siehe 2.1) | Tool-Portal |
 
 **Erledigt 31.07.:** Alle vier Uploads deployed und im Repo gegengeprüft (Projekt-Check v2 · Fördermittel-Finder v3 in `kunden/` **und** `demo/` · VwV-StVO 2025 v3) ✓ · 1-Byte-Leiche `demo/foerdermittelfinder.html` gelöscht ✓ · Bügelplaner live und von Startseite **und** Portal-Loginseite verlinkt ✓ – der Deployment-Rückstand im Tool-Portal ist damit abgearbeitet
@@ -84,7 +84,7 @@
 - **Zweck:** Erste kommerzielle Tool-Lizenzierung. **Beauftragt ist ausschließlich der Projekt-Check** – Abrechnung: Pauschale bei Übergabe, **Abrechnung offen**. Die fachliche Letztabnahme erfolgt durch einen externen Prüfer, **beauftragt durch die AGFK-SL** (→ Lizenz „AGFK Honorarkraft"). Die übrigen 4 Tools (Fördermittel-Finder, Zuständigkeiten, VwV-StVO 2025, Vergabe-Assistent) sind **kein Auftrag**, sondern Kennenlern-Zugang befristet bis 30.09.2026.
 - **Lizenzen im Portal:** „AGFK Saarland" bis 15.05.2027 · „AGFK Honorarkraft" (externer Prüfer) bis 27.05.2027 (5-Tool-Suite)
 - **Status:** läuft (Auftrag Projekt-Check; Übergabe und Abrechnung offen)
-- **Offen (27.07.2026):** Nutzungsrechte am Projekt-Check ungeklärt (gemeinsame Leistung – Fachinhalt AGFK-SL, Umsetzung 2Rat) · Freigabe für Referenznennung und Zitate aus der Testrunde steht aus · Abgrenzung Mängelbeseitigung / Weiterentwicklung noch nicht schriftlich · Entscheidung Beistellung oder Lizenzierung der übrigen Werkzeuge
+- **Offen (Stand 02.08.2026):** Nutzungsrechte am Projekt-Check noch zu regeln – **Werkzeug von 2Rat entwickelt** (Idee, Konzeption und Umsetzung); die AGFK-SL hat zu Projektbeginn eine Zuständigkeitslandkarte als Datengrundlage beigestellt, seither kein weiterer Fachbeitrag. Einordnung und Belege → Projekt „BÜRO 2Rat“ · Freigabe für Referenznennung und Zitate aus der Testrunde steht aus · Abgrenzung Mängelbeseitigung / Weiterentwicklung noch nicht schriftlich · Entscheidung Beistellung oder Lizenzierung der übrigen Werkzeuge
 - **Achtung Vertriebsargument:** Der erhöhte Fördersatz von 90 % taugt **nicht** als Argument für eine AGFK-Mitgliedschaft – er hängt an der Finanzschwäche der Kommune, nicht an der Mitgliedschaft (→ 2.3). Falls das gegenüber Geschäftsstelle oder Mitgliedern schon so angeklungen ist, beiläufig geraderücken, bevor es in eine Präsentation oder ein Rundschreiben wandert.
 - **Grundlage:** Eckpunktepapier „Eckpunkte zur vertraglichen Regelung" (27.07.2026) erstellt – Leistungsarten, Rechte, Referenz, Pflege · Inhalte → Projekt „BÜRO 2Rat"
 - **Nächster Schritt:** Referenzfreigabe kurzfristig einholen; Gespräch nach der Urlaubszeit; vor 30.09.2026 Gespräch über die Fortsetzung der Kennenlern-Zugänge; nach AGFK-Logo: `agfk-sl/`-Varianten erstellen
@@ -99,7 +99,8 @@
 - **Zweck:** Passwortgeschütztes Portal auf GitHub Pages (`Werkzeuge/index.html`). **Architektur seit 06–07/2026:** zentrales `TOOLS`-Array (6 Tools) + `PATHS`-Routing in Varianten-Ordner (`kunden/` = Vollversionen · `agfk-sl/` = AGFK-Fassungen, noch leer · `demo/` = Trial) + `LICENSES` mit `target` (Ordner-Variante), `tools`-Filter (Sichtbarkeit pro Kunde) und `toolExpires` (Ablauf pro Einzeltool). Neue Kundenlizenz = eine Zeile im Array.
 - **Repo:** github.com/2Rat/2Rat.github.io *(Ordner `Werkzeuge/`, Tools in `Werkzeuge/kunden/`)*
 - **Status:** läuft / produktiv · **Accessibility-Politur (7 Dateien) am 19.07.2026 deployed & verifiziert – Live-Stand = gepatchter Stand** · **Sichtbarkeitsschutz seit 11.07.2026:** `noindex` in allen `kunden/`-Tools + `robots.txt` im Repo-Root (sperrt `Werkzeuge/`, Cockpit, `cmd` für Suchmaschinen) · Wartungskalender-Dokument vorhanden (→ Tool-Portal-Projekt)
-- **Nächster Schritt:** veralteten Array-Kommentar zur intern-Lizenz löschen; nach AGFK-Logo: `agfk-sl/`-Varianten befüllen
+- **Missbrauchsschutz Stufe 1–3 (beauftragt 02.08.2026, HUB-Entscheidung):** A Urhebervermerk-Audit aller Dateien in `kunden/` und `demo/` (2Rat-Vermerk + `2rat.org` in jeder Fußzeile) · B einheitlicher Nutzungshinweis in der Fußzeile · C Organisationsname aus `LICENSES` an die Tools durchreichen und in Kopfzeile, Fußzeile und **Ergebnis-Vermerk** anzeigen (Fallback „2Rat", kein Blocker bei fehlendem Wert) · D Code-Policy: ein Code je Organisation, 12+ Zeichen zufällig, max. 12 Monate Laufzeit, Wert sofort in den Passwortmanager. **Nicht im Auftrag:** Serverschutz (Netlify/Cloudflare Access) und Backend – erst ab drei zahlenden Lizenzen neu bewerten. Umsetzung nach Verify-First; Rückmeldung per 📮-Meldung.
+- **Nächster Schritt:** Missbrauchsschutz Stufe 1–3 umsetzen (→ Tool-Portal-Projekt); veralteten Array-Kommentar zur intern-Lizenz löschen; nach AGFK-Logo: `agfk-sl/`-Varianten befüllen
 
 ### 2.2 Zuständigkeiten Radverkehr Saarland
 - **Kunde / Partner:** eigen (Tool, lizenzpflichtig)
@@ -166,9 +167,10 @@
 
 ### 2.11 Projekt-Check Radverkehr ⭐
 - **Kunde / Partner:** eigen (Tool, Portal) · **von AGFK-SL beauftragt** (Pauschale bei Übergabe, Abrechnung offen – siehe 1.5)
-- **Zweck:** „Wer muss an den Tisch?" – laienfreundlicher Wegweiser auf Basis der **AGFK-Zuständigkeitslandkarte**: 3-Schritte-Wizard (Vorhaben → Lage → Sonderfälle, ~9 Falltypen von Radweg über Fahrradstraße bis Schulweg) → liefert Federführung, einzubindende Stellen, Prüfpunkte und einen **kopier-/downloadbaren Projektvermerk**. Fahrradstraße/-zone-Logik nach § 12 StVZustG. Verlinkt auf die übrigen Portal-Tools. Datengrundlage: AGFK-SL (Stand 06/2026).
+- **Zweck:** „Wer muss an den Tisch?" – laienfreundlicher Wegweiser auf Basis der **AGFK-Zuständigkeitslandkarte**: 3-Schritte-Wizard (Vorhaben → Lage → Sonderfälle, ~9 Falltypen von Radweg über Fahrradstraße bis Schulweg) → liefert Federführung, einzubindende Stellen, Prüfpunkte und einen **kopier-/downloadbaren Projektvermerk**. Fahrradstraße/-zone-Logik nach § 12 StVZustG. Verlinkt auf die übrigen Portal-Tools. Datengrundlage: von der AGFK-SL beigestellte Zuständigkeitslandkarte (Stand 06/2026); Fortschreibung seither durch 2Rat (u. a. über RAD-Lab-Rückmeldungen).
 - **Repo:** github.com/2Rat/2Rat.github.io *(`Werkzeuge/kunden/projekt-check.html`)*
 - **Status:** live (Portal-Tool, im Dashboard als Einstiegs-Tool erstgereiht) · erstes beauftragtes Tool 🎉 · **v2 (27.07.2026) am 31.07.2026 deployed & gegengeprüft ✓** (`const STAND='Stand 07/2026 · v2'` im Repo nachgewiesen): zentrale Konstante `STAND` eingeführt, die Kopfzeile, Fußzeile, Startseitenhinweis und Ergebnis-Vermerk speist – künftig nur diese eine Zeile hochzählen. Der Vermerk nennt jetzt selbst die Fassung, aus der er stammt. Datumsangabe bei der Datengrundlage entfernt (stand im Widerspruch zu diesem Verzeichnis), Werkzeug-Stand vereinheitlicht · **Patch vom Vormittag deployed & live verifiziert:** Rollentrennung Bau-/Tiefbauamt (Baulastträger) gegenüber Bauhof/Betriebshof (Umsetzung), Kontaktblock an die Zuständigkeiten angeglichen (derselbe Neunkirchen-Fehler steckte auch hier), LfS-Kontaktbox ergänzt, Stand vereinheitlicht
+- **Urheberschaft:** Werkzeug von 2Rat entwickelt – der Auftrag lautete auf eine Verschriftlichung, das Werkzeug war ein eigener Vorschlag von 2Rat. Der 2Rat-Hinweis in der Fußzeile bleibt in allen Fassungen erhalten.
 - **Soll Referenzprojekt werden** – dafür nötig: Freigabe zur Nennung der AGFK-SL, Bildschirmfotos, Zitate aus der Testrunde, Fortbestand des 2Rat-Hinweises in der Fußzeile
 - **Version-2-Themen (nicht beauftragt, geparkt):** Freitextfeld „Vorhaben / Standort" für den Projektvermerk · Verknüpfung mit dem GeoPortal Saarland beim Zusatzfaktor „fremde Grundstücke" · schlanke Kartenansicht auf OSM-Basis. **Ausgeschlossen:** ZORA (Login, räumlich begrenzter Nutzungsvertrag, personenbezogene Daten) und eingebettete Google-Maps-Ansicht (Datenschutz)
 - **Bekannte Schwächen:** Kommunen-, Kreis- und Kontaktdaten liegen doppelt in Projekt-Check und Zuständigkeiten – jede Behördenänderung kostet zwei Commits, in der Pflege einkalkulieren
@@ -480,4 +482,4 @@
 
 ---
 
-*2Rat – Büro für Radverkehrsplanung · Stand: 31.07.2026*
+*2Rat – Büro für Radverkehrsplanung · Stand: 02.08.2026*
