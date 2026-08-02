@@ -34,6 +34,33 @@
 </style>
 </head>
 <body>
+<!-- ══ 2Rat Lizenzkontext ══════════════════════════════════════════════
+     Reicht den Organisationsnamen aus dem Tool-Portal an das Werkzeug durch.
+     Reihenfolge: URL-Parameter ?org=  →  sessionStorage (Portal-Login)  →  "2Rat".
+     Ein fehlender Wert blockiert nichts - das Werkzeug bleibt voll nutzbar.
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+var LIZENZ_ORG = (function () {
+  function clean(v) { return (v || '').toString().replace(/[<>]/g, '').trim().slice(0, 80); }
+  var o = '';
+  try { o = clean(new URLSearchParams(location.search).get('org')); } catch (e) {}
+  if (!o) { try { o = clean(JSON.parse(sessionStorage.getItem('2rat_s') || '{}').org); } catch (e) {} }
+  if (o) { try { sessionStorage.setItem('2rat_org', o); } catch (e) {} }
+  else { try { o = clean(sessionStorage.getItem('2rat_org')); } catch (e) {} }
+  return o || '2Rat';
+})();
+function lizenzKopfzeile() { return 'Lizenz: ' + LIZENZ_ORG; }
+function lizenzVermerkZeile() {
+  return 'Bereitgestellt f\u00fcr: ' + LIZENZ_ORG
+       + '\nEntwickelt und gepflegt von 2Rat \u2013 B\u00fcro f\u00fcr Radverkehrsplanung \u00b7 www.2rat.org';
+}
+function lizenzInit() {
+  var n = document.querySelectorAll('[data-lizenz]');
+  for (var i = 0; i < n.length; i++) { n[i].textContent = lizenzKopfzeile(); }
+}
+if (document.readyState !== 'loading') { lizenzInit(); }
+else { document.addEventListener('DOMContentLoaded', lizenzInit); }
+</script>
 <div id="root"></div>
 <script>
 const e = React.createElement;
@@ -217,6 +244,7 @@ function VermerkGenerator({ wert, art, verfahren }) {
   } else {
     text = "Vergabevermerk – EU-weites Verfahren\n\nDatum: " + today + "\nLeistungsart: " + artLabel + "\nGesch. Auftragswert: " + formatEuro(wert) + " (netto)\n\nDer Auftragswert erreicht/überschreitet den EU-Schwellenwert (" + formatEuro(THRESHOLDS_2026[art]) + "). Vollständiger Vergabevermerk gem. § 8 VgV erforderlich.\n\n[Hinweis: Rechtliche Beratung empfohlen]";
   }
+  text += "\n\n" + lizenzVermerkZeile();
   function handleCopy() {
     navigator.clipboard.writeText(text).then(function() {
       setCopied(true);
@@ -275,7 +303,7 @@ function App() {
             e("h1", { style: { fontSize: 17, fontWeight: 700, color: "#3E403F", margin: 0, lineHeight: 1.3 }}, "Vergabe-Assistent ", e("span", { style: { color: "#1678A9" }}, "Saarland"))
           )
         ),
-        e("div", { className: "header-meta", style: { textAlign: "right", fontSize: 11, color: "#8a8a8a", lineHeight: 1.5 }}, "Saarland", e("br"), "Vergabeerlass 2025 · EU-SW 2026", e("br"), "Stand 07/2026 · v3")
+        e("div", { className: "header-meta", style: { textAlign: "right", fontSize: 11, color: "#8a8a8a", lineHeight: 1.5 }}, "Saarland", e("br"), "Vergabeerlass 2025 · EU-SW 2026", e("br"), "Stand 07/2026 · v3", e("br"), e("span", { style: { fontWeight: 600 }}, lizenzKopfzeile()))
       )
     ),
     e("div", { style: { maxWidth: 640, margin: "0 auto", padding: "20px 16px 60px" }},
@@ -416,7 +444,10 @@ function App() {
           "Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall. Grundlage: Vergabeerlass SL 2025 (Amtsbl. 26/2025, ab 01.07.2025 unbefristet) – Direktauftrag bis 100.000 €, darüber Freihändige Vergabe oder Beschränkte Ausschreibung bis zum EU-Schwellenwert (2026/27: Bau 5.404.000 €, Liefer/DL 216.000 €). KSVG §§ 82 ff. Alle Werte netto. Bei Fördermitteln ggf. strengere Vorgaben. Stand 07/2026."
         ),
         e("p", { style: { fontSize: 10, color: "#a1a1aa", margin: "6px 0 0", lineHeight: 1.6 }},
-          "© 2Rat · Armin Jung · Radverkehrsplaner EIPOS · www.2rat.org"
+          "Entwickelt und gepflegt von 2Rat – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · www.2rat.org"
+        ),
+        e("p", { style: { fontSize: 10, color: "#a1a1aa", margin: "6px 0 0", lineHeight: 1.6 }},
+          lizenzKopfzeile() + " · Lizenziert zur Nutzung durch die oben genannte Organisation. Weitergabe an Dritte nicht gestattet."
         )
       )
     )

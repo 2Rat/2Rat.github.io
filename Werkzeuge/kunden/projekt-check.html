@@ -121,6 +121,33 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
 </style>
 </head>
 <body>
+<!-- ══ 2Rat Lizenzkontext ══════════════════════════════════════════════
+     Reicht den Organisationsnamen aus dem Tool-Portal an das Werkzeug durch.
+     Reihenfolge: URL-Parameter ?org=  →  sessionStorage (Portal-Login)  →  "2Rat".
+     Ein fehlender Wert blockiert nichts - das Werkzeug bleibt voll nutzbar.
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+var LIZENZ_ORG = (function () {
+  function clean(v) { return (v || '').toString().replace(/[<>]/g, '').trim().slice(0, 80); }
+  var o = '';
+  try { o = clean(new URLSearchParams(location.search).get('org')); } catch (e) {}
+  if (!o) { try { o = clean(JSON.parse(sessionStorage.getItem('2rat_s') || '{}').org); } catch (e) {} }
+  if (o) { try { sessionStorage.setItem('2rat_org', o); } catch (e) {} }
+  else { try { o = clean(sessionStorage.getItem('2rat_org')); } catch (e) {} }
+  return o || '2Rat';
+})();
+function lizenzKopfzeile() { return 'Lizenz: ' + LIZENZ_ORG; }
+function lizenzVermerkZeile() {
+  return 'Bereitgestellt f\u00fcr: ' + LIZENZ_ORG
+       + '\nEntwickelt und gepflegt von 2Rat \u2013 B\u00fcro f\u00fcr Radverkehrsplanung \u00b7 www.2rat.org';
+}
+function lizenzInit() {
+  var n = document.querySelectorAll('[data-lizenz]');
+  for (var i = 0; i < n.length; i++) { n[i].textContent = lizenzKopfzeile(); }
+}
+if (document.readyState !== 'loading') { lizenzInit(); }
+else { document.addEventListener('DOMContentLoaded', lizenzInit); }
+</script>
 
 <div class="header">
   <div class="header-inner">
@@ -131,7 +158,7 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
         <div class="header-title">Projekt-Check <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right"><a class="portal-link" href="index.html">← Zum Portal</a><br>Saarland · Kommunale Vorhaben<br><span id="standTop">Stand 07/2026 · v2</span></div>
+    <div class="header-right"><a class="portal-link" href="index.html">← Zum Portal</a><br>Saarland · Kommunale Vorhaben<br><span id="standTop">Stand 07/2026 · v2</span><br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -142,7 +169,8 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
   <footer class="footer">
     <b>Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. <span id="standFoot">Stand 07/2026 · v2</span>.
     Datengrundlage: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL) sowie StVO, VwV-StVO 2025, StVZustG Saarland, SaarlStrG, FStrG.<br>
-    Entwickelt von 2Rat – Büro für Radverkehrsplanung · <a href="https://www.2rat.org">www.2rat.org</a>
+    <strong style="color:var(--gray)">Entwickelt und gepflegt von 2Rat</strong> – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
+    <br><span style="display:inline-block;margin-top:5px;opacity:.85"><span data-lizenz></span> · Lizenziert zur Nutzung durch die oben genannte Organisation. Weitergabe an Dritte nicht gestattet.</span>
   </footer>
 </main>
 
@@ -560,7 +588,7 @@ function buildVermerk(){
   if(d.steps&&d.steps.length){t+='\nNächste Schritte:\n';d.steps.forEach((st,i)=>{t+=(i+1)+'. '+st+'\n';});}
   if(d.hinweis)t+='\nGut zu wissen: '+d.hinweis+'\n';
   t+='\nFragen offen? Geschäftsstelle der AGFK-SL · Tel. '+AGFK_TEL+' · '+AGFK_MAIL+'\n';
-  t+='Quelle: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL) · Projekt-Check 2Rat · www.2rat.org\n';
+  t+='Quelle: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL) · Projekt-Check\n'+lizenzVermerkZeile()+'\n';
   t+='Werkzeug: Projekt-Check Radverkehr · '+STAND;
   return t;
 }

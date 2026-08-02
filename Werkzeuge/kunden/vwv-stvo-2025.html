@@ -157,6 +157,33 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px;color:var(--gray)}
 </style>
 </head>
 <body>
+<!-- ══ 2Rat Lizenzkontext ══════════════════════════════════════════════
+     Reicht den Organisationsnamen aus dem Tool-Portal an das Werkzeug durch.
+     Reihenfolge: URL-Parameter ?org=  →  sessionStorage (Portal-Login)  →  "2Rat".
+     Ein fehlender Wert blockiert nichts - das Werkzeug bleibt voll nutzbar.
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+var LIZENZ_ORG = (function () {
+  function clean(v) { return (v || '').toString().replace(/[<>]/g, '').trim().slice(0, 80); }
+  var o = '';
+  try { o = clean(new URLSearchParams(location.search).get('org')); } catch (e) {}
+  if (!o) { try { o = clean(JSON.parse(sessionStorage.getItem('2rat_s') || '{}').org); } catch (e) {} }
+  if (o) { try { sessionStorage.setItem('2rat_org', o); } catch (e) {} }
+  else { try { o = clean(sessionStorage.getItem('2rat_org')); } catch (e) {} }
+  return o || '2Rat';
+})();
+function lizenzKopfzeile() { return 'Lizenz: ' + LIZENZ_ORG; }
+function lizenzVermerkZeile() {
+  return 'Bereitgestellt f\u00fcr: ' + LIZENZ_ORG
+       + '\nEntwickelt und gepflegt von 2Rat \u2013 B\u00fcro f\u00fcr Radverkehrsplanung \u00b7 www.2rat.org';
+}
+function lizenzInit() {
+  var n = document.querySelectorAll('[data-lizenz]');
+  for (var i = 0; i < n.length; i++) { n[i].textContent = lizenzKopfzeile(); }
+}
+if (document.readyState !== 'loading') { lizenzInit(); }
+else { document.addEventListener('DOMContentLoaded', lizenzInit); }
+</script>
 
 <div class="header">
   <div class="header-inner">
@@ -167,7 +194,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px;color:var(--gray)}
         <div class="header-title">VwV-StVO 2025 <span>Maßnahmen-Übersicht Radverkehr</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br>Stand 07/2026 · v3</div>
+    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br>Stand 07/2026 · v3<br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -277,7 +304,8 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px;color:var(--gray)}
     Grundlage: 12. Änderung der Allgemeinen Verwaltungsvorschrift zur StVO (VwV-StVO), BAnz AT 09.04.2025 B2 (Umsetzung der StVO-Novelle 2024).
     Verbindlich ist ausschließlich der Verordnungs- und Verwaltungsvorschrifttext in der jeweils aktuellen Fassung.
     <br>
-    <strong>© 2Rat</strong> · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
+    <strong>Entwickelt und gepflegt von 2Rat</strong> – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
+    <br><span style="display:inline-block;margin-top:5px;opacity:.85"><span data-lizenz></span> · Lizenziert zur Nutzung durch die oben genannte Organisation. Weitergabe an Dritte nicht gestattet.</span>
   </footer>
 </main>
 
@@ -575,7 +603,7 @@ function bindMeasureEvents(){
   document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const text = decodeURIComponent(btn.getAttribute('data-copy'));
+      const text = decodeURIComponent(btn.getAttribute('data-copy')) + '\n\n' + lizenzVermerkZeile();
       navigator.clipboard.writeText(text).then(() => {
         btn.classList.add('ok');
         btn.textContent = '✓ kopiert';
@@ -644,7 +672,7 @@ function setupCopy(btnId, areaId, defaultLabel){
   document.getElementById(btnId).addEventListener('click', () => {
     const ta = document.getElementById(areaId);
     if(!ta.value) return;
-    navigator.clipboard.writeText(ta.value).then(() => {
+    navigator.clipboard.writeText(ta.value + '\n\n' + lizenzVermerkZeile()).then(() => {
       const btn = document.getElementById(btnId);
       btn.classList.add('ok');
       btn.textContent = '✓ kopiert';

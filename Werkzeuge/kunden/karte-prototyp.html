@@ -52,6 +52,33 @@ body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);ba
 </style>
 </head>
 <body>
+<!-- ══ 2Rat Lizenzkontext ══════════════════════════════════════════════
+     Reicht den Organisationsnamen aus dem Tool-Portal an das Werkzeug durch.
+     Reihenfolge: URL-Parameter ?org=  →  sessionStorage (Portal-Login)  →  "2Rat".
+     Ein fehlender Wert blockiert nichts - das Werkzeug bleibt voll nutzbar.
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+var LIZENZ_ORG = (function () {
+  function clean(v) { return (v || '').toString().replace(/[<>]/g, '').trim().slice(0, 80); }
+  var o = '';
+  try { o = clean(new URLSearchParams(location.search).get('org')); } catch (e) {}
+  if (!o) { try { o = clean(JSON.parse(sessionStorage.getItem('2rat_s') || '{}').org); } catch (e) {} }
+  if (o) { try { sessionStorage.setItem('2rat_org', o); } catch (e) {} }
+  else { try { o = clean(sessionStorage.getItem('2rat_org')); } catch (e) {} }
+  return o || '2Rat';
+})();
+function lizenzKopfzeile() { return 'Lizenz: ' + LIZENZ_ORG; }
+function lizenzVermerkZeile() {
+  return 'Bereitgestellt f\u00fcr: ' + LIZENZ_ORG
+       + '\nEntwickelt und gepflegt von 2Rat \u2013 B\u00fcro f\u00fcr Radverkehrsplanung \u00b7 www.2rat.org';
+}
+function lizenzInit() {
+  var n = document.querySelectorAll('[data-lizenz]');
+  for (var i = 0; i < n.length; i++) { n[i].textContent = lizenzKopfzeile(); }
+}
+if (document.readyState !== 'loading') { lizenzInit(); }
+else { document.addEventListener('DOMContentLoaded', lizenzInit); }
+</script>
 
 <div class="header">
   <div class="header-inner">
@@ -62,7 +89,7 @@ body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);ba
         <div class="brand-title">Karten-Prototyp · <span>Kommune per Klick</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland · Demo<br>OpenStreetMap · Overpass API</div>
+    <div class="header-right">Saarland · Demo<br>OpenStreetMap · Overpass API<br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -81,7 +108,8 @@ body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);ba
   </div>
 
   <div class="footer">
-    Prototyp <b>v8</b> · 2Rat – Büro für Radverkehrsplanung · Armin Jung · <a href="https://www.2rat.org">www.2rat.org</a><br>
+    Prototyp <b>v8</b> · Entwickelt und gepflegt von 2Rat – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a><br>
+    <span style="display:inline-block;margin:4px 0;opacity:.85"><span data-lizenz></span> · Lizenziert zur Nutzung durch die oben genannte Organisation. Weitergabe an Dritte nicht gestattet.</span><br>
     Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende · Gemeinde-Erkennung über <a href="https://overpass-api.de">Overpass-API</a> (amtliche Verwaltungsgrenzen, admin_level 8) · Nutzungsrichtlinien beachten
   </div>
 </div>
