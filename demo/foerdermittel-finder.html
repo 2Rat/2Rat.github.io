@@ -134,6 +134,14 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 </style>
 </head>
 <body>
+<!-- ══ 2Rat Herkunftsvermerk (Demo) ═══════════════════════════════════
+     Freie Testversion - kein Lizenznehmer. Der Vermerk trägt die Herkunft.
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+function lizenzVermerkZeile() {
+  return 'Entwickelt und gepflegt von 2Rat \u2013 B\u00fcro f\u00fcr Radverkehrsplanung \u00b7 www.2rat.org';
+}
+</script>
 <div class="demo-banner">🚲 <span><b>Kostenlose Demo</b> – 3 von 13 Fördergegenständen freigeschaltet. Vollzugang für Ihre Kommune inkl. aller Werkzeuge der 2Rat-Suite:</span> <a href="mailto:fahr2rat@gmail.com?subject=Anfrage%20Vollversion%20F%C3%B6rdermittel-Finder">Vollversion anfragen</a></div>
 
 <div class="header">
@@ -157,7 +165,8 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
     Grundlage: Förderrichtlinie Rad- und Fußverkehr Saarland (FRL-NMOB-Rad-Fuß), gültig 17.11.2025 – 17.11.2030.
     Verbindlich ist ausschließlich der Richtlinientext der Bewilligungsbehörde.
     <br>
-    <strong style="color:var(--gray)">© 2Rat</strong> · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
+    <strong style="color:var(--gray)">Entwickelt und gepflegt von 2Rat</strong> – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
+    <br><span style="display:inline-block;margin-top:5px;opacity:.85">Frei zugängliche Testversion. Alle Rechte am Werkzeug liegen bei 2Rat.</span>
   </div>
 </div>
 
@@ -539,7 +548,7 @@ function buildFVermerk(){
   t+='\nBewilligungsbehörde: MUKMAV, Referat A/4, Keplerstraße 18, 66117 Saarbrücken\n';
   t+='Fachliche Rückfragen: fahrrad@umwelt.saarland.de · Tel. (0681) 501-1426\n';
   t+='Richtlinie: FRL-NMOB-Rad-Fuß · gültig 17.11.2025 – 17.11.2030\n';
-  t+='\nOrientierungshilfe, keine Rechts- oder Fachberatung – maßgeblich ist die Richtlinie.\nQuelle: Fördermittel-Finder Radverkehr Saarland · 2Rat – www.2rat.org';
+  t+='\nOrientierungshilfe, keine Rechts- oder Fachberatung – maßgeblich ist die Richtlinie.\nQuelle: Fördermittel-Finder Radverkehr Saarland (Testversion)\n'+lizenzVermerkZeile();
   return t;
 }
 function copyFVermerk(){const text=buildFVermerk();const done=()=>{const b=document.getElementById('copyBtn');if(!b)return;b.textContent='Kopiert ✓';b.classList.add('copied');setTimeout(()=>{b.textContent='Kopieren';b.classList.remove('copied');},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>ffb(text,done));}else{ffb(text,done);}}
