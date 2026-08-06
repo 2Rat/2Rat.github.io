@@ -178,7 +178,7 @@ const TOOLS = [
     id: "foerdermittel-finder",
     title: "Fördermittel-Finder",
     desc: "Interaktiver Wegweiser durch die Förderrichtlinie Rad- und Fußverkehr Saarland (FRL-NMOB-Rad-Fuß). Findet passende Fördergegenstände, Quoten und Antragsberechtigungen.",
-    tags: ["FRL-NMOB-Rad-Fuß", "Stand 03/2026"]
+    tags: ["FRL-NMOB-Rad-Fuß", "Stand 07/2026 · v3"]
   },
   {
     id: "zustaendigkeiten",
@@ -215,14 +215,16 @@ const TOOLS = [
 /* ══════════════════════════════════════════════════════════════════
    PATHS – Ordner pro Tool-Variante (target)
    ─────────────────────────────────────────
-   kunden/   = 2Rat-Vollversionen
-   agfk-sl/  = überarbeitete Versionen für AGFK Saarland
-   demo/     = Trial-Versionen
+   kunden/   = 2Rat-Vollversionen (Werkzeuge/kunden/)
+   agfk-sl/  = überarbeitete Versionen für AGFK Saarland (Werkzeuge/agfk-sl/)
+   demo/     = Trial-Versionen – liegen im Repo-Root (/demo/), NICHT unter
+               Werkzeuge/, daher "../demo/". Dort liegt derzeit nur der
+               Fördermittel-Finder; andere Tool-IDs laufen ins 404.
    ══════════════════════════════════════════════════════════════════ */
 const PATHS = {
   "kunden":  "kunden/",
   "agfk-sl": "agfk-sl/",
-  "demo":    "demo/",
+  "demo":    "../demo/",
   "test":    "kunden/"
 };
 
