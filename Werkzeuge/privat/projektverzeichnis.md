@@ -5,9 +5,9 @@
 
 # 2Rat – Gesamt-Projektverzeichnis
 
-**Stand:** 02.08.2026
+**Stand:** 06.08.2026
 **Anzahl Vorhaben (konsolidiert):** 37
-**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 3 × – zuletzt Werkzeugdokumentation) · **Repo-Prüfungen 31.07.2026** (Bügelplaner live · vier Tool-Uploads verifiziert · 1-Byte-Leiche gelöscht) · **HUB-Entscheidung 02.08.2026** (Missbrauchsschutz Stufe 1–3 beauftragt)
+**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 3 × – zuletzt Werkzeugdokumentation) · **Repo-Prüfungen 31.07.2026** (Bügelplaner live · vier Tool-Uploads verifiziert · 1-Byte-Leiche gelöscht) · **HUB-Entscheidung 02.08.2026** (Missbrauchsschutz Stufe 1–3 beauftragt) · 📮 Meldungen Tool-Portal 06.08.2026 (Gesprächsleitfaden AGFK-SL · Portal-Patch deployed & SHA-verifiziert · finales Angebotsmodell AGFK-SL)
 
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Claude liefert die komplette Datei neu → Armin committet. Fertig.
 
@@ -23,7 +23,7 @@
 | prüfen | Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den **Passwortmanager** übertragen, bevor die 30-Tage-Session abläuft | Tool-Portal / RadPlan |
 | offen | Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe und Abrechnung | Tool-Portal |
 | **jetzt** | Projekt-Check: Freigabe für **Referenznennung + Zitate** aus der Testrunde bei der AGFK-SL einholen – solange die Testphase läuft, ist es eine Formsache | Tool-Portal |
-| nach Urlaub | Gespräch AGFK-SL: Nutzungsrechte Projekt-Check, Pflegevereinbarung, Lizenzmodell übrige Tools → Eckpunktepapier liegt vor | Tool-Portal / BÜRO 2Rat |
+| **terminieren** | Gespräch AGFK-SL (Irene): **Angebotspaket vollständig (Angebot · Nutzungsvereinbarung · Leitfaden · Rechnung, Stand 06.08.2026)** – Termin noch nicht vereinbart, Angebot gültig bis 30.09.2026 | Tool-Portal / BÜRO 2Rat |
 | **beauftragt 02.08.** | Missbrauchsschutz Stufe 1–3 (Urhebervermerk-Audit · Nutzungshinweis · Lizenznehmer sichtbar · Code-Policy) – Auftrag liegt beim Tool-Portal, 📮-Meldung zurück | Tool-Portal |
 | wartet | AGFK-Logo → dann Branding zur Laufzeit einbauen (kein eigener Ordner, siehe 2.1) | Tool-Portal |
 
@@ -86,8 +86,10 @@
 - **Status:** läuft (Auftrag Projekt-Check; Übergabe und Abrechnung offen)
 - **Offen (Stand 02.08.2026):** Nutzungsrechte am Projekt-Check noch zu regeln – **Werkzeug von 2Rat entwickelt** (Idee, Konzeption und Umsetzung); die AGFK-SL hat zu Projektbeginn eine Zuständigkeitslandkarte als Datengrundlage beigestellt, seither kein weiterer Fachbeitrag. Einordnung und Belege → Projekt „BÜRO 2Rat“ · Freigabe für Referenznennung und Zitate aus der Testrunde steht aus · Abgrenzung Mängelbeseitigung / Weiterentwicklung noch nicht schriftlich · Entscheidung Beistellung oder Lizenzierung der übrigen Werkzeuge
 - **Achtung Vertriebsargument:** Der erhöhte Fördersatz von 90 % taugt **nicht** als Argument für eine AGFK-Mitgliedschaft – er hängt an der Finanzschwäche der Kommune, nicht an der Mitgliedschaft (→ 2.3). Falls das gegenüber Geschäftsstelle oder Mitgliedern schon so angeklungen ist, beiläufig geraderücken, bevor es in eine Präsentation oder ein Rundschreiben wandert.
-- **Grundlage:** Eckpunktepapier „Eckpunkte zur vertraglichen Regelung" (27.07.2026) erstellt – Leistungsarten, Rechte, Referenz, Pflege · Inhalte → Projekt „BÜRO 2Rat"
-- **Nächster Schritt:** Referenzfreigabe kurzfristig einholen; Gespräch nach der Urlaubszeit; vor 30.09.2026 Gespräch über die Fortsetzung der Kennenlern-Zugänge; nach AGFK-Logo: `agfk-sl/`-Varianten erstellen
+- **Grundlage:** Eckpunktepapier „Eckpunkte zur vertraglichen Regelung" (27.07.2026) erstellt – Leistungsarten, Rechte, Referenz, Pflege · **Gesprächsleitfaden für den Termin mit Irene (06.08.2026)** erstellt und geliefert: fünf Gesprächsschritte (Abrechnung Projekt-Check → Paket-Logik → vier Klärungsfragen → Preisvorschlag je Szenario → Nutzungsvereinbarung / Logo / Mitgliederbereich), dazu Zugeständnis-Reihenfolge und vorbereitete Antworten auf Rückfragen · Inhalte, Beträge und Verhandlungslinie → Projekt „BÜRO 2Rat"
+- **Angebotspaket 06.08.2026 fertig:** Nach mehreren Iterationen liegt ein **finales Angebotsmodell** vor – Einmalposition für Entwicklung und dauerhaftes Nutzungsrecht am Projekt-Check plus **jährliche Vereinbarung über die öffentliche Bereitstellung von drei Werkzeugen** (Projekt-Check, Zuständigkeiten, Fördermittel-Finder) auf der AGFK-Website, inklusive Branding, Hosting und fachlicher Pflege. Kein Staffel- oder Einzellizenzmodell mehr. Vier Dokumente erstellt und aufeinander abgestimmt: Angebot (2026-AGFK-03, ersetzt 2026-AGFK-02), Nutzungsvereinbarung, Gesprächsleitfaden, Rechnung. **Alle Beträge, Konditionen, Vertragsklauseln und die Verhandlungslinie → Projekt „BÜRO 2Rat“ – bewusst nicht hier.**
+- **Angebot gültig bis 30.09.2026.**
+- **Nächster Schritt:** **Termin mit Irene vereinbaren** (Leitfaden liegt vor); Referenzfreigabe kurzfristig einholen; vor 30.09.2026 Gespräch über die Fortsetzung der Kennenlern-Zugänge; nach AGFK-Logo: `agfk-sl/`-Varianten erstellen
 
 ---
 
@@ -100,6 +102,7 @@
 - **Repo:** github.com/2Rat/2Rat.github.io *(Ordner `Werkzeuge/`, Tools in `Werkzeuge/kunden/`)*
 - **Status:** läuft / produktiv · **Accessibility-Politur (7 Dateien) am 19.07.2026 deployed & verifiziert – Live-Stand = gepatchter Stand** · **Sichtbarkeitsschutz seit 11.07.2026:** `noindex` in allen `kunden/`-Tools + `robots.txt` im Repo-Root (sperrt `Werkzeuge/`, Cockpit, `cmd` für Suchmaschinen) · Wartungskalender-Dokument vorhanden (→ Tool-Portal-Projekt)
 - **Missbrauchsschutz Stufe 1–3 (beauftragt 02.08.2026, HUB-Entscheidung):** A Urhebervermerk-Audit aller Dateien in `kunden/` und `demo/` (2Rat-Vermerk + `2rat.org` in jeder Fußzeile) · B einheitlicher Nutzungshinweis in der Fußzeile · C Organisationsname aus `LICENSES` an die Tools durchreichen und in Kopfzeile, Fußzeile und **Ergebnis-Vermerk** anzeigen (Fallback „2Rat", kein Blocker bei fehlendem Wert) · D Code-Policy: ein Code je Organisation, 12+ Zeichen zufällig, max. 12 Monate Laufzeit, Wert sofort in den Passwortmanager. **Nicht im Auftrag:** Serverschutz (Netlify/Cloudflare Access) und Backend – erst ab drei zahlenden Lizenzen neu bewerten. Umsetzung nach Verify-First; Rückmeldung per 📮-Meldung.
+- **Portal-Patch 06.08.2026 deployed & verifiziert ✓:** `Werkzeuge/index.html` hochgeladen, Live-Fassung per SHA-256 byte-identisch mit der gelieferten Datei (440 Zeilen, kein Whitespace- oder Encoding-Verlust). Inhalt: Stand-Badge der Fördermittel-Finder-Kachel auf „07/2026 · v3“ korrigiert (Ausgangsbefund: veraltete Angabe „03/2026“), `PATHS.demo` → `../demo/` gefixt, PATHS-Kommentar präzisiert. AGFK-Lizenz unverändert mit allen fünf Werkzeugen. Geprüft über GitHub Raw (Auslieferungsquelle von Pages) – Browser-Gegenprobe mit Strg+F5 empfohlen.
 - **Nächster Schritt:** Missbrauchsschutz Stufe 1–3 umsetzen (→ Tool-Portal-Projekt); veralteten Array-Kommentar zur intern-Lizenz löschen; nach AGFK-Logo: `agfk-sl/`-Varianten befüllen
 
 ### 2.2 Zuständigkeiten Radverkehr Saarland
@@ -119,6 +122,7 @@
 - ⚠️ **`quoteAGFK` geprüft (27.07.2026) – Ergebnis: sachlich falsch.** Der erhöhte Satz von bis zu 90 % gilt für **finanzschwache** Gemeinden, Städte und Landkreise; die Finanzschwäche stellt das Landesverwaltungsamt als Kommunalaufsichtsbehörde fest und muss bei Antragstellung nachgewiesen werden. Die Systematik lautet bis zu 75 % / 90 % bei Finanzschwäche / bis zu 100 % bei besonderem Landesinteresse. **Eine AGFK-Mitgliedschaft ist in keiner Fundstelle Fördervoraussetzung.** Das Feld enthält in jeder Zeile exakt den höchsten alternativen Satz der Kundenfassung (mal Finanzschwäche, mal Schule/Kita, bei den Abstellanlagen beide zusammengefasst) – also eine Umetikettierung, keinen eigenen Fördertatbestand.
 - **Folge:** `quoteAGFK` ersatzlos streichen. Die AGFK-Fassung darf keinen eigenen Datenstand führen, sondern nur eine Co-Branding-Hülle über demselben Datenblock sein – sonst wiederholt sich das Auseinanderlaufen wie bei den Kontaktdaten in Projekt-Check und Zuständigkeiten. **Risiko entschärft:** Die Entwürfe waren nie live, Kunden- und Demofassung sind korrekt.
 - **v3 (27.07.2026) – am 31.07.2026 in beiden Fassungen deployed & im Repo gegengeprüft ✓** (dynamische Frist und Vorhabenbeginn-Warnfeld in `kunden/` wie in `demo/` nachgewiesen, Demo trägt „Stand 07/2026"): Antragsfrist rechnet jetzt dynamisch („30.09.2026 – noch X Tage", ab sechs Wochen Restlauf rot, am Stichtag „heute!", danach automatisch aufs Folgejahr); Ausnahme **31.05.2030** berücksichtigt, nach Ablauf der Richtlinie erscheint ein Hinweis statt eines falschen Datums (über acht Stichtage inkl. Jahreswechsel durchgerechnet) · Hinweis zum Vorhabenbeginn als rotes Warnfeld oben im Ergebnis mit Erläuterung, dass bereits der Abschluss eines Lieferungs- oder Leistungsvertrags als Beginn gilt – aus den Standardhinweisen entfernt, damit er nicht doppelt erscheint · beides ebenfalls im Ergebnis-Vermerk · Demo-Fassung trägt jetzt ebenfalls eine Versionsangabe im Kopf.
+- **06.08.2026:** Stand-Badge der Portal-Kachel zeigt jetzt „Stand 07/2026 · v3“ statt „03/2026“ – die Kachel-Angabe passt damit wieder zum tatsächlichen Dateistand (Patch in `Werkzeuge/index.html`, → 2.1).
 - **Nächster Schritt:** `quoteAGFK` aus den AGFK-Entwürfen entfernen; Aktualisierung bei neuer FRL-Fassung
 
 ### 2.4 Konzept-Check
@@ -148,8 +152,8 @@
 ### 2.8 Lizenzkonzept-Dokument
 - **Kunde / Partner:** intern
 - **Zweck:** DOCX mit 2Rat-Briefkopf, dokumentiert Lizenzbedingungen und Konditionen für die Tool-Nutzung.
-- **Status:** abgeschlossen
-- **Nächster Schritt:** —
+- **Status:** abgeschlossen · ⚠️ **teilweise überholt (06.08.2026):** Sagt die AGFK-SL zum Angebotspaket zu, entfällt das Einzellizenzmodell für **Projekt-Check, Zuständigkeiten und Fördermittel-Finder** – diese drei wären dann über die AGFK-Website öffentlich verfügbar. **VwV-StVO 2025 (3.4) und Vergabe-Assistent (2.9) bleiben lizenzierbar.**
+- **Nächster Schritt:** Nach der AGFK-Entscheidung überarbeiten (Konditionen → BÜRO 2Rat)
 
 ### 2.9 Vergabe-Assistent Saarland
 - **Kunde / Partner:** eigen (Tool, Portal)
@@ -423,6 +427,7 @@
 | **01.09.–15.10.2026** | 1.4 Radherbst-Kampagne | Aktionszeitraum (EMW 16.–22.09.) |
 | **30.09.2026** | Förderung (FRL-NMOB) | Jahres-Stichtag |
 | **30.09.2026** | 1.5 AGFK-SL | Kennenlern-Tools laufen ab (`toolExpires`) → vorher Gespräch über die Fortsetzung |
+| **30.09.2026** | 1.5 AGFK-SL | **Gültigkeit des Angebots 2026-AGFK-03 endet** |
 | **30.09.2026** | 2.1 Tool-Portal | RAD-Lab-Testrunde endet (→ 2.13) – Lizenz-Zeile entfernen |
 | **Sep 2026** | 4.3 Schulweg-Detektive | Android-Entwicklerbestätigung für PWA-APK prüfen |
 | **15.05.2027** | 1.5 AGFK-SL | Lizenz „AGFK Saarland" läuft ab → Verlängerung |
@@ -434,7 +439,7 @@
 
 **Geklärt 27.07.:** Kontaktdaten der Straßenverkehrsbehörden geprüft (Neunkirchen korrigiert) · EU-Schwellenwerte 2026/27 im Vergabe-Assistenten bereits aktuell · Kartenwunsch aus der Testrunde eingeordnet (ZORA und Google-Maps-Embed ausgeschlossen, GeoPortal Saarland als Ersatz)
 
-**Ohne festes Datum:** Gespräch mit der AGFK-SL nach der Urlaubszeit – Nutzungsrechte Projekt-Check, Pflegevereinbarung, Lizenzmodell übrige Werkzeuge (Grundlage: Eckpunktepapier vom 27.07.2026)
+**Ohne festes Datum:** Gespräch mit der AGFK-SL (Irene) – Nutzungsrechte Projekt-Check, Pflegevereinbarung, Lizenzmodell übrige Werkzeuge. Grundlage: vollständiges Angebotspaket vom 06.08.2026 (Angebot 2026-AGFK-03, Nutzungsvereinbarung, Gesprächsleitfaden, Rechnung) auf Basis des Eckpunktepapiers vom 27.07.2026. **Termin noch nicht vereinbart.**
 
 ---
 
@@ -482,4 +487,4 @@
 
 ---
 
-*2Rat – Büro für Radverkehrsplanung · Stand: 02.08.2026*
+*2Rat – Büro für Radverkehrsplanung · Stand: 06.08.2026*
