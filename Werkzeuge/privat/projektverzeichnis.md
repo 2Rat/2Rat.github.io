@@ -5,9 +5,9 @@
 
 # 2Rat – Gesamt-Projektverzeichnis
 
-**Stand:** 06.08.2026
+**Stand:** 09.08.2026
 **Anzahl Vorhaben (konsolidiert):** 37
-**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 3 × – zuletzt Werkzeugdokumentation) · **Repo-Prüfungen 31.07.2026** (Bügelplaner live · vier Tool-Uploads verifiziert · 1-Byte-Leiche gelöscht) · **HUB-Entscheidung 02.08.2026** (Missbrauchsschutz Stufe 1–3 beauftragt) · 📮 Meldungen Tool-Portal 06.08.2026 (Gesprächsleitfaden AGFK-SL · Portal-Patch deployed & SHA-verifiziert · finales Angebotsmodell AGFK-SL)
+**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 3 × – zuletzt Werkzeugdokumentation) · **Repo-Prüfungen 31.07.2026** (Bügelplaner live · vier Tool-Uploads verifiziert · 1-Byte-Leiche gelöscht) · **HUB-Entscheidung 02.08.2026** (Missbrauchsschutz Stufe 1–3 beauftragt) · 📮 Meldungen Tool-Portal 06.08.2026 (Gesprächsleitfaden AGFK-SL · Portal-Patch deployed & SHA-verifiziert · finales Angebotsmodell AGFK-SL · Deployment-Korrektur GitHub-Incident) · 📮 Meldung RadPlan Pro 09.08.2026 (v3.2-Patch geliefert · KI-Modellumstellung · Impressum-Anschrift · Schwachpunkt Startsequenz)
 
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Claude liefert die komplette Datei neu → Armin committet. Fertig.
 
@@ -19,13 +19,12 @@
 |---|---|---|
 | ~~15.07.~~ / ~~31.07.2026~~ **beide abgelaufen** | JGF FL1 + FL2 – Ausgang nachtragen (eingereicht ja/nein?), danach Zeile raus | Förderung-Projekt |
 | **30.09.2026** | FRL-NMOB Jahres-Stichtag **+ AGFK-Kennenlern-Zugänge laufen ab (vorher Gespräch führen)** **+ RAD-Lab-Testrunde endet** | Förderung / Tool-Portal |
-| prüfen | RadPlan Pro: 19.07.-Deployment (JSON-Pipeline) erfolgt – ist die Login-bereinigte Version mit drin? | RadPlan-Projekt |
+| **offen** | RadPlan Pro: **v3.2-Patch vom 09.08.2026 geliefert, Deployment (GitHub → Netlify) steht aus** – danach Testphase mit neuem KI-Modell fortsetzen | RadPlan-Projekt |
 | prüfen | Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den **Passwortmanager** übertragen, bevor die 30-Tage-Session abläuft | Tool-Portal / RadPlan |
-| offen | Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe und Abrechnung | Tool-Portal |
-| **jetzt** | Projekt-Check: Freigabe für **Referenznennung + Zitate** aus der Testrunde bei der AGFK-SL einholen – solange die Testphase läuft, ist es eine Formsache | Tool-Portal |
-| **terminieren** | Gespräch AGFK-SL (Irene): **Angebotspaket vollständig (Angebot · Nutzungsvereinbarung · Leitfaden · Rechnung, Stand 06.08.2026)** – Termin noch nicht vereinbart, Angebot gültig bis 30.09.2026 | Tool-Portal / BÜRO 2Rat |
-| **beauftragt 02.08.** | Missbrauchsschutz Stufe 1–3 (Urhebervermerk-Audit · Nutzungshinweis · Lizenznehmer sichtbar · Code-Policy) – Auftrag liegt beim Tool-Portal, 📮-Meldung zurück | Tool-Portal |
-| wartet | AGFK-Logo → dann Branding zur Laufzeit einbauen (kein eigener Ordner, siehe 2.1) | Tool-Portal |
+| offen / **jetzt** | Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe und Abrechnung · **parallel** Freigabe für Referenznennung + Zitate aus der Testrunde einholen (solange die Testphase läuft, Formsache) | Tool-Portal |
+| **terminieren** | Gespräch AGFK-SL (Irene): **Angebotspaket vollständig (Angebot · Nutzungsvereinbarung · Leitfaden · Rechnung, Stand 06.08.2026)** – Termin noch nicht vereinbart, Angebot gültig bis 30.09.2026 · danach AGFK-Logo → Branding zur Laufzeit (siehe 2.1) | Tool-Portal / BÜRO 2Rat |
+| **beauftragt 02.08.** | Missbrauchsschutz Stufe 1–3 (Urhebervermerk-Audit · Nutzungshinweis · Lizenznehmer sichtbar · Code-Policy) – Auftrag liegt beim Tool-Portal, 📮-Meldung zurück · **vorher:** Pages-Build nach dem GitHub-Incident vom 06.08. gegenprüfen (githubstatus.com → Actions-Tab → Kachel-Badge „07/2026 · v3“ im Inkognito-Fenster) | Tool-Portal |
+| **klären** | **Neue Geschäftsanschrift**: RadPlan-Impressum und Skills sind bereits umgestellt – Anschrift in diesem Verzeichnis (7.1 und URL-Verzeichnis) noch alt, Wert nachreichen | BÜRO 2Rat |
 
 **Erledigt 31.07.:** Alle vier Uploads deployed und im Repo gegengeprüft (Projekt-Check v2 · Fördermittel-Finder v3 in `kunden/` **und** `demo/` · VwV-StVO 2025 v3) ✓ · 1-Byte-Leiche `demo/foerdermittelfinder.html` gelöscht ✓ · Bügelplaner live und von Startseite **und** Portal-Loginseite verlinkt ✓ – der Deployment-Rückstand im Tool-Portal ist damit abgearbeitet
 
@@ -102,7 +101,9 @@
 - **Repo:** github.com/2Rat/2Rat.github.io *(Ordner `Werkzeuge/`, Tools in `Werkzeuge/kunden/`)*
 - **Status:** läuft / produktiv · **Accessibility-Politur (7 Dateien) am 19.07.2026 deployed & verifiziert – Live-Stand = gepatchter Stand** · **Sichtbarkeitsschutz seit 11.07.2026:** `noindex` in allen `kunden/`-Tools + `robots.txt` im Repo-Root (sperrt `Werkzeuge/`, Cockpit, `cmd` für Suchmaschinen) · Wartungskalender-Dokument vorhanden (→ Tool-Portal-Projekt)
 - **Missbrauchsschutz Stufe 1–3 (beauftragt 02.08.2026, HUB-Entscheidung):** A Urhebervermerk-Audit aller Dateien in `kunden/` und `demo/` (2Rat-Vermerk + `2rat.org` in jeder Fußzeile) · B einheitlicher Nutzungshinweis in der Fußzeile · C Organisationsname aus `LICENSES` an die Tools durchreichen und in Kopfzeile, Fußzeile und **Ergebnis-Vermerk** anzeigen (Fallback „2Rat", kein Blocker bei fehlendem Wert) · D Code-Policy: ein Code je Organisation, 12+ Zeichen zufällig, max. 12 Monate Laufzeit, Wert sofort in den Passwortmanager. **Nicht im Auftrag:** Serverschutz (Netlify/Cloudflare Access) und Backend – erst ab drei zahlenden Lizenzen neu bewerten. Umsetzung nach Verify-First; Rückmeldung per 📮-Meldung.
-- **Portal-Patch 06.08.2026 deployed & verifiziert ✓:** `Werkzeuge/index.html` hochgeladen, Live-Fassung per SHA-256 byte-identisch mit der gelieferten Datei (440 Zeilen, kein Whitespace- oder Encoding-Verlust). Inhalt: Stand-Badge der Fördermittel-Finder-Kachel auf „07/2026 · v3“ korrigiert (Ausgangsbefund: veraltete Angabe „03/2026“), `PATHS.demo` → `../demo/` gefixt, PATHS-Kommentar präzisiert. AGFK-Lizenz unverändert mit allen fünf Werkzeugen. Geprüft über GitHub Raw (Auslieferungsquelle von Pages) – Browser-Gegenprobe mit Strg+F5 empfohlen.
+- **Portal-Patch 06.08.2026 – im Repo ✓, Auslieferung offen ⏳:** `Werkzeuge/index.html` hochgeladen, **Repo-Fassung** per SHA-256 byte-identisch mit der gelieferten Datei (440 Zeilen, kein Whitespace- oder Encoding-Verlust). Inhalt: Stand-Badge der Fördermittel-Finder-Kachel auf „07/2026 · v3“ korrigiert (Ausgangsbefund: veraltete Angabe „03/2026“), `PATHS.demo` → `../demo/` gefixt, PATHS-Kommentar präzisiert. AGFK-Lizenz unverändert mit allen fünf Werkzeugen.
+- ⚠️ **Korrektur zur Deployment-Meldung (Abend 06.08.2026):** Die Bestätigung war verfrüht. **GitHub-Incident „Actions and Pages – degraded availability“** blockierte den Pages-Build; hängende und fehlschlagende Workflow-Läufe. Folge: Das Repo trägt die korrigierte Fassung, die ausgelieferte Seite zeigte weiterhin den letzten erfolgreichen Build (Badge „03/2026“). Kein Datenverlust, Portal voll funktionsfähig. **Gegenprobe nach Ende des Incidents steht aus** (→ AKUT).
+- **Lehre für künftige Prüfungen:** `raw.githubusercontent.com` belegt nur den **Repo-Stand**, nicht den **ausgelieferten** Stand. Live-Verifikation braucht zusätzlich den Actions-Tab (grüner Build) und eine Browser-Gegenprobe im Inkognito-Fenster.
 - **Nächster Schritt:** Missbrauchsschutz Stufe 1–3 umsetzen (→ Tool-Portal-Projekt); veralteten Array-Kommentar zur intern-Lizenz löschen; nach AGFK-Logo: `agfk-sl/`-Varianten befüllen
 
 ### 2.2 Zuständigkeiten Radverkehr Saarland
@@ -122,7 +123,7 @@
 - ⚠️ **`quoteAGFK` geprüft (27.07.2026) – Ergebnis: sachlich falsch.** Der erhöhte Satz von bis zu 90 % gilt für **finanzschwache** Gemeinden, Städte und Landkreise; die Finanzschwäche stellt das Landesverwaltungsamt als Kommunalaufsichtsbehörde fest und muss bei Antragstellung nachgewiesen werden. Die Systematik lautet bis zu 75 % / 90 % bei Finanzschwäche / bis zu 100 % bei besonderem Landesinteresse. **Eine AGFK-Mitgliedschaft ist in keiner Fundstelle Fördervoraussetzung.** Das Feld enthält in jeder Zeile exakt den höchsten alternativen Satz der Kundenfassung (mal Finanzschwäche, mal Schule/Kita, bei den Abstellanlagen beide zusammengefasst) – also eine Umetikettierung, keinen eigenen Fördertatbestand.
 - **Folge:** `quoteAGFK` ersatzlos streichen. Die AGFK-Fassung darf keinen eigenen Datenstand führen, sondern nur eine Co-Branding-Hülle über demselben Datenblock sein – sonst wiederholt sich das Auseinanderlaufen wie bei den Kontaktdaten in Projekt-Check und Zuständigkeiten. **Risiko entschärft:** Die Entwürfe waren nie live, Kunden- und Demofassung sind korrekt.
 - **v3 (27.07.2026) – am 31.07.2026 in beiden Fassungen deployed & im Repo gegengeprüft ✓** (dynamische Frist und Vorhabenbeginn-Warnfeld in `kunden/` wie in `demo/` nachgewiesen, Demo trägt „Stand 07/2026"): Antragsfrist rechnet jetzt dynamisch („30.09.2026 – noch X Tage", ab sechs Wochen Restlauf rot, am Stichtag „heute!", danach automatisch aufs Folgejahr); Ausnahme **31.05.2030** berücksichtigt, nach Ablauf der Richtlinie erscheint ein Hinweis statt eines falschen Datums (über acht Stichtage inkl. Jahreswechsel durchgerechnet) · Hinweis zum Vorhabenbeginn als rotes Warnfeld oben im Ergebnis mit Erläuterung, dass bereits der Abschluss eines Lieferungs- oder Leistungsvertrags als Beginn gilt – aus den Standardhinweisen entfernt, damit er nicht doppelt erscheint · beides ebenfalls im Ergebnis-Vermerk · Demo-Fassung trägt jetzt ebenfalls eine Versionsangabe im Kopf.
-- **06.08.2026:** Stand-Badge der Portal-Kachel zeigt jetzt „Stand 07/2026 · v3“ statt „03/2026“ – die Kachel-Angabe passt damit wieder zum tatsächlichen Dateistand (Patch in `Werkzeuge/index.html`, → 2.1).
+- **06.08.2026:** Stand-Badge der Portal-Kachel auf „Stand 07/2026 · v3“ korrigiert (vorher „03/2026“) – **im Repo, Auslieferung wegen des GitHub-Incidents noch gegenzuprüfen** (Patch in `Werkzeuge/index.html`, → 2.1).
 - **Nächster Schritt:** `quoteAGFK` aus den AGFK-Entwürfen entfernen; Aktualisierung bei neuer FRL-Fassung
 
 ### 2.4 Konzept-Check
@@ -262,7 +263,9 @@
 - **Status:** läuft · **v3.2 (12.07.2026)** – Regelwerks-Hierarchie Saarland (ERA maßgeblich, MuLöS BW nur ergänzend), DTV→Kfz/h-Umrechnung im KI-Prompt, Tempo bis 100 (außerorts), max_tokens 2000, Datenschutz auf Netlify korrigiert. Impressum-Mail ✓ erledigt. · 19.07.: **bereinigte Version** (neuer Login, localStorage-Überlauf-Schutz), Zugang rotiert · 19.07.: **KI-Analyse auf JSON-first-Pipeline umgestellt** (Whitelist-Validierung, editierbares Feld „Fachliche Bewertung"), EXIF-GPS/Datum-Bugs behoben, **Bericht-Paket-Export** (JSON inkl. Fotos) – **deployed, Testphase läuft**
 - **Festlegung:** Das KI-Feld heißt in allen Dokumenten immer **„Fachliche Bewertung"**; bei fachlich falscher KI-Analyse wird das Feld vor Export vollständig überschrieben (KI liefert Entwurf, Verantwortung bleibt beim Planer)
 - **Begleit-Skill:** Claude-Skill `radplan-bericht` erstellt & paketiert – erzeugt DOCX-Berichte aus dem Bericht-Paket (Ortstermin / Maßnahmenblätter / Hybrid; 2Rat- und Neutral-Modus); Karten dort aktuell Platzhalter, Testphase
-- **Nächster Schritt:** Testphase abschließen (Feldtest inkl. Probe-KI-Analyse mit DTV-Wert); danach: Import-Button für Bericht-Paket, KI-Prompt-Erweiterung (Klassifikation Strecke/Querung/Knoten), Karten-Workflow klären; Linien-Erfassung verfeinern
+- **Patch 09.08.2026 geliefert, Deployment offen ⏳:** `index.html` (v3.2) gepatcht – Auslieferung über GitHub → Netlify steht noch aus. Inhalt: **KI-Modell auf `claude-sonnet-5` umgestellt** (Standard), `claude-haiku-4-5-20251001` als Option; `normModel()` migriert abgekündigte Modell-IDs aus dem localStorage · **Impressum auf die neue Geschäftsanschrift umgestellt** – die neue Anschrift betrifft alle 2Rat-Ausgaben, die Skills sind bereits angepasst (→ 7.1 und URL-Verzeichnis hier noch nachzuziehen)
+- ⚠️ **Bekannter Schwachpunkt (dokumentiert 09.08.2026):** Die Startsequenz bricht bei einem Fehler in `initMap()` ab – Einstellungen und Anmeldestatus werden dann nicht geladen. Bestandsverhalten, **keine Datenverluste**. Fix zusammen mit dem KI-Prompt-Umbau geplant.
+- **Nächster Schritt:** v3.2 deployen; Testphase mit neuem Modell abschließen – **Vergleichstest gegen die drei bekannten Fehlinterpretationen aus dem letzten Feldtest**; danach KI-Prompt-Umbau (Klassifikation Strecke/Querung/Knoten) inkl. Startsequenz-Fix; Karten-Workflow klären; Linien-Erfassung verfeinern · **bewusst zurückgestellt:** Import-Funktion für Bericht-Paket-JSON (bleibt offener Punkt)
 
 ### 4.3 Schulweg-Detektive
 - **Kunde / Partner:** Jugendpflege Kirkel + 2Rat (Technik)
@@ -338,7 +341,7 @@
 ### 7.1 2Rat Büroverwaltung / Stammdatendokument
 - **Kunde / Partner:** intern
 - **Zweck:** Claude-Projekt „BÜRO 2Rat" mit Stammdaten, Vorlagen, Projekt-Register. Logo liegt vor (`Logo_2Rat_clean__1_.png`).
-- **Offizielle Büro-E-Mail:** `fahr2rat@gmail.com` · **Anschrift:** Ritter-von-Hagen-Str. 13, 66822 Lebach
+- **Offizielle Büro-E-Mail:** `fahr2rat@gmail.com` · **Anschrift:** ⚠️ **Umstellung auf neue Geschäftsanschrift läuft (08/2026)** – RadPlan-Impressum und Claude-Skills sind bereits umgestellt, der Wert ist hier noch nachzutragen (bis dahin galt: Ritter-von-Hagen-Str. 13, 66822 Lebach)
 - **Status:** im Aufbau
 - **Nächster Schritt:** Steuernummer / IBAN eintragen; einheitliche Briefkopf-DOCX-Vorlage erstellen (offen)
 
@@ -411,7 +414,7 @@
 | Ressource | Adresse |
 |---|---|
 | **E-Mail Büro (offiziell)** | **fahr2rat@gmail.com** |
-| Anschrift | Ritter-von-Hagen-Str. 13, 66822 Lebach |
+| Anschrift | ⚠️ neue Geschäftsanschrift nachzutragen (→ 7.1) |
 | AGFK-SL | geschaeftstelle@agfk-sl.de |
 
 ---
@@ -487,4 +490,4 @@
 
 ---
 
-*2Rat – Büro für Radverkehrsplanung · Stand: 06.08.2026*
+*2Rat – Büro für Radverkehrsplanung · Stand: 09.08.2026*
