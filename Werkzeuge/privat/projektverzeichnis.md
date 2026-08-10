@@ -5,9 +5,9 @@
 
 # 2Rat – Gesamt-Projektverzeichnis
 
-**Stand:** 09.08.2026
+**Stand:** 10.08.2026
 **Anzahl Vorhaben (konsolidiert):** 37
-**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 3 × – zuletzt Werkzeugdokumentation) · **Repo-Prüfungen 31.07.2026** (Bügelplaner live · vier Tool-Uploads verifiziert · 1-Byte-Leiche gelöscht) · **HUB-Entscheidung 02.08.2026** (Missbrauchsschutz Stufe 1–3 beauftragt) · 📮 Meldungen Tool-Portal 06.08.2026 (Gesprächsleitfaden AGFK-SL · Portal-Patch deployed & SHA-verifiziert · finales Angebotsmodell AGFK-SL · Deployment-Korrektur GitHub-Incident) · 📮 Meldung RadPlan Pro 09.08.2026 (v3.2-Patch geliefert · KI-Modellumstellung · Impressum-Anschrift · Schwachpunkt Startsequenz)
+**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 3 × – zuletzt Werkzeugdokumentation) · **Repo-Prüfungen 31.07.2026** (Bügelplaner live · vier Tool-Uploads verifiziert · 1-Byte-Leiche gelöscht) · **HUB-Entscheidung 02.08.2026** (Missbrauchsschutz Stufe 1–3 beauftragt) · 📮 Meldungen Tool-Portal 06.08.2026 (Gesprächsleitfaden AGFK-SL · Portal-Patch deployed & SHA-verifiziert · finales Angebotsmodell AGFK-SL · Deployment-Korrektur GitHub-Incident) · 📮 Meldung RadPlan Pro 09.08.2026 (v3.2-Patch geliefert · KI-Modellumstellung · Impressum-Anschrift · Schwachpunkt Startsequenz) · 📮 Meldung RadPlan Pro 10.08.2026 (Sammeldatei deployed · KI-Prompt v2 produktiv · Share-Bug Dateityp, Fix geliefert)
 
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Claude liefert die komplette Datei neu → Armin committet. Fertig.
 
@@ -19,7 +19,7 @@
 |---|---|---|
 | ~~15.07.~~ / ~~31.07.2026~~ **beide abgelaufen** | JGF FL1 + FL2 – Ausgang nachtragen (eingereicht ja/nein?), danach Zeile raus | Förderung-Projekt |
 | **30.09.2026** | FRL-NMOB Jahres-Stichtag **+ AGFK-Kennenlern-Zugänge laufen ab (vorher Gespräch führen)** **+ RAD-Lab-Testrunde endet** | Förderung / Tool-Portal |
-| **offen** | RadPlan Pro: **v3.2-Patch vom 09.08.2026 geliefert, Deployment (GitHub → Netlify) steht aus** – danach Testphase mit neuem KI-Modell fortsetzen | RadPlan-Projekt |
+| **offen** | RadPlan Pro: Sammeldatei vom 09.08. ist deployed ✓ – **neuer Share-Fix vom 10.08.2026 geliefert, Deployment (GitHub → Netlify) steht aus**; danach Feldtest fortsetzen | RadPlan-Projekt |
 | prüfen | Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den **Passwortmanager** übertragen, bevor die 30-Tage-Session abläuft | Tool-Portal / RadPlan |
 | offen / **jetzt** | Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe und Abrechnung · **parallel** Freigabe für Referenznennung + Zitate aus der Testrunde einholen (solange die Testphase läuft, Formsache) | Tool-Portal |
 | **terminieren** | Gespräch AGFK-SL (Irene): **Angebotspaket vollständig (Angebot · Nutzungsvereinbarung · Leitfaden · Rechnung, Stand 06.08.2026)** – Termin noch nicht vereinbart, Angebot gültig bis 30.09.2026 · danach AGFK-Logo → Branding zur Laufzeit (siehe 2.1) | Tool-Portal / BÜRO 2Rat |
@@ -263,9 +263,12 @@
 - **Status:** läuft · **v3.2 (12.07.2026)** – Regelwerks-Hierarchie Saarland (ERA maßgeblich, MuLöS BW nur ergänzend), DTV→Kfz/h-Umrechnung im KI-Prompt, Tempo bis 100 (außerorts), max_tokens 2000, Datenschutz auf Netlify korrigiert. Impressum-Mail ✓ erledigt. · 19.07.: **bereinigte Version** (neuer Login, localStorage-Überlauf-Schutz), Zugang rotiert · 19.07.: **KI-Analyse auf JSON-first-Pipeline umgestellt** (Whitelist-Validierung, editierbares Feld „Fachliche Bewertung"), EXIF-GPS/Datum-Bugs behoben, **Bericht-Paket-Export** (JSON inkl. Fotos) – **deployed, Testphase läuft**
 - **Festlegung:** Das KI-Feld heißt in allen Dokumenten immer **„Fachliche Bewertung"**; bei fachlich falscher KI-Analyse wird das Feld vor Export vollständig überschrieben (KI liefert Entwurf, Verantwortung bleibt beim Planer)
 - **Begleit-Skill:** Claude-Skill `radplan-bericht` erstellt & paketiert – erzeugt DOCX-Berichte aus dem Bericht-Paket (Ortstermin / Maßnahmenblätter / Hybrid; 2Rat- und Neutral-Modus); Karten dort aktuell Platzhalter, Testphase
-- **Patch 09.08.2026 geliefert, Deployment offen ⏳:** `index.html` (v3.2) gepatcht – Auslieferung über GitHub → Netlify steht noch aus. Inhalt: **KI-Modell auf `claude-sonnet-5` umgestellt** (Standard), `claude-haiku-4-5-20251001` als Option; `normModel()` migriert abgekündigte Modell-IDs aus dem localStorage · **Impressum auf die neue Geschäftsanschrift umgestellt** – die neue Anschrift betrifft alle 2Rat-Ausgaben, die Skills sind bereits angepasst (→ 7.1 und URL-Verzeichnis hier noch nachzuziehen)
+- **Patch 09.08.2026 – am 10.08.2026 deployed ✓ (Sammeldatei):** `index.html` (v3.2). Inhalt: **KI-Modell auf `claude-sonnet-5` umgestellt** (Standard), `claude-haiku-4-5-20251001` als Option; `normModel()` migriert abgekündigte Modell-IDs aus dem localStorage · **Impressum auf die neue Geschäftsanschrift umgestellt** – die neue Anschrift betrifft alle 2Rat-Ausgaben, die Skills sind bereits angepasst (→ 7.1 und URL-Verzeichnis hier noch nachzuziehen)
+- **KI-Prompt v2 produktiv (10.08.2026) ✓:** Die Re-Analyse klassifiziert korrekt („Querungshilfe · Mittelinsel zu schmal") – der Fehlbefund der v1-Fassung ist damit behoben. Zwei Share-Buttons live.
+- ⚠️ **Bug im Feldtest 10.08.2026 – Fix geliefert, Deployment offen ⏳:** Web Share meldet „Permission denied", weil `application/json` bzw. `application/geo+json` nicht auf der Dateityp-Positivliste von Chrome für Android stehen. Lösung: geteilte Dateien laufen als `text/plain` (Dateiname und Endung `.json` bleiben erhalten) plus **Auto-Download-Fallback bei jedem Share-Fehler**; betrifft `shareReport` und `shareGeoJSON`.
+- 📌 **Lehre:** Browser-Web-APIs (Share, Gesture-Regeln, MIME-Positivlisten) vor dem Einbau gegen die Doku prüfen – dieselbe Disziplin wie bei der Anthropic-API.
 - ⚠️ **Bekannter Schwachpunkt (dokumentiert 09.08.2026):** Die Startsequenz bricht bei einem Fehler in `initMap()` ab – Einstellungen und Anmeldestatus werden dann nicht geladen. Bestandsverhalten, **keine Datenverluste**. Fix zusammen mit dem KI-Prompt-Umbau geplant.
-- **Nächster Schritt:** v3.2 deployen; Testphase mit neuem Modell abschließen – **Vergleichstest gegen die drei bekannten Fehlinterpretationen aus dem letzten Feldtest**; danach KI-Prompt-Umbau (Klassifikation Strecke/Querung/Knoten) inkl. Startsequenz-Fix; Karten-Workflow klären; Linien-Erfassung verfeinern · **bewusst zurückgestellt:** Import-Funktion für Bericht-Paket-JSON (bleibt offener Punkt)
+- **Nächster Schritt:** Share-Fix deployen; Testphase mit neuem Modell abschließen – **Vergleichstest gegen die drei bekannten Fehlinterpretationen aus dem letzten Feldtest**; danach Startsequenz-Fix; Karten-Workflow klären; Linien-Erfassung verfeinern · **bewusst zurückgestellt:** Import-Funktion für Bericht-Paket-JSON (bleibt offener Punkt)
 
 ### 4.3 Schulweg-Detektive
 - **Kunde / Partner:** Jugendpflege Kirkel + 2Rat (Technik)
@@ -490,4 +493,4 @@
 
 ---
 
-*2Rat – Büro für Radverkehrsplanung · Stand: 09.08.2026*
+*2Rat – Büro für Radverkehrsplanung · Stand: 10.08.2026*
