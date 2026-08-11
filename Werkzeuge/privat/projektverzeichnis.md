@@ -5,9 +5,9 @@
 
 # 2Rat – Gesamt-Projektverzeichnis
 
-**Stand:** 11.08.2026
+**Stand:** 11.08.2026 *(2. Fassung des Tages)*
 **Anzahl Vorhaben (konsolidiert):** 37
-**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 3 × – zuletzt Werkzeugdokumentation) · **Repo-Prüfungen 31.07.2026** (Bügelplaner live · vier Tool-Uploads verifiziert · 1-Byte-Leiche gelöscht) · **HUB-Entscheidung 02.08.2026** (Missbrauchsschutz Stufe 1–3 beauftragt) · 📮 Meldungen Tool-Portal 06.08.2026 (Gesprächsleitfaden AGFK-SL · Portal-Patch deployed & SHA-verifiziert · finales Angebotsmodell AGFK-SL · Deployment-Korrektur GitHub-Incident) · 📮 Meldung RadPlan Pro 09.08.2026 (v3.2-Patch geliefert · KI-Modellumstellung · Impressum-Anschrift · Schwachpunkt Startsequenz) · 📮 Meldung RadPlan Pro 10.08.2026 (Sammeldatei deployed · KI-Prompt v2 produktiv · Share-Bug Dateityp, Fix geliefert) · 📮 Meldung + Nachtrag AGFK-SL 11.08.2026 (Nutzungsvereinbarung überarbeitet · Angebot 2026-AGFK-03 neu erstellt · Dokument Bereitstellungsvarianten · Testaktion „Kritischer Blick“ · Briefkopf-Template repariert)
+**Quellen:** Fassung 05.05.2026 · Tool-Updates 12.07.2026 (RadPlan v3.2, Zuständigkeiten v16) · Förderung-Projekt · 📮 Meldung Tool-Portal 19.07.2026 (Accessibility-Deployment) · **Live-Repo-Analyse 19.07.2026** (Portal-index, LICENSES, projekt-check, karte-prototyp) · 📮 Meldungen Tool-Portal 27.07.2026 (RAD-Lab-Rückmeldungen, Zuständigkeiten v17, Vergabe-Assistent v3, Projekt-Check) · 📮 Meldungen 31.07.2026 (Bügelplaner, 3 × – zuletzt Werkzeugdokumentation) · **Repo-Prüfungen 31.07.2026** (Bügelplaner live · vier Tool-Uploads verifiziert · 1-Byte-Leiche gelöscht) · **HUB-Entscheidung 02.08.2026** (Missbrauchsschutz Stufe 1–3 beauftragt) · 📮 Meldungen Tool-Portal 06.08.2026 (Gesprächsleitfaden AGFK-SL · Portal-Patch deployed & SHA-verifiziert · finales Angebotsmodell AGFK-SL · Deployment-Korrektur GitHub-Incident) · 📮 Meldung RadPlan Pro 09.08.2026 (v3.2-Patch geliefert · KI-Modellumstellung · Impressum-Anschrift · Schwachpunkt Startsequenz) · 📮 Meldung RadPlan Pro 10.08.2026 (Sammeldatei deployed · KI-Prompt v2 produktiv · Share-Bug Dateityp, Fix geliefert) · 📮 Meldung + Nachtrag AGFK-SL 11.08.2026 (Nutzungsvereinbarung überarbeitet · Angebot 2026-AGFK-03 neu erstellt · Dokument Bereitstellungsvarianten · Testaktion „Kritischer Blick“ · Briefkopf-Template repariert) · 📮 Meldung Website 11.08.2026 (Radherbst abgesagt · Website-Neugestaltung live · Preisangaben von der Website entfernt)
 
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Claude liefert die komplette Datei neu → Armin committet. Fertig.
 
@@ -63,20 +63,20 @@
 - **Kunde / Partner:** Gemeinde Wadgassen
 - **Zweck:** Erste Saarland-Pilotkommune mit echter Bürgerbeteiligung – Referenzprojekt für die Kommunen-Kampagne (1.4).
 - **Status:** **abgeschlossen** ✓ – Abschlussbericht erstellt und an die Gemeinde versendet, positives Feedback; Abrechnung erledigt. Umsetzungsphase in Aussicht (haushaltsabhängig).
-- **Nächster Schritt:** Konzept-Check-Auswertung starten (→ 2.4); Wadgassen ist zum RAD-Lab eingeladen (→ 2.13); als Referenz in der Radherbst-Kampagne nutzen
+- **Nächster Schritt:** Konzept-Check-Auswertung starten (→ 2.4); Wadgassen ist zum RAD-Lab eingeladen (→ 2.13); als Referenz beim nächsten Flyer-Versand nutzen (→ 1.4, frühestens 2027)
 
 ### 1.3 Radverkehrskonzept Stadt Wadern
 - **Kunde / Partner:** Stadt Wadern
 - **Zweck:** Umsetzungsbegleitung zum bestehenden RVK plus Radwegemelder als niederschwelliger Vorlauf.
 - **Status:** ruht (Rückmeldung nach der Mai-Rats-Sitzung steht aus)
-- **Nächster Schritt:** Aktiv nachhaken – ggf. gekoppelt an die Radherbst-Kampagne (1.4) als Wiedereinstieg
+- **Nächster Schritt:** Aktiv nachhaken – eigenständig, nicht mehr an die Kampagne gekoppelt (1.4 ausgesetzt)
 
-### 1.4 Kommunen-Kampagne „Radherbst 2026"
+### 1.4 Kommunen-Kampagne (Flyer-Versand)
 - **Kunde / Partner:** intern (Vertriebskampagne)
-- **Zweck:** Systematische Ansprache der saarländischen Kommunen mit dem Radwegemelder. Frühjahrsaktion verschoben → Neuauflage als „Radherbst 2026" (Aktionszeitraum 01.09.–15.10.2026, inkl. Europäische Mobilitätswoche).
-- **Status:** vorbereitet (Material fertig, wartet auf Versand)
-- **Nächster Schritt:** Versand Anfang August 2026 (vorher Flyer-Datum aktualisieren, Test-Versand)
-- **Details (Preise, Strategie, Material, Rechtliches):** → Claude-Projekt **„BÜRO 2Rat"** (Session-Notizen)
+- **Zweck:** Systematische Ansprache der saarländischen Kommunen mit dem Radwegemelder.
+- **Status:** **ausgesetzt (11.08.2026)** – die Aktion „Radherbst 2026" **findet nicht statt**, ein Versand hat nie stattgefunden. Alle Radherbst-Fristen entfallen ersatzlos.
+- **Nächster Schritt:** Neuer Flyer-Versand **frühestens Anfang 2027**, Termin offen – vorher Material und Datumsangaben überarbeiten
+- **Details (Strategie, Material, Rechtliches):** → Claude-Projekt **„BÜRO 2Rat"** (Session-Notizen)
 
 ### 1.5 AGFK-SL Kunde (Tool-Lizenzierung) 🎉
 - **Kunde / Partner:** AGFK-SL (geschaeftstelle@agfk-sl.de)
@@ -157,6 +157,7 @@
 - **Kunde / Partner:** intern
 - **Zweck:** DOCX mit 2Rat-Briefkopf, dokumentiert Lizenzbedingungen und Konditionen für die Tool-Nutzung.
 - **Status:** abgeschlossen · ⚠️ **teilweise überholt (06.08.2026):** Sagt die AGFK-SL zum Angebotspaket zu, entfällt das Einzellizenzmodell für **Projekt-Check, Zuständigkeiten und Fördermittel-Finder** – diese drei wären dann über die AGFK-Website öffentlich verfügbar. **VwV-StVO 2025 (3.4) und Vergabe-Assistent (2.9) bleiben lizenzierbar.**
+- **11.08.2026:** Die Website nennt keine Preise und keine „Jahreslizenz für Kommunen" mehr (→ 5.1) – **kein Widerspruch mehr** zum AGFK-SL-Angebotspaket.
 - **Nächster Schritt:** Nach der AGFK-Entscheidung überarbeiten (Konditionen → BÜRO 2Rat)
 
 ### 2.9 Vergabe-Assistent Saarland
@@ -294,10 +295,12 @@
 
 ### 5.1 2rat.org Website
 - **Kunde / Partner:** eigen
-- **Zweck:** Außendarstellung 2Rat – Produktseiten, Kontakt, Kampagnenboxen.
+- **Zweck:** Außendarstellung 2Rat – Produktseiten, Kontakt, Einstieg in die Werkzeuge.
 - **Repo:** github.com/2Rat/2Rat.github.io
-- **Status:** läuft (Pflege)
-- **Nächster Schritt:** —
+- **Status:** live · **Neugestaltung am 11.08.2026 deployed und im Browser gegengeprüft ✓** – neue `index.html` (7 Blöcke, Karten-Hero, Personenblock mit Foto) plus zwei neue Unterseiten `radwegemelder.html` und `planungswerkzeuge.html`. Entfallen: Radherbst-Sektion (→ 1.4), Ticker, Fahrradfrühling-Button (→ 5.3). Neue Datei `armin-portrait.jpg` in der Repo-Wurzel (EXIF/GPS entfernt).
+- **Keine Preisangaben mehr:** Die Website nennt weder Preise noch eine „Jahreslizenz für Kommunen" – der Widerspruch zum AGFK-SL-Angebotspaket ist damit ausgeräumt (→ 1.5, 2.8).
+- **Offen:** Impressum und Datenschutz liegen weiterhin im Repo `velomeld` – Ablage klären; AGFK-SL-Referenz erst nach schriftlicher Freigabe aufnehmen (→ 1.5)
+- **Nächster Schritt:** Impressum/Datenschutz-Ablage entscheiden; Anschriftenwechsel (→ 7.1) auf den neuen Seiten nachziehen
 
 ### 5.2 Radwegemelder-Ergebnis-Cockpit
 - **Kunde / Partner:** eigen (öffentliche Produkt-Ausgabe)
@@ -309,8 +312,8 @@
 ### 5.3 Fahrradfrühling-Film „Speichenerwachen"
 - **Kunde / Partner:** eigen (Marketing-Asset)
 - **Zweck:** Animierter Awareness-Kurzfilm, eingebettet auf 2rat.org.
-- **Status:** live
-- **Nächster Schritt:** Bei Bedarf MP4-Konvertierung via OBS Studio
+- **Status:** vorhanden · **seit dem Website-Relaunch 11.08.2026 nicht mehr von der Startseite verlinkt** (Fahrradfrühling-Button entfallen, → 5.1)
+- **Nächster Schritt:** Entscheiden, ob der Film an anderer Stelle wieder eingebunden wird; bei Bedarf MP4-Konvertierung via OBS Studio
 
 ### 5.4 Persönliche Kommandozentrale
 - **Kunde / Partner:** eigen (Büro-intern)
@@ -380,7 +383,7 @@
 | Claude-Projekt | Behandelte Vorhaben | Rolle |
 |---|---|---|
 | **Projektübersicht 2Rat** | Pflege und Fortschreibung **dieses Verzeichnisses** – zentrale Statusübersicht aller Vorhaben. Hier laufen alle 📮-Meldungen aus den Werkstatt-Projekten ein. | **HUB** |
-| **BÜRO 2Rat** | Zentrales Büro- und Steuerungsprojekt: Stammdaten, Vorlagen, Steuer, Standardtexte · 1.4 Radherbst-Kampagne · Geschäftsinterna (Preise, Strategie, Rechtliches, Session-Notizen) – **bleiben dort, nicht ins öffentliche Verzeichnis!** | Büro & Vertrieb |
+| **BÜRO 2Rat** | Zentrales Büro- und Steuerungsprojekt: Stammdaten, Vorlagen, Steuer, Standardtexte · 1.4 Kommunen-Kampagne · Geschäftsinterna (Preise, Strategie, Rechtliches, Session-Notizen) – **bleiben dort, nicht ins öffentliche Verzeichnis!** | Büro & Vertrieb |
 | **Hostenbach** | 1.1 · 3.2 QAD · 3.5 Planrahmen | Kundenprojekt |
 | **2Rat Radwegemelder Webseite Dashboard** | 4.1 · 1.2 · Supabase | Produkt-Hauptprojekt |
 | **Schulweg-Detektive** | 4.3 | Kooperation Kirkel |
@@ -403,7 +406,9 @@
 
 | Ressource | URL |
 |---|---|
-| 2Rat Website | www.2rat.org |
+| 2Rat Website (Startseite, neu 11.08.2026) | www.2rat.org |
+| Website – Radwegemelder | www.2rat.org/radwegemelder.html |
+| Website – Planungswerkzeuge | www.2rat.org/planungswerkzeuge.html |
 | Werkzeuge-Portal (Login) | www.2rat.org/Werkzeuge |
 | Tool-Dateien (Vollversionen) | www.2rat.org/Werkzeuge/kunden/ *(6 Tools + Karten-Prototyp)* |
 | AGFK-Varianten (geplant) | www.2rat.org/Werkzeuge/agfk-sl/ *(noch leer)* |
@@ -434,9 +439,6 @@
 |---|---|---|
 | ~~15.07.2026~~ | Förderung (JGF FL1) | Skizzen-Frist **verstrichen** – Ausgang nachtragen |
 | **31.07.2026** | Förderung (JGF FL2) | Antrags-Frist – nur junge Menschen bis 25, Raumbezug Bildungs-/Jugendeinrichtungen! |
-| **Anfang Aug 2026** | 1.4 Radherbst-Kampagne | Versand (Flyer-Datum aktualisieren → Test → Batches) |
-| **25.08.2026** | 1.4 Radherbst-Kampagne | Rückmelde-Frist der Kommunen |
-| **01.09.–15.10.2026** | 1.4 Radherbst-Kampagne | Aktionszeitraum (EMW 16.–22.09.) |
 | **30.09.2026** | Förderung (FRL-NMOB) | Jahres-Stichtag |
 | **30.09.2026** | 1.5 AGFK-SL | Kennenlern-Tools laufen ab (`toolExpires`) → vorher Gespräch über die Fortsetzung |
 | **30.09.2026** | 1.5 AGFK-SL | **Gültigkeit des Angebots 2026-AGFK-03 endet** |
@@ -449,6 +451,8 @@
 | **Anfang 2028** | 2.9 Vergabe-Assistent | Neue EU-Schwellenwerte einpflegen (aktuelle Werte gelten bis 31.12.2027) |
 
 **Geklärt 19.07.:** AGFK-Code (neue Lizenz bis 15.05.2027) · Wadgassen-Pilot (abgeschlossen) · Wadern (ruht, nachhaken) · Demo-Code (Freemium ohne Code, geklärt)
+
+**Entfallen 11.08.:** Alle Radherbst-Fristen (Versand · Rückmeldung 25.08. · Aktionszeitraum 01.09.–15.10.) – die Aktion findet nicht statt (→ 1.4)
 
 **Geklärt 27.07.:** Kontaktdaten der Straßenverkehrsbehörden geprüft (Neunkirchen korrigiert) · EU-Schwellenwerte 2026/27 im Vergabe-Assistenten bereits aktuell · Kartenwunsch aus der Testrunde eingeordnet (ZORA und Google-Maps-Embed ausgeschlossen, GeoPortal Saarland als Ersatz)
 
@@ -463,10 +467,10 @@
 | **läuft / live / produktiv / stabil / aktiv** | 23 | 1.5, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.10, **2.11**, **2.13**, **2.14**, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1 |
 | **teils läuft** | 1 | 1.1 *(LP1 abgeschlossen ✓ · LP2 offen)* |
 | **abgeschlossen** | 4 | **1.2**, 2.8, 3.5, 7.3 |
-| **vorbereitet** | 3 | 1.4, 2.6 *(Demo-Konzept)*, 3.2 |
+| **vorbereitet** | 2 | 2.6 *(Demo-Konzept)*, 3.2 |
 | **in Entwicklung / im Aufbau** | 2 | 2.5, 7.1 |
 | **Experiment / Prototyp** | 1 | 2.12 |
-| **ruht** | 1 | 1.3 |
+| **ruht / ausgesetzt** | 2 | 1.3, **1.4** |
 | **offen** | 1 | 7.2 |
 | **verworfen** | 1 | 8.1 |
 
@@ -501,4 +505,4 @@
 
 ---
 
-*2Rat – Büro für Radverkehrsplanung · Stand: 11.08.2026*
+*2Rat – Büro für Radverkehrsplanung · Stand: 11.08.2026 (2. Fassung)*
