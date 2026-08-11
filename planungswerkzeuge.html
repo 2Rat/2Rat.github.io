@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planungswerkzeuge für Kommunen | 2Rat</title>
+  <meta name="description" content="Entscheidungshilfen im Browser für die Radverkehrsplanung im Saarland: Zuständigkeiten, Fördermittel, Vergabe, VwV-StVO 2025, Abstellanlagen.">
+  <meta name="author" content="2Rat – Büro für Radverkehrsplanung, Armin Jung">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.2rat.org/planungswerkzeuge.html">
+  <meta property="og:title" content="Planungswerkzeuge für Kommunen | 2Rat">
+  <meta property="og:description" content="Entscheidungshilfen im Browser für die Radverkehrsplanung im Saarland: Zuständigkeiten, Fördermittel, Vergabe, VwV-StVO 2025, Abstellanlagen.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.2rat.org/planungswerkzeuge.html">
+  <meta property="og:image" content="https://www.2rat.org/Logo_2Rat_clean.png">
+  <meta property="og:locale" content="de_DE">
+  <meta name="geo.region" content="DE-SL">
+  <meta name="geo.placename" content="Lebach">
+  <link rel="icon" type="image/png" href="Logo_2Rat_clean.png">
+
+  <!-- Schriften werden lokal aus fonts/ geladen. Keine Verbindung zu
+       Google oder anderen Dritten. Lizenztext: fonts/OFL.txt -->
+  <style>
+    /* Lokale Schriften – keine Verbindung zu Google. Lizenz: fonts/OFL.txt */
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-v15-latin_latin-ext-regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-v15-latin_latin-ext-500.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-v15-latin_latin-ext-600.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-v15-latin_latin-ext-700.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Outfit'; src:url('fonts/outfit-v15-latin_latin-ext-800.woff2') format('woff2'); font-weight:800; font-style:normal; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dm-sans-v17-latin_latin-ext-regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dm-sans-v17-latin_latin-ext-500.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dm-sans-v17-latin_latin-ext-600.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dm-sans-v17-latin_latin-ext-700.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+    @font-face { font-family:'DM Sans'; src:url('fonts/dm-sans-v17-latin_latin-ext-800.woff2') format('woff2'); font-weight:800; font-style:normal; font-display:swap; }
+
+    :root{
+      --green:#66A242; --green-dark:#4F7F30;
+      --blue:#0671B9;  --blue-dark:#046091;
+      --beige:#F5E6C8;
+      --paper:#FFFFFF; --paper-2:#F8F7F3;
+      --ink:#22261F; --text:#3D3D3D; --text-light:#6F6F68;
+      --line:#E3E2DB;
+      --warn:#C0522F; --sun:#E0A93B;
+      --wrap:1120px;
+      --display:'Outfit',system-ui,-apple-system,sans-serif;
+      --body:'DM Sans',system-ui,-apple-system,sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--text);
+      font-family:var(--body);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
+    img{max-width:100%;height:auto}
+    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+
+    /* Kopf */
+    header{border-bottom:1px solid var(--line);background:var(--paper);
+      position:sticky;top:0;z-index:40}
+    .head{display:flex;align-items:center;gap:32px;padding:16px 0}
+    .head__logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .head__logo img{height:38px;width:auto}
+    .head__logo span{font-family:var(--display);font-weight:800;font-size:22px;
+      letter-spacing:-.02em;color:var(--ink);line-height:1}
+    nav{margin-left:auto;display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+    nav a{text-decoration:none;font-size:15.5px;color:var(--text);padding:4px 0;
+      border-bottom:2px solid transparent;transition:border-color .15s,color .15s}
+    nav a:hover{color:var(--ink);border-color:var(--green)}
+    nav a[aria-current="page"]{color:var(--ink);border-color:var(--green);font-weight:500}
+    nav a.nav__cta{border:1px solid var(--green);color:var(--green-dark);font-weight:700;
+      padding:9px 17px;border-radius:6px}
+    nav a.nav__cta:hover{background:var(--green);color:#fff;border-color:var(--green)}
+    nav a.nav__cta[aria-current="page"]{background:var(--green);color:#fff}
+
+    /* Grundbausteine */
+    section{padding:88px 0}
+    .sec--tint{background:var(--paper-2);border-block:1px solid var(--line)}
+    .eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--green-dark);margin:0 0 18px}
+    h1{font-family:var(--display);font-weight:800;color:var(--ink);
+      font-size:clamp(33px,4.3vw,52px);line-height:1.09;letter-spacing:-.025em;margin:0 0 22px}
+    h1 .q{color:var(--text-light);display:block;font-weight:600}
+    h2{font-family:var(--display);font-weight:800;color:var(--ink);
+      font-size:clamp(26px,3.1vw,37px);line-height:1.16;letter-spacing:-.02em;margin:0 0 16px}
+    h3{font-family:var(--display);font-weight:700;font-size:21px;color:var(--ink);
+      margin:0 0 10px;letter-spacing:-.01em;line-height:1.25}
+    .lead{font-size:19.5px;color:var(--text);max-width:31em;margin:0 0 32px}
+    .sec__intro{font-size:19px;color:var(--text-light);max-width:34em;margin:0 0 54px}
+    .cta{display:inline-block;background:var(--green);color:#fff;text-decoration:none;
+      font-weight:700;font-size:17px;padding:15px 30px;border-radius:7px;
+      transition:background .15s,transform .15s}
+    .cta:hover{background:var(--green-dark);transform:translateY(-1px)}
+    .cta-sub{display:inline-block;margin-left:22px;font-size:16px;color:var(--blue-dark);
+      text-decoration:none;border-bottom:1px solid rgba(6,113,185,.35)}
+    .cta-sub:hover{border-color:var(--blue)}
+    .link{color:var(--blue-dark);text-decoration:none;font-weight:500;
+      border-bottom:1px solid rgba(6,113,185,.3)}
+    .link:hover{border-color:var(--blue)}
+
+    /* Hero */
+    .hero{padding:80px 0 76px;border-bottom:1px solid var(--line)}
+    .hero__grid{display:grid;grid-template-columns:1fr 1fr;gap:68px;align-items:center}
+    .hero--klein{padding:64px 0 56px}
+    .hero--klein h1{max-width:15em}
+
+    /* Karte */
+    .map{width:100%;height:auto;display:block;border-radius:10px;
+      border:1px solid var(--line);background:var(--paper-2)}
+    .pin{opacity:0;transform:translateY(-10px);animation:drop .5s cubic-bezier(.2,.8,.3,1) forwards}
+    .pin:nth-of-type(1){animation-delay:.25s}.pin:nth-of-type(2){animation-delay:.38s}
+    .pin:nth-of-type(3){animation-delay:.51s}.pin:nth-of-type(4){animation-delay:.64s}
+    .pin:nth-of-type(5){animation-delay:.77s}.pin:nth-of-type(6){animation-delay:.90s}
+    @keyframes drop{to{opacity:1;transform:translateY(0)}}
+    .ring{transform-origin:center;animation:pulse 3.4s ease-in-out 1.2s infinite}
+    @keyframes pulse{0%,100%{opacity:.16}50%{opacity:.32}}
+    .map__cap{margin:14px 2px 0;font-size:14.5px;color:var(--text-light)}
+
+    /* Dreierraster */
+    .drei{display:grid;grid-template-columns:repeat(3,1fr);gap:50px}
+    .zwei{display:grid;grid-template-columns:repeat(2,1fr);gap:50px}
+    .leistung p{margin:0 0 14px;font-size:16.5px}
+    .ico{width:34px;height:34px;stroke:var(--green-dark);stroke-width:1.6;fill:none;
+      stroke-linecap:round;stroke-linejoin:round;margin-bottom:20px}
+
+    /* Zeilenliste (Werkzeuge) */
+    .tools__group{margin:38px 0 2px;font-size:12.5px;font-weight:700;letter-spacing:.13em;
+      text-transform:uppercase;color:var(--green-dark)}
+    .tools__group:first-of-type{margin-top:0}
+    .tool{display:grid;grid-template-columns:230px 1fr 190px;gap:34px;align-items:baseline;
+      padding:26px 0;border-top:1px solid var(--line)}
+    .tool:last-of-type{border-bottom:1px solid var(--line)}
+    .tool__name{font-family:var(--display);font-weight:700;font-size:20px;color:var(--ink);
+      letter-spacing:-.01em}
+    .tool__desc{margin:0;font-size:16.5px}
+    .tool__meta{display:flex;flex-direction:column;align-items:flex-start;gap:9px}
+    .tool__meta a{font-size:15.5px;font-weight:700;color:var(--blue-dark);
+      text-decoration:none;border-bottom:1px solid rgba(6,113,185,.3)}
+    .tool__meta a:hover{border-color:var(--blue)}
+    .tag{font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+      color:var(--text-light);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+    .tag--frei{color:var(--green-dark);border-color:#C9DEB9}
+    .nachsatz{margin:26px 0 0;font-size:16px;color:var(--text-light);max-width:40em}
+
+    /* Referenz / Zahlen */
+    .ref{display:grid;grid-template-columns:1.05fr 1fr;gap:68px;align-items:center}
+    .zahlen{display:flex;gap:44px;margin:32px 0 0;flex-wrap:wrap}
+    .zahl b{display:block;font-family:var(--display);font-weight:800;font-size:46px;
+      color:var(--blue);line-height:1;letter-spacing:-.03em}
+    .zahl span{display:block;font-size:14.5px;color:var(--text-light);margin-top:7px;max-width:9em}
+    .kasten{border-left:3px solid var(--green);padding:6px 0 6px 26px}
+    .kasten p{margin:0 0 12px;font-size:16.5px}
+    .kasten p:last-child{margin-bottom:0}
+
+    /* Person */
+    .person{display:grid;grid-template-columns:340px 1fr;gap:56px;align-items:start}
+    .person img{border-radius:10px;border:1px solid var(--line);display:block;width:100%}
+    .person__name{font-family:var(--display);font-weight:800;font-size:23px;color:var(--ink);
+      margin:18px 0 2px;letter-spacing:-.01em}
+    .person__rolle{font-size:15px;color:var(--text-light);margin:0}
+
+    /* Liste mit Haken */
+    ul.haken{list-style:none;padding:0;margin:0 0 8px}
+    ul.haken li{position:relative;padding:0 0 11px 30px;font-size:16.5px}
+    ul.haken li::before{content:"";position:absolute;left:2px;top:9px;width:13px;height:8px;
+      border-left:2px solid var(--green);border-bottom:2px solid var(--green);
+      transform:rotate(-45deg)}
+
+    /* Kontakt / Schluss */
+    .kontakt{display:grid;grid-template-columns:1.1fr 1fr;gap:64px}
+    .kdaten{list-style:none;padding:0;margin:0 0 26px}
+    .kdaten li{padding:0 0 10px;font-size:17px}
+    .kdaten a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--line)}
+    .kdaten a:hover{border-color:var(--green)}
+    .schluss{text-align:center}
+    .schluss p{max-width:32em;margin:0 auto 32px;color:var(--text-light);font-size:19px}
+    footer{border-top:1px solid var(--line);padding:26px 0;font-size:14.5px;color:var(--text-light)}
+    .foot{display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+    .foot span:first-child{margin-right:auto}
+    .foot a{color:var(--text-light);text-decoration:none;border-bottom:1px solid var(--line)}
+    .foot a:hover{color:var(--ink)}
+
+    @media(max-width:900px){
+      body{font-size:17px}
+      .head{flex-wrap:wrap;gap:12px;padding:14px 0}
+      nav{margin-left:0;width:100%;gap:18px;font-size:15px}
+      nav a{font-size:15px}
+      .hero{padding:48px 0 44px}
+      .hero__grid,.ref,.person,.kontakt{grid-template-columns:1fr;gap:38px}
+      .drei,.zwei{grid-template-columns:1fr;gap:42px}
+      section{padding:60px 0}
+      .cta-sub{display:block;margin:20px 0 0}
+      .zahlen{gap:28px}
+      .tool{grid-template-columns:1fr;gap:12px;padding:22px 0}
+      .tool__meta{flex-direction:row;align-items:center;gap:16px}
+      .person img{max-width:300px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *{animation:none!important;transition:none!important}
+      .pin{opacity:1;transform:none}
+      html{scroll-behavior:auto}
+    }
+    :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap head">
+      <a href="index.html" class="head__logo">
+        <img src="Logo_2Rat_clean.png" alt="" width="120" height="38">
+        <span>2Rat</span>
+      </a>
+      <nav aria-label="Hauptnavigation">
+        <a href="index.html#leistungen">Leistungen</a>
+        <a href="radwegemelder.html">Radwegemelder</a>
+        <a href="planungswerkzeuge.html" aria-current="page">Werkzeuge</a>
+        <a href="index.html#referenz">Referenzen</a>
+        <a href="index.html#kontakt" class="nav__cta">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero hero--klein">
+    <div class="wrap">
+      <p class="eyebrow">Werkzeuge</p>
+      <h1>Fragen, die im Amt
+        <span class="q">regelmäßig auftauchen.</span></h1>
+      <p class="lead">Sechs kleine Entscheidungshilfen im Browser – entstanden, weil ich
+        sie in der eigenen Planungsarbeit gebraucht habe. Jede endet mit einem Vermerk,
+        den Sie in die Akte legen können.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="tools__group">Frei nutzbar · ohne Anmeldung</p>
+
+      <div class="tool">
+        <div class="tool__name">Bügelplaner</div>
+        <p class="tool__desc">Wie viele Fahrräder passen vor Rathaus, Schule oder Bahnhof?
+          Maße eingeben, Stellplatz- und Bügelzahl bekommen, dazu eine maßstäbliche
+          Aufstellskizze. Rechnet nach DIN 79008 und ADFC TR 6102; Bezugsmaß ist die
+          Stellplatzbreite von Rad zu Rad.</p>
+        <div class="tool__meta"><span class="tag tag--frei">frei</span>
+          <a href="buegelplaner/">Öffnen</a></div>
+      </div>
+
+      <div class="tool">
+        <div class="tool__name">Fördermittel-Finder</div>
+        <p class="tool__desc">Welche Landesförderung passt zu meiner Maßnahme, wie hoch ist
+          die Quote, wann ist Antragsschluss? Nach der Landesrichtlinie für Rad- und
+          Fußverkehr, mit Warnung vor dem vorzeitigen Vorhabenbeginn – schon der
+          Vertragsabschluss zählt als Beginn.</p>
+        <div class="tool__meta"><span class="tag">3 von 13 frei</span>
+          <a href="demo/foerdermittel-finder.html">Demo starten</a></div>
+      </div>
+
+      <p class="tools__group">Im Fachportal · Zugang im Rahmen einer Zusammenarbeit</p>
+
+      <div class="tool">
+        <div class="tool__name">Zuständigkeiten Radverkehr</div>
+        <p class="tool__desc">Wer entscheidet hier eigentlich – Gemeinde, Landkreis,
+          Regionalverband oder Land? Führt nach StVO und Saarländischem Straßengesetz zur
+          richtigen Stelle, inklusive geprüfter Kontaktdaten der Straßenverkehrsbehörden.</p>
+        <div class="tool__meta"><span class="tag">Stand 07/2026</span></div>
+      </div>
+
+      <div class="tool">
+        <div class="tool__name">Projekt-Check Radverkehr</div>
+        <p class="tool__desc">Wer muss an den Tisch, bevor es losgeht? In drei Schritten
+          vom Vorhaben über die Lage zu Federführung, zu beteiligenden Stellen und
+          Prüfpunkten – am Ende ein Projektvermerk zum Mitnehmen.</p>
+        <div class="tool__meta"><span class="tag">Stand 07/2026</span></div>
+      </div>
+
+      <div class="tool">
+        <div class="tool__name">VwV-StVO 2025</div>
+        <p class="tool__desc">Was hat sich mit der Novelle geändert – und wie begründe ich
+          es rechtssicher? 15 Maßnahmen mit Rechtsgrundlage, Randnummer und fertigem
+          Begründungstext, wahlweise für Ordnungsamt, Rat oder Bürger formuliert.</p>
+        <div class="tool__meta"><span class="tag">Fassung 04/2025</span></div>
+      </div>
+
+      <div class="tool">
+        <div class="tool__name">Vergabe-Assistent</div>
+        <p class="tool__desc">Welches Verfahren gilt bei diesem Auftragswert, und warum
+          greift der EU-Schwellenwert hier noch nicht? Nach dem Vergabeerlass des Saarlandes,
+          inklusive Einleitungs- und Vergabebeschluss als Pflichtschritte.</p>
+        <div class="tool__meta"><span class="tag">Stand 07/2026</span></div>
+      </div>
+
+      <p class="nachsatz">Die Werkzeuge des Fachportals stelle ich Kommunen und Verbänden im
+        Rahmen einer Zusammenarbeit bereit – einschließlich der Pflege, wenn sich
+        Richtlinien, Erlasse oder Zuständigkeiten ändern. Genau das ist der Punkt: Ein
+        Fördermittel-Finder ohne Pflege ist nach der nächsten Richtlinienfassung wertlos.</p>
+      <p class="nachsatz"><a href="Werkzeuge/" class="link">Zum Fachportal</a> ·
+        <a href="index.html#kontakt" class="link">Zugang anfragen</a></p>
+    </div>
+  </section>
+
+  <section class="sec--tint">
+    <div class="wrap">
+      <div class="ref">
+        <div>
+          <p class="eyebrow">Warum es diese Werkzeuge gibt</p>
+          <h2>Aus der Planungsarbeit, nicht aus der Produktabteilung</h2>
+          <p style="margin:0 0 18px;max-width:32em">Jedes dieser Werkzeuge ist entstanden,
+            weil ich dieselbe Frage zum wiederholten Mal beantworten musste – und weil die
+            Antwort nachvollziehbar in einer Akte landen sollte, nicht in einer E-Mail.</p>
+          <p style="margin:0;max-width:32em">Deshalb steht bei jedem Werkzeug der Stand
+            dabei. Sie sehen auf einen Blick, wie aktuell die Grundlage ist, auf der Sie
+            gerade entscheiden.</p>
+        </div>
+        <div class="kasten">
+          <p><strong>Was die Werkzeuge nicht sind</strong></p>
+          <p>Sie ersetzen keine Prüfung im Einzelfall und keine Rechtsberatung. Sie führen
+            Sie zur richtigen Stelle, zum passenden Verfahren und zur belastbaren
+            Begründung – die Entscheidung bleibt bei Ihnen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="schluss">
+    <div class="wrap">
+      <h2>Fehlt ein Werkzeug, das Sie brauchen?</h2>
+      <p>Sagen Sie mir, welche Frage bei Ihnen immer wieder auftaucht. Häufig ist genau das
+        der Anfang des nächsten Werkzeugs.</p>
+      <a href="mailto:fahr2rat@gmail.com" class="cta">Anfrage senden</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot">
+      <span>© 2026 2Rat – Büro für Radverkehrsplanung</span>
+      <span>Armin Jung · Radverkehrsplaner EIPOS</span>
+      <a href="https://2rat.github.io/velomeld/datenschutz.html">Impressum &amp; Datenschutz</a>
+      <a href="Flyer2Rat.pdf">Flyer</a>
+    </div>
+  </footer>
+
+</body>
+</html>
