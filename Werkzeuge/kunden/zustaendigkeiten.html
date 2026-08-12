@@ -167,7 +167,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>Stand 08/2026 · v18<br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right">Saarland<br>Stand 08/2026 · v19<br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -183,7 +183,8 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
   <div id="content"></div>
   <footer class="footer">
     Dieses Tool dient als Orientierungshilfe und ersetzt keine Rechts- oder Fachberatung im Einzelfall.
-    Grundlagen: StVZustG Saarland, StVO, VwV-StVO 2025, SaarlStrG, FStrG, ERA 2010; ergänzend Musterlösungen BW (Okt. 2025, im Saarland nicht verbindlich).
+    Grundlagen: StVZustG Saarland, StVO, VwV-StVO 2025, SaarlStrG, FStrG, ERA 2010 sowie die Landesvorgabe „Maßgaben und Richtlinien beim Ausbau von Radverkehrsanlagen“ (MUKMAV, Stand 05/2023).
+    Ergänzend die Musterlösungen für Radverkehrsanlagen Baden-Württemberg (Stand 10/2025): im Saarland nicht eingeführt und damit nicht verbindlich, fachlich aber der aktuellste verfügbare Stand – sie nehmen die laufende ERA-Fortschreibung (Veröffentlichung ab 2026 erwartet) in Systematik und Maßen weitgehend vorweg. Empfehlung 2Rat: bei Neu- und Umbauten als Zielwert ansetzen.
     Im Einzelfall bitte Zuständigkeit mit der jeweiligen Behörde prüfen.
     <br>
     <strong style="color:var(--gray)">Entwickelt und gepflegt von 2Rat</strong> – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
@@ -222,11 +223,11 @@ const MEASURES=[
 ];
 
 const STREETS=[
-{id:"bundeslandstrasse",label:"Bundes- oder Landesstraße",icon:"B/L",color:"#dc2626"},
+{id:"bundeslandstrasse",label:"Bundes- oder Landstraße",icon:"B/L",color:"#dc2626"},
 {id:"gemeindestrasse",label:"Gemeindestraße",icon:"G",color:"#659444"},
 {id:"sonstige",label:"Sonstige öffentliche Straße",icon:"S",color:"#8a8a8a"}
 ];
-/* Unterauswahl, wenn Bundes-/Landesstraße gewählt wird – hält die Rechtslogik exakt */
+/* Unterauswahl, wenn Bundes-/Landstraße gewählt wird – hält die Rechtslogik exakt */
 const BL_SUB=[
 {id:"bundesstrasse",label:"Bundesstraße (B)",desc:"Baulast Bund · FStrG"},
 {id:"landesstrasse1",label:"Landstraße I. Ordnung (L)",desc:"Baulast Land · SaarlStrG"},
@@ -391,12 +392,13 @@ const PRAXIS={
 };
 
 /* Quellenebenen: GESETZ (StVO/VwV-StVO 2025 einschl. der dort in Bezug genommenen
-   FGSV-Regelwerke) – SAARLAND (MUKMAV-Broschüre 05/2023) – BW (MuLöS 10/2025) */
-const QGRP={G:{txt:"GESETZ",cls:"q-g"},SL:{txt:"SAARLAND",cls:"q-sl"},BW:{txt:"BW",cls:"q-bw"}};
+   FGSV-Regelwerke) – SAARLAND (MUKMAV-Broschüre 05/2023) – BW (MuLöS 10/2025,
+   fachlicher Vorgriff auf die ERA-Fortschreibung) */
+const QGRP={G:{txt:"GESETZ",cls:"q-g"},SL:{txt:"SAARLAND",cls:"q-sl"},BW:{txt:"BW · ERA-VORGRIFF",cls:"q-bw"}};
 const QORDER=["G","SL","BW"];
 function splitQ(p){const i=p.indexOf("|");if(i<1)return{q:null,t:p};const k=p.slice(0,i);return QGRP[k]?{q:k,t:p.slice(i+1)}:{q:null,t:p};}
 function sortPraxis(a){return a.map(splitQ).map((o,i)=>({o,i})).sort((x,y)=>{const rx=x.o.q?QORDER.indexOf(x.o.q):99,ry=y.o.q?QORDER.indexOf(y.o.q):99;return rx-ry||x.i-y.i;}).map(x=>x.o);}
-const QLEGENDE="GESETZ = StVO und VwV-StVO i. d. F. vom 03.04.2025 einschließlich der dort in Bezug genommenen Regelwerke (ERA 2010, RASt 06, RiLSA, RMS) · SAARLAND = Maßgaben und Richtlinien beim Ausbau von Radverkehrsanlagen, MUKMAV, Stand 05/2023 – Landesvorgabe der Bewilligungsbehörde; in der FRL NMOB-Rad-Fuß nicht ausdrücklich benannt, im Förderverfahren aber regelmäßig herangezogen. Bei Widerspruch gilt die GESETZ-Ebene · BW = Musterlösungen Baden-Württemberg 10/2025, im Saarland nicht eingeführt";
+const QLEGENDE="GESETZ = StVO und VwV-StVO i. d. F. vom 03.04.2025 einschließlich der dort in Bezug genommenen Regelwerke (ERA 2010, RASt 06, RiLSA, RMS) · SAARLAND = Maßgaben und Richtlinien beim Ausbau von Radverkehrsanlagen, MUKMAV, Stand 05/2023 – Landesvorgabe der Bewilligungsbehörde; in der FRL NMOB-Rad-Fuß nicht ausdrücklich benannt, im Förderverfahren aber regelmäßig herangezogen. Bei Widerspruch gilt die GESETZ-Ebene · BW · ERA-VORGRIFF = Musterlösungen für Radverkehrsanlagen Baden-Württemberg, Stand 10/2025 – im Saarland nicht eingeführt und damit nicht verbindlich, fachlich aber der aktuellste verfügbare Stand: Systematik (Basisstandard) und Maße nehmen die laufende Fortschreibung der ERA (Veröffentlichung ab 2026 erwartet) weitgehend vorweg. Empfehlung 2Rat: bei Neu- und Umbauten als Zielwert ansetzen und ein Abweichen von der ERA 2010 in der Planung kurz begründen.";
 
 let state={step:0,category:null,measure:null,street:null,blsub:null,location:null,kommune:null,mapPrefill:false};
 
@@ -585,10 +587,10 @@ function render(){
     let h=`<button class="btn-back" onclick="goStep(0)">← Zurück</button>
     <h2>Auf welcher Straße?</h2>
     <p class="subtitle">Maßnahme: <strong>${m.label}</strong></p>
-    <p class="hint">Hinweis: Im Saarland gibt es keine Kreisstraßen.</p>`;
+    <p class="hint">Hinweis: Im Saarland gibt es keine Kreisstraßen. Das Saarländische Straßengesetz kennt Landstraßen I. und II. Ordnung (§ 3 Abs. 1 SaarlStrG) – die Landstraßen II. Ordnung übernehmen hier die Funktion, die in anderen Ländern die Kreisstraßen haben.</p>`;
     h+=renderCards(STREETS.map(s=>({id:s.id,html:`<div class="card-row"><span class="street-badge" style="background:${s.color}">${s.icon}</span><span class="card-label">${s.label}</span></div>`})),state.street,'selectStreet');
     if(state.street==="bundeslandstrasse"){
-      h+=`<div class="section"><h3>Welche Einstufung?</h3><p class="subtitle">Die Baulast unterscheidet sich – Bund (FStrG) oder Land (SaarlStrG).</p>`;
+      h+=`<div class="section"><h3>Welche Einstufung?</h3><p class="subtitle">Die Baulast unterscheidet sich – Bund (FStrG) oder Land (SaarlStrG). Landstraßen beider Ordnungen liegen in der Baulast des Landes; die Einstufung ist im Straßenverzeichnis nach § 3 Abs. 2 SaarlStrG festgelegt.</p>`;
       h+=renderCards(BL_SUB.map(b=>({id:b.id,html:`<div class="card-label sm">${b.label}</div><div class="card-desc">${b.desc}</div>`})),state.blsub,'selectBlsub',true);
       h+=`</div>`;
     }
