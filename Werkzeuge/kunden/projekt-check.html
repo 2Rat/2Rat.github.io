@@ -118,6 +118,16 @@ h3{font-size:14px;font-weight:700;margin:18px 0 8px}
   .result-card,.info-box,.copy-box,.agfk-contact{break-inside:avoid;page-break-inside:avoid;box-shadow:none}
   .copy-body{max-height:none;overflow:visible;border:1px solid var(--gray-border)}
 }
+.lernbox{margin-top:18px;border:1px solid var(--gray-border);border-radius:8px;background:#fbfbfa}
+.lernbox>summary{cursor:pointer;list-style:none;padding:11px 14px;font-size:12.5px;font-weight:600;color:var(--blue-dark)}
+.lernbox>summary::-webkit-details-marker{display:none}
+.lernbox>summary::before{content:"\25b8 ";font-weight:400}
+.lernbox[open]>summary::before{content:"\25be "}
+.lernbox[open]>summary{border-bottom:1px solid var(--gray-border)}
+.lernbox-body{padding:12px 14px 14px;font-size:12.5px;line-height:1.6;color:var(--gray)}
+.lernbox-body p{margin-bottom:7px}
+.lernbox-body b{color:#333}
+.lernbox-merk{margin-top:10px;padding:9px 11px;background:var(--blue-light);border-radius:6px;font-size:12px;color:var(--blue-dark)}
 </style>
 </head>
 <body>
@@ -158,7 +168,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
         <div class="header-title">Projekt-Check <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right"><a class="portal-link" href="index.html">← Zum Portal</a><br>Saarland · Kommunale Vorhaben<br><span id="standTop">Stand 08/2026 · v3</span><br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right"><a class="portal-link" href="index.html">← Zum Portal</a><br>Saarland · Kommunale Vorhaben<br><span id="standTop">Stand 08/2026 · v4</span><br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -166,8 +176,17 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
   <div class="kommune-bar" id="kommuneBar"></div>
   <div class="steps" id="steps"></div>
   <div id="content"></div>
+  <details class="lernbox"><summary>Kurz erklärt: Was gilt eigentlich verbindlich?</summary><div class="lernbox-body">
+    <p><b>StVO</b> – Rechtsverordnung, gilt unmittelbar für alle. Sie regelt, <b>ob</b> etwas angeordnet werden darf.</p>
+    <p><b>VwV-StVO</b> (Fassung vom 03.04.2025) – Verwaltungsvorschrift. Sie bindet die Behörde nach innen, nicht die Verkehrsteilnehmenden, und sagt der Straßenverkehrsbehörde, wie sie die StVO anzuwenden hat. Ein Abweichen ist möglich, aber begründungsbedürftig.</p>
+    <p><b>Technische Regelwerke der FGSV</b> (ERA 2010, RASt 06, RMS, RiLSA) – keine Rechtsnormen, sondern anerkannte Regeln der Technik. Sie sagen, <b>wie</b> eine Anlage auszusehen hat. Verbindlich werden sie, weil die VwV-StVO auf sie verweist, weil ein Land sie einführt oder weil ein Fördermittelgeber sie fordert. Wer ohne Begründung darunterbleibt, trägt das Haftungsrisiko.</p>
+    <p><b>Landesvorgaben</b> – im Saarland die Maßgaben und Richtlinien des MUKMAV (05/2023). Formal keine Rechtsnorm, im Förderverfahren praktisch bindend.</p>
+    <p><b>Musterlösungen anderer Länder</b> – etwa Baden-Württemberg. Im Saarland nicht eingeführt: fachliche Orientierung, kein Anspruch darauf und keine Pflicht dazu.</p>
+    <div class="lernbox-merk">Merksatz: StVO und VwV-StVO entscheiden, <b>ob</b> – die technischen Regelwerke entscheiden, <b>wie</b>.</div>
+  </div></details>
+
   <footer class="footer">
-    <b>Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. <span id="standFoot">Stand 08/2026 · v3</span>.
+    <b>Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. <span id="standFoot">Stand 08/2026 · v4</span>.
     Datengrundlage: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL) sowie StVO, VwV-StVO 2025, StVZustG Saarland, SaarlStrG, FStrG.<br>
     <strong style="color:var(--gray)">Entwickelt und gepflegt von 2Rat</strong> – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
     <br><span style="display:inline-block;margin-top:5px;opacity:.85"><span data-lizenz></span> · Lizenziert zur Nutzung durch die oben genannte Organisation. Weitergabe an Dritte nicht gestattet.</span>
@@ -320,7 +339,7 @@ const OD_BAULAST=["Saarbrücken"];
    Zuordnung: eigene StVB nur Saarbrücken/Völklingen/St. Ingbert, sonst Landkreis/RV. */
 // Zentrale Versionsangabe – wird an allen sichtbaren Stellen und im Vermerk verwendet.
 // Bei jeder Änderung am Werkzeug NUR hier hochzählen.
-const STAND='Stand 08/2026 · v3';
+const STAND='Stand 08/2026 · v4';
 
 const KONTAKTE={
  "rv":{name:"Regionalverband Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 506-3350",mail:"strassenverkehr@rvsbr.de",web:"regionalverband-saarbruecken.de",url:"https://www.regionalverband-saarbruecken.de/ordnungsamt/strassenverkehrsbehoerde/"},

@@ -79,6 +79,16 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px;color:var(--gray)}
 
 .legal-block{background:var(--blue-light);border-radius:6px;padding:9px 12px;font-size:11px;color:var(--blue-dark);line-height:1.5;border:1px solid rgba(22,120,169,.18)}
 .practice-block{background:var(--green-light);border-radius:6px;padding:9px 12px;font-size:11px;color:#3a5a1f;line-height:1.5;border:1px solid rgba(101,148,68,.25)}
+.lernbox{margin-top:14px;border:1px solid var(--gray-border);border-radius:8px;background:#fbfbfa}
+.lernbox>summary{cursor:pointer;list-style:none;padding:11px 14px;font-size:12.5px;font-weight:600;color:var(--blue-dark)}
+.lernbox>summary::-webkit-details-marker{display:none}
+.lernbox>summary::before{content:"▸ ";font-weight:400}
+.lernbox[open]>summary::before{content:"▾ "}
+.lernbox[open]>summary{border-bottom:1px solid var(--gray-border)}
+.lernbox-body{padding:12px 14px 14px;font-size:12.5px;line-height:1.6;color:var(--gray)}
+.lernbox-body p{margin-bottom:7px}
+.lernbox-body b{color:#333}
+.lernbox-merk{margin-top:10px;padding:9px 11px;background:var(--blue-light);border-radius:6px;font-size:12px;color:var(--blue-dark)}
 .practice-block .practice-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-dark);margin-bottom:4px}
 
 .arg-block{background:var(--white);border-radius:6px;padding:9px 12px;font-size:11px;color:var(--gray);line-height:1.55;border-left:3px solid var(--blue);border:1px solid var(--gray-border);border-left:3px solid var(--blue);white-space:pre-line;font-family:Georgia,serif;font-style:italic}
@@ -194,7 +204,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
         <div class="header-title">VwV-StVO 2025 <span>Maßnahmen-Übersicht Radverkehr</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br>Stand 08/2026 · v4<br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br>Stand 08/2026 · v5<br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -205,6 +215,22 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
     <p>Die VwV-StVO 2025 erleichtert die Anordnung von Radverkehrs- und Fußverkehrsmaßnahmen erheblich. Der Nachweis einer qualifizierten Gefahrenlage entfällt für viele Maßnahmen, neue Schutzgüter (Umwelt, Klima, Gesundheit, Stadtentwicklung) treten an seine Stelle. Dieses Tool bündelt die relevanten Neuerungen mit fertigen Textbausteinen für Ordnungsamt, Rat und Bürgerschaft.</p>
     <div class="legal-ref">Rechtsstand: 12. Änderung der Allgemeinen Verwaltungsvorschrift zur StVO, ausgefertigt 03.04.2025, veröffentlicht im Bundesanzeiger (BAnz AT 09.04.2025 B2); Umsetzung der StVO-Novelle 2024.</div>
   </div>
+
+  <details class="lernbox"><summary>Kurz erklärt: Was gilt eigentlich verbindlich?</summary><div class="lernbox-body">
+    <p><b>StVO</b> – Rechtsverordnung, gilt unmittelbar für alle. Sie regelt, <b>ob</b> etwas angeordnet werden darf.</p>
+    <p><b>VwV-StVO</b> (Fassung vom 03.04.2025) – Verwaltungsvorschrift. Sie bindet die Behörde nach innen, nicht die Verkehrsteilnehmenden, und sagt der Straßenverkehrsbehörde, wie sie die StVO anzuwenden hat. Ein Abweichen ist möglich, aber begründungsbedürftig.</p>
+    <p><b>Technische Regelwerke der FGSV</b> (ERA 2010, RASt 06, RMS, RiLSA) – keine Rechtsnormen, sondern anerkannte Regeln der Technik. Sie sagen, <b>wie</b> eine Anlage auszusehen hat. Verbindlich werden sie, weil die VwV-StVO auf sie verweist, weil ein Land sie einführt oder weil ein Fördermittelgeber sie fordert. Wer ohne Begründung darunterbleibt, trägt das Haftungsrisiko.</p>
+    <p><b>Landesvorgaben</b> – im Saarland die Maßgaben und Richtlinien des MUKMAV (05/2023). Formal keine Rechtsnorm, im Förderverfahren praktisch bindend.</p>
+    <p><b>Musterlösungen anderer Länder</b> – etwa Baden-Württemberg. Im Saarland nicht eingeführt: fachliche Orientierung, kein Anspruch darauf und keine Pflicht dazu.</p>
+    <div class="lernbox-merk">Merksatz: StVO und VwV-StVO entscheiden, <b>ob</b> – die technischen Regelwerke entscheiden, <b>wie</b>.</div>
+  </div></details>
+
+  <details class="lernbox"><summary>Kurz erklärt: Regelmaß, Mindestmaß, Klammerwert</summary><div class="lernbox-body">
+    <p><b>Regelmaß</b> ist der Wert, der zu planen ist – nicht der Idealwert, sondern der Normalfall.</p>
+    <p><b>Mindestmaß</b> gilt nur bei nachweislich beengten Verhältnissen und ist zu begründen. Mehrere Mindestmaße im selben Querschnitt zu kombinieren, ist nach ERA ausdrücklich zu vermeiden.</p>
+    <p><b>Klammerwerte</b> in ERA und RASt sind reduzierte Ausnahmewerte. Nach den E Klima 2022 sind sie nicht mehr anzuwenden; die Regelmaße gelten dort als Mindestwerte.</p>
+    <p>Nicht jede Anlage hat ein Mindestmaß: Für Radfahrstreifen nennt die ERA 2010 nur 1,85 m und eine Vergrößerung nach oben – kein Maß darunter.</p>
+  </div></details>
 
   <div class="filterbar">
     <input type="text" id="searchInput" placeholder="🔍 Maßnahme, Zeichen oder Randnummer suchen …" aria-label="Maßnahme, Zeichen oder Randnummer suchen">

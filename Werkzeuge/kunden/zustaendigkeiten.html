@@ -85,6 +85,18 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .q-sl{background:#659444;color:#fff}
 .q-bw{background:#e3e3e3;color:#555}
 .praxis-legend{margin-top:9px;padding-top:7px;border-top:1px solid rgba(101,148,68,.25);font-size:10px;line-height:1.45;color:#5d7a45}
+.lernbox{margin-top:14px;border:1px solid var(--gray-border);border-radius:8px;background:#fbfbfa}
+.lernbox>summary{cursor:pointer;list-style:none;padding:11px 14px;font-size:12.5px;font-weight:600;color:var(--blue-dark)}
+.lernbox>summary::-webkit-details-marker{display:none}
+.lernbox>summary::before{content:"▸ ";font-weight:400}
+.lernbox[open]>summary::before{content:"▾ "}
+.lernbox[open]>summary{border-bottom:1px solid var(--gray-border)}
+.lernbox-body{padding:12px 14px 14px;font-size:12.5px;line-height:1.6;color:var(--gray)}
+.lernbox-body h4{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--blue-dark);margin:12px 0 6px}
+.lernbox-body h4:first-child{margin-top:0}
+.lernbox-body p{margin-bottom:7px}
+.lernbox-body b{color:#333}
+.lernbox-merk{margin-top:10px;padding:9px 11px;background:var(--blue-light);border-radius:6px;font-size:12px;color:var(--blue-dark)}
 .praxis-item:last-child{margin-bottom:0}
 .info-box{margin-top:16px;background:var(--blue-light);border-radius:8px;border:1px solid rgba(22,120,169,.19);padding:14px 16px}
 .info-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
@@ -167,7 +179,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>Stand 08/2026 · v20<br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right">Saarland<br>Stand 08/2026 · v22<br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -324,10 +336,14 @@ const PRAXIS={
     "BW|Regelmaß Radfahrstreifen ≥ 2,00 m zzgl. Sicherheitstrennstreifen (Basisstandard); Radvorrangroute ≥ 2,50 m, Radschnellverbindung ≥ 3,00 m"
   ],
   radfahrstreifen_schutz:[
-    "BW|Gesamtbreite Radfahrstreifen + Trennelement ≥ 2,50 m",
-    "BW|Sicherheitstrennstreifen (Poller/Borde) ≥ 0,75 m",
-    "G|Nutzbare Radstreifenbreite ≥ 1,85 m (ERA 2010)",
-    "G|Kombiniert bauliche Trennung mit verkehrsrechtlicher Anordnung"
+    "G|Der Radfahrstreifen selbst folgt der ERA 2010: 1,85 m inkl. Breitstrich, bei hohen Stärken oder Vzul über 50 km/h mindestens 2,00 m",
+    "G|Kombiniert bauliche Trennung mit verkehrsrechtlicher Anordnung",
+    "BW|Radfahrstreifen auf Fahrbahnniveau ≥ 2,00 m (Musterblatt Basis 1c-1, innerorts, als Variante eingestuft)",
+    "BW|Trennelement Doppelbord: Mindestbreite 0,50 m einschließlich Borde, Bordhöhe 0,08 m; an Engstellen ausnahmsweise 0,30 m",
+    "BW|Das Musterblatt zeigt zwei Querschnitte – der breitere Sicherheitsraum liegt bei ≥ 1,00 m",
+    "BW|Sicherheitstrennstreifen zum ruhenden Verkehr zusätzlich ≥ 0,75 m",
+    "BW|Bei Gefahr missbräuchlicher Nutzung durch fließenden oder ruhenden Kfz-Verkehr Sperrpfosten vorsehen",
+    "BW|Grundlage des Musterblatts ist der RMS-Entwurf (Stand 2023), Regelplan S24 – noch nicht veröffentlichtes Regelwerk"
   ],
   fahrradstrasse:[
     "G|Radverkehr muss nicht die vorherrschende Verkehrsart sein; eine zu erwartende hohe Dichte kann mit der Anordnung bewirkt und damit begründet werden (VwV-StVO zu Z 244.1 Rn. 1)",
@@ -400,6 +416,8 @@ const QGRP={G:{txt:"GESETZ",cls:"q-g"},SL:{txt:"SAARLAND",cls:"q-sl"},BW:{txt:"B
 const QORDER=["G","SL","BW"];
 function splitQ(p){const i=p.indexOf("|");if(i<1)return{q:null,t:p};const k=p.slice(0,i);return QGRP[k]?{q:k,t:p.slice(i+1)}:{q:null,t:p};}
 function sortPraxis(a){return a.map(splitQ).map((o,i)=>({o,i})).sort((x,y)=>{const rx=x.o.q?QORDER.indexOf(x.o.q):99,ry=y.o.q?QORDER.indexOf(y.o.q):99;return rx-ry||x.i-y.i;}).map(x=>x.o);}
+const LERNBOX_RECHT=`<details class="lernbox"><summary>Kurz erklärt: Was gilt eigentlich verbindlich?</summary><div class="lernbox-body"><p><b>StVO</b> – Rechtsverordnung, gilt unmittelbar für alle. Sie regelt, <b>ob</b> etwas angeordnet werden darf.</p><p><b>VwV-StVO</b> (Fassung vom 03.04.2025) – Verwaltungsvorschrift. Sie bindet die Behörde nach innen, nicht die Verkehrsteilnehmenden, und sagt der Straßenverkehrsbehörde, wie sie die StVO anzuwenden hat. Ein Abweichen ist möglich, aber begründungsbedürftig.</p><p><b>Technische Regelwerke der FGSV</b> (ERA 2010, RASt 06, RMS, RiLSA) – keine Rechtsnormen, sondern anerkannte Regeln der Technik. Sie sagen, <b>wie</b> eine Anlage auszusehen hat. Verbindlich werden sie, weil die VwV-StVO auf sie verweist, weil ein Land sie einführt oder weil ein Fördermittelgeber sie fordert. Wer ohne Begründung darunterbleibt, trägt das Haftungsrisiko.</p><p><b>Landesvorgaben</b> – hier die Maßgaben und Richtlinien des MUKMAV (05/2023). Formal keine Rechtsnorm, im Förderverfahren praktisch bindend.</p><p><b>Musterlösungen anderer Länder</b> – hier Baden-Württemberg. Im Saarland nicht eingeführt: fachliche Orientierung, kein Anspruch darauf und keine Pflicht dazu.</p><div class="lernbox-merk">Merksatz: StVO und VwV-StVO entscheiden, <b>ob</b> – die technischen Regelwerke entscheiden, <b>wie</b>.</div></div></details>`;
+const LERNBOX_MASSE=`<details class="lernbox"><summary>Kurz erklärt: Regelmaß, Mindestmaß, Klammerwert</summary><div class="lernbox-body"><p><b>Regelmaß</b> ist der Wert, der zu planen ist – nicht der Idealwert, sondern der Normalfall.</p><p><b>Mindestmaß</b> gilt nur bei nachweislich beengten Verhältnissen und ist zu begründen. Mehrere Mindestmaße im selben Querschnitt zu kombinieren, ist nach ERA ausdrücklich zu vermeiden.</p><p><b>Klammerwerte</b> in ERA und RASt sind reduzierte Ausnahmewerte. Nach den E Klima 2022 sind sie nicht mehr anzuwenden; die Regelmaße gelten dort als Mindestwerte.</p><p>Nicht jede Anlage hat ein Mindestmaß: Für Radfahrstreifen nennt die ERA 2010 nur 1,85 m und eine Vergrößerung nach oben – kein Maß darunter.</p></div></details>`;
 const QLEGENDE="GESETZ = StVO und VwV-StVO i. d. F. vom 03.04.2025 einschließlich der dort in Bezug genommenen Regelwerke (ERA 2010, RASt 06, RiLSA, RMS) · SAARLAND = Maßgaben und Richtlinien beim Ausbau von Radverkehrsanlagen, MUKMAV, Stand 05/2023 – Landesvorgabe der Bewilligungsbehörde; in der FRL NMOB-Rad-Fuß nicht ausdrücklich benannt, im Förderverfahren aber regelmäßig herangezogen. Bei Widerspruch gilt die GESETZ-Ebene · BW · ERA-VORGRIFF = Musterlösungen für Radverkehrsanlagen Baden-Württemberg, Stand 10/2025 – im Saarland nicht eingeführt und damit nicht verbindlich, fachlich aber der aktuellste verfügbare Stand: Systematik (Basisstandard) und Maße nehmen die laufende Fortschreibung der ERA (Veröffentlichung ab 2026 erwartet) weitgehend vorweg. Empfehlung 2Rat: bei Neu- und Umbauten als Zielwert ansetzen und ein Abweichen von der ERA 2010 in der Planung kurz begründen.";
 
 let state={step:0,category:null,measure:null,street:null,blsub:null,location:null,kommune:null,mapPrefill:false};
@@ -654,7 +672,9 @@ function render(){
     }
     if(r.praxis.length){
       h+=`<div class="praxis-box"><div class="praxis-title">📐 Maße &amp; Planungshinweise</div>${sortPraxis(r.praxis).map(p=>`<div class="praxis-item">${p.q?`<span class="qbadge ${QGRP[p.q].cls}">${QGRP[p.q].txt}</span>`:'• '}${p.t}</div>`).join('')}<div class="praxis-legend">${QLEGENDE}</div></div>`;
+      h+=LERNBOX_MASSE;
     }
+    h+=LERNBOX_RECHT;
     h+=`</div></div>`;
     h+='<div class="copy-box"><div class="copy-head"><span class="copy-head-title">Ergebnis-Vermerk (für E-Mail / Akte)</span><button class="copy-btn" id="copyBtn" onclick="copyZVermerk()">Kopieren</button></div><div class="copy-body">'+escH(buildZVermerk())+'</div><div class="copy-actions" style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--gray-border)"><button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="sendZMail()">✉️ Als E-Mail</button><button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="downloadZTxt()">⬇️ Als Text speichern</button></div></div>';
     if(state.kommune){
