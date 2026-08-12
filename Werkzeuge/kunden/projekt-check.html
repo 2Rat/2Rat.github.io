@@ -158,7 +158,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
         <div class="header-title">Projekt-Check <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right"><a class="portal-link" href="index.html">← Zum Portal</a><br>Saarland · Kommunale Vorhaben<br><span id="standTop">Stand 07/2026 · v2</span><br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right"><a class="portal-link" href="index.html">← Zum Portal</a><br>Saarland · Kommunale Vorhaben<br><span id="standTop">Stand 08/2026 · v3</span><br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -167,7 +167,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
   <div class="steps" id="steps"></div>
   <div id="content"></div>
   <footer class="footer">
-    <b>Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. <span id="standFoot">Stand 07/2026 · v2</span>.
+    <b>Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall.</b> Sie ersetzt keine Einzelfallprüfung und keine formelle Beteiligung der zuständigen Behörden. <span id="standFoot">Stand 08/2026 · v3</span>.
     Datengrundlage: Zuständigkeitslandkarte Radverkehr Saarland (AGFK-SL) sowie StVO, VwV-StVO 2025, StVZustG Saarland, SaarlStrG, FStrG.<br>
     <strong style="color:var(--gray)">Entwickelt und gepflegt von 2Rat</strong> – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
     <br><span style="display:inline-block;margin-top:5px;opacity:.85"><span data-lizenz></span> · Lizenziert zur Nutzung durch die oben genannte Organisation. Weitergabe an Dritte nicht gestattet.</span>
@@ -196,7 +196,7 @@ const FALLTYPEN=[
  beteiligte:["Bau-/Tiefbauamt","Verkehrsplanung","Straßenverkehrsbehörde","Polizei"],
  pruef:["Haushalt und Förderfähigkeit klären","Grundstücke und Widmung prüfen","Knotenpunkte und Querungen planen","Beleuchtung und Entwässerung mitdenken","Wer unterhält den Weg später?"],
  steps:["Ausgangspunkt und Ziel festhalten","Baulast und Eigentum klären","Förderung prüfen","Beteiligte einbinden","Planung beauftragen"],
- hinweis:"Gemeint ist hier ein Radweg an einer Gemeinde- oder Ortsstraße. Liegt der Radweg an einer Bundes- oder Landesstraße (auch in der Ortsdurchfahrt)? Dann passt der Falltyp „Etwas an einer Durchgangsstraße“ besser – dort hat meist das Land (LfS) die Federführung.",
+ hinweis:"Gemeint ist hier ein Radweg an einer Gemeinde- oder Ortsstraße. Liegt der Radweg an einer Bundesstraße oder an einer Landstraße I./II. Ordnung (auch in der Ortsdurchfahrt)? Dann passt der Falltyp „Etwas an einer Durchgangsstraße“ besser – dort hat meist das Land (LfS) die Federführung.",
  links:["zustaendigkeiten","vergabe"], askFoerder:true},
 {id:"fahrradstrasse",icon:"🛣️",label:"Fahrradstraße oder -zone einrichten",
  desc:"Eine einzelne Fahrradstraße oder eine ganze Fahrradzone",
@@ -229,7 +229,7 @@ const FALLTYPEN=[
  steps:["Problemstellen mit Schule aufnehmen","Beteiligte an einen Tisch holen","Maßnahmen festlegen","Förderung prüfen","Umsetzen und begleiten"],
  links:["zustaendigkeiten"], askFoerder:true},
 {id:"bundlandstrasse",icon:"🤝",label:"Etwas an einer Durchgangsstraße",
- desc:"Vorhaben an einer Bundes- oder Landesstraße",
+ desc:"Vorhaben an einer Bundesstraße oder Landstraße I./II. Ordnung",
  lead:"DYNAMIC", /* wird je nach Lage gesetzt */
  askLage:true,
  varianten:{
@@ -320,7 +320,7 @@ const OD_BAULAST=["Saarbrücken"];
    Zuordnung: eigene StVB nur Saarbrücken/Völklingen/St. Ingbert, sonst Landkreis/RV. */
 // Zentrale Versionsangabe – wird an allen sichtbaren Stellen und im Vermerk verwendet.
 // Bei jeder Änderung am Werkzeug NUR hier hochzählen.
-const STAND='Stand 07/2026 · v2';
+const STAND='Stand 08/2026 · v3';
 
 const KONTAKTE={
  "rv":{name:"Regionalverband Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 506-3350",mail:"strassenverkehr@rvsbr.de",web:"regionalverband-saarbruecken.de",url:"https://www.regionalverband-saarbruecken.de/ordnungsamt/strassenverkehrsbehoerde/"},
@@ -441,7 +441,7 @@ function effData(f){
           beteiligte:["Eigene Verkehrsplanung / Bauamt","Eigene Straßenverkehrsbehörde","Polizei","ggf. LfS (angrenzende freie Strecke)"],
           pruef:["Baulast der Ortsdurchfahrt liegt bei der Stadt selbst (§ 5 Abs. 2 FStrG / § 47 Abs. 1 SaarlStrG)","Planung, Finanzierung und Förderfähigkeit im eigenen Haus klären","Anordnung über die eigene Straßenverkehrsbehörde","Übergang zur freien Strecke früh mit dem LfS abstimmen"],
           steps:["Vorhaben intern abstimmen","Baulast- und Finanzierungsfragen im Haus klären","Anordnung durch die eigene Straßenverkehrsbehörde","Umsetzung planen und beauftragen"],
-          hinweis:"Sonderfall "+k.name+": Städte mit mehr als 80.000 Einwohnern tragen die Straßenbaulast für die Ortsdurchfahrten von Bundes- und Landesstraßen selbst (§ 5 Abs. 2 FStrG; für Landstraßen I./II. Ordnung § 47 Abs. 1 SaarlStrG). Fahrbahn, Radwege und Gehwege der Ortsdurchfahrt liegen damit bei der Stadt – der LfS führt erst auf der freien Strecke außerhalb. Ein gesondertes Einvernehmen nach § 45 Abs. 1b StVO spielt hier keine Rolle, da die Stadt zugleich eigene Straßenverkehrsbehörde ist."
+          hinweis:"Sonderfall "+k.name+": Städte mit mehr als 80.000 Einwohnern tragen die Straßenbaulast für die Ortsdurchfahrten von Bundesstraßen und Landstraßen selbst (§ 5 Abs. 2 FStrG; für Landstraßen I./II. Ordnung § 47 Abs. 1 SaarlStrG). Fahrbahn, Radwege und Gehwege der Ortsdurchfahrt liegen damit bei der Stadt – der LfS führt erst auf der freien Strecke außerhalb. Ein gesondertes Einvernehmen nach § 45 Abs. 1b StVO spielt hier keine Rolle, da die Stadt zugleich eigene Straßenverkehrsbehörde ist."
         });
       }
     }
@@ -523,10 +523,10 @@ function viewErgebnis(){
     }
   }
 
-  // Baulasttraeger Bundes-/Landesstrasse: LfS-Kontakt (identisch zum Werkzeug Zustaendigkeiten)
+  // Baulasttraeger Bundes-/Landstrasse: LfS-Kontakt (identisch zum Werkzeug Zustaendigkeiten)
   if(f.id==="radweg"||f.id==="bundlandstrasse"){
     h+='<div class="info-box"><div class="info-title">Erste Anlaufstelle beim Land \u2013 Landesbetrieb f\u00fcr Stra\u00dfenbau (LfS)</div><div class="info-body">'+
-       'Sobald eine Bundes- oder Landesstra\u00dfe im Spiel ist, ist der LfS Tr\u00e4ger der Stra\u00dfenbaulast \u2013 fr\u00fchzeitig einbinden.<br>'+
+       'Sobald eine Bundesstra\u00dfe oder eine Landstra\u00dfe I./II. Ordnung im Spiel ist, ist der LfS Tr\u00e4ger der Stra\u00dfenbaulast \u2013 fr\u00fchzeitig einbinden.<br>'+
        '<b>LfS \u2013 Fachbereich 42 Stra\u00dfenplanung</b><br>Peter-Neuber-Allee 1, 66538 Neunkirchen<br>'+
        '\u2709\ufe0f <a href="mailto:radwege@lfs.saarland.de">radwege@lfs.saarland.de</a> \u00b7 \ud83d\udcde 06821 100-0 (Zentrale)<br>'+
        '\ud83c\udf10 <a href="https://www.saarland.de/lfs/DE/home" target="_blank" rel="noopener">www.saarland.de/lfs</a> '+
