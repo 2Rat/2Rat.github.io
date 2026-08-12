@@ -80,6 +80,11 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .praxis-box{margin-top:12px;background:var(--green-light);border:1px solid rgba(101,148,68,.25);border-radius:7px;padding:12px 14px}
 .praxis-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-dark);margin-bottom:5px}
 .praxis-item{font-size:12px;color:#3a5a1f;line-height:1.5;margin-bottom:5px}
+.qbadge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.05em;line-height:1.4;padding:1px 5px;border-radius:3px;margin-right:6px;vertical-align:1px;white-space:nowrap}
+.q-g{background:#1e4f7a;color:#fff}
+.q-sl{background:#659444;color:#fff}
+.q-bw{background:#e3e3e3;color:#555}
+.praxis-legend{margin-top:9px;padding-top:7px;border-top:1px solid rgba(101,148,68,.25);font-size:10px;line-height:1.45;color:#5d7a45}
 .praxis-item:last-child{margin-bottom:0}
 .info-box{margin-top:16px;background:var(--blue-light);border-radius:8px;border:1px solid rgba(22,120,169,.19);padding:14px 16px}
 .info-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
@@ -162,7 +167,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>Stand 07/2026 · v17<br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right">Saarland<br>Stand 08/2026 · v18<br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -202,7 +207,7 @@ const MEASURES=[
 {id:"tempo30_strecke",label:"Tempo 30 (streckenbezogen)",desc:"Geschwindigkeitsbeschränkung auf einzelner Strecke (Z 274)",legal:"§ 45 Abs. 1 / Abs. 9 StVO",type:"anordnung"},
 {id:"einbahn_oeffnung",label:"Einbahnstraßenöffnung für Radverkehr",desc:"Zusatzzeichen Z 1000-32 »Radfahrer frei« an Einbahnstraße",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu Z 220",type:"anordnung"},
 {id:"gehweg_frei",label:"Gehweg – Radfahrer frei",desc:"Z 239 + Zusatzzeichen 1022-10 »Radfahrer frei«",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu Z 239",type:"anordnung"},
-{id:"gemeinsam_ohne_bp",label:"Gemeinsamer Geh-/Radweg ohne Benutzungspflicht",desc:"Z 239 mit Zusatz »Radfahrer frei« – Mitbenutzung ohne Pflicht",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu Z 239/240",type:"anordnung"},
+{id:"gemeinsam_ohne_bp",label:"Gemeinsamer Geh-/Radweg ohne Benutzungspflicht",desc:"Sinnbilder »Fußgänger«/»Radverkehr« (Rn. 38a) oder Z 239 + Zz 1022-10 – Letzteres mit Schrittgeschwindigkeit",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu § 2 Abs. 4 S. 2 Rn. 38a; zu Z 239",type:"anordnung"},
 {id:"benutzungspflicht_aufheben",label:"Benutzungspflicht aufheben",desc:"Entfernung Z 237/240/241 (benutzungspflichtiger Radweg)",legal:"§ 45 Abs. 1 StVO, VwV-StVO zu § 2 Abs. 4",type:"anordnung"},
 {id:"radweg_beschilderung",label:"Radweg beschildern (Z 237/240/241)",desc:"Anordnung benutzungspflichtiger Radweg",legal:"§ 45 Abs. 9 StVO, VwV-StVO zu § 2 Abs. 4",type:"anordnung"},
 {id:"modale_filter",label:"Modale Filter / Durchfahrtssperre",desc:"Durchfahrtsbeschränkung für Kfz, Radverkehr frei (Z 250 + 1022-10)",legal:"§ 45 Abs. 1 StVO",type:"anordnung"},
@@ -292,58 +297,106 @@ function applyMap(d,lat,lon){const els=(d&&d.elements)||[];const areas=els.filte
 /* Praxishinweise: primär ERA 2010; ergänzend Musterlösungen BW (Okt. 2025, im Saarland nicht verbindlich) */
 const PRAXIS={
   schutzstreifen:[
-    "Regelbreite: 1,50 m inkl. Markierung (ERA 2010)",
-    "Mindestbreite: 1,25 m in Engstellen (ERA 2010)",
-    "Schutzstreifen sind Fahrbahnmarkierungen – sie erhöhen nicht die Gesamtfahrbahnbreite",
-    "Verbleibende Kernfahrbahn: ≥ 4,50 m bei Gegenverkehr (ohne Parken) (MuLöS BW)",
-    "Kein Einsatz bei zulässiger Höchstgeschwindigkeit über 50 km/h oder mehr als 15.000 Kfz in 24 h (DTV)"
+    "G|Regelbreite 1,50 m inkl. Markierung (ERA 2010)",
+    "G|Mindestbreite 1,25 m in Engstellen (ERA 2010)",
+    "G|Schutzstreifen sind Fahrbahnmarkierungen – sie erhöhen nicht die Gesamtfahrbahnbreite",
+    "G|Kein Einsatz bei zulässiger Höchstgeschwindigkeit über 50 km/h oder mehr als 15.000 Kfz in 24 h (DTV)",
+    "SL|Breite 1,50 m; Schmalstrich-Lücke-Markierung 1,00 m / 1,00 m, Strichbreite 0,12 m",
+    "SL|Fahrradpiktogramm ca. alle 300 m markieren",
+    "SL|Kernfahrbahn ≥ 4,50 m; bis ≤ 5,50 m keine mittlere Leitlinie (Richtwert: gefahrlose Begegnung zweier Pkw)",
+    "SL|Sicherheitsraum zu parkenden Fahrzeugen: 0,50 m bei Längsparkstreifen, 0,75 m bei Schrägparkständen",
+    "SL|Nur innerörtlich anzulegen; in Kreisverkehrsplätzen nicht zulässig",
+    "SL|Auch auf vierstreifigen Straßen möglich",
+    "BW|Verbleibende Kernfahrbahn ≥ 4,50 m bei Gegenverkehr (ohne Parken)"
   ],
   radfahrstreifen:[
-    "Regelbreite: 1,85 m inkl. Breitstrich (ERA 2010)",
-    "Mindestbreite: 1,50 m (ERA 2010, nur bei beengten Verhältnissen)",
-    "Sicherheitstrennstreifen zum Parken: ≥ 0,75 m (MuLöS BW)",
-    "Roteinfärbung an Konfliktpunkten empfohlen"
+    "G|Regelbreite 1,85 m inkl. Breitstrich (ERA 2010)",
+    "G|Mindestbreite 1,50 m (ERA 2010, nur bei beengten Verhältnissen)",
+    "SL|Breite 1,85 m einschl. Markierung; bei hohen Kfz-/Radverkehrsstärken mind. 2,00 m",
+    "SL|Durchgezogener Breitstrich 0,25 m (Z 295); Kernfahrbahn ≥ 5,50 m mit mittlerer Leitlinie zur Fahrstreifentrennung",
+    "SL|Anwendungsbereich innerorts bei ca. 500 bis 2.000 Kfz/h, abhängig von der zulässigen Höchstgeschwindigkeit",
+    "SL|Sicherheitsraum zu parkenden Fahrzeugen: 0,50–0,75 m bei Längsparkstreifen, 0,75 m bei Schrägparkständen",
+    "SL|Fortsetzung an Knotenpunkten als Furt mit enger Breitstrich-Lücke-Markierung 0,50 m / 0,20 m, ggf. Roteinfärbung",
+    "SL|In Kreisverkehrsplätzen nicht zulässig; Führung ausschließlich auf Fahrbahnniveau",
+    "BW|Sicherheitstrennstreifen zum Parken ≥ 0,75 m"
   ],
   radfahrstreifen_schutz:[
-    "Gesamtbreite Radfahrstreifen + Trennelement: ≥ 2,50 m (MuLöS BW)",
-    "Sicherheitstrennstreifen (Poller/Borde): ≥ 0,75 m (MuLöS BW)",
-    "Nutzbare Radstreifenbreite: ≥ 1,85 m (ERA 2010)",
-    "Kombiniert bauliche Trennung mit verkehrsrechtlicher Anordnung"
+    "BW|Gesamtbreite Radfahrstreifen + Trennelement ≥ 2,50 m",
+    "BW|Sicherheitstrennstreifen (Poller/Borde) ≥ 0,75 m",
+    "G|Nutzbare Radstreifenbreite ≥ 1,85 m (ERA 2010)",
+    "G|Kombiniert bauliche Trennung mit verkehrsrechtlicher Anordnung"
   ],
   fahrradstrasse:[
-    "Nutzbare Fahrgasse: ≥ 4,00 m – Begegnungsfall Rad/Rad (ERA 2010)",
-    "Bei zugelassenem Kfz-Verkehr: in der Praxis ≥ 4,60 m (Begegnung Kfz/Rad)",
-    "Ergänzend MuLöS BW 10/2025 (im Saarland nicht verbindlich): mit Kfz ≥ 3,50 m zzgl. Sicherheitstrennstreifen bei < 1.500 Kfz/24h; Fahrbahn nicht breiter als 5,50 m (Geschwindigkeitsdämpfung)",
-    "Sicherheitstrennstreifen zum Parken: ≥ 0,75 m",
-    "Bevorrechtigung an Knotenpunkten empfohlen (Beschilderung + ggf. Gehweganhebung)",
-    "Bei Kfz-Freigabe: Diagonalsperren zur Unterbindung von Durchgangsverkehr prüfen (MuLöS BW RVR 3a-4)"
+    "G|Radverkehr muss nicht die vorherrschende Verkehrsart sein; eine zu erwartende hohe Dichte kann mit der Anordnung bewirkt und damit begründet werden (VwV-StVO zu Z 244.1 Rn. 1)",
+    "G|Zulässige Höchstgeschwindigkeit 30 km/h für alle; Nebeneinanderfahren mit Fahrrädern und Elektrokleinstfahrzeugen erlaubt",
+    "G|Auf Senkrecht- und Schrägparkstände soll grundsätzlich verzichtet werden (VwV-StVO zu Z 244.1 Rn. 3)",
+    "G|Z 244.2 ist entbehrlich beim Übergang in Fußgängerzone, Fahrradzone, Tempo-30-Zone oder verkehrsberuhigten Bereich (VwV-StVO zu Z 244.1 Rn. 4)",
+    "G|Nutzbare Fahrgasse ≥ 4,00 m – Begegnungsfall Rad/Rad (ERA 2010)",
+    "SL|Einrichtung bis zu einer Belastung von etwa 400 Kfz/h",
+    "SL|Eine Bevorrechtigung über mehrere Knotenpunkte hinweg ist mit Verkehrszeichen nicht zulässig – Alternative: bauliche Veränderungen",
+    "SL|Bauliche Einengungen an Einmündungen oder Anhebung der Kreuzungsbereiche, damit 30 km/h nicht überschritten werden",
+    "SL|Werden Kraftfahrzeuge nicht zugelassen, sind für diesen Verkehr Alternativen aufzuzeigen",
+    "BW|Bei zugelassenem Kfz-Verkehr in der Praxis ≥ 4,60 m (Begegnung Kfz/Rad)",
+    "BW|Mit Kfz ≥ 3,50 m zzgl. Sicherheitstrennstreifen bei < 1.500 Kfz/24 h; Fahrbahn nicht breiter als 5,50 m (Geschwindigkeitsdämpfung)",
+    "BW|Sicherheitstrennstreifen zum Parken ≥ 0,75 m",
+    "BW|Bei Kfz-Freigabe Diagonalsperren zur Unterbindung von Durchgangsverkehr prüfen (RVR 3a-4)"
   ],
   fahrradzone:[
-    "Es gelten die Maßgaben der Fahrradstraße für alle Straßen im Zonenbereich",
-    "VwV-StVO zu Z 274.1/274.2 gilt entsprechend (insb. Vorfahrtregelung)"
+    "G|Es gelten die Maßgaben der Fahrradstraße für alle Straßen im Zonenbereich",
+    "G|VwV-StVO zu Z 274.1/274.2 gilt entsprechend (insb. Vorfahrtregelung)",
+    "SL|Keine Überschneidung mit der Anordnung einer Tempo-30-Zone",
+    "SL|Nur auf Straßen ohne lichtzeichengeregelte Kreuzungen/Einmündungen und ohne Fahrstreifenbegrenzung (Z 295), Leitlinien (Z 340) oder benutzungspflichtige Radwege (Z 237/240/241)",
+    "SL|An allen Kreuzungen und Einmündungen gilt rechts vor links",
+    "SL|Zeichen 244.3 als Sinnbild in regelmäßigen Abständen auf der Fahrbahn aufbringen"
+  ],
+  gehweg_frei:[
+    "G|Auf dem freigegebenen Gehweg gilt Schrittgeschwindigkeit (StVO Anlage 2, Erläuterung zu Z 239 Nr. 2)",
+    "G|Unter 2,50 m nutzbarer Wegbreite ist die gemeinsame Führung generell ausgeschlossen (ERA 2010, Abschnitt 3.6, Bild 15)",
+    "G|Einsatzgrenze Fußgänger + Radfahrer je Spitzenstunde (ERA 2010, Bild 15, Näherungswerte): rund 70 bei 2,50 m, rund 100 bei 3,00 m, rund 130 bei 3,50 m, rund 155 bei 4,00 m",
+    "G|Maßgeblich ist die nutzbare, nicht die bauliche Breite: abzüglich 0,20–0,25 m zu Wand/Zaun, 0,50–0,75 m zu Längsparkständen sowie Möblierung, Schaltschränke, Auslagen",
+    "G|Ausschlusskriterien unabhängig von Breite und Belastung (ERA 2010): intensive Geschäftsnutzung, dichte Folge angrenzender Hauseingänge, zahlreiche Zufahrten bei beengten Verhältnissen, Gefälle über 3 %, Haltestellen in Seitenlage ohne Wartefläche, hohe Nutzung durch schutzbedürftige Fußgänger (u. a. Kinder)",
+    "G|Bordsteinabsenkungen an Einmündungen und Kreuzungen erforderlich (VwV-StVO zu Z 239 Rn. 3)",
+    "G|Kinder bis 10 Jahre dürfen den Gehweg ohnehin benutzen (§ 2 Abs. 5 StVO) – die Freigabe ändert daran nichts"
   ],
   radweg_bau:[
-    "Regelbreite Einrichtungsradweg: 2,00 m (ERA 2010), Mindestbreite 1,60 m",
-    "Regelbreite Zweirichtungsradweg: 2,50 m (ERA 2010), Mindestbreite 2,00 m",
-    "Sicherheitstrennstreifen zur Fahrbahn: ≥ 0,75 m"
+    "G|Regelbreite Einrichtungsradweg 2,00 m (ERA 2010), Mindestbreite 1,60 m",
+    "G|Regelbreite Zweirichtungsradweg 2,50 m (ERA 2010), Mindestbreite 2,00 m",
+    "G|Innerorts nur Radverkehr einschließlich Elektrokleinstfahrzeuge; außerorts sind Radwege auch für Mofas und E-Bikes frei",
+    "SL|Breite 2,00 m, gemeinsamer Geh- und Radweg 2,50 m",
+    "SL|Sicherheitsräume: 0,75 m zur Fahrbahn oder zu Längsparkstreifen, 1,10 m zu Senkrecht- und Schrägparkständen, 0,30 m taktil oder optisch zu Gehbereichen",
+    "SL|Radverkehr an Radwegeenden baulich getrennt auf die Fahrbahn führen (Bordführung oder Schutzinsel)",
+    "BW|Sicherheitstrennstreifen zur Fahrbahn ≥ 0,75 m"
   ],
   gemeinsamer_geh_radweg:[
-    "Regelbreite: 2,50 m (ERA 2010)",
-    "Mindestbreite: 2,00 m (nur bei geringem Fußgänger- und Radverkehr)",
-    "Nur bei geringem Fußgängeraufkommen zulässig (VwV-StVO zu Z 240)",
-    "Kosten-Hinweis OD an Bundes-/Landstraßen: gemeinsamer Geh-/Radweg nur mit Vereinbarung zur hälftigen Kostenteilung (ODR 2008 / ARS 14/2008) – ein getrennt geführter Radweg liegt dagegen voll in der Baulast von Bund/Land"
+    "G|Regelbreite 2,50 m (ERA 2010)",
+    "G|Mindestbreite 2,00 m (nur bei geringem Fußgänger- und Radverkehr)",
+    "G|Nur bei geringem Fußgängeraufkommen zulässig (VwV-StVO zu Z 240)",
+    "G|Kosten-Hinweis OD an Bundes-/Landstraßen: gemeinsamer Geh-/Radweg nur mit Vereinbarung zur hälftigen Kostenteilung (ODR 2008 / ARS 14/2008) – ein getrennt geführter Radweg liegt dagegen voll in der Baulast von Bund/Land",
+    "SL|Breite gemeinsamer Geh- und Radweg 2,50 m; 0,30 m taktile oder optische Trennung zu Gehbereichen"
   ],
   einbahn_oeffnung:[
-    "Mindestbreite Fahrgasse: 3,50 m (bei Gegenverkehr Rad/Kfz)",
-    "Empfohlen bei zulässiger Höchstgeschwindigkeit von höchstens 30 km/h",
+    "G|Soll-Bestimmung mit eingeschränktem Ermessen: Die Freigabe ist einzelfallbezogen zu prüfen, nur im Ausnahmefall ist davon abzusehen (VwV-StVO zu Z 220, Ziff. 4–7)",
+    "G|Zulässige Höchstgeschwindigkeit höchstens 30 km/h in der Einbahnstraße",
+    "SL|Ausreichende Begegnungsbreite erforderlich; bei Linienbusverkehr oder starkem Schwerlastverkehr mindestens 3,50 m – ansonsten sind keine Fahrbahn-Mindestbreiten vorgeschrieben",
+    "SL|Übersichtliche Verkehrsführung; wo erforderlich, sind Schutzräume anzulegen",
+    "SL|Zusatzzeichen 1000-32 an allen Zeichen 220; am Ende der Freigabe zusätzlich Z 267 mit Zusatzzeichen 1022-10",
+    "SL|In Kurvenbereichen kann die Markierung von Schutz- oder Radfahrstreifen oder eine bauliche Absicherung des gegengerichteten Radverkehrs sinnvoll sein",
     "Schutzstreifen in Gegenrichtung bei Breite ≥ 4,50 m prüfen"
   ],
   querungshilfe:[
-    "Mittelinselbreite: ≥ 2,50 m (Aufstellfläche für Radverkehr)",
-    "Ab 5.000 Kfz/24h Mittelinsel erforderlich (MuLöS BW)",
-    "Ab 15.000 Kfz/24h LSA oder Über-/Unterführung prüfen"
+    "BW|Mittelinselbreite ≥ 2,50 m (Aufstellfläche für Radverkehr)",
+    "BW|Ab 5.000 Kfz/24 h Mittelinsel erforderlich",
+    "BW|Ab 15.000 Kfz/24 h LSA oder Über-/Unterführung prüfen"
   ]
 };
+
+/* Quellenebenen: GESETZ (StVO/VwV-StVO 2025 einschl. der dort in Bezug genommenen
+   FGSV-Regelwerke) – SAARLAND (MUKMAV-Broschüre 05/2023) – BW (MuLöS 10/2025) */
+const QGRP={G:{txt:"GESETZ",cls:"q-g"},SL:{txt:"SAARLAND",cls:"q-sl"},BW:{txt:"BW",cls:"q-bw"}};
+const QORDER=["G","SL","BW"];
+function splitQ(p){const i=p.indexOf("|");if(i<1)return{q:null,t:p};const k=p.slice(0,i);return QGRP[k]?{q:k,t:p.slice(i+1)}:{q:null,t:p};}
+function sortPraxis(a){return a.map(splitQ).map((o,i)=>({o,i})).sort((x,y)=>{const rx=x.o.q?QORDER.indexOf(x.o.q):99,ry=y.o.q?QORDER.indexOf(y.o.q):99;return rx-ry||x.i-y.i;}).map(x=>x.o);}
+const QLEGENDE="GESETZ = StVO und VwV-StVO i. d. F. vom 03.04.2025 einschließlich der dort in Bezug genommenen Regelwerke (ERA 2010, RASt 06, RiLSA, RMS) · SAARLAND = Maßgaben und Richtlinien beim Ausbau von Radverkehrsanlagen, MUKMAV, Stand 05/2023 – Landesvorgabe der Bewilligungsbehörde; in der FRL NMOB-Rad-Fuß nicht ausdrücklich benannt, im Förderverfahren aber regelmäßig herangezogen. Bei Widerspruch gilt die GESETZ-Ebene · BW = Musterlösungen Baden-Württemberg 10/2025, im Saarland nicht eingeführt";
 
 let state={step:0,category:null,measure:null,street:null,blsub:null,location:null,kommune:null,mapPrefill:false};
 
@@ -442,7 +495,8 @@ function getResult(){
     if(m.id==="benutzungspflicht_aufheben")notes.push("Benutzungspflicht (Z 237/240/241) nur bei qualifizierter Gefahrenlage zulässig. Ohne diese ist die Benutzungspflicht aufzuheben (BVerwG, 18.11.2010 – 3 C 42.09).");
     if(m.id==="radweg_beschilderung")notes.push("Radwegebenutzungspflicht setzt qualifizierte Gefahrenlage voraus (§ 45 Abs. 9 Satz 4 Nr. 1 StVO). Radweg muss ERA-Anforderungen erfüllen.");
     if(m.id==="rotmarkierung")notes.push("Eine Roteinfärbung mit Piktogrammkette hat unterstützenden Charakter und ist Sache des Baulastträgers – sie ersetzt nicht die Anordnung der zugrunde liegenden Radverkehrsführung. Empfehlung: mit Straßenverkehrsbehörde und Polizei abstimmen. Radwegefurten an Vorfahrtstraßen (Z 306) sind stets zu markieren (VwV-StVO zu § 9).");
-    if(m.id==="gemeinsam_ohne_bp")notes.push("Ein gemeinsamer Geh-/Radweg ohne Benutzungspflicht (Z 239 + »Radfahrer frei«) lässt dem Radverkehr die Wahl zwischen Weg und Fahrbahn. Keine qualifizierte Gefahrenlage erforderlich – im Gegensatz zum benutzungspflichtigen gemeinsamen Geh- und Radweg (Z 240).");
+    if(m.id==="gemeinsam_ohne_bp")notes.push("Für den gemeinsamen Geh-/Radweg ohne Benutzungspflicht gibt es zwei Wege: Kennzeichnung durch Aufbringung der Sinnbilder »Fußgänger« und »Radverkehr« (VwV-StVO zu § 2 Abs. 4 S. 2, Rn. 38a) – dann gilt keine Schrittgeschwindigkeit; oder Z 239 mit Zusatzzeichen 1022-10 – dann gilt Schrittgeschwindigkeit (StVO Anlage 2, Erläuterung zu Z 239 Nr. 2). Beide lassen dem Radverkehr die Wahl zwischen Weg und Fahrbahn und setzen keine qualifizierte Gefahrenlage voraus – im Gegensatz zum benutzungspflichtigen Z 240. Die Wahl des Weges vor der Anordnung bewusst treffen.");
+    if(m.id==="gehweg_frei")notes.push("Auf dem freigegebenen Gehweg gilt Schrittgeschwindigkeit; der Fußverkehr darf weder gefährdet noch behindert werden, notfalls muss der Radverkehr warten (StVO Anlage 2, Erläuterung zu Z 239 Nr. 2). Die Freigabe steht am Ende der Prüfreihenfolge: zuerst Radfahrstreifen, dann Schutzstreifen, erst dann Gehwegfreigabe (VwV-StVO zu § 2 Abs. 4 S. 2, Rn. 11). Beschaffenheit und Zustand des Gehwegs sollen den Verkehrsbedürfnissen des Radverkehrs entsprechen, insbesondere Bordsteinabsenkungen an Einmündungen und Kreuzungen (VwV-StVO zu Z 239 Rn. 3). Für E-Scooter gilt die Freigabe »Radverkehr frei« bis zum 28.02.2027 nicht – ab dem 01.03.2027 gilt sie automatisch mit (eKFV-Novelle, BGBl. 2026 I Nr. 32).");
   }
 
   /* Bauliche Maßnahmen */
@@ -456,6 +510,9 @@ function getResult(){
   }
 
   if((s==="gemeindestrasse"||s==="sonstige")&&(m.type==="anordnung"||m.type==="anordnung_bau"))notes.push("Mitteilungspflicht: Gemeinden müssen u. a. Verkehrsbeschränkungen, Fußgängerüberwege und Vorfahrtsregelungen der nach § 7 Abs. 3 StVZustG zuständigen Behörde (Landkreis bzw. Regionalverband Saarbrücken) mitteilen (§ 12 Abs. 3 StVZustG).");
+
+  /* Förderrechtlicher Hinweis: getrennte Führung als Zielstellung der FRL */
+  if(m.id==="gemeinsam_ohne_bp"||m.id==="gemeinsamer_geh_radweg")notes.push("Förderrechtlich: Zielstellung der FRL NMOB-Rad-Fuß (Nr. 5, Zuwendungsvoraussetzungen) ist eine getrennte Verkehrsführung. Ist die Herstellung eines getrennten Radweges nicht anders lösbar als über einen gemeinsamen Geh- und Radweg – etwa wegen zusätzlicher Flächeninanspruchnahme oder Eingriffen in Natur und Umwelt –, ist dies im Einzelfall zu begründen. Die Begründung frühzeitig dokumentieren; sie wird im Zuwendungsverfahren verlangt.");
 
   /* Praxishinweise aus ERA/MuLöS */
   if(PRAXIS[m.id])praxis=PRAXIS[m.id];
@@ -592,7 +649,7 @@ function render(){
       h+=`<div class="notes"><div class="notes-title">⚖ Rechtliche Hinweise & Praxistipps</div>${r.notes.map(n=>`<div class="notes-item">• ${n}</div>`).join('')}</div>`;
     }
     if(r.praxis.length){
-      h+=`<div class="praxis-box"><div class="praxis-title">📐 Maße & Planungshinweise (ERA 2010 / MuLöS BW)</div>${r.praxis.map(p=>`<div class="praxis-item">• ${p}</div>`).join('')}</div>`;
+      h+=`<div class="praxis-box"><div class="praxis-title">📐 Maße &amp; Planungshinweise</div>${sortPraxis(r.praxis).map(p=>`<div class="praxis-item">${p.q?`<span class="qbadge ${QGRP[p.q].cls}">${QGRP[p.q].txt}</span>`:'• '}${p.t}</div>`).join('')}<div class="praxis-legend">${QLEGENDE}</div></div>`;
     }
     h+=`</div></div>`;
     h+='<div class="copy-box"><div class="copy-head"><span class="copy-head-title">Ergebnis-Vermerk (für E-Mail / Akte)</span><button class="copy-btn" id="copyBtn" onclick="copyZVermerk()">Kopieren</button></div><div class="copy-body">'+escH(buildZVermerk())+'</div><div class="copy-actions" style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--gray-border)"><button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="sendZMail()">✉️ Als E-Mail</button><button class="btn btn-outline" style="margin:0;padding:8px 14px;font-size:13px;width:auto" onclick="downloadZTxt()">⬇️ Als Text speichern</button></div></div>';
@@ -663,7 +720,7 @@ function buildZVermerk(){
   if(r.measure.type!=='bau')t+='Aufsichtsbehörde: '+r.aufsicht+'\n';
   if(r.warnings.length){t+='\nACHTUNG – in dieser Lage nicht vorgesehen:\n';r.warnings.forEach(w=>{t+='- '+w+'\n';});}
   if(r.notes.length){t+='\nRechtliche Hinweise & Praxistipps:\n';r.notes.forEach(n=>{t+='- '+n+'\n';});}
-  if(r.praxis.length){t+='\nMaße & Planungshinweise (ERA 2010 / MuLöS BW):\n';r.praxis.forEach(p=>{t+='- '+p+'\n';});}
+  if(r.praxis.length){t+='\nMaße & Planungshinweise:\n';sortPraxis(r.praxis).forEach(p=>{t+='- '+(p.q?'['+QGRP[p.q].txt+'] ':'')+p.t+'\n';});t+='('+QLEGENDE+')\n';}
   t+='\nOrientierungshilfe, keine Rechts- oder Fachberatung – Zuständigkeit im Einzelfall mit der Behörde klären.\nQuelle: Zuständigkeiten Radverkehr Saarland\n'+lizenzVermerkZeile();
   return t;
 }
