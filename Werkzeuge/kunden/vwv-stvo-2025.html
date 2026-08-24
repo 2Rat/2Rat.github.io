@@ -206,7 +206,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
         <div class="header-title">VwV-StVO 2025 <span>Maßnahmen-Übersicht Radverkehr</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br>Stand 08/2026 · v6<br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br>Stand 08/2026 · v7<br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -494,11 +494,11 @@ const MEASURES = {
     icon: "📏",
     desc: "Kurze Verbindungsabschnitte zwischen zwei T30-Bereichen",
     type: "new",
-    rn: "§ 45 Abs. 9 S. 4 Nr. 6 StVO + VwV",
-    legal: "§ 45 Abs. 9 S. 4 Nr. 6 StVO",
-    explanation: "Zur Vermeidung kurzer und schwer vermittelbarer Wechsel zwischen 30 km/h und 50 km/h kann Tempo 30 auch auf einem Verbindungsabschnitt zwischen zwei bereits angeordneten T30-Bereichen festgesetzt werden. Maximallänge gemäß jeweiliger Fassung der VwV.",
+    rn: "§ 45 Abs. 9 S. 4 Nr. 4 StVO",
+    legal: "§ 45 Abs. 9 S. 4 Nr. 4 StVO",
+    explanation: "Liegen zwei Tempo-30-Abschnitte nah beieinander, darf die Strecke dazwischen einbezogen werden. So werden kurze und schwer vermittelbare Wechsel zwischen 30 und 50 km/h vermieden. Die Höchstlänge steht seit der StVO-Novelle vom 11.10.2024 im Gesetz selbst: 500 Meter – zuvor waren es 300 Meter, geregelt nur in der VwV. Maßgeblich ist der Abstand zwischen den Tempo-30-Strecken, nicht der zwischen den geschützten Einrichtungen. Nr. 4 erfasst daneben auch Tempo-30-Zonen nach § 45 Abs. 1c StVO.",
     arg: "Zwischen den bestehenden T30-Bereichen [A] und [B] wird Tempo 30 auch auf dem Verbindungsabschnitt nach § 45 Abs. 9 S. 4 Nr. 6 StVO angeordnet. Ziel ist die Vermeidung kurzer Geschwindigkeitswechsel und eine durchgehende, gut nachvollziehbare Verkehrsregelung.",
-    practice: "Maximallänge in der jeweils geltenden VwV-Fassung nachsehen – im Zweifel die örtliche Verkehrsbehörde einbinden. Die Verkehrsschau dokumentiert die Notwendigkeit des Lückenschlusses."
+    practice: "Die 500 Meter zwischen den beiden Tempo-30-Strecken messen und im Bescheid festhalten – daran hängt die Zulässigkeit. Die Verkehrsschau dokumentiert die Notwendigkeit des Lückenschlusses. Bei mehreren Einrichtungen entlang einer Straße lohnt die Prüfung, ob sich über gestaffelte Lückenschlüsse ein durchgehender Abschnitt ergibt."
   },
   "einbahn_oeffnung": {
     name: "Einbahnstraßenöffnung für den Radverkehr",
@@ -516,10 +516,10 @@ const MEASURES = {
     icon: "🧪",
     desc: "Befristete Erprobung – ohne Nachweis einer Gefahrenlage",
     type: "new",
-    rn: "§ 45 Abs. 1 S. 1 Nr. 6 StVO + VwV",
-    legal: "§ 45 Abs. 1 S. 1 Nr. 6 StVO",
+    rn: "§ 45 Abs. 1 S. 2 Nr. 6 StVO + VwV",
+    legal: "§ 45 Abs. 1 S. 2 Nr. 6 StVO",
     explanation: "Verkehrsversuche dienen der Erprobung verkehrsregelnder Maßnahmen. Sie sind befristet anzuordnen und während der Laufzeit zu evaluieren. Eine qualifizierte Gefahrenlage ist nicht Voraussetzung. Die VwV-StVO 2025 konkretisiert die Anforderungen an Begründung, Befristung und Evaluation.",
-    arg: "Die Anordnung erfolgt als Verkehrsversuch nach § 45 Abs. 1 S. 1 Nr. 6 StVO. Sie ist befristet auf den Zeitraum vom [Datum] bis [Datum]. Während der Versuchsphase wird die Wirkung der Maßnahme regelmäßig evaluiert. Auf Grundlage der Evaluation wird über eine Verstetigung, Anpassung oder Aufhebung entschieden.",
+    arg: "Die Anordnung erfolgt als Verkehrsversuch nach § 45 Abs. 1 S. 2 Nr. 6 StVO. Sie ist befristet auf den Zeitraum vom [Datum] bis [Datum]. Während der Versuchsphase wird die Wirkung der Maßnahme regelmäßig evaluiert. Auf Grundlage der Evaluation wird über eine Verstetigung, Anpassung oder Aufhebung entschieden.",
     practice: "Empfehlung: Vorab Evaluationskonzept festlegen (Indikatoren, Erhebungsmethoden, Vergleichszeiträume). Bürgerbeteiligung begleitet den Versuch und erhöht die Akzeptanz. Verstetigung erfolgt anschließend auf regulärer Rechtsgrundlage."
   },
   "fgu": {
@@ -527,11 +527,11 @@ const MEASURES = {
     icon: "🦓",
     desc: "Angebotsplanung möglich – ohne besondere Gefahrenlage",
     type: "changed",
-    rn: "VwV zu Z 350",
-    legal: "§ 45 Abs. 1 StVO, VwV-StVO zu Z 350; R-FGÜ 2001",
-    explanation: "Fußgängerüberwege können nach der VwV-StVO 2025 angeordnet werden, ohne dass eine besondere örtliche Gefahrenlage nachzuweisen ist. Sie sind als Maßnahme der Angebotsplanung im Sinne der Förderung des Fußverkehrs zulässig. Die Anforderungen der R-FGÜ 2001 (Sichtbeziehungen, Verkehrsstärken, Beleuchtung) sind zu beachten.",
-    arg: "Der Fußgängerüberweg wird in Höhe [Ort] nach § 45 Abs. 1 StVO i. V. m. § 45 Abs. 1 S. 2 Nr. 7 StVO als Angebotsplanung zur Förderung des Fußverkehrs angeordnet. Die Anforderungen der R-FGÜ 2001 hinsichtlich Sichtbeziehungen, Knotenpunktabstand, Beleuchtung und Verkehrsstärken sind eingehalten.",
-    practice: "Beleuchtung des FGÜ ist Pflicht (R-FGÜ 2001). Im Bereich von Querungshilfen prüfen, ob LSA, FGÜ oder Mittelinsel der bessere Lösungsansatz ist – orientiert an Kfz-Stärke und Fußverkehrsfrequenz."
+    rn: "VwV-StVO zu § 26 (Neufassung 2025)",
+    legal: "§ 45 Abs. 9 S. 4 Nr. 9 StVO (kein Nachweis einer qualifizierten Gefahrenlage); § 45 Abs. 1 StVO; VwV-StVO zu § 26 in der Neufassung 2025; Beleuchtung: § 45 Abs. 5 S. 2 StVO",
+    explanation: "Die wichtigste Änderung: Die VwV-StVO 2025 hat den Abschnitt zu § 26 vollständig neu gefasst und stellt darin ausdrücklich klar, dass die in den R-FGÜ vorgegebenen <b>verkehrlichen Voraussetzungen als rechtlich unverbindliche Empfehlungen</b> zu erachten sind. Die alten Schwellenwerte für Fußgänger- und Fahrzeugstärken, an denen Zebrastreifen jahrzehntelang gescheitert sind, müssen also nicht mehr erreicht werden. Verbindlich geblieben ist allein die Beleuchtung: Straßenverkehrsbehörde und Straßenbaulastträger müssen die Beleuchtungskriterien der R-FGÜ gewährleisten (§ 45 Abs. 5 S. 2 StVO), notwendige Beleuchtungseinrichtungen ordnet die Straßenverkehrsbehörde an.<br><br>Hinzu kommt: Seit der StVO-Novelle sind Fußgängerüberwege vom Nachweis einer qualifizierten Gefahrenlage freigestellt (§ 45 Abs. 9 S. 4 Nr. 9 StVO).<br><br>Die harten Einsatzgrenzen der neuen VwV bleiben dagegen bestehen: nur innerhalb geschlossener Ortschaften, nicht auf Straßen mit mehr als 50 km/h, in der Regel nur wenn auf beiden Seiten Gehwege vorhanden sind, und nur bei höchstens einem Fahrstreifen je Richtung. Fußgängerüberwege müssen ausreichend weit voneinander entfernt liegen; eine eingerichtete Grüne Welle kann gegen die Anlage sprechen.<br><br>Radverkehrsrelevant: In der Regel sollen Fußgängerüberwege zum Schutz der Fußgänger <b>auch über Radverkehrsanlagen</b> angelegt werden.",
+    arg: "Der Fußgängerüberweg wird in Höhe [Ort] nach § 45 Abs. 1 StVO angeordnet; der Nachweis einer qualifizierten Gefahrenlage ist nach § 45 Abs. 9 S. 4 Nr. 9 StVO nicht erforderlich. Die Anordnung stützt sich auf den Querungsbedarf des Fußverkehrs. Die Einsatzgrenzen der VwV-StVO zu § 26 sind eingehalten: Lage innerhalb der geschlossenen Ortschaft, zulässige Höchstgeschwindigkeit von höchstens 50 km/h, beidseitige Gehwege, ein Fahrstreifen je Richtung sowie ausreichender Abstand zu weiteren Fußgängerüberwegen. Die Beleuchtungskriterien der R-FGÜ werden nach § 45 Abs. 5 S. 2 StVO gewährleistet; die erforderlichen Beleuchtungseinrichtungen werden hiermit angeordnet. Die in den R-FGÜ genannten verkehrlichen Voraussetzungen sind nach der VwV-StVO in der Neufassung 2025 rechtlich unverbindliche Empfehlungen.",
+    practice: "Beleuchtung ist der einzige Punkt, der aus den R-FGÜ verbindlich geblieben ist – und sie ist gesondert anzuordnen, nicht nur zu planen. Wer früher an den Verkehrsstärken gescheitert ist, sollte den Fall erneut aufgreifen: Diese Hürde ist entfallen, maßgeblich ist jetzt der Querungsbedarf. Im Bereich von Querungshilfen weiterhin prüfen, ob Lichtsignalanlage, Fußgängerüberweg oder Mittelinsel besser passt."
   },
   "gehwegparken": {
     name: "Gehwegparken \u2013 Zul\u00e4ssigkeit und Restbreite",
