@@ -178,11 +178,19 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
   <div class="kommune-bar" id="kommuneBar"></div>
   <details class="lernbox"><summary><span class="lernbox-t">Gesetz oder Regelwerk? Was davon wirklich verbindlich ist</span><span class="lernbox-sub">StVO · VwV-StVO 2025 · ERA und die übrigen FGSV-Regelwerke · Landesvorgabe Saarland · Musterlösungen Baden-Württemberg</span></summary><div class="lernbox-body">
     <p><b>StVO</b> – Rechtsverordnung, gilt unmittelbar für alle. Sie regelt, <b>ob</b> etwas angeordnet werden darf.</p>
-    <p><b>VwV-StVO</b> (Fassung vom 03.04.2025) – Verwaltungsvorschrift. Sie bindet die Behörde nach innen, nicht die Verkehrsteilnehmenden, und sagt der Straßenverkehrsbehörde, wie sie die StVO anzuwenden hat. Ein Abweichen ist möglich, aber begründungsbedürftig.</p>
+    <p><b>VwV-StVO</b> (Fassung vom 03.04.2025, BAnz AT 09.04.2025 B2, in Kraft seit 10.04.2025) – Verwaltungsvorschrift. Sie bindet die Behörde nach innen, nicht die Verkehrsteilnehmenden, und sagt der Straßenverkehrsbehörde, wie sie die StVO anzuwenden hat. Ein Abweichen ist möglich, aber begründungsbedürftig.</p>
     <p><b>Technische Regelwerke der FGSV</b> (ERA 2010, RASt 06, RMS, RiLSA) – keine Rechtsnormen, sondern anerkannte Regeln der Technik. Sie sagen, <b>wie</b> eine Anlage auszusehen hat. Verbindlich werden sie, weil die VwV-StVO auf sie verweist, weil ein Land sie einführt oder weil ein Fördermittelgeber sie fordert. Wer ohne Begründung darunterbleibt, trägt das Haftungsrisiko.</p>
     <p><b>Landesvorgaben</b> – im Saarland die Maßgaben und Richtlinien des MUKMAV (05/2023). Formal keine Rechtsnorm, im Förderverfahren praktisch bindend.</p>
     <p><b>Musterlösungen anderer Länder</b> – etwa Baden-Württemberg. Im Saarland nicht eingeführt: fachliche Orientierung, kein Anspruch darauf und keine Pflicht dazu.</p>
     <div class="lernbox-merk">Merksatz: StVO und VwV-StVO entscheiden, <b>ob</b> – die technischen Regelwerke entscheiden, <b>wie</b>.</div>
+  </div></details>
+
+  <details class="lernbox"><summary><span class="lernbox-t">Wer macht was? Die vier Begriffe, um die es immer geht</span><span class="lernbox-sub">Baulast · Anordnung · Ortsdurchfahrt · Einvernehmen</span></summary><div class="lernbox-body">
+    <p><b>Baulast</b> – Wer die Baulast hat, muss die Straße bauen, unterhalten, reinigen und im Winter räumen. Und wer sie hat, zahlt. Sie hängt an der Straßenart: Bundesstraßen beim Bund, Landstraßen I. und II. Ordnung beim Land, Gemeindestraßen bei der Kommune. Die Baulast ist meist die erste Frage, weil sich daran entscheidet, wessen Haushalt betroffen ist.</p>
+    <p><b>Anordnung</b> – Ein Schild oder eine Markierung darf nicht einfach aufgestellt werden. Es braucht eine förmliche Entscheidung der Straßenverkehrsbehörde, dass genau dieses Zeichen an genau diese Stelle gehört. Das ist die Anordnung. Sie ist etwas anderes als das Bauen: Der Baulastträger stellt das Schild auf, aber erst nachdem die Straßenverkehrsbehörde es angeordnet hat.</p>
+    <p><b>Ortsdurchfahrt</b> – Der Abschnitt einer Bundes- oder Landstraße, der innerhalb der Ortstafeln verläuft. Die Straße bleibt eine Bundes- oder Landstraße, aber die Zuständigkeiten verschieben sich teilweise zur Kommune. Deshalb lohnt der genaue Blick, ob eine Maßnahme innerhalb oder außerhalb der Ortstafel liegt.</p>
+    <p><b>Einvernehmen</b> – Mehr als Anhörung, weniger als eigene Zuständigkeit. Wer Einvernehmen erteilen muss, hat ein Vetorecht: Ohne seine Zustimmung darf die Maßnahme nicht angeordnet werden. Ein bloßes Benehmen bedeutet dagegen nur, dass angehört werden muss – widersprechen kann man, entschieden wird trotzdem.</p>
+    <div class="lernbox-merk">Merksatz: Die <b>Baulast</b> sagt, wer zahlt und baut – die <b>Anordnung</b> sagt, wer über Schilder und Markierungen entscheidet. Das sind oft zwei verschiedene Stellen.</div>
   </div></details>
 
   <div class="steps" id="steps"></div>
@@ -225,7 +233,7 @@ const FALLTYPEN=[
  beteiligte:["Straßenverkehrsbehörde","Polizei","Bau-/Tiefbauamt (Baulastträger)","Bauhof / Betriebshof (Umsetzung)","ÖPNV / Rettungsdienste","Anlieger"],
  pruef:["Netzfunktion und Eignung prüfen","Einzelne Fahrradstraße oder zusammenhängende Zone? (unterschiedliche Rechtsgrundlage)","Begleitmaßnahmen festlegen (Bevorrechtigung, Markierung)","Beschilderung und Markierung","Anlieger informieren","Wirkung später prüfen (Evaluation)"],
  steps:["Netzfunktion und Eignung prüfen","Klären, ob Fahrradstraße (einzeln) oder Fahrradzone","Anordnung durch die zuständige Straßenverkehrsbehörde","Beteiligte informieren","Umsetzen und evaluieren"],
- hinweis:"Wichtig ist der Unterschied zwischen Straße und Zone: Eine einzelne Fahrradstraße (Z 244.1) wird über § 45 Abs. 1 StVO angeordnet. Im Saarland ist diese Befugnis auf die Gemeinden übertragen (§ 12 StVZustG umfasst § 45 Abs. 1 bis 1d) – auf ihren eigenen Gemeindestraßen kann die Gemeinde die Fahrradstraße also selbst anordnen. Eine Fahrradzone (Z 244.3) dagegen läuft über § 45 Abs. 1i StVO, der nicht auf die Gemeinden übertragen ist: Hier ordnet die Straßenverkehrsbehörde (Kreis/Regionalverband bzw. Saarbrücken, Völklingen, St. Ingbert) im Einvernehmen mit der Gemeinde an. Die Zone darf sich nicht auf Bundes-, Landes-, Kreis- oder Vorfahrtstraßen erstrecken.",
+ hinweis:"Kurz gesagt: Eine <b>einzelne Fahrradstraße</b> darf Ihre Gemeinde auf ihren eigenen Straßen selbst anordnen. Eine <b>ganze Fahrradzone</b> darf sie nicht selbst anordnen – das macht der Landkreis bzw. der Regionalverband, Ihre Gemeinde muss aber zustimmen.<br><br>Der Grund liegt in der Zuständigkeitsverteilung: Die einzelne Fahrradstraße (Z 244.1) stützt sich auf § 45 Abs. 1 StVO, und diese Befugnis hat das Saarland den Gemeinden übertragen (§ 12 Abs. 1 Nr. 4 StVZustG, der § 45 Abs. 1 bis 1d umfasst). Die Fahrradzone (Z 244.3) stützt sich dagegen auf § 45 Abs. 1i StVO – der steht nicht in dieser Liste und bleibt deshalb bei der Straßenverkehrsbehörde (Landkreis, Regionalverband bzw. Saarbrücken, Völklingen, St. Ingbert).<br><br>Grenzen der Zone: Sie darf sich nicht auf Bundesstraßen, Landstraßen I. und II. Ordnung oder Vorfahrtstraßen erstrecken.",
  links:["zustaendigkeiten"], askFoerder:true},
 {id:"markierung",icon:"🚧",label:"Schilder, Markierung oder Tempo ändern",
  desc:"Schutzstreifen, Tempo 30, Einbahn-Öffnung, Beschilderung",
@@ -259,7 +267,7 @@ const FALLTYPEN=[
      beteiligte:["Eigene Verkehrsplanung / Bauamt","Straßenverkehrsbehörde (örtlich)","Landesbetrieb für Straßenbau (LfS) als Baulastträger","Polizei"],
      pruef:["Einvernehmen der Gemeinde sichern (§ 45 Abs. 1b StVO)","Baulast klären: Fahrbahn (inkl. abmarkierter Parkstreifen auf der Fahrbahn) und straßenbegleitende Radwege beim Land/Bund, selbständige Gehwege und eigene Parkflächen bei der Kommune","Kostenteilung bei gemeinsamen Geh-/Radwegen früh mit dem LfS klären","Anordnung mit Straßenverkehrsbehörde abstimmen"],
      steps:["Frühzeitig Kontakt zum LfS aufnehmen","Eigene Position und Wünsche klären","Baulast- und Kostenfragen klären","Anordnung abstimmen","Umsetzung begleiten"],
-     hinweis:"In der Ortsdurchfahrt redet die Kommune mit: Sie hat Einvernehmensrecht (§ 45 Abs. 1b StVO) und trägt die Baulast für selbständige Gehwege und eigene Parkflächen. Die Fahrbahn – einschließlich eines nur darauf abmarkierten Parkstreifens – sowie straßenbegleitende Radwege bleiben in der Baulast des Landes/Bundes. Ausnahme: Städte mit mehr als 80.000 Einwohnern (im Saarland nur Saarbrücken) tragen die Baulast der Ortsdurchfahrt selbst – dort oben die Kommune auswählen, dann zeigt das Ergebnis den Sonderfall."
+     hinweis:"Läuft die Bundes- oder Landstraße durch Ihren Ort (Ortsdurchfahrt), teilen sich Kommune und Land die Verantwortung. Faustregel: <b>Was auf der Fahrbahn liegt, gehört dem Land</b> – auch ein Parkstreifen, der nur aufmarkiert ist, und ein Radweg direkt neben der Fahrbahn. <b>Was daneben liegt, gehört der Kommune</b> – eigenständige Gehwege und eigene Parkflächen.<br><br>Bei Anordnungen auf der Ortsdurchfahrt muss Ihre Kommune zustimmen, bevor sie wirksam werden (§ 45 Abs. 1b StVO).<br><br>Eine Ausnahme gibt es für Städte über 80.000 Einwohner – im Saarland nur Saarbrücken. Dort trägt die Stadt die Ortsdurchfahrt komplett selbst. Wählen Sie oben Saarbrücken aus, zeigt das Ergebnis diesen Sonderfall."
    },
    ausserorts:{
      lead:"Das Land (LfS) hat den Hut auf – die Kommune bringt sich ein.",
@@ -341,7 +349,7 @@ const OD_BAULAST=["Saarbrücken"];
    Zuordnung: eigene StVB nur Saarbrücken/Völklingen/St. Ingbert, sonst Landkreis/RV. */
 // Zentrale Versionsangabe – wird an allen sichtbaren Stellen und im Vermerk verwendet.
 // Bei jeder Änderung am Werkzeug NUR hier hochzählen.
-const STAND='Stand 08/2026 · v5';
+const STAND='Stand 08/2026 · v6';
 
 const KONTAKTE={
  "rv":{name:"Regionalverband Saarbrücken – Straßenverkehrsbehörde (Ordnungsamt)",tel:"0681 506-3350",mail:"strassenverkehr@rvsbr.de",web:"regionalverband-saarbruecken.de",url:"https://www.regionalverband-saarbruecken.de/ordnungsamt/strassenverkehrsbehoerde/"},
