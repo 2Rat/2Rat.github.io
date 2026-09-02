@@ -5,31 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Vergabe-Assistent Saarland – 2Rat</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; }
-  .art-btn { transition: all 0.15s ease; }
-  .art-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important; }
-  .result-enter { animation: fadeUp 0.35s ease-out; }
+  :root {
+    --blue:#1678A9; --blue-dark:#115d85; --blue-light:#e8f4fa;
+    --green:#659444; --green-dark:#4a7332; --green-light:#eef5e6;
+    --amber:#f59e0b; --red:#ef4444;
+    --gray:#3E403F; --gray-mid:#6b7280; --gray-light:#8a8a8a; --line:#e2e8f0;
+  }
+  body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #1e293b; }
+  a { color: var(--blue); }
+
+  /* Kopf */
+  .app-header { background: #fff; padding: 16px 20px; border-bottom: 3px solid var(--green); }
+  .app-header .inner { max-width: 640px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand img { height: 38px; }
+  .header-sub { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gray-light); }
+  .app-header h1 { font-size: 17px; font-weight: 700; color: var(--gray); margin: 0; line-height: 1.3; }
+  .app-header h1 span { color: var(--blue); }
+  .header-meta { text-align: right; font-size: 11px; color: var(--gray-light); line-height: 1.5; }
+  .header-meta a { text-decoration: none; font-weight: 600; }
+
+  .main { max-width: 640px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  /* Erklärkasten */
+  .lernbox { margin: 0 0 16px; border: 1px solid rgba(22,120,169,.30); border-radius: 8px; background: var(--blue-light); overflow: hidden; }
+  .lernbox summary { list-style: none; cursor: pointer; padding: 11px 15px; display: flex; gap: 10px; align-items: flex-start; }
+  .lernbox summary::-webkit-details-marker { display: none; }
+  .lernbox summary .chev { font-size: 10px; color: var(--blue); margin-top: 5px; transition: transform .2s; }
+  .lernbox[open] summary .chev { transform: rotate(90deg); }
+  .lernbox summary b { display: block; font-size: 13px; color: var(--blue-dark); }
+  .lernbox summary small { display: block; font-size: 11.5px; color: var(--blue); margin-top: 2px; line-height: 1.45; }
+  .lernbox-body { padding: 13px 15px 15px; background: #fff; border-top: 1px solid rgba(22,120,169,.22); font-size: 12.5px; line-height: 1.62; color: var(--gray); }
+  .lernbox-body p { margin: 0 0 8px; }
+  .lernbox-body p:last-child { margin: 0; }
+  .lernbox-body b { color: var(--blue-dark); }
+
+  /* Eingabe */
+  .card { background: #fff; border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 1px 3px rgba(0,0,0,.04); overflow: hidden; margin-bottom: 12px; }
+  .input-card { padding: 16px; margin-bottom: 16px; }
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label { font-size: 12px; font-weight: 600; color: #64748b; display: block; margin-bottom: 8px; }
+  .art-row { display: flex; gap: 8px; }
+  .art-btn { flex: 1; padding: 10px 8px; border-radius: 10px; border: 2px solid var(--line); background: #fff; cursor: pointer; text-align: center; transition: all .15s ease; font-family: inherit; }
+  .art-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+  .art-btn .icon { font-size: 20px; }
+  .art-btn .lbl { font-size: 12px; font-weight: 500; color: var(--gray-mid); margin-top: 2px; }
+  .art-btn[aria-pressed="true"] { border-color: var(--blue); background: var(--blue-light); }
+  .art-btn[aria-pressed="true"] .lbl { font-weight: 700; color: var(--blue-dark); }
+  .wert-wrap { display: flex; border-radius: 10px; border: 2px solid var(--line); overflow: hidden; }
+  .wert-wrap:focus-within { box-shadow: 0 0 0 3px rgba(22,120,169,.15); border-color: var(--blue); }
+  .wert-wrap input { flex: 1; padding: 10px 14px; font-size: 18px; border: none; font-family: ui-monospace, monospace; color: #1e293b; outline: none; background: transparent; min-width: 0; }
+  .wert-wrap .unit { padding: 10px 14px; font-size: 14px; font-weight: 600; color: #94a3b8; background: #f8fafc; border-left: 1px solid var(--line); display: flex; align-items: center; }
+  .schaetz-hinweis { margin-top: 8px; padding: 9px 12px; border-radius: 8px; background: #fef9ec; border: 1px solid #f0e0b0; font-size: 12px; line-height: 1.55; color: #7a6420; }
+  .quick-row { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .quick-btn { padding: 4px 10px; border-radius: 6px; font-size: 11px; border: 1px solid var(--line); background: #fff; color: #64748b; cursor: pointer; font-family: ui-monospace, monospace; font-weight: 500; transition: all .12s; }
+  .quick-btn:hover, .quick-btn[aria-pressed="true"] { background: var(--blue-light); }
+
+  /* Ergebnis */
+  .result-enter { animation: fadeUp .35s ease-out; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .badge-card { border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; border: 2px solid; }
+  .badge-card .tagrow { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .badge-card .tag { padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: .04em; }
+  .badge-card .wert { font-size: 11px; color: #94a3b8; font-family: ui-monospace, monospace; }
+  .badge-card h2 { font-size: 20px; font-weight: 700; color: #1e293b; margin: 0 0 4px; }
+  .badge-card p { font-size: 14px; color: #4b5563; margin: 0; line-height: 1.5; }
+  .lvl-direkt { background: var(--green-light); border-color: rgba(101,148,68,.45); }
+  .lvl-direkt .tag { background: var(--green-dark); }
+  .lvl-vereinfacht { background: #fffbeb; border-color: #fde68a; }
+  .lvl-vereinfacht .tag { background: var(--amber); }
+  .lvl-eu { background: #fef2f2; border-color: #fecaca; }
+  .lvl-eu .tag { background: var(--red); }
+
+  .sec-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #f1f5f9; }
+  .sec-head .t { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: #1e293b; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; background: var(--red); }
+  .dot.done { background: var(--green-dark); }
+  .counter { font-size: 13px; font-weight: 700; font-family: ui-monospace, monospace; color: var(--gray-mid); }
+  .counter.done { color: var(--green-dark); }
+  .sec-body { padding: 4px; }
+  .fertig { padding: 10px 16px; background: var(--green-light); border-top: 1px solid rgba(101,148,68,.45); font-size: 13px; font-weight: 600; color: var(--green-dark); text-align: center; }
+
+  .step-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; border-radius: 10px; background: transparent; transition: all .15s ease; user-select: none; border-left: 3px solid transparent; }
+  .step-row:hover { background: #f9fafb; }
+  .step-row .box { width: 24px; height: 24px; min-width: 24px; border-radius: 7px; border: 2px solid #d1d5db; background: #fff; display: flex; align-items: center; justify-content: center; transition: all .15s ease; }
+  .step-row .box svg { display: none; }
+  .step-row .txt { font-size: 14px; line-height: 1.5; color: #1f2937; flex: 1; }
+  .step-row .txt.warn { color: #b45309; font-weight: 600; }
+  .step-row[aria-pressed="true"] .txt { color: #9ca3af; text-decoration: line-through; }
+  .step-row[aria-pressed="true"] .box svg { display: block; }
+  .step-row.pflicht[aria-pressed="true"] { background: var(--green-light); border-left-color: var(--green-dark); }
+  .step-row.pflicht[aria-pressed="true"] .box { border-color: var(--green-dark); background: var(--green-dark); }
+  .step-row.empfohlen[aria-pressed="true"] { background: #fffbeb; border-left-color: var(--amber); }
+  .step-row.empfohlen[aria-pressed="true"] .box { border-color: var(--amber); background: var(--amber); }
+  .step-row.bedarf[aria-pressed="true"] { background: var(--blue-light); border-left-color: var(--blue); }
+  .step-row.bedarf[aria-pressed="true"] .box { border-color: var(--blue); background: var(--blue); }
+
+  .coll-btn { width: 100%; display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: none; border: none; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--gray-mid); text-align: left; font-family: inherit; }
+  .coll-btn .chev { font-size: 10px; display: inline-block; transition: transform .2s; }
+  .coll-btn[aria-expanded="true"] .chev { transform: rotate(90deg); }
+  .coll-btn .cnt { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 10px; background: #f1f5f9; color: #64748b; }
+  .coll-body { padding: 0 4px 4px; }
+  .coll-body.rg { padding: 0 4px 8px; }
+  .rg-row { padding: 6px 14px; font-size: 13px; color: #374151; border-radius: 6px; margin-bottom: 1px; }
+  .rg-row:nth-child(odd) { background: #f8fafc; }
+
+  .vermerk-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: none; border: none; cursor: pointer; font-family: inherit; }
+  .vermerk-btn .t { font-size: 14px; font-weight: 700; color: #1e293b; }
+  .vermerk-btn .chev { font-size: 10px; color: #94a3b8; display: inline-block; transition: transform .2s; }
+  .vermerk-btn[aria-expanded="true"] .chev { transform: rotate(90deg); }
+  .copy-row { padding: 0 16px 8px; display: flex; justify-content: flex-end; }
+  .copy-btn { padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; background: var(--blue); color: #fff; transition: all .2s; font-family: inherit; }
+  .copy-btn.ok { background: var(--green-dark); }
+  pre.vermerk { padding: 14px 16px; margin: 0; font-size: 12px; line-height: 1.7; color: #374151; background: #f8fafc; white-space: pre-wrap; font-family: ui-monospace, Consolas, monospace; max-height: 280px; overflow-y: auto; border-top: 1px solid #f1f5f9; }
+
+  .suite-links { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
+  .suite-links .h { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-light); }
+  .suite-link { display: block; padding: 11px 14px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; text-decoration: none; color: var(--gray); font-size: 13px; line-height: 1.5; }
+  .suite-link b { color: var(--blue-dark); }
+  footer { display: block; margin-top: 16px; padding: 12px 16px; border-radius: 10px; background: rgba(0,0,0,.02); border: 1px solid var(--line); }
+  footer p { font-size: 10px; color: #a1a1aa; margin: 0; line-height: 1.6; }
+  footer p + p { margin-top: 6px; }
+  footer a { text-decoration: none; }
+
+  /* Barrierefreiheit: sichtbarer Fokus */
+  .step-row:focus-visible, .art-btn:focus-visible, .quick-btn:focus-visible, button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   @media (prefers-reduced-motion: reduce) {
     .result-enter { animation: none; }
     .art-btn:hover { transform: none; }
   }
-  .quick-btn { transition: all 0.12s; }
-  .quick-btn:hover { background: #e8f4fa !important; }
-  .step-row:hover { background: #f9fafb; }
-  input[type=text]:focus { outline: none; box-shadow: 0 0 0 3px rgba(22,120,169,0.15); border-color: #1678A9; }
-  /* Barrierefreiheit: sichtbarer Fokus */
-  .step-row:focus-visible, .art-btn:focus-visible, .quick-btn:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid #1678A9; outline-offset: 2px; }
   /* Druckansicht: nur Branding + Ergebnis */
   @media print {
     body { background: #fff; }
-    .header-meta, .input-card, .quick-btn, .art-btn { display: none !important; }
+    .header-meta, .input-card, .quick-btn, .art-btn, .lernbox, .suite-links { display: none !important; }
     .result-enter { animation: none !important; }
-    .result-enter > div { box-shadow: none !important; break-inside: avoid; page-break-inside: avoid; }
+    .card, .badge-card { box-shadow: none !important; break-inside: avoid; page-break-inside: avoid; }
   }
 </style>
 </head>
@@ -61,29 +174,91 @@ function lizenzInit() {
 if (document.readyState !== 'loading') { lizenzInit(); }
 else { document.addEventListener('DOMContentLoaded', lizenzInit); }
 </script>
-<div id="root"></div>
-<script>
-const e = React.createElement;
-const { useState, useEffect, useRef } = React;
 
+<div class="app-header">
+  <div class="inner">
+    <div class="brand">
+      <img id="logo" alt="2Rat – Büro für Radverkehrsplanung">
+      <div>
+        <div class="header-sub">Büro für Radverkehrsplanung</div>
+        <h1>Vergabe-Assistent <span>Saarland</span></h1>
+      </div>
+    </div>
+    <div class="header-meta"><a href="index.html">← Zum Portal</a><br>Saarland<br>Vergabeerlass 2025 · EU-SW 2026/27<br><span data-stand></span><br><span data-lizenz style="font-weight:600"></span></div>
+  </div>
+</div>
+
+<div class="main">
+
+  <details class="lernbox">
+    <summary>
+      <span class="chev" aria-hidden="true">▶</span>
+      <span>
+        <b>Was dieses Werkzeug macht – und was nicht</b>
+        <small>Direktauftrag · Freihändige Vergabe · Beschränkte Ausschreibung · EU-Schwellenwert · Vergabevermerk</small>
+      </span>
+    </summary>
+    <div class="lernbox-body">
+      <p>Sie geben <b>Leistungsart</b> und geschätzten <b>Auftragswert netto</b> ein. Das Werkzeug ordnet das Vorhaben einer von drei Stufen zu und zeigt die Pflichtschritte, sinnvolle Ergänzungen und die passenden Rechtsgrundlagen. Eine Vorlage für den Vergabevermerk lässt sich direkt kopieren.</p>
+      <p><b>Warum drei Stufen:</b> Der Vergabeerlass des Saarlandes von 2025 erlaubt Kommunen den <b>Direktauftrag bis 100.000 €</b>. Darüber sind bis zum EU-Schwellenwert Freihändige Vergabe und Beschränkte Ausschreibung frei wählbar. Ab dem EU-Schwellenwert (2026/27: Bau 5.404.000 €, Liefer-/Dienstleistungen 216.000 €) gilt das förmliche EU-Verfahren nach GWB und VgV.</p>
+      <p><b>Nicht abgedeckt:</b> Sektorenauftraggeber, Konzessionen, Rahmenvereinbarungen mit Sonderregeln und die Frage, ob Ihre Hauptsatzung für einen Betrag einen Gremienbeschluss verlangt – das steht nur in Ihrer eigenen Zuständigkeitsordnung. Bei Fördermitteln können die Nebenbestimmungen des Zuwendungsbescheids strenger sein als der Erlass.</p>
+    </div>
+  </details>
+
+  <div class="card input-card">
+    <div class="field">
+      <span class="field-label" id="artLabel">Leistungsart</span>
+      <div class="art-row" role="group" aria-labelledby="artLabel" id="artRow"></div>
+    </div>
+    <div class="field">
+      <label class="field-label" for="wertInput">Auftragswert netto</label>
+      <div class="wert-wrap">
+        <input id="wertInput" type="text" inputmode="numeric" placeholder="z.B. 75000" autocomplete="off">
+        <div class="unit">€</div>
+      </div>
+      <div class="schaetz-hinweis"><b>Auftragswert richtig schätzen (§ 3 VgV): </b>Alle Lose und Teilaufträge desselben Vorhabens zusammenrechnen. Eine Aufteilung in kleinere Aufträge, um Wertgrenzen oder den EU-Schwellenwert zu umgehen, ist unzulässig.</div>
+      <div class="quick-row" id="quickRow"></div>
+    </div>
+  </div>
+
+  <div id="result"></div>
+
+  <div class="suite-links">
+    <div class="h">Passende weitere Werkzeuge</div>
+    <a class="suite-link" href="foerdermittel-finder.html"><b>Fördermittel-Finder</b> – Erst die Förderung sichern, dann vergeben (Quote nach FRL-NMOB-Rad-Fuß)</a>
+    <a class="suite-link" href="zustaendigkeiten.html"><b>Zuständigkeiten Radverkehr</b> – Wer ordnet an, wer trägt die Baulast?</a>
+  </div>
+
+  <footer>
+    <p>Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall. Grundlage: Vergabeerlass SL 2025 (Amtsbl. 26/2025, ab 01.07.2025 unbefristet) – Direktauftrag bis 100.000 €, darüber Freihändige Vergabe oder Beschränkte Ausschreibung bis zum EU-Schwellenwert (2026/27: Bau 5.404.000 €, Liefer/DL 216.000 €). KSVG §§ 82 ff. Alle Werte netto. Bei Fördermitteln ggf. strengere Vorgaben. <span data-stand></span>.</p>
+    <p>Entwickelt und gepflegt von 2Rat – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a></p>
+    <p><span data-lizenz></span> · Lizenziert zur Nutzung durch die oben genannte Organisation. Weitergabe an Dritte nicht gestattet.</p>
+  </footer>
+</div>
+
+<script>
+const STAND='Stand 09/2026 · v5';
+document.querySelectorAll('[data-stand]').forEach(function(n){ n.textContent = STAND; });
 const LOGO='data:image/jpeg;base64,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';
+document.getElementById('logo').src=LOGO;
 
 const THRESHOLDS_2026 = { bau: 5404000, liefer_dl: 216000, freiberuflich: 216000 };
 const LEISTUNGSARTEN = [
-  { id: "bau", label: "Bau", icon: "\u{1F3D7}️" },
+  { id: "bau", label: "Bau", icon: "\u{1F3D7}\uFE0F" },
   { id: "liefer_dl", label: "Liefer / DL", icon: "\u{1F4E6}" },
   { id: "freiberuflich", label: "Freiberuflich", icon: "\u{1F4D0}" },
 ];
+const QUICK = [5000, 50000, 100000, 150000, 250000];
 
 function formatEuro(val) { return val.toLocaleString("de-DE") + " €"; }
+function esc(s) { return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 
 function getVerfahren(wert, art) {
   const sw = THRESHOLDS_2026[art];
   if (wert <= 0) return null;
   if (wert <= 100000) {
     return {
-      level: "direkt", name: "Direktauftrag", color: "#659444",
-      bgColor: "#ecfdf5", borderColor: "#a7f3d0", tagLabel: "Einfachstes Verfahren",
+      level: "direkt", name: "Direktauftrag", tagLabel: "Einfachstes Verfahren",
       kurz: "Kein förmliches Verfahren nötig. Auftrag direkt vergeben.",
       pflicht: [
         "Haushaltsmittel verfügbar?",
@@ -111,7 +286,6 @@ function getVerfahren(wert, art) {
     return {
       level: "vereinfacht",
       name: "Freihändige Vergabe oder Beschränkte Ausschreibung",
-      color: "#f59e0b", bgColor: "#fffbeb", borderColor: "#fde68a",
       tagLabel: "Unterhalb EU-Schwellenwert",
       kurz: "Der EU-Schwellenwert liegt für diese Leistungsart bei " + formatEuro(sw) + " netto und wird hier nicht erreicht – EU-Vergaberecht gilt also nicht. Im Saarland sind seit dem Vergabeerlass 2025 oberhalb 100.000 € bis zum EU-Schwellenwert beide Verfahren frei wählbar – Sie entscheiden je nach Markt und Leistung. In beiden Fällen mind. 3 Angebote bzw. Bieter einholen und dokumentieren.",
       pflicht: [
@@ -127,8 +301,7 @@ function getVerfahren(wert, art) {
       empfohlen: [
         "Gleichbehandlung dokumentieren (keine Ortspräferenz)",
         "Antikorruption: Rotation, Mehr-Augen-Prinzip",
-        ...(isNahSchwelle ? ["⚠️ Nähe EU-Schwellenwert – Puffer einplanen!"] : []),
-      ],
+      ].concat(isNahSchwelle ? ["⚠️ Nähe EU-Schwellenwert – Puffer einplanen!"] : []),
       nurBeiBedarf: [
         "Bei Fördermitteln: ANBest-Vorgaben prüfen",
         "Werkstätten / Inklusionsbetriebe berücksichtigen",
@@ -142,8 +315,7 @@ function getVerfahren(wert, art) {
     };
   }
   return {
-    level: "eu", name: "EU-weite Ausschreibung", color: "#ef4444",
-    bgColor: "#fef2f2", borderColor: "#fecaca", tagLabel: "EU-Vergaberecht",
+    level: "eu", name: "EU-weite Ausschreibung", tagLabel: "EU-Vergaberecht",
     kurz: "Förmliches EU-Verfahren nach GWB/VgV. Fristen, Bekanntmachung, Dokumentation zwingend.",
     pflicht: [
       "Bedarfsermittlung + Kostenschätzung",
@@ -175,66 +347,9 @@ function getVerfahren(wert, art) {
   };
 }
 
-function StepRow({ text, done, onToggle, type }) {
-  const colors = {
-    pflicht: { check: "#659444" },
-    empfohlen: { check: "#f59e0b" },
-    bedarf: { check: "#1678A9" },
-  };
-  const c = colors[type];
-  const isWarning = text.startsWith("⚠");
-  return e("div", {
-    onClick: onToggle, className: "step-row",
-    role: "button", tabIndex: 0, "aria-pressed": done,
-    onKeyDown: function(ev) { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onToggle(); } },
-    style: {
-      display: "flex", alignItems: "center", gap: 12,
-      padding: "12px 14px", cursor: "pointer", borderRadius: 10,
-      background: done ? (type === "pflicht" ? "#f0fdf4" : type === "empfohlen" ? "#fffbeb" : "#f0f9ff") : "transparent",
-      transition: "all 0.15s ease", userSelect: "none",
-      borderLeft: "3px solid " + (done ? c.check : "transparent"),
-    }
-  },
-    e("div", { style: {
-      width: 24, height: 24, minWidth: 24, borderRadius: 7,
-      border: "2px solid " + (done ? c.check : "#d1d5db"),
-      background: done ? c.check : "#fff",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      transition: "all 0.15s ease",
-    }}, done ? e("svg", { width: 14, height: 14, viewBox: "0 0 24 24", fill: "none", stroke: "#fff", strokeWidth: 3, strokeLinecap: "round", strokeLinejoin: "round" }, e("polyline", { points: "20 6 9 17 4 12" })) : null),
-    e("span", { style: {
-      fontSize: 14, lineHeight: 1.5,
-      color: done ? "#9ca3af" : isWarning ? "#b45309" : "#1f2937",
-      textDecoration: done ? "line-through" : "none",
-      fontWeight: isWarning ? 600 : 400, flex: 1,
-    }}, text)
-  );
-}
-
-function Collapsible({ title, badge, children }) {
-  const [open, setOpen] = useState(false);
-  return e("div", null,
-    e("button", {
-      onClick: function() { setOpen(!open); },
-      "aria-expanded": open,
-      style: {
-        width: "100%", display: "flex", alignItems: "center", gap: 8,
-        padding: "10px 14px", background: "none", border: "none",
-        cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#6b7280", textAlign: "left",
-      }
-    },
-      e("span", { style: { transform: open ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s", fontSize: 10, display: "inline-block" }}, "▶"),
-      title,
-      badge ? e("span", { style: { fontSize: 11, fontWeight: 500, padding: "2px 8px", borderRadius: 10, background: "#f1f5f9", color: "#64748b" }}, badge) : null
-    ),
-    open ? e("div", { style: { paddingLeft: 4 }}, children) : null
-  );
-}
-
-function VermerkGenerator({ wert, art, verfahren }) {
-  const [copied, setCopied] = useState(false);
-  const [show, setShow] = useState(false);
-  const artLabel = LEISTUNGSARTEN.find(function(l) { return l.id === art; })?.label || art;
+function vermerkText(wert, art, verfahren) {
+  const l = LEISTUNGSARTEN.find(function(x){ return x.id === art; });
+  const artLabel = l ? l.label : art;
   const today = new Date().toLocaleDateString("de-DE");
   var text;
   if (verfahren.level === "direkt") {
@@ -244,217 +359,146 @@ function VermerkGenerator({ wert, art, verfahren }) {
   } else {
     text = "Vergabevermerk – EU-weites Verfahren\n\nDatum: " + today + "\nLeistungsart: " + artLabel + "\nGesch. Auftragswert: " + formatEuro(wert) + " (netto)\n\nDer Auftragswert erreicht/überschreitet den EU-Schwellenwert (" + formatEuro(THRESHOLDS_2026[art]) + "). Vollständiger Vergabevermerk gem. § 8 VgV erforderlich.\n\n[Hinweis: Rechtliche Beratung empfohlen]";
   }
-  text += "\n\n" + lizenzVermerkZeile();
-  function handleCopy() {
-    navigator.clipboard.writeText(text).then(function() {
-      setCopied(true);
-      setTimeout(function() { setCopied(false); }, 2000);
-    });
-  }
-  return e("div", { style: { background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.04)", marginBottom: 12 }},
-    e("button", { onClick: function() { setShow(!show); }, "aria-expanded": show, style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", background: "none", border: "none", cursor: "pointer" }},
-      e("span", { style: { fontSize: 14, fontWeight: 700, color: "#1e293b" }}, "\u{1F4DD} Vergabevermerk-Vorlage"),
-      e("span", { style: { transform: show ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s", fontSize: 10, color: "#94a3b8" }}, "▶")
-    ),
-    show ? e("div", null,
-      e("div", { style: { padding: "0 16px 8px", display: "flex", justifyContent: "flex-end" }},
-        e("button", { onClick: handleCopy, style: { padding: "6px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600, border: "none", cursor: "pointer", background: copied ? "#659444" : "#1678A9", color: "#fff", transition: "all 0.2s" }},
-          copied ? "✓ Kopiert!" : "In Zwischenablage kopieren")
-      ),
-      e("pre", { style: { padding: "14px 16px", margin: 0, fontSize: 12, lineHeight: 1.7, color: "#374151", background: "#f8fafc", whiteSpace: "pre-wrap", fontFamily: "ui-monospace, Consolas, monospace", maxHeight: 280, overflowY: "auto", borderTop: "1px solid #f1f5f9" }}, text)
-    ) : null
-  );
+  return text + "\n\n" + lizenzVermerkZeile();
 }
 
-function App() {
-  const [art, setArt] = useState(null);
-  const [wertInput, setWertInput] = useState("");
-  const [wert, setWert] = useState(0);
-  const [checks, setChecks] = useState({});
-  const resultRef = useRef(null);
+/* ── Zustand ── */
+var state = { art: null, wert: 0, checks: {}, open: { empfohlen: false, bedarf: false, vermerk: false, rg: false }, copied: false };
+var verfahren = null;
 
-  function parseWert(input) {
-    var cleaned = input.replace(/[^\d,.]/g, "").replace(/\./g, "").replace(",", ".");
-    return parseFloat(cleaned) || 0;
+function parseWert(input) {
+  var cleaned = input.replace(/[^\d,.]/g, "").replace(/\./g, "").replace(",", ".");
+  return parseFloat(cleaned) || 0;
+}
+
+/* ── Eingabe ── */
+function renderArt() {
+  var h = '';
+  LEISTUNGSARTEN.forEach(function(l) {
+    h += '<button type="button" class="art-btn" data-art="' + l.id + '" aria-pressed="' + (state.art === l.id) + '">'
+       + '<div class="icon" aria-hidden="true">' + l.icon + '</div><div class="lbl">' + esc(l.label) + '</div></button>';
+  });
+  document.getElementById('artRow').innerHTML = h;
+}
+function renderQuick() {
+  var h = '';
+  QUICK.forEach(function(v) {
+    h += '<button type="button" class="quick-btn" data-v="' + v + '" aria-pressed="' + (state.wert === v) + '">' + (v >= 1000 ? (v / 1000) + "k" : v) + '</button>';
+  });
+  document.getElementById('quickRow').innerHTML = h;
+}
+document.getElementById('artRow').addEventListener('click', function(ev) {
+  var b = ev.target.closest('.art-btn'); if (!b) return;
+  state.art = b.dataset.art; renderArt(); update(true);
+});
+document.getElementById('quickRow').addEventListener('click', function(ev) {
+  var b = ev.target.closest('.quick-btn'); if (!b) return;
+  var v = parseInt(b.dataset.v, 10);
+  document.getElementById('wertInput').value = String(v);
+  state.wert = v; renderQuick(); update(true);
+});
+document.getElementById('wertInput').addEventListener('input', function(ev) {
+  state.wert = parseWert(ev.target.value); renderQuick(); update(true);
+});
+
+/* ── Ergebnis ── */
+function stepRow(t, key, type) {
+  var done = !!state.checks[key];
+  var warn = t.indexOf("⚠") === 0;
+  return '<div class="step-row ' + type + '" role="button" tabindex="0" aria-pressed="' + done + '" data-key="' + key + '">'
+       + '<div class="box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></div>'
+       + '<span class="txt' + (warn ? ' warn' : '') + '">' + esc(t) + '</span></div>';
+}
+function collapsible(id, title, count, bodyHtml, extraClass) {
+  var open = !!state.open[id];
+  return '<div class="card"><button type="button" class="coll-btn" data-open="' + id + '" aria-expanded="' + open + '">'
+       + '<span class="chev" aria-hidden="true">▶</span>' + title + '<span class="cnt">' + count + '</span></button>'
+       + (open ? '<div class="coll-body' + (extraClass ? ' ' + extraClass : '') + '">' + bodyHtml + '</div>' : '') + '</div>';
+}
+
+function update(resetChecks) {
+  verfahren = state.art && state.wert > 0 ? getVerfahren(state.wert, state.art) : null;
+  if (resetChecks) { state.checks = {}; state.copied = false; }
+  renderResult();
+  if (verfahren && resetChecks) {
+    setTimeout(function(){ var r = document.getElementById('result'); if (r && r.firstElementChild) r.firstElementChild.scrollIntoView({ behavior: "smooth", block: "start" }); }, 120);
   }
+}
 
-  var verfahren = art && wert > 0 ? getVerfahren(wert, art) : null;
-
-  useEffect(function() {
-    setChecks({});
-    if (verfahren) {
-      setTimeout(function() { resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }, 120);
-    }
-  }, [art, wert]);
-
-  function toggle(key) { setChecks(function(prev) { var n = {}; for (var k in prev) n[k] = prev[k]; n[key] = !prev[key]; return n; }); }
-  var pflichtDone = verfahren ? verfahren.pflicht.filter(function(_, i) { return checks["p" + i]; }).length : 0;
-  var pflichtTotal = verfahren ? verfahren.pflicht.length : 0;
+function renderResult() {
+  var root = document.getElementById('result');
+  if (!verfahren) { root.innerHTML = ''; return; }
+  var v = verfahren;
+  var pflichtDone = v.pflicht.filter(function(_, i){ return state.checks["p" + i]; }).length;
+  var pflichtTotal = v.pflicht.length;
   var allDone = pflichtDone === pflichtTotal && pflichtTotal > 0;
 
-  return e("div", { style: { minHeight: "100vh", background: "#f8fafc" }},
-    // Header (2Rat-Branding)
-    e("div", { className: "app-header", style: { background: "#fff", padding: "16px 20px", borderBottom: "3px solid #659444" }},
-      e("div", { style: { maxWidth: 640, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }},
-        e("div", { style: { display: "flex", alignItems: "center", gap: 14 }},
-          e("img", { src: LOGO, alt: "2Rat – Büro für Radverkehrsplanung", style: { height: 38 }}),
-          e("div", null,
-            e("div", { style: { fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#8a8a8a" }}, "Büro für Radverkehrsplanung"),
-            e("h1", { style: { fontSize: 17, fontWeight: 700, color: "#3E403F", margin: 0, lineHeight: 1.3 }}, "Vergabe-Assistent ", e("span", { style: { color: "#1678A9" }}, "Saarland"))
-          )
-        ),
-        e("div", { className: "header-meta", style: { textAlign: "right", fontSize: 11, color: "#8a8a8a", lineHeight: 1.5 }}, "Saarland", e("br"), "Vergabeerlass 2025 · EU-SW 2026", e("br"), "Stand 07/2026 · v3", e("br"), e("span", { style: { fontWeight: 600 }}, lizenzKopfzeile()))
-      )
-    ),
-    e("div", { style: { maxWidth: 640, margin: "0 auto", padding: "20px 16px 60px" }},
-      // Input Card
-      e("div", { className: "input-card", style: { background: "#fff", borderRadius: 14, padding: 16, border: "1px solid #e2e8f0", marginBottom: 16, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
-        // Leistungsart
-        e("div", { style: { marginBottom: 14 }},
-          e("label", { style: { fontSize: 12, fontWeight: 600, color: "#64748b", display: "block", marginBottom: 8 }}, "Leistungsart"),
-          e("div", { style: { display: "flex", gap: 8 }},
-            LEISTUNGSARTEN.map(function(l) {
-              return e("button", {
-                key: l.id, className: "art-btn",
-                onClick: function() { setArt(l.id); },
-                "aria-pressed": art === l.id,
-                style: {
-                  flex: 1, padding: "10px 8px", borderRadius: 10,
-                  border: art === l.id ? "2px solid #1678A9" : "2px solid #e2e8f0",
-                  background: art === l.id ? "#e8f4fa" : "#fff",
-                  cursor: "pointer", textAlign: "center",
-                }
-              },
-                e("div", { style: { fontSize: 20 }}, l.icon),
-                e("div", { style: { fontSize: 12, fontWeight: art === l.id ? 700 : 500, color: art === l.id ? "#115d85" : "#6b7280", marginTop: 2 }}, l.label)
-              );
-            })
-          )
-        ),
-        // Auftragswert
-        e("div", null,
-          e("label", { htmlFor: "wertInput", style: { fontSize: 12, fontWeight: 600, color: "#64748b", display: "block", marginBottom: 8 }}, "Auftragswert netto"),
-          e("div", { style: { display: "flex", borderRadius: 10, border: "2px solid #e2e8f0", overflow: "hidden" }},
-            e("input", {
-              id: "wertInput", type: "text", value: wertInput, inputMode: "numeric",
-              onChange: function(ev) { setWertInput(ev.target.value); setWert(parseWert(ev.target.value)); },
-              placeholder: "z.B. 75000",
-              style: { flex: 1, padding: "10px 14px", fontSize: 18, border: "none", fontFamily: "ui-monospace, monospace", color: "#1e293b", outline: "none", background: "transparent" }
-            }),
-            e("div", { style: { padding: "10px 14px", fontSize: 14, fontWeight: 600, color: "#94a3b8", background: "#f8fafc", borderLeft: "1px solid #e2e8f0", display: "flex", alignItems: "center" }}, "€")
-          ),
-          e("div", { style: { marginTop: 8, padding: "9px 12px", borderRadius: 8, background: "#fef9ec", border: "1px solid #f0e0b0", fontSize: 12, lineHeight: 1.55, color: "#7a6420" }},
-            e("b", null, "Auftragswert richtig schätzen (§ 3 VgV): "),
-            "Alle Lose und Teilaufträge desselben Vorhabens zusammenrechnen. Eine Aufteilung in kleinere Aufträge, um Wertgrenzen oder den EU-Schwellenwert zu umgehen, ist unzulässig."
-          ),
-          e("div", { style: { display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }},
-            [5000, 50000, 100000, 150000, 250000].map(function(v) {
-              return e("button", {
-                key: v, className: "quick-btn",
-                onClick: function() { setWertInput(v.toString()); setWert(v); },
-                style: {
-                  padding: "4px 10px", borderRadius: 6, fontSize: 11,
-                  border: "1px solid #e2e8f0", background: wert === v ? "#e8f4fa" : "#fff",
-                  color: "#64748b", cursor: "pointer",
-                  fontFamily: "ui-monospace, monospace", fontWeight: 500,
-                }
-              }, v >= 1000 ? (v / 1000) + "k" : v);
-            })
-          )
-        )
-      ),
+  var h = '<div class="result-enter">';
+  h += '<div class="badge-card lvl-' + v.level + '"><div class="tagrow"><span class="tag">' + esc(v.tagLabel) + '</span><span class="wert">' + formatEuro(state.wert) + '</span></div>'
+     + '<h2>' + esc(v.name) + '</h2><p>' + esc(v.kurz) + '</p></div>';
 
-      // RESULT
-      verfahren ? e("div", { ref: resultRef, className: "result-enter" },
-        // Badge
-        e("div", { style: { background: verfahren.bgColor, border: "2px solid " + verfahren.borderColor, borderRadius: 14, padding: "16px 18px", marginBottom: 12 }},
-          e("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }},
-            e("div", { style: { padding: "3px 10px", borderRadius: 6, fontSize: 11, fontWeight: 700, background: verfahren.color, color: "#fff", textTransform: "uppercase", letterSpacing: "0.04em" }}, verfahren.tagLabel),
-            e("span", { style: { fontSize: 11, color: "#94a3b8", fontFamily: "ui-monospace, monospace" }}, formatEuro(wert))
-          ),
-          e("h2", { style: { fontSize: 20, fontWeight: 700, color: "#1e293b", margin: "0 0 4px" }}, verfahren.name),
-          e("p", { style: { fontSize: 14, color: "#4b5563", margin: 0, lineHeight: 1.5 }}, verfahren.kurz)
-        ),
+  h += '<div class="card"><div class="sec-head"><div class="t"><span class="dot' + (allDone ? ' done' : '') + '"></span>Pflichtschritte</div>'
+     + '<span class="counter' + (allDone ? ' done' : '') + '">' + pflichtDone + '/' + pflichtTotal + '</span></div><div class="sec-body">';
+  v.pflicht.forEach(function(t, i){ h += stepRow(t, "p" + i, "pflicht"); });
+  h += '</div>' + (allDone ? '<div class="fertig">✅ Fertig – Auftrag kann erteilt werden</div>' : '') + '</div>';
 
-        // Pflicht
-        e("div", { style: { background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", overflow: "hidden", marginBottom: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
-          e("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderBottom: "1px solid #f1f5f9" }},
-            e("div", { style: { display: "flex", alignItems: "center", gap: 8 }},
-              e("span", { style: { width: 8, height: 8, borderRadius: "50%", background: allDone ? "#659444" : "#ef4444", display: "inline-block" }}),
-              e("span", { style: { fontSize: 14, fontWeight: 700, color: "#1e293b" }}, "Pflichtschritte")
-            ),
-            e("span", { style: { fontSize: 13, fontWeight: 700, fontFamily: "ui-monospace, monospace", color: allDone ? "#659444" : "#6b7280" }}, pflichtDone + "/" + pflichtTotal)
-          ),
-          e("div", { style: { padding: "4px 4px" }},
-            verfahren.pflicht.map(function(t, i) {
-              return e(StepRow, { key: "p" + i, text: t, done: !!checks["p" + i], onToggle: function() { toggle("p" + i); }, type: "pflicht" });
-            })
-          ),
-          allDone ? e("div", { style: { padding: "10px 16px", background: "#f0fdf4", borderTop: "1px solid #bbf7d0", fontSize: 13, fontWeight: 600, color: "#059669", textAlign: "center" }}, "✅ Fertig – Auftrag kann erteilt werden") : null
-        ),
+  var eb = ''; v.empfohlen.forEach(function(t, i){ eb += stepRow(t, "e" + i, "empfohlen"); });
+  h += collapsible('empfohlen', '\u{1F4A1} Empfohlen', v.empfohlen.length, eb);
+  var bb = ''; v.nurBeiBedarf.forEach(function(t, i){ bb += stepRow(t, "b" + i, "bedarf"); });
+  h += collapsible('bedarf', '\u{1F4CE} Nur bei Bedarf', v.nurBeiBedarf.length, bb);
 
-        // Empfohlen
-        e("div", { style: { background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", overflow: "hidden", marginBottom: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
-          e(Collapsible, { title: "\u{1F4A1} Empfohlen", badge: "" + verfahren.empfohlen.length },
-            e("div", { style: { padding: "0 4px 4px" }},
-              verfahren.empfohlen.map(function(t, i) {
-                return e(StepRow, { key: "e" + i, text: t, done: !!checks["e" + i], onToggle: function() { toggle("e" + i); }, type: "empfohlen" });
-              })
-            )
-          )
-        ),
+  h += '<div class="card"><button type="button" class="vermerk-btn" data-open="vermerk" aria-expanded="' + !!state.open.vermerk + '">'
+     + '<span class="t">\u{1F4DD} Vergabevermerk-Vorlage</span><span class="chev" aria-hidden="true">▶</span></button>';
+  if (state.open.vermerk) {
+    h += '<div class="copy-row"><button type="button" class="copy-btn' + (state.copied ? ' ok' : '') + '" id="copyBtn">' + (state.copied ? '✓ Kopiert!' : 'In Zwischenablage kopieren') + '</button></div>'
+       + '<pre class="vermerk" id="vermerkPre">' + esc(vermerkText(state.wert, state.art, v)) + '</pre>';
+  }
+  h += '</div>';
 
-        // Nur bei Bedarf
-        e("div", { style: { background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", overflow: "hidden", marginBottom: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
-          e(Collapsible, { title: "\u{1F4CE} Nur bei Bedarf", badge: "" + verfahren.nurBeiBedarf.length },
-            e("div", { style: { padding: "0 4px 4px" }},
-              verfahren.nurBeiBedarf.map(function(t, i) {
-                return e(StepRow, { key: "b" + i, text: t, done: !!checks["b" + i], onToggle: function() { toggle("b" + i); }, type: "bedarf" });
-              })
-            )
-          )
-        ),
-
-        // Vergabevermerk
-        e(VermerkGenerator, { wert: wert, art: art, verfahren: verfahren }),
-
-        // Rechtsgrundlagen
-        e("div", { style: { background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }},
-          e(Collapsible, { title: "\u{1F4DA} Rechtsgrundlagen", badge: "" + verfahren.rechtsgrundlagen.length },
-            e("div", { style: { padding: "0 4px 8px" }},
-              verfahren.rechtsgrundlagen.map(function(rg, i) {
-                return e("div", { key: i, style: { padding: "6px 14px", fontSize: 13, color: "#374151", background: i % 2 === 0 ? "#f8fafc" : "transparent", borderRadius: 6, marginBottom: 1 }}, rg);
-              })
-            )
-          )
-        )
-      ) : null,
-
-      // Footer (2Rat)
-      // Suite-Links
-      e("div", { className: "suite-links", style: { marginTop: 24, display: "flex", flexDirection: "column", gap: 8 }},
-        e("div", { style: { fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#8a8a8a" }}, "Passende weitere Werkzeuge"),
-        e("a", { href: "foerdermittel-finder.html", style: { display: "block", padding: "11px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, background: "#fff", textDecoration: "none", color: "#3E403F", fontSize: 13, lineHeight: 1.5 }},
-          e("b", { style: { color: "#115d85" }}, "Fördermittel-Finder"), " – Erst die Förderung sichern, dann vergeben (Quote nach FRL-NMOB-Rad-Fuß)"),
-        e("a", { href: "zustaendigkeiten.html", style: { display: "block", padding: "11px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, background: "#fff", textDecoration: "none", color: "#3E403F", fontSize: 13, lineHeight: 1.5 }},
-          e("b", { style: { color: "#115d85" }}, "Zuständigkeiten Radverkehr"), " – Wer ordnet an, wer trägt die Baulast?")
-      ),
-      e("footer", { style: { display: "block", marginTop: 16, padding: "12px 16px", borderRadius: 10, background: "rgba(0,0,0,0.02)", border: "1px solid #e2e8f0" }},
-        e("p", { style: { fontSize: 10, color: "#a1a1aa", margin: 0, lineHeight: 1.6 }},
-          "Orientierungshilfe, keine Rechts- oder Fachberatung im Einzelfall. Grundlage: Vergabeerlass SL 2025 (Amtsbl. 26/2025, ab 01.07.2025 unbefristet) – Direktauftrag bis 100.000 €, darüber Freihändige Vergabe oder Beschränkte Ausschreibung bis zum EU-Schwellenwert (2026/27: Bau 5.404.000 €, Liefer/DL 216.000 €). KSVG §§ 82 ff. Alle Werte netto. Bei Fördermitteln ggf. strengere Vorgaben. Stand 07/2026."
-        ),
-        e("p", { style: { fontSize: 10, color: "#a1a1aa", margin: "6px 0 0", lineHeight: 1.6 }},
-          "Entwickelt und gepflegt von 2Rat – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · www.2rat.org"
-        ),
-        e("p", { style: { fontSize: 10, color: "#a1a1aa", margin: "6px 0 0", lineHeight: 1.6 }},
-          lizenzKopfzeile() + " · Lizenziert zur Nutzung durch die oben genannte Organisation. Weitergabe an Dritte nicht gestattet."
-        )
-      )
-    )
-  );
+  var rb = ''; v.rechtsgrundlagen.forEach(function(rg){ rb += '<div class="rg-row">' + esc(rg) + '</div>'; });
+  h += collapsible('rg', '\u{1F4DA} Rechtsgrundlagen', v.rechtsgrundlagen.length, rb, 'rg');
+  h += '</div>';
+  root.innerHTML = h;
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(e(App));
+document.getElementById('result').addEventListener('click', function(ev) {
+  var t = ev.target;
+  var row = t.closest('.step-row');
+  if (row) { toggleStep(row.dataset.key); return; }
+  var ob = t.closest('[data-open]');
+  if (ob) { var id = ob.dataset.open; state.open[id] = !state.open[id]; renderResult(); return; }
+  if (t.closest('#copyBtn')) {
+    var txt = document.getElementById('vermerkPre').textContent;
+    var done = function(){ state.copied = true; renderResult(); setTimeout(function(){ state.copied = false; renderResult(); }, 2000); };
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt).then(done, function(){ fallbackCopy(txt); done(); }); }
+    else { fallbackCopy(txt); done(); }
+  }
+});
+document.getElementById('result').addEventListener('keydown', function(ev) {
+  var row = ev.target.closest('.step-row'); if (!row) return;
+  if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggleStep(row.dataset.key); }
+});
+/* Abhaken ohne Neuaufbau: nur Zeile, Zähler und Fertig-Hinweis anfassen */
+function toggleStep(k) {
+  state.checks[k] = !state.checks[k];
+  var row = document.querySelector('.step-row[data-key="' + k + '"]');
+  if (row) row.setAttribute('aria-pressed', String(!!state.checks[k]));
+  if (k.charAt(0) !== 'p' || !verfahren) return;
+  var done = verfahren.pflicht.filter(function(_, i){ return state.checks["p" + i]; }).length;
+  var total = verfahren.pflicht.length, all = done === total && total > 0;
+  var c = document.querySelector('.counter'), dot = document.querySelector('.sec-head .dot');
+  if (c) { c.textContent = done + '/' + total; c.classList.toggle('done', all); }
+  if (dot) dot.classList.toggle('done', all);
+  var card = c && c.closest('.card'), f = card && card.querySelector('.fertig');
+  if (all && card && !f) { var d = document.createElement('div'); d.className = 'fertig'; d.textContent = '✅ Fertig – Auftrag kann erteilt werden'; card.appendChild(d); }
+  if (!all && f) f.remove();
+}
+function fallbackCopy(txt) {
+  var ta = document.createElement('textarea'); ta.value = txt; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.left = '-9999px';
+  document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta);
+}
+
+renderArt(); renderQuick(); update(false);
 </script>
 </body>
 </html>
