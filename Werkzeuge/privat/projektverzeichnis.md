@@ -1,10 +1,9 @@
 2Rat – Büro für Radverkehrsplanung
 Armin Jung · Radverkehrsplaner EIPOS · www.2rat.org
----
 2Rat – Gesamt-Projektverzeichnis
-Stand: 02.09.2026
-Anzahl Vorhaben (konsolidiert): 38
-Quellen: Fassung 05.05.2026 · fortgeschrieben über 📮-Meldungen aus den Werkstatt-Projekten (Historie je Vorhaben) · letzte Meldungen 02.09.2026 (Tool-Portal: Live-Prüfung aller Werkzeuge · RadPlan Pro: v3.3 deployed) · Aufräumdurchlauf 02.09.2026 (Historie eingedampft, Widersprüche bereinigt)
+Stand: 13.09.2026
+Anzahl Vorhaben (konsolidiert): 39
+Quellen: Fassung 05.05.2026 · fortgeschrieben über 📮-Meldungen aus den Werkstatt-Projekten (Historie je Vorhaben) · letzte Meldung 13.09.2026 (RadPlan Pro: Neubau Modell 7.1 als Branch-Deploy · Architekturentscheidung Felderfassung/Google Drive · neues Kundenprojekt Stadt Lebach) · Aufräumdurchlauf 02.09.2026 (Historie eingedampft, Widersprüche bereinigt)
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Claude liefert die komplette Datei neu → Armin committet. Fertig.
 ---
 🔥 AKUT – Das zählt jetzt
@@ -13,9 +12,9 @@ Wann	Was	Wo
 prüfen	Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den Passwortmanager übertragen, bevor die 30-Tage-Session abläuft	Tool-Portal / RadPlan
 offen / jetzt	Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe und Abrechnung · parallel Freigabe für Referenznennung + Zitate einholen – aus der RAD-Lab-Runde und aus der Aktion „Kritischer Blick“ (Zitate liegen vor, Freigabe der Zitierenden steht aus)	Tool-Portal
 jetzt	AGFK-SL: Anschreiben an Irene liegt fertig vor, Anhänge bereit (Angebot v2 · Nutzungsvereinbarung v3) – Versand steht aus, Termin weiterhin zu vereinbaren. Angebot jetzt gültig bis 31.10.2026 · parallel Anfrage an Nicole: Freigabe der Logo-Verwendung (Logodatei liegt vor, → 2.15)	Tool-Portal / BÜRO 2Rat
-03.09.2026	Zuständigkeiten: St. Ingbert als eigene Straßenverkehrsbehörde telefonisch klären (§ 7 Abs. 1 StVZustG nennt sie nicht, Regionalverband bestätigt Völklingen als Mittelstadt mit eigener Behörde) – Recherche als Kommentar an der Todoist-Aufgabe	Tool-Portal
+überfällig	Zuständigkeiten: St. Ingbert als eigene Straßenverkehrsbehörde telefonisch klären (§ 7 Abs. 1 StVZustG nennt sie nicht, Regionalverband bestätigt Völklingen als Mittelstadt mit eigener Behörde) – Recherche als Kommentar an der Todoist-Aufgabe	Tool-Portal
+14.09.2026	Netlify-Build-Kontingent erschöpft – bis zum Reset keine Deploys möglich (betrifft RadPlan Pro und Branch-Deploy Neubau, → 4.2)	RadPlan Pro
 Restpunkte	Neue Geschäftsanschrift (Antoniusstraße 44): Repo-Prüfung 13.08.2026 – Website und zentrales Impressum sind umgestellt ✓, offen: `schulweg-check/datenschutz.html` (gepatcht geliefert, Commit steht aus), Play Console, Behörden und DOCX-Vorlagen	BÜRO 2Rat / Schulweg
----
 Inhalt
 Kundenprojekte & Akquise
 Tools & Werkzeuge-Portal
@@ -30,7 +29,6 @@ URL-Verzeichnis
 Fristen
 Statusverteilung
 Zugänge & Codes
----
 1️⃣ Kundenprojekte & Akquise
 1.1 Radverkehrsplanung Hostenbach
 Kunde / Partner: Gemeinde Wadgassen
@@ -71,7 +69,13 @@ Vergabe-Assistent im Paket: Nach Variante B ist der Vergabe-Assistent (→ 2.9) 
 AGFK-Vorschau live (24.08.2026): Die vier Werkzeuge stehen als AGFK-Fassung unter `2rat.org/agfk-werkzeuge/` zur Ansicht bereit – vollständig in den AGFK-Hausfarben, mit Logo und korrekter Verbandsbezeichnung (→ 2.15). Grundlage fürs Gespräch, ersetzt keine Freigabe.
 Logo: derzeit die von der Verbandswebsite übernommene Fassung eingebunden – Originaldatei und Freigabe der Verwendung bei Nicole anfragen.
 Nächster Schritt: Anschreiben an Irene versenden (Anhänge liegen bereit), Termin vereinbaren; Logo-Originaldatei und Freigabe bei Nicole anfragen; Bereitstellungsweg im Gespräch klären (Empfehlung Subdomain/CNAME, → 2.15); Referenzfreigabe kurzfristig einholen; vor 30.09.2026 Gespräch über die Fortsetzung der Kennenlern-Zugänge
----
+1.6 Thalexweiler Netto (L 304)
+Kunde / Partner: Stadt Lebach
+Zweck: Begutachtung einer Radverkehrssituation an der L 304 (Einmündungs-/Zufahrtsbereich Netto Thalexweiler) mit Ortstermin und schriftlicher Auswertung – erster Kundenauftrag, der vollständig über RadPlan Pro und den Skill `radplan-bericht` läuft.
+Status: läuft · Ortstermin-Bericht und Kurzbericht am 10.09.2026 erstellt
+Offen: eigene Belegfotos S1/P1 sowie drei Kartenausschnitte ergänzen – danach versandfertig
+Nächster Schritt: Fotos und Kartenausschnitte einsetzen, Berichte an die Stadt Lebach übergeben
+Details (Beträge, Ansprechpartner): → Projekt „BÜRO 2Rat"
 2️⃣ Tools & Werkzeuge-Portal
 Alle unter: www.2rat.org/Werkzeuge · 6 Werkzeuge im `TOOLS`-Array: 5 produktiv + Förderrichtlinien „In Entwicklung" (→ 2.10) · Karten-Prototyp außerhalb des Arrays (→ 2.12)
 2.1 Werkzeuge-Portal (Login & Lizenzverwaltung)
@@ -200,7 +204,6 @@ Stand 02.09.2026: Alle vier AGFK-Fassungen auf den neuen Stand gebracht und live
 Infrastruktur bestätigt (02.09.2026): Pages läuft auf `main`/root, HTTPS wird erzwungen, die Domain `2rat.org/agfk-werkzeuge/` wird über das Hauptrepo vererbt – kein eigener CNAME nötig. `robots.txt` ist optional, das Meta-`noindex` genügt. Korrektur einer früheren Notiz: Einen `master`-Branch gab es nie (Fehldeutung einer raw-URL) – Punkt gestrichen.
 ⚠️ Doppelpflege – Entscheidung 02.09.2026: Das AGFK-Repo ist eine physische Branding-Kopie von `kunden/` (25–40 Zeilen Abweichung je Datei); das Runtime-Branding-Prinzip ist dort nicht umgesetzt. Während der laufenden Testrunde bleibt das Repo die Referenz für die AGFK-SL; nach Testende wird zusammengeführt: Runtime-Branding einführen, `kunden/` wieder einzige Quelle.
 Nächster Schritt: Nach Testende Runtime-Branding einführen und `kunden/` wieder zur einzigen Quelle machen · Freigabe der Logo-Verwendung bei Nicole anfragen · Beim Umzug auf eine AGFK-Subdomain: DNS-Eintrag durch die AGFK, Domain in den Pages-Einstellungen des neuen Repos, `noindex` entfernen – danach ist `2rat.org/agfk-werkzeuge/` nicht mehr erreichbar, in der Mitgliederkommunikation deshalb nur die endgültige Adresse verbreiten
----
 3️⃣ QGIS-Plugins & Planungs-Werkzeuge
 3.1 QGIS-Plugin „Radverkehrsplaner ANALYSE"
 Kunde / Partner: intern (Eigenentwicklung)
@@ -233,7 +236,6 @@ Kunde / Partner: intern (wiederverwendbar)
 Zweck: SVG-Planrahmen im 2Rat-Design für QGIS-Drucklayouts, skalierbar.
 Status: abgeschlossen
 Nächster Schritt: —
----
 4️⃣ Apps & Digitale Produkte
 4.1 Velomeld / Radwegemelder
 Kunde / Partner: eigen (Kernprodukt)
@@ -244,10 +246,10 @@ Nächster Schritt: Repo-Split abschließen; Status-Management für Meldungen ein
 4.2 RadPlan Pro
 Kunde / Partner: eigen (Profi-Tool)
 Zweck: GPS-Felderfassung für Planer mit ERA-Konformitätscheck via Claude API. PWA, Daten nur lokal (localStorage), KI-API mit User-eigenem Anthropic-Key.
-Repo: github.com/2Rat/radplan-pro (privat) · Live: radplan-pro.netlify.app
-Status: läuft · v3.2 (12.07.2026) – Regelwerks-Hierarchie Saarland (ERA maßgeblich, MuLöS BW nur ergänzend), DTV→Kfz/h-Umrechnung im KI-Prompt, Tempo bis 100 (außerorts), max_tokens 2000, Datenschutz auf Netlify korrigiert. Impressum-Mail ✓ erledigt. · 19.07.: bereinigte Version (neuer Login, localStorage-Überlauf-Schutz), Zugang rotiert · 19.07.: KI-Analyse auf JSON-first-Pipeline umgestellt (Whitelist-Validierung, editierbares Feld „Fachliche Bewertung"), EXIF-GPS/Datum-Bugs behoben, Bericht-Paket-Export (JSON inkl. Fotos) – deployed, Testphase läuft
+Repo: github.com/2Rat/radplan-pro (privat) · Live: radplan-pro.netlify.app · Testfassung: neubau--radplan-pro.netlify.app (Branch-Deploy)
+Status: läuft · zweigleisig seit 09/2026 – Live-App unter `main` auf v3.3 unverändert, daneben der Neubau (Modell 7.1) als Branch-Deploy in der Testphase · v3.2 (12.07.2026) – Regelwerks-Hierarchie Saarland (ERA maßgeblich, MuLöS BW nur ergänzend), DTV→Kfz/h-Umrechnung im KI-Prompt, Tempo bis 100 (außerorts), max_tokens 2000, Datenschutz auf Netlify korrigiert. Impressum-Mail ✓ erledigt. · 19.07.: bereinigte Version (neuer Login, localStorage-Überlauf-Schutz), Zugang rotiert · 19.07.: KI-Analyse auf JSON-first-Pipeline umgestellt (Whitelist-Validierung, editierbares Feld „Fachliche Bewertung"), EXIF-GPS/Datum-Bugs behoben, Bericht-Paket-Export (JSON inkl. Fotos) – deployed, Testphase läuft
 Festlegung: Das KI-Feld heißt in allen Dokumenten immer „Fachliche Bewertung"; bei fachlich falscher KI-Analyse wird das Feld vor Export vollständig überschrieben (KI liefert Entwurf, Verantwortung bleibt beim Planer)
-Begleit-Skill: Claude-Skill `radplan-bericht` erstellt & paketiert – erzeugt DOCX-Berichte aus dem Bericht-Paket (Ortstermin / Maßnahmenblätter / Hybrid; 2Rat- und Neutral-Modus); Karten dort aktuell Platzhalter, Testphase
+Begleit-Skill: Claude-Skill `radplan-bericht` erstellt & paketiert – erzeugt DOCX-Berichte aus dem Bericht-Paket (Ortstermin / Maßnahmenblätter / Hybrid; 2Rat- und Neutral-Modus); Karten dort aktuell Platzhalter, Testphase · Fortschreibung 10.09.2026: neues Format „kurz" (zweiseitiger Kurzbericht für Amtsleitungen), Dezimalkomma-Normalisierung, Pfadfindung repariert · erster Einsatz beim Kundenprojekt Stadt Lebach (→ 1.6)
 Patch 09.08.2026 – am 10.08.2026 deployed ✓ (Sammeldatei): `index.html` (v3.2). Inhalt: KI-Modell auf `claude-sonnet-5` umgestellt (Standard), `claude-haiku-4-5-20251001` als Option; `normModel()` migriert abgekündigte Modell-IDs aus dem localStorage · Impressum auf die neue Geschäftsanschrift umgestellt (→ 7.1)
 KI-Prompt v2 produktiv (10.08.2026) ✓: Die Re-Analyse klassifiziert korrekt („Querungshilfe · Mittelinsel zu schmal") – der Fehlbefund der v1-Fassung ist damit behoben. Zwei Share-Buttons live.
 Bug im Feldtest 10.08.2026 – mit v3.2 behoben ✓: Web Share meldet „Permission denied", weil `application/json` bzw. `application/geo+json` nicht auf der Dateityp-Positivliste von Chrome für Android stehen. Lösung: geteilte Dateien laufen als `text/plain` (Dateiname und Endung `.json` bleiben erhalten) plus Auto-Download-Fallback bei jedem Share-Fehler; betrifft `shareReport` und `shareGeoJSON`.
@@ -256,7 +258,10 @@ Schwachpunkt Startsequenz (dokumentiert 09.08.2026) – mit v3.2 erledigt ✓: D
 v3.2 abgeschlossen (Stand 02.09.2026) ✓: KI-Prompt mit Klassifikation Strecke / Querung / Knotenpunkt, Startsequenz gekapselt, Teilen-Funktion für Bericht-Pakete.
 v3.3 (02.09.2026) deployed & Versionsnummer in den Einstellungen bestätigt ✓: `index.html` – die KI erhält jetzt alle Vor-Ort-Messwerte einschließlich DTV, Analyse mit 1500-px-Foto, Bestandstypen für regelkonforme Querungen und Führungen, Preistabelle je Modell, Erinnerung an die Datensicherung.
 Entscheidung 02.09.2026: Service Worker / Offline-Modus bleibt aus, solange das Werkzeug allein genutzt wird. Die Versionsnummer in den Einstellungen ist der Prüfstein nach jedem Deploy.
-Nächster Schritt: Testphase mit neuem Modell abschließen – Vergleichstest gegen die drei bekannten Fehlinterpretationen aus dem letzten Feldtest; Karten-Workflow klären; Linien-Erfassung verfeinern · bewusst zurückgestellt: Import-Funktion für Bericht-Pakete (wird relevant ab dem zweiten Gerät oder Nutzer)
+Neubau Modell 7.1 – Pakete 3–6 geliefert (10.–13.09.2026), Branch-Deploy `neubau--radplan-pro.netlify.app`, Testphase: Regelbefunde rechnen bei jeder Änderung automatisch nach · Dezimalkomma durchgängig · Pflichtmaß-Hinweise über eine Sammelabfrage · Streckenlinien mit Seitenversatz auf der Karte · PWA mit Offline-Betrieb und versioniertem Cache · Projektverwaltung in IndexedDB (mehrere Projekte nebeneinander, die 5-MB-Grenze des localStorage entfällt) · Google-Drive-Abgleich mit Hochladen, Holen und Konfliktschutz. Tests: 61 Unit- und 64 Smoke-Tests grün.
+Damit überholt: die Entscheidung vom 02.09.2026 gegen einen Service Worker (Offline-Betrieb ist im Neubau enthalten) und die Zurückstellung der Import-Funktion (über den Drive-Abgleich abgedeckt).
+Architekturentscheidung 13.09.2026: RadPlan Pro bleibt Felderfassungswerkzeug und tritt nicht gegen QField an. Zentraler Speicher ist Google Drive mit dem nicht-sensiblen Scope `drive.file` (Zugriff nur auf die von der App selbst angelegten Dateien), kein Dauerabgleich im Hintergrund. Dafür ein eigenes Google-Cloud-Projekt „RadPlan Pro" angelegt, derzeit im Testmodus.
+Nächster Schritt: Testphase des Neubaus abschließen, dann Zusammenführung mit `main` entscheiden · nächstes Paket: basemap.de als zweite Kartenquelle – OSM erzwingt seit März 2026 eine Referer-Pflicht, lokales Testen geht deshalb nur noch über `http.server`, nicht mehr per Doppelklick · Google-Cloud-Projekt aus dem Testmodus holen, bevor es in den Regelbetrieb geht · ⏳ bis 14.09.2026 keine Deploys möglich (Netlify-Build-Kontingent erschöpft) · Karten-Workflow klären; Vergleichstest gegen die drei bekannten Fehlinterpretationen aus dem letzten Feldtest
 4.3 Schulweg-Detektive
 Kunde / Partner: Jugendpflege Kirkel + 2Rat (Technik)
 Zweck: Gesamtwerk – DSGVO-konforme PWA + Play-Store-App (v1.2.1.0), Web-Auswertungskarte v2, Erklärfilm, Info-Doku, Begleitmaterial.
@@ -270,7 +275,6 @@ Zweck: Standalone-PWA für Inventar- und Aufgabenverwaltung im Bauhof.
 Repo: github.com/2Rat/bauhof-inventar · Live: bauhof-2rat.netlify.app
 Status: live (funktional ruhend)
 Nächster Schritt: —
----
 5️⃣ Marketing & Website
 5.1 2rat.org Website
 Kunde / Partner: eigen
@@ -299,7 +303,6 @@ Zugang: Code → Passwortmanager · am 19.07.2026 sicherheitsbereinigt und Zugan
 URLs: `2rat.org/cmd` · `2rat.org/Werkzeuge/privat/`
 Status: live
 Nächster Schritt: Bei Status-Änderungen Datei-Update; Fristen mit diesem Verzeichnis synchron halten
----
 6️⃣ Infrastruktur
 6.1 GitHub-Organisation `2Rat` – Repo-Übersicht
 Kunde / Partner: intern
@@ -307,7 +310,7 @@ Zweck: Zentrale Code-Infrastruktur (Tools, Plugins, Apps, Website).
 URL: github.com/2Rat
 Status: aktiv
 Nächster Schritt: Repo-Struktur sauber halten
-#	Repository	Sichtbarkeit	Bezug
+Repository	Sichtbarkeit	Bezug
 1	`2Rat/2Rat.github.io`	öffentlich	Website · Cockpit · Kommandozentrale · Portal + alle Portal-Tools
 2	`2Rat/velomeld`	–	4.1 Bürger-App
 3	`2Rat/velomeld-pro`	–	4.1 Profi-Variante
@@ -316,7 +319,6 @@ Nächster Schritt: Repo-Struktur sauber halten
 6	`2Rat/schulweg-check`	–	4.3 Schulweg-Detektive
 7	`2Rat/umzugsplan`	–	(privat/Test)
 8	`2Rat/agfk-werkzeuge`	öffentlich	2.15 AGFK-Vorschau (Pages aktiv)
----
 7️⃣ Büro-intern & Behörden
 7.1 2Rat Büroverwaltung / Stammdatendokument
 Kunde / Partner: intern
@@ -337,15 +339,12 @@ Kunde / Partner: ARD/ZDF/DR – Az 651 028 117 5
 Zweck: Pflichtanmeldung; voraussichtlich beitragsfrei nach Ziff. 1.3 (Büro in Privatwohnung).
 Status: abgeschlossen (Anmeldung 20.04.2026)
 Nächster Schritt: Bescheid abwarten
----
 💡 Ideenspeicher (keine Vorhaben, zählen nicht mit)
 I.1 Radverkehrskonzept-Werkzeug für kleine Kommunen – KI-/webgestützt, Stand 30.08.2026: Ideen- und Marktrecherchephase. Netz-/Datenebene ist durch freie Werkzeuge (DigiRad, RadSim, TILDA/Trassenscout) gut abgedeckt; die Lücke liegt im Weg vom Befund zum beschlussfähigen Dokument (Mängelanalyse, Maßnahmenblätter mit ERA/VwV-Begründung, Kostenschätzung, Förderzuordnung, Konzepttext mit Beschlussvorlage). Offene Fragen: Haftung / fachliche Unterschrift, Kannibalisierung der eigenen Dienstleistung → Projekt „BÜRO 2Rat"
 I.2 Konsistenz-Audit dieses Verzeichnisses als wiederkehrende Prüfung (Versionen, Status, Querverweise) – erster Durchlauf 02.09.2026
----
 8️⃣ Archiv / Verworfen
 8.1 QGIS-Plugin „Radverkehrsplaner CONSTRUCT"
 Status: verworfen (zu instabil, ersetzt durch QAD)
----
 9️⃣ Claude-Projekt-Landkarte
 Claude-Projekt	Behandelte Vorhaben	Rolle
 Projektübersicht 2Rat	Pflege und Fortschreibung dieses Verzeichnisses – zentrale Statusübersicht aller Vorhaben. Hier laufen alle 📮-Meldungen aus den Werkstatt-Projekten ein.	HUB
@@ -378,7 +377,8 @@ Bügelplaner (frei, ohne Code)	www.2rat.org/buegelplaner/
 Kommandozentrale	www.2rat.org/cmd
 Radwegemelder-Ergebnisse	www.2rat.org/cockpit.html
 Velomeld (Bürger-App)	2rat.org/velomeld/#home
-RadPlan Pro	radplan-pro.netlify.app
+RadPlan Pro (Live, `main`)	radplan-pro.netlify.app
+RadPlan Pro Neubau (Branch-Deploy, Test)	neubau--radplan-pro.netlify.app
 Bauhof-App	bauhof-2rat.netlify.app
 Schulweg-Detektive (PWA)	009aj.github.io/schulweg-check/
 Schulweg-Detektive (Play Store)	play.google.com/store/apps/details?id=de.zweirat.schulwegdetektive
@@ -388,10 +388,10 @@ Ressource	Adresse
 E-Mail Büro (offiziell)	fahr2rat@gmail.com
 Anschrift	Antoniusstraße 44, 66822 Lebach
 AGFK-SL	geschaeftstelle@agfk-sl.de
----
 1️⃣1️⃣ Fristen
 Datum	Kontext	Aktion
 15.07. / 31.07.2026	Förderung (JGF FL1 / FL2)	Fristen verstrichen – Ausgang nachtragen (eingereicht ja/nein?), danach Zeile raus
+14.09.2026	4.2 RadPlan Pro	Netlify-Build-Kontingent zurückgesetzt – bis dahin keine Deploys
 30.09.2026	Förderung (FRL-NMOB)	Jahres-Stichtag
 30.09.2026	1.5 AGFK-SL	Kennenlern-Tools laufen ab (`toolExpires`) → vorher Gespräch über die Fortsetzung
 31.10.2026	1.5 AGFK-SL	Gültigkeit des Angebots 2026-AGFK-03 v2 endet (von 30.09. verlängert)
@@ -403,15 +403,15 @@ Sep 2026	4.3 Schulweg-Detektive	Android-Entwicklerbestätigung für PWA-APK prü
 27.05.2027	1.5 AGFK-SL	Lizenz „AGFK Honorarkraft" läuft ab
 Anfang 2028	2.9 Vergabe-Assistent	Neue EU-Schwellenwerte einpflegen (aktuelle Werte gelten bis 31.12.2027)
 Entfallen 11.08.: Alle Radherbst-Fristen (Versand · Rückmeldung 25.08. · Aktionszeitraum 01.09.–15.10.) – die Aktion findet nicht statt (→ 1.4)
+Geklärt 13.09.: Architektur RadPlan Pro (Felderfassung statt QField, Google Drive als zentraler Speicher mit Scope `drive.file`, kein Dauerabgleich) · Pakete 3–6 des Neubaus geliefert und als Branch-Deploy in Test
 Geklärt 02.09.: Live-Prüfung aller Werkzeuge (Zuständigkeiten v35 · Fördermittel-Finder v6 · Projekt-Check v7 · Vergabe-Assistent v5 · VwV-StVO 2025 v8, alle deployed und gegengeprüft) · EU-Schwellenwerte 2026/27 verifiziert · Fördermittel-Fristen gegen FAQ 05/2026 bestätigt · Barrierefreiheits-Befund revidiert (kein Handlungsbedarf) · AGFK-Repo-Infrastruktur bestätigt · VwV-StVO 2025 nicht im AGFK-Paket
 Geklärt 24.08.: Zuständigkeiten v34 (ERA-2010-Verifikation, 195 Praxishinweise, sieben Sachfehler behoben) · Projekt-Check v6 · VwV-StVO 2025 v7 (drei Rechtsfehler) · Portal-Badges – alles deployed und gegengeprüft
 Geklärt 13.08.: Google-Play-Ziel-API-Level der Schulweg-Detektive (Frist 31.08.2026) erledigt · Missbrauchsschutz Stufe 1–3 umgesetzt · Schriftlizenzen `fonts/` geklärt
 Geklärt 27.07.: Kontaktdaten der Straßenverkehrsbehörden geprüft (Neunkirchen korrigiert) · EU-Schwellenwerte 2026/27 im Vergabe-Assistenten bereits aktuell · Kartenwunsch aus der Testrunde eingeordnet (ZORA und Google-Maps-Embed ausgeschlossen, GeoPortal Saarland als Ersatz)
 Ohne festes Datum: Gespräch mit der AGFK-SL (Irene) – Nutzungsrechte Projekt-Check, Pflegevereinbarung, Lizenzmodell übrige Werkzeuge. Grundlage: Angebot 2026-AGFK-03 v2 und Nutzungsvereinbarung v3 (Stand 24.08.2026) auf Basis des Eckpunktepapiers vom 27.07.2026. Anschreiben liegt fertig vor, Versand und Termin stehen aus.
----
 1️⃣2️⃣ Statusverteilung
 Status	Anzahl	Vorhaben
-läuft / live / produktiv / stabil / aktiv	23	1.5, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.11, 2.13, 2.14, 2.15, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1
+läuft / live / produktiv / stabil / aktiv	24	1.5, 1.6, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.11, 2.13, 2.14, 2.15, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1
 teils läuft	1	1.1 (LP1 abgeschlossen ✓ · LP2 offen)
 abgeschlossen	4	1.2, 2.8, 3.5, 7.3
 vorbereitet	2	2.6 (Demo-Konzept), 3.2
@@ -420,7 +420,6 @@ Experiment / Prototyp	1	2.12
 ruht / ausgesetzt	2	1.3, 1.4
 offen	1	7.2
 verworfen	1	8.1
----
 1️⃣3️⃣ Zugänge & Codes
 Diese Datei liegt im öffentlichen Repo – deshalb hier keine Klartext-Codes. Alle Code-Werte: → Passwortmanager (KeePassXC/Bitwarden).
 Zugang	Code-Wert	Gültig bis / Status
@@ -434,11 +433,9 @@ Demo Tool-Portal	(deaktiviert)	am 24.06.2026 auskommentiert (Altlast ohne `tools
 Cockpit (`cockpit.html`)	→ Passwortmanager	—
 RadPlan Pro	→ Passwortmanager (Wert vermutlich im Chat des RadPlan-Pro-Projekts – übertragen!)	rotiert 19.07.2026
 Passwortmanager-Verweise: Gmail · Supabase (Velomeld) · Netlify · GitHub-Token · Anthropic API-Key · kundenspezifische Cockpit-Codes (via Hash-Generator erzeugt, extern abgelegt)
----
 🛠 Pflegeanleitung – die 3 Regeln
 Eine Datei, eine Wahrheit – und die liegt auf GitHub. `Werkzeuge/privat/projektverzeichnis.md` im Repo `2Rat/2Rat.github.io` ist die einzige gültige Fassung. Claude liest zu Sitzungsbeginn die raw-URL: `https://raw.githubusercontent.com/2Rat/2Rat.github.io/main/Werkzeuge/privat/projektverzeichnis.md`. Im Projektwissen liegt keine Kopie (veraltet sonst).
 Updates immer über Claude, immer komplett. „Claude, Vorhaben X ist jetzt Y" → Claude holt die Live-Version, patcht, liefert die komplette Datei → Armin committet. Auch 📮-Meldungen aus anderen Claude-Projekten laufen so ein – dieses Dokument ist der zentrale Ablageplatz, die anderen Projekte sind Werkstätten.
 Wöchentlicher Blick auf 🔥 AKUT. Der Block oben ist das Erste, was man sieht. Fristen erledigt → raus. Neues Dringendes → rein. Wenn AKUT länger als 8 Zeilen wird: aufräumen. Keine Klartext-Codes in diese Datei – das Repo ist öffentlich.
 Geschäftsinterna bleiben draußen – auch in der Formulierung. Preise, Vertriebsstrategie, Rechtliches, Kundeninterna → nur im Projekt „BÜRO 2Rat". Ins zentrale Verzeichnis wandern ausschließlich Status + Fristen + Verweis – nie Inhalte. Diese Datei ist über die raw-URL ohne Anmeldung öffentlich lesbar (der Ordnername `privat` schützt nichts). Deshalb auch keine Angaben zum Zahlungsstand, zu Verhandlungsabsichten oder zur Finanzlage einer Kommune – Kunden können hier mitlesen. Neutral formulieren: „Abrechnung offen" statt „Zahlung ausstehend", „Gespräch über Fortsetzung" statt „Upsell".
----
-2Rat – Büro für Radverkehrsplanung · Stand: 02.09.2026
+2Rat – Büro für Radverkehrsplanung · Stand: 13.09.2026
