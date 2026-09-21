@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>VwV-StVO 2025 Maßnahmen-Übersicht Radverkehr Saarland – 2Rat</title>
+<!-- Karte und Geodaten: einzige Quelle ist das Repo agfk-werkzeuge (ausgeliefert unter 2rat.org/agfk-werkzeuge/, gleiche Origin).
+     Zieht das Repo um, hier die drei Pfade anpassen. Fehlen die Skripte, bleibt das Tool ohne Standort-Check voll nutzbar. -->
+<link rel="stylesheet" href="https://2rat.org/agfk-werkzeuge/vendor/leaflet/leaflet.css">
+<script src="https://2rat.org/agfk-werkzeuge/vendor/leaflet/leaflet.js"></script>
+<script src="https://2rat.org/agfk-werkzeuge/rp-geo.js"></script>
+<script src="https://2rat.org/agfk-werkzeuge/rp-unfaelle.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -166,6 +172,35 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px;color:var(--gray)}
   .measure-card .measure-body{display:block!important}
   .category,.measure-card,.intro{break-inside:avoid;page-break-inside:avoid;box-shadow:none}
 }
+/* ── Standort-Check ── */
+.sc{background:var(--white);border:1.5px solid var(--gray-border);border-radius:10px;padding:16px 18px;margin-bottom:18px}
+.sc-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.sc-title{font-size:14px;font-weight:700;color:var(--blue-dark)}
+.sc-sub{font-size:11.5px;color:var(--gray-light);margin-top:2px}
+.sc-search{display:flex;gap:8px;margin-top:12px}
+.sc-search input{flex:1;padding:8px 10px;border:1.5px solid var(--gray-border);border-radius:6px;font-size:13px}
+.sc-btn{padding:8px 12px;border:1.5px solid var(--blue);background:var(--white);color:var(--blue);border-radius:6px;font-size:12.5px;cursor:pointer;font-weight:600}
+.sc-btn.prim{background:var(--blue);color:var(--white)}
+.sc-btn:disabled{opacity:.5;cursor:default}
+#scmap{height:320px;border-radius:8px;border:1.5px solid var(--gray-border);margin-top:10px;z-index:1}
+.sc-status{font-size:12px;margin-top:8px;color:var(--gray-light)}
+.sc-erg{margin-top:12px;border-top:1px solid var(--gray-border);padding-top:10px}
+.sc-basis{font-size:12.5px;line-height:1.6;margin-bottom:8px}
+.sc-basis b{color:var(--gray)}
+.sc-row{display:grid;grid-template-columns:26px 1fr auto;gap:8px;align-items:start;padding:8px 6px;border-bottom:1px solid #eee;font-size:12.5px;line-height:1.5}
+.sc-row:last-child{border-bottom:none}
+.sc-ico{font-size:15px;line-height:1.2}
+.sc-row .t{font-weight:600;color:var(--gray)}
+.sc-row .d{color:#555}
+.sc-row .rn{font-size:10.5px;color:var(--gray-light);letter-spacing:.03em}
+.sc-row.ok .t{color:var(--green-dark)}.sc-row.no .t{color:#8a8a8a}.sc-row.warn .t{color:#8a5a00}
+.sc-badge{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 6px;border-radius:4px;margin-right:5px;vertical-align:middle}
+.sc-badge.amtlich{background:var(--blue-light);color:var(--blue-dark)}.sc-badge.osm{background:#f0f0f0;color:#666}.sc-badge.ua{background:#fdecec;color:#8a1f1f}
+.sc-hint{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:6px;padding:8px 10px;font-size:12px;color:#6b4d00;margin-top:8px;line-height:1.5}
+.sc-note{font-size:11px;color:var(--gray-light);margin-top:10px;line-height:1.5}
+.sc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.sc-sel{padding:2px 8px;font-size:11px;border-radius:5px;border:1px solid var(--green);background:var(--green-light);color:var(--green-dark);cursor:pointer;white-space:nowrap}
+@media print{.sc #scmap,.sc-search,.sc-actions{display:none}}
 </style>
 </head>
 <body>
@@ -206,7 +241,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
         <div class="header-title">VwV-StVO 2025 <span>Maßnahmen-Übersicht Radverkehr</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br><span data-stand>Stand 09/2026 · v8</span><br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right">Saarland<br>VwV-StVO 04/2025<br><span data-stand>Stand 09/2026 · v9</span><br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -247,6 +282,25 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
   </div>
 
   <div id="measuresContainer"></div>
+
+  <div class="sc" id="standortCheck">
+    <div class="sc-head">
+      <div>
+        <div class="sc-title">📍 Standort-Check (optional)</div>
+        <div class="sc-sub">Stelle auf der Karte anklicken – das Tool prüft, welche Anordnungswege der VwV-StVO hier in Frage kommen, und füllt die Basisdaten vor.</div>
+      </div>
+      <button class="sc-btn" id="scToggle" type="button">Karte öffnen</button>
+    </div>
+    <div id="scBody" style="display:none">
+      <div class="sc-search">
+        <input type="text" id="scSuche" placeholder="Adresse oder Straße, z. B. Hauptstraße 12, Lebach" aria-label="Adresse suchen">
+        <button class="sc-btn" id="scSuchen" type="button">Suchen</button>
+      </div>
+      <div id="scmap"></div>
+      <div class="sc-status" id="scStatus">Karte anklicken oder Adresse suchen.</div>
+      <div class="sc-erg" id="scErg" style="display:none"></div>
+    </div>
+  </div>
 
   <div class="tools-section">
     <div class="tools-header">📝 Textbausteine generieren</div>
@@ -340,7 +394,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
 <script>
 const LOGO='data:image/jpeg;base64,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';
 document.getElementById('logo').src=LOGO;
-const STAND='Stand 09/2026 · v8';
+const STAND='Stand 09/2026 · v9';
 document.querySelectorAll('[data-stand]').forEach(function(n){n.textContent=STAND;});
 
 /* ── Maßnahmen-Datenbank: VwV-StVO 2025 ── */
@@ -499,7 +553,7 @@ const MEASURES = {
     rn: "§ 45 Abs. 9 S. 4 Nr. 4 StVO",
     legal: "§ 45 Abs. 9 S. 4 Nr. 4 StVO",
     explanation: "Liegen zwei Tempo-30-Abschnitte nah beieinander, darf die Strecke dazwischen einbezogen werden. So werden kurze und schwer vermittelbare Wechsel zwischen 30 und 50 km/h vermieden. Die Höchstlänge steht seit der StVO-Novelle vom 11.10.2024 im Gesetz selbst: 500 Meter – zuvor waren es 300 Meter, geregelt nur in der VwV. Maßgeblich ist der Abstand zwischen den Tempo-30-Strecken, nicht der zwischen den geschützten Einrichtungen. Nr. 4 erfasst daneben auch Tempo-30-Zonen nach § 45 Abs. 1c StVO.",
-    arg: "Zwischen den bestehenden T30-Bereichen [A] und [B] wird Tempo 30 auch auf dem Verbindungsabschnitt nach § 45 Abs. 9 S. 4 Nr. 6 StVO angeordnet. Ziel ist die Vermeidung kurzer Geschwindigkeitswechsel und eine durchgehende, gut nachvollziehbare Verkehrsregelung.",
+    arg: "Zwischen den bestehenden T30-Bereichen [A] und [B] wird Tempo 30 auch auf dem Verbindungsabschnitt nach § 45 Abs. 9 S. 4 Nr. 4 StVO angeordnet. Ziel ist die Vermeidung kurzer Geschwindigkeitswechsel und eine durchgehende, gut nachvollziehbare Verkehrsregelung.",
     practice: "Die 500 Meter zwischen den beiden Tempo-30-Strecken messen und im Bescheid festhalten – daran hängt die Zulässigkeit. Die Verkehrsschau dokumentiert die Notwendigkeit des Lückenschlusses. Bei mehreren Einrichtungen entlang einer Straße lohnt die Prüfung, ob sich über gestaffelte Lückenschlüsse ein durchgehender Abschnitt ergibt."
   },
   "einbahn_oeffnung": {
@@ -792,6 +846,187 @@ Ihre ${kommune}
 [Datum]`;
 }
 
+
+/* ══ Standort-Check ════════════════════════════════════════════════════════════════
+   Amtliche Geodaten (LfS-Straßennetz, SVZ 2021) und Unfallatlas aus rp-geo.js / rp-unfaelle.js (Repo agfk-werkzeuge),
+   Einrichtungen, Querungen und Tempo-30-Bestand aus OpenStreetMap (Overpass, freie Spiegel), Adresse über Nominatim.
+   Prüft Tatbestände – entscheidet nicht. Jede Zeile trägt ihre Herkunft; alles ist vor Ort zu verifizieren. */
+const SC_OK = typeof RPGeo !== 'undefined' && typeof L !== 'undefined';
+const SC_OVERPASS = ['https://overpass.private.coffee/api/interpreter','https://overpass.kumi.systems/api/interpreter'];
+const SC_NOMI = 'https://nominatim.openstreetmap.org';
+const SC_EINR = {school:'Schule',kindergarten:'Kita',childcare:'Kindertagespflege',hospital:'Krankenhaus',nursing_home:'Pflegeheim',social_facility:'Soziale Einrichtung',clinic:'Klinik'};
+let scMap=null, scMarker=null, scErg=null;
+
+function scDist(a,b,c,d){const p=Math.PI/180,x=Math.sin((c-a)*p/2),y=Math.sin((d-b)*p/2);return 2*6371000*Math.asin(Math.sqrt(x*x+Math.cos(a*p)*Math.cos(c*p)*y*y));}
+function scEsc(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function scStatus(h){document.getElementById('scStatus').innerHTML=h;}
+
+/* Karte */
+function scInit(){
+  if(scMap)return;
+  if(!SC_OK){scStatus('<b>Standort-Check nicht verfügbar.</b> Karte oder Geodaten konnten nicht geladen werden (agfk-werkzeuge nicht erreichbar oder externe Skripte gesperrt). Die Maßnahmen-Übersicht und die Textbausteine funktionieren unabhängig davon.');return;}
+  scMap=L.map('scmap').setView([49.38,6.95],9);
+  let tileErr=0;
+  const bm=L.tileLayer('https://sgx.geodatenzentrum.de/wmts_basemapde/tile/1.0.0/de_basemapde_web_raster_farbe/default/GLOBAL_WEBMERCATOR/{z}/{y}/{x}.png',{maxZoom:19,attribution:'© GeoBasis-DE / BKG (2026) dl-de/by-2-0',referrerPolicy:'strict-origin-when-cross-origin'});
+  bm.on('tileerror',()=>{if(++tileErr===4){scMap.removeLayer(bm);L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap-Mitwirkende',referrerPolicy:'strict-origin-when-cross-origin'}).addTo(scMap);}});
+  bm.addTo(scMap);
+  scMap.on('click',ev=>scAuswerten(+ev.latlng.lat.toFixed(6),+ev.latlng.lng.toFixed(6)));
+  setTimeout(()=>scMap.invalidateSize(),50);
+}
+document.getElementById('scToggle').addEventListener('click',()=>{
+  const b=document.getElementById('scBody'),open=b.style.display==='none';
+  b.style.display=open?'block':'none';document.getElementById('scToggle').textContent=open?'Karte schließen':'Karte öffnen';
+  if(open)scInit();
+});
+async function scSuche(){
+  const q=document.getElementById('scSuche').value.trim();if(!q||!scMap)return;
+  scStatus('⏳ Adresse wird gesucht …');
+  try{
+    const r=await fetch(SC_NOMI+'/search?format=jsonv2&limit=1&countrycodes=de&viewbox=6.35,49.65,7.42,49.10&bounded=1&accept-language=de&q='+encodeURIComponent(q),{headers:{'Accept':'application/json'},referrerPolicy:'strict-origin-when-cross-origin'});
+    const j=await r.json();
+    if(!j.length){scStatus('Keine Adresse im Saarland gefunden – bitte Ort ergänzen oder direkt auf die Karte klicken.');return;}
+    const lat=+j[0].lat,lon=+j[0].lon;scMap.setView([lat,lon],17);scAuswerten(lat,lon);
+  }catch(e){scStatus('Adresssuche nicht erreichbar – bitte direkt auf die Karte klicken.');}
+}
+document.getElementById('scSuchen').addEventListener('click',scSuche);
+document.getElementById('scSuche').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();scSuche();}});
+
+/* Abfragen */
+async function scNomiReverse(lat,lon){
+  const r=await fetch(SC_NOMI+'/reverse?format=jsonv2&zoom=17&addressdetails=1&accept-language=de&lat='+lat+'&lon='+lon,{headers:{'Accept':'application/json'},referrerPolicy:'strict-origin-when-cross-origin'});
+  if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json(),a=j.address||{};
+  return {strasse:a.road||a.pedestrian||a.residential||null,ortsteil:a.village||a.suburb||a.hamlet||null,kommune:a.municipality||a.town||a.city||a.village||null,land:a.state||null};
+}
+function scOverpassQL(lat,lon){
+  return '[out:json][timeout:20];('
+    +'nwr(around:300,'+lat+','+lon+')["amenity"~"^(school|kindergarten|childcare|hospital|nursing_home|social_facility|clinic)$"];'
+    +'node(around:200,'+lat+','+lon+')["highway"="crossing"];'
+    +'way(around:500,'+lat+','+lon+')["highway"]["maxspeed"="30"];'
+    +'way(around:500,'+lat+','+lon+')["highway"]["maxspeed:type"~"zone"];'
+    +'way(around:500,'+lat+','+lon+')["highway"]["zone:maxspeed"~"30"];'
+    +'way(around:30,'+lat+','+lon+')["highway"~"^(primary|secondary|tertiary|unclassified|residential|living_street)$"];'
+    +');out geom;';
+}
+async function scOverpass(q){
+  let err=null;
+  for(const ep of SC_OVERPASS){const c=new AbortController();const to=setTimeout(()=>c.abort(),12000);
+    try{const r=await fetch(ep+'?data='+encodeURIComponent(q),{signal:c.signal});clearTimeout(to);if(!r.ok)throw new Error('HTTP '+r.status);return await r.json();}
+    catch(e){clearTimeout(to);err=e;}}
+  throw err||new Error('Overpass');
+}
+function scWayDist(lat,lon,geom){let best=Infinity;const s=Math.cos(lat*Math.PI/180);
+  for(let i=0;i<geom.length-1;i++){const ax=(geom[i].lon-lon)*s,ay=geom[i].lat-lat,bx=(geom[i+1].lon-lon)*s,by=geom[i+1].lat-lat,dx=bx-ax,dy=by-ay;
+    const t=(dx===0&&dy===0)?0:Math.max(0,Math.min(1,-(ax*dx+ay*dy)/(dx*dx+dy*dy)));const d=Math.hypot(ax+t*dx,ay+t*dy)*111320;if(d<best)best=d;}
+  return best;}
+/* OSM-Antwort in Befunde übersetzen – reine Funktion, testbar */
+function scOsmAuswerten(lat,lon,json){
+  const el=(json&&json.elements)||[],o={einrichtungen:[],querungen:[],t30:[],weg:null};
+  el.forEach(e=>{const t=e.tags||{};let d;
+    if(e.type==='node'){d=scDist(lat,lon,e.lat,e.lon);}else if(e.geometry&&e.geometry.length){d=scWayDist(lat,lon,e.geometry);}else if(e.center){d=scDist(lat,lon,e.center.lat,e.center.lon);}else return;
+    if(t.amenity&&SC_EINR[t.amenity]){o.einrichtungen.push({art:SC_EINR[t.amenity],name:t.name||null,dist:Math.round(d)});}
+    else if(t.highway==='crossing'){const art=t.crossing_ref==='zebra'||t.crossing==='zebra'?'Fußgängerüberweg (Zebrastreifen)':t.crossing==='traffic_signals'?'Querung mit Lichtsignal':t.crossing==='marked'?'markierte Querung':t.crossing==='uncontrolled'?'ungesicherte Querung':'Querungsstelle';if(t.crossing!=='no')o.querungen.push({art:art,dist:Math.round(d)});}
+    else if(e.type==='way'&&t.highway){
+      const ist30=t.maxspeed==='30'||/zone/.test(t['maxspeed:type']||'')||/30/.test(t['zone:maxspeed']||'');
+      if(ist30){o.t30.push({name:t.name||t.ref||'(ohne Namen)',zone:/zone/.test(t['maxspeed:type']||'')||/zone/.test(t['zone:maxspeed']||'')||/zone/.test(t['source:maxspeed']||''),dist:Math.round(d)});}
+      if(d<=30&&(!o.weg||d<o.weg.dist))o.weg={name:t.name||t.ref||null,highway:t.highway,maxspeed:t.maxspeed||null,oneway:t.oneway==='yes',vorfahrt:t.priority_road==='designated',dist:Math.round(d)};
+    }});
+  o.einrichtungen.sort((a,b)=>a.dist-b.dist);o.querungen.sort((a,b)=>a.dist-b.dist);
+  /* T30-Wege desselben Namens zusammenfassen */
+  const seen={};o.t30=o.t30.filter(w=>{const k=w.name+(w.zone?'Z':'');if(seen[k]){if(w.dist<seen[k].dist)seen[k].dist=w.dist;return false;}seen[k]=w;return true;}).sort((a,b)=>a.dist-b.dist);
+  return o;
+}
+
+/* Auswertung */
+async function scAuswerten(lat,lon){
+  if(!SC_OK)return;
+  if(scMarker)scMarker.setLatLng([lat,lon]);else scMarker=L.marker([lat,lon]).addTo(scMap);
+  scStatus('⏳ Stelle wird ausgewertet – Straßennetz, Zählstellen, Unfallatlas, Einrichtungen und Adresse …');
+  document.getElementById('scErg').style.display='none';
+  const e={lat,lon,amt:null,dtv:null,lage:null,unfall:null,unfallStrecke:null,adr:null,osm:null,osmFehler:null,adrFehler:null};
+  try{e.amt=RPGeo.strasseAmStandort(lat,lon);e.dtv=RPGeo.dtvFuer(e.amt,lat,lon);}catch(x){}
+  if(e.dtv&&e.dtv.modus==='abschnitt'&&e.dtv.zst&&e.dtv.zst.f)e.lage=e.dtv.zst.f==='FS'?'ausserorts':'ortsdurchfahrt';
+  if(typeof RPGeo.unfaelleImUmkreis==='function'){try{e.unfall=RPGeo.unfaelleImUmkreis(lat,lon,100);if(e.amt)e.unfallStrecke=RPGeo.unfaelleEntlang(e.amt,lat,lon,1000);}catch(x){}}
+  await Promise.all([
+    scNomiReverse(lat,lon).then(a=>{e.adr=a;}).catch(x=>{e.adrFehler=x.message;}),
+    scOverpass(scOverpassQL(lat,lon)).then(j=>{e.osm=scOsmAuswerten(lat,lon,j);}).catch(x=>{e.osmFehler=x.name==='AbortError'?'Zeitüberschreitung':x.message;})
+  ]);
+  if(!e.lage&&e.osm&&e.osm.weg){const w=e.osm.weg;if(/^(residential|living_street)$/.test(w.highway)||(w.maxspeed&&+w.maxspeed<=50))e.lage='innerorts';else if(w.maxspeed&&+w.maxspeed>=70)e.lage='ausserorts';}
+  scErg=e;scRender();
+  scStatus('Auswertung abgeschlossen – Ergebnis unten. Punkt neu setzen, um eine andere Stelle zu prüfen.');
+}
+
+/* Tatbestände – reine Funktion, testbar */
+function scTatbestaende(e){
+  const k=[];const amt=e.amt,o=e.osm||{einrichtungen:[],querungen:[],t30:[],weg:null};
+  const B='<span class="sc-badge amtlich">amtlich</span>',O='<span class="sc-badge osm">lt. OSM</span>',U='<span class="sc-badge ua">Unfallatlas</span>';
+  const bl=amt?(amt.klasseCode==='B'?'Bundesstraße':'Landstraße'):null;
+  /* Zuständigkeit */
+  if(amt)k.push({st:'warn',ico:'🏛️',t:'Anordnung durch die Straßenverkehrsbehörde des Landkreises / Regionalverbands',rn:'§ 12 StVZustG Saarland · Baulast LfS',d:B+scEsc(amt.strasse)+' ('+scEsc(amt.klasse)+', Abstand '+amt.dist+' m). Auf einer '+bl+' ordnet nicht die Gemeinde an; Antrag/Anregung an die Straßenverkehrsbehörde, LfS als Baulastträger einbinden.'+(e.dtv&&e.dtv.modus==='abschnitt'&&e.dtv.zst&&e.dtv.zst.dtv?' Verkehr: DTV '+e.dtv.zst.dtv.toLocaleString('de-DE')+' Kfz/Tag, SV '+e.dtv.zst.sv+' (SVZ 2021, Zählstelle '+e.dtv.zst.z+').':'')});
+  else k.push({st:'ok',ico:'🏛️',t:'Gemeinde ordnet selbst an (vermutlich Gemeindestraße)',rn:'§ 12 Abs. 1 Nr. 4 StVZustG Saarland',d:B+'Keine Bundes- oder Landstraße im Umkreis von 40 m.'+(o.weg?' '+O+scEsc(o.weg.name||'Straße ohne Namen')+' ('+o.weg.highway+(o.weg.maxspeed?', Tempo '+o.weg.maxspeed:'')+(o.weg.oneway?', Einbahnstraße':'')+(o.weg.vorfahrt?', Vorfahrtstraße':'')+').':'')});
+  /* Tempo-30-Zone */
+  if(amt)k.push({st:'no',ico:'⛔',t:'Tempo-30-Zone hier nicht möglich',rn:'§ 45 Abs. 1c StVO',d:'Zonen dürfen keine Straßen des überörtlichen Verkehrs (Bundes-, Landstraßen) umfassen – in Frage kommt nur eine streckenbezogene Anordnung (unten).'});
+  else k.push({st:o.weg&&o.weg.vorfahrt?'warn':'ok',ico:'🔵',t:'Tempo-30-Zone möglich',rn:'§ 45 Abs. 1c StVO',d:'Gemeindestraße ohne überörtliche Verkehrsfunktion. Voraussetzungen: keine Vorfahrtstraße (Z 306), Rechts-vor-links, keine Lichtzeichenanlage innerhalb der Zone, Zonenbeginn eindeutig erkennbar.'+(o.weg&&o.weg.vorfahrt?' <b>Laut OSM Vorfahrtstraße – vor Ort prüfen, ggf. Vorfahrt aufheben.</b>':'')+(o.weg&&o.weg.maxspeed==='30'?' Hier gilt laut OSM bereits Tempo 30.':'')});
+  /* Nr. 6 soziale Einrichtungen */
+  const en=o.einrichtungen[0];
+  if(en&&en.dist<=200)k.push({st:'ok',ico:'🏫',t:'Tempo 30 vor sozialer Einrichtung – Voraussetzung erfüllt',rn:'§ 45 Abs. 9 S. 4 Nr. 6 StVO',mid:'t30_soziale_einrichtungen',d:O+scEsc(en.art)+(en.name?' „'+scEsc(en.name)+'“':'')+' in ca. '+en.dist+' m'+(o.einrichtungen.length>1?' (+'+(o.einrichtungen.length-1)+' weitere im Umkreis von 300 m)':'')+'. Gilt auch auf Bundes- und Landstraßen; räumlich auf den unmittelbaren Bereich (i. d. R. 100–200 m um den Eingang) begrenzen.'});
+  else if(en)k.push({st:'warn',ico:'🏫',t:'Soziale Einrichtung in der Nähe, aber außerhalb des unmittelbaren Bereichs',rn:'§ 45 Abs. 9 S. 4 Nr. 6 StVO',mid:'t30_soziale_einrichtungen',d:O+scEsc(en.art)+(en.name?' „'+scEsc(en.name)+'“':'')+' in ca. '+en.dist+' m. Der unmittelbare Bereich reicht i. d. R. 100–200 m – Zuschnitt vor Ort begründen oder Lückenschluss prüfen.'});
+  else k.push({st:'no',ico:'🏫',t:'Keine soziale Einrichtung im Umkreis von 300 m gefunden',rn:'§ 45 Abs. 9 S. 4 Nr. 6 StVO',d:O+'OSM kennt hier keine Schule, Kita, Klinik oder Pflegeeinrichtung – fehlende Einträge sind möglich, vor Ort prüfen.'});
+  /* Nr. 6 Querungen */
+  const q=o.querungen[0];
+  if(q&&q.dist<=150)k.push({st:'ok',ico:'🦓',t:'Tempo 30 an Querungsstelle – Voraussetzung erfüllt',rn:'§ 45 Abs. 9 S. 4 Nr. 6 StVO',mid:'t30_querungen',d:O+scEsc(q.art)+' in ca. '+q.dist+' m'+(o.querungen.length>1?' (+'+(o.querungen.length-1)+' weitere in 200 m)':'')+'. Ausdehnung auf den Schutzbereich der Querung begrenzen, mit der Verkehrsschau abstimmen.'});
+  else if(q)k.push({st:'warn',ico:'🦓',t:'Querungsstelle in der Nähe',rn:'§ 45 Abs. 9 S. 4 Nr. 6 StVO',mid:'t30_querungen',d:O+scEsc(q.art)+' in ca. '+q.dist+' m – Schutzbereich vor Ort festlegen.'});
+  else k.push({st:'no',ico:'🦓',t:'Keine Querungsstelle im Umkreis von 200 m gefunden',rn:'§ 45 Abs. 9 S. 4 Nr. 6 StVO',d:O+'Kein FGÜ und keine markierte Querung in OSM – vor Ort prüfen.'});
+  /* Nr. 4 Lückenschluss */
+  const t30=o.t30;
+  if(t30.length>=2)k.push({st:'ok',ico:'📏',t:'Lückenschluss zwischen Tempo-30-Bereichen prüfen',rn:'§ 45 Abs. 9 S. 4 Nr. 4 StVO',mid:'t30_lueckenschluss',d:O+'Tempo-30-Bestand im Umkreis von 500 m: '+t30.slice(0,4).map(w=>scEsc(w.name)+(w.zone?' (Zone)':'')+' ca. '+w.dist+' m').join(' · ')+'. Zulässig, wenn der Abstand zwischen den beiden T30-Strecken höchstens 500 m beträgt – Abstand messen und im Bescheid festhalten.'});
+  else if(t30.length===1)k.push({st:'warn',ico:'📏',t:'Ein Tempo-30-Bereich in der Nähe',rn:'§ 45 Abs. 9 S. 4 Nr. 4 StVO',mid:'t30_lueckenschluss',d:O+scEsc(t30[0].name)+(t30[0].zone?' (Zone)':'')+' in ca. '+t30[0].dist+' m. Für einen Lückenschluss braucht es einen zweiten T30-Bereich in höchstens 500 m Abstand – ggf. entsteht er erst mit einer der Anordnungen oben.'});
+  else k.push({st:'no',ico:'📏',t:'Kein Tempo-30-Bestand im Umkreis von 500 m',rn:'§ 45 Abs. 9 S. 4 Nr. 4 StVO',d:O+'Kein Lückenschluss möglich; OSM-Tempolimits sind nicht vollständig.'});
+  /* Unfallgeschehen */
+  if(e.unfall){const u=e.unfall,r=e.unfallStrecke;
+    const auff=(u.gesamt>=3||u.getoetet>0||u.schwer>0||(u.rad+u.fuss)>=2)||!!r&&(r.getoetet>0||r.schwer>=2||(r.rad+r.fuss)>=3||(r.schwerpunkt&&r.schwerpunkt.n>=3));
+    let d=U+(u.gesamt?u.gesamt+' Unfälle mit Personenschaden 2023–2025 im Umkreis von 100 m ('+[u.getoetet?u.getoetet+' mit Getöteten':null,u.schwer?u.schwer+' mit Schwerverletzten':null,u.leicht?u.leicht+' mit Leichtverletzten':null].filter(Boolean).join(', ')+'; '+u.rad+' mit Rad-, '+u.fuss+' mit Fußgängerbeteiligung).':'keine Unfälle mit Personenschaden 2023–2025 im Umkreis von 100 m.');
+    if(r&&typeof RPGeo.unfallTextStrecke==='function')d+=' Strecke: '+scEsc(RPGeo.unfallTextStrecke(r));
+    d+=auff?' <b>Auffällig – Unfallkommission einbinden.</b> Trägt eine Anordnung nach § 45 Abs. 9 S. 3 (Gefahrenlage), auch dort, wo keiner der Nr.-4/6-Fälle greift.':' Für Rad- und Fußverkehrsmaßnahmen nach § 45 Abs. 1 S. 2 Nr. 7 ist ohnehin keine Gefahrenlage nachzuweisen.';
+    k.push({st:auff?'warn':'ok',ico:'⚠️',t:auff?'Unfallgeschehen auffällig':'Unfallgeschehen unauffällig',rn:'§ 45 Abs. 9 S. 3 StVO · Sachschadensunfälle nur bei der Unfallkommission',d:d});}
+  /* Nr. 7 */
+  k.push({st:'ok',ico:'📜',t:'Rad-/Fußverkehrsmaßnahmen ohne Gefahrenlage möglich',rn:'§ 45 Abs. 1 S. 2 Nr. 7 StVO · Rn. 14a–14e VwV-StVO',mid:'rechtsgrundlage_neu',d:'Fahrradstraße, Radfahr-/Schutzstreifen, Einbahnöffnung u. a. lassen sich unabhängig von den Tatbeständen oben auf die Schutzgüter Umwelt, Klima, Gesundheit und Städtebau stützen'+(amt?' – auf der '+scEsc(amt.strasse)+' aber durch die Straßenverkehrsbehörde des Kreises, nicht die Gemeinde':'')+'.'});
+  return k;
+}
+function scBasis(e){
+  const strasse=e.amt?e.amt.strasse+(e.adr&&e.adr.strasse&&e.adr.strasse!==e.amt.strasse?' ('+e.adr.strasse+')':''):(e.adr&&e.adr.strasse)||(e.osm&&e.osm.weg&&e.osm.weg.name)||'';
+  const lage={ortsdurchfahrt:'Ortsdurchfahrt',ausserorts:'außerorts (freie Strecke)',innerorts:'innerorts'}[e.lage]||null;
+  return {kommune:e.adr&&e.adr.kommune?e.adr.kommune:'',ort:[strasse,e.adr&&e.adr.ortsteil?e.adr.ortsteil:null,lage].filter(Boolean).join(', ')};
+}
+function scRender(){
+  const e=scErg;if(!e)return;const b=scBasis(e),k=scTatbestaende(e);
+  let h='<div class="sc-basis"><b>Standort:</b> '+scEsc(b.ort||'–')+(b.kommune?' · <b>Kommune:</b> '+scEsc(b.kommune):'')+' <span style="color:var(--gray-light)">('+e.lat.toFixed(5)+', '+e.lon.toFixed(5)+')</span>'+(e.adrFehler?'<br><span style="color:var(--gray-light)">Adresse nicht ermittelbar ('+scEsc(e.adrFehler)+')</span>':'')+'</div>';
+  if(e.osmFehler)h+='<div class="sc-hint">OpenStreetMap nicht erreichbar ('+scEsc(e.osmFehler)+') – Einrichtungen, Querungen und Tempo-30-Bestand konnten nicht geprüft werden; amtliche Daten und Unfallatlas liegen vor.</div>';
+  h+='<div>'+k.map(x=>'<div class="sc-row '+x.st+'"><div class="sc-ico">'+x.ico+'</div><div><div class="t">'+x.t+'</div><div class="rn">'+scEsc(x.rn)+'</div><div class="d">'+x.d+'</div></div><div>'+(x.mid&&MEASURES[x.mid]?'<button type="button" class="sc-sel" onclick="scWaehle(\''+x.mid+'\')">Als Maßnahme wählen</button>':'')+'</div></div>').join('')+'</div>';
+  h+='<div class="sc-actions"><button type="button" class="sc-btn prim" id="scUebernehmen">Basisdaten übernehmen</button><button type="button" class="sc-btn" id="scVermerk">Standort-Vermerk kopieren</button></div>';
+  h+='<div class="sc-note">Quellen: LfS-Straßennetz und SVZ 2021 (© GDI-SL 2026, CC BY 4.0) · Unfallatlas 2023–2025, Statistische Ämter des Bundes und der Länder (dl-de/by-2.0), nur Unfälle mit Personenschaden · Einrichtungen, Querungen, Tempolimits: © OpenStreetMap-Mitwirkende (ODbL), nicht vollständig · Adresse: Nominatim. Der Standort-Check ersetzt weder Verkehrsschau noch Ortskenntnis – Fahrbahnbreite, Sichtweiten und Beschilderung sind vor Ort zu prüfen.</div>';
+  const el=document.getElementById('scErg');el.innerHTML=h;el.style.display='block';
+  document.getElementById('scUebernehmen').addEventListener('click',()=>{if(b.kommune)document.getElementById('globalKommune').value=b.kommune;if(b.ort)document.getElementById('globalOrt').value=b.ort;document.getElementById('globalKommune').scrollIntoView({behavior:'smooth',block:'center'});});
+  document.getElementById('scVermerk').addEventListener('click',()=>{navigator.clipboard.writeText(scVermerkText()).then(()=>{scStatus('Standort-Vermerk in die Zwischenablage kopiert.');}).catch(()=>{scStatus('Kopieren nicht möglich – Text bitte aus dem Aktenvermerk-Feld übernehmen.');});});
+}
+function scWaehle(mid){const sel=document.getElementById('globalMeasureSelect');if(sel&&MEASURES[mid]){sel.value=mid;const b=scBasis(scErg);if(b.kommune&&!document.getElementById('globalKommune').value)document.getElementById('globalKommune').value=b.kommune;if(b.ort&&!document.getElementById('globalOrt').value)document.getElementById('globalOrt').value=b.ort;sel.scrollIntoView({behavior:'smooth',block:'center'});}}
+function scVermerkText(){
+  const e=scErg;if(!e)return '';const b=scBasis(e);const strip=h=>h.replace(/<span class="sc-badge[^"]*">([^<]*)<\/span>/g,'[$1] ').replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
+  let t='Standort-Check VwV-StVO 2025 – Aktenvermerk\nStandort: '+(b.ort||'–')+(b.kommune?' · '+b.kommune:'')+' ('+e.lat.toFixed(5)+', '+e.lon.toFixed(5)+')\n\n';
+  scTatbestaende(e).forEach(x=>{t+=(x.st==='ok'?'[✓] ':x.st==='warn'?'[?] ':'[–] ')+x.t+' ('+x.rn+')\n    '+strip(x.d)+'\n';});
+  t+='\nQuellen: LfS-Straßennetz, SVZ 2021 (GDI-SL, CC BY 4.0); Unfallatlas 2023–2025 (Statistische Ämter, dl-de/by-2.0); OpenStreetMap (ODbL); Nominatim. Vor Ort zu verifizieren.\nErstellt mit dem VwV-StVO-Werkzeug von 2Rat, '+STAND+', '+new Date().toLocaleDateString('de-DE')+'\n';
+  return t;
+}
+/* Platzhalter in den Textbausteinen aus dem Standort-Check füllen – nur, wenn ein Befund vorliegt */
+function scPlatzhalter(text){
+  const e=scErg;if(!e)return text;const o=e.osm||{einrichtungen:[],querungen:[],t30:[]},b=scBasis(e);
+  const en=o.einrichtungen[0],q=o.querungen[0];
+  if(en&&en.dist<=300)text=text.replace(/\[Einrichtung\]/g,en.art+(en.name?' „'+en.name+'“':''));
+  if(b.ort)text=text.replace(/\[Ort\]/g,b.ort.split(',')[0]);
+  if(o.t30.length>=2){text=text.replace(/\[A\]/g,o.t30[0].name).replace(/\[B\]/g,o.t30[1].name);}
+  if(q&&q.dist<=200)text=text.replace(/Querungsstelle in Höhe/g,q.art+' in Höhe');
+  return text;
+}
+
 /* Ein Button erzeugt alle drei Bausteine */
 document.getElementById('genAllBtn').addEventListener('click', () => {
   const mid = document.getElementById('globalMeasureSelect').value;
@@ -799,9 +1034,9 @@ document.getElementById('genAllBtn').addEventListener('click', () => {
   const kommune = document.getElementById('globalKommune').value.trim() || '[Kommune]';
   const ort = document.getElementById('globalOrt').value.trim() || '[Straße / Ort]';
 
-  document.getElementById('ordnungsamtOutput').value = buildOrdnungsamt(m, kommune, ort);
-  document.getElementById('ratOutput').value = buildRat(m, kommune, ort);
-  document.getElementById('buergerOutput').value = buildBuerger(m, kommune, ort);
+  document.getElementById('ordnungsamtOutput').value = scPlatzhalter(buildOrdnungsamt(m, kommune, ort));
+  document.getElementById('ratOutput').value = scPlatzhalter(buildRat(m, kommune, ort));
+  document.getElementById('buergerOutput').value = scPlatzhalter(buildBuerger(m, kommune, ort));
 
   /* Alle drei Cards aufklappen, damit man die Ergebnisse sieht */
   document.querySelectorAll('.tool-card').forEach(c => c.classList.add('open'));
