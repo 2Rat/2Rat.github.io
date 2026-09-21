@@ -1,24 +1,35 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-brand="2rat">
 <head>
 <meta charset="UTF-8">
+<!-- ══ MARKE ══════════════════════════════════════════════════════════════
+     Eine Quelldatei für beide Fassungen. Vor dem Kopieren nur data-brand oben
+     in <html> setzen: "agfk" (Repo 2Rat/agfk-werkzeuge) oder "2rat" (Werkzeuge/kunden/).
+     Alles Markenspezifische steht unten im Block BRAND – der Rest ist identisch.
+     Für kunden/ zusätzlich die drei Skriptpfade (Leaflet, rp-geo.js, rp-unfaelle.js)
+     absolut auf https://2rat.org/agfk-werkzeuge/ setzen.
+     ═══════════════════════════════════════════════════════════════════════ -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Zuständigkeiten Radverkehr Saarland – 2Rat</title>
 <link rel="stylesheet" href="https://2rat.org/agfk-werkzeuge/vendor/leaflet/leaflet.css">
-<!-- Karte und Geodaten: einzige Quelle ist das Repo agfk-werkzeuge (2rat.org/agfk-werkzeuge/, gleiche Origin). Zieht es um, die drei Pfade anpassen. -->
+<!-- Karte und Geodaten lokal (kein CDN): Leaflet 1.9.4 in vendor/, amtliche Geodaten in rp-geo.js -->
 <script src="https://2rat.org/agfk-werkzeuge/vendor/leaflet/leaflet.js"></script>
 <script src="https://2rat.org/agfk-werkzeuge/rp-geo.js"></script>
 <script src="https://2rat.org/agfk-werkzeuge/rp-unfaelle.js"></script><!-- Unfallatlas Saarland 2023–2025 (dl-de/by-2.0), hängt sich an RPGeo -->
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --blue:#1678A9;--blue-dark:#115d85;--blue-light:#e8f4fa;
-  --green:#659444;--green-dark:#4a7332;--green-light:#eef5e6;
+  /* Marke agfk (Standard) */
+  --blue:#114B7D;--blue-dark:#0C3557;--blue-light:#E8EEF4;
+  --green:#14AB9B;--green-dark:#0C7A6C;--green-light:#E3F5F2;--green-rgb:20,171,155;
   --gray:#3E403F;--gray-light:#8a8a8a;--gray-border:#d9d9d9;
   --bg:#f9fafb;--white:#ffffff;
   --warn:#d4930a;--warn-bg:#fef9ec;--warn-border:#f0dca0;
-  --info:#1678A9;--info-bg:#e8f4fa;--info-border:#b3d7ea;
+}
+:root[data-brand="2rat"]{
+  --blue:#1678A9;--blue-dark:#115d85;--blue-light:#e8f4fa;
+  --green:#659444;--green-dark:#4a7332;--green-light:#eef5e6;--green-rgb:101,148,68;
 }
 body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);background:var(--bg);min-height:100vh}
 .header{background:var(--white);border-bottom:3px solid var(--green);padding:18px 20px}
@@ -29,6 +40,7 @@ body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--gray);ba
 .header-title{font-size:17px;font-weight:700;color:var(--gray);line-height:1.3}
 .header-title span{color:var(--blue)}
 .header-right{text-align:right;font-size:11px;color:var(--gray-light);line-height:1.5}
+.portal-link{color:var(--blue-dark);text-decoration:none;font-weight:600}.portal-link:hover{text-decoration:underline}
 .main{max-width:680px;margin:0 auto;padding:24px 20px 60px}
 .steps{display:flex;gap:6px;align-items:center;margin-bottom:24px}
 .step-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;transition:all .2s}
@@ -80,14 +92,14 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .zwarn-item:last-child{margin-bottom:0}
 .notes-item{font-size:12px;color:#6b5900;line-height:1.5;margin-bottom:5px}
 .notes-item:last-child{margin-bottom:0}
-.praxis-box{margin-top:12px;background:var(--green-light);border:1px solid rgba(20,171,155,.3);border-radius:7px;padding:12px 14px}
+.praxis-box{margin-top:12px;background:var(--green-light);border:1px solid rgba(var(--green-rgb),.3);border-radius:7px;padding:12px 14px}
 .praxis-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-dark);margin-bottom:5px}
 .praxis-item{font-size:12px;color:#3a5a1f;line-height:1.5;margin-bottom:5px}
 .qbadge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.05em;line-height:1.4;padding:1px 5px;border-radius:3px;margin-right:6px;vertical-align:1px;white-space:nowrap}
 .q-g{background:#1e4f7a;color:#fff}
-.q-sl{background:#0C7A6C;color:#fff}
+.q-sl{background:var(--green-dark);color:#fff}
 .q-bw{background:#e3e3e3;color:#555}.q-al{background:#f0e6d2;color:#7a5c1e}
-.praxis-legend{margin-top:9px;padding-top:7px;border-top:1px solid rgba(20,171,155,.3);font-size:10px;line-height:1.45;color:#0C7A6C}
+.praxis-legend{margin-top:9px;padding-top:7px;border-top:1px solid rgba(var(--green-rgb),.3);font-size:10px;line-height:1.45;color:var(--green-dark)}
 .lernbox{margin:0 0 16px;border:1px solid rgba(22,120,169,.30);border-radius:8px;background:var(--blue-light);overflow:hidden}
 .lernbox.inresult{margin:14px 0 0}
 .lernbox>summary{cursor:pointer;list-style:none;padding:12px 15px;color:var(--blue-dark)}
@@ -122,7 +134,7 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .map-status.show{display:block;margin-top:10px}
 .map-tip{display:none;font-size:11.5px;color:var(--gray-light);margin-top:8px;line-height:1.5}
 .mapwrap.open .map-tip{display:block}
-.map-status .ok{background:var(--green-light);border:1px solid rgba(20,171,155,.35);border-radius:8px;padding:11px 14px;font-size:12.5px;line-height:1.55}
+.map-status .ok{background:var(--green-light);border:1px solid rgba(var(--green-rgb),.35);border-radius:8px;padding:11px 14px;font-size:12.5px;line-height:1.55}
 .map-status .ok b{color:var(--green-dark)}
 .map-status .warn{background:#fef9ec;border:1px solid #f0e0b0;border-radius:8px;padding:11px 14px;font-size:12.5px;line-height:1.55;color:#7a6420}
 .map-status .warn b{color:#7a6420}
@@ -164,11 +176,12 @@ var LIZENZ_ORG = (function () {
   if (!o) { try { o = clean(JSON.parse(sessionStorage.getItem('2rat_s') || '{}').org); } catch (e) {} }
   if (o) { try { sessionStorage.setItem('2rat_org', o); } catch (e) {} }
   else { try { o = clean(sessionStorage.getItem('2rat_org')); } catch (e) {} }
-  return o || '2Rat';
+  return o || '';
 })();
-function lizenzKopfzeile() { return 'Lizenz: ' + LIZENZ_ORG; }
+function lizenzOrg() { return LIZENZ_ORG || (typeof BRAND !== 'undefined' ? BRAND.lizenzOrg : ''); }
+function lizenzKopfzeile() { return 'Lizenz: ' + lizenzOrg(); }
 function lizenzVermerkZeile() {
-  return 'Bereitgestellt f\u00fcr: ' + LIZENZ_ORG
+  return 'Bereitgestellt f\u00fcr: ' + lizenzOrg()
        + '\nEntwickelt und gepflegt von 2Rat \u2013 B\u00fcro f\u00fcr Radverkehrsplanung \u00b7 www.2rat.org';
 }
 function lizenzInit() {
@@ -184,11 +197,11 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
     <div class="header-left">
       <img class="header-logo" id="logo" alt="2Rat – Büro für Radverkehrsplanung" src="">
       <div>
-        <div class="header-sub">Arbeitsgemeinschaft fahrradfreundlicher Kommunen im Saarland</div>
+        <div class="header-sub" id="brandSub"></div>
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right"><a href="../index.html" style="color:var(--blue-dark);text-decoration:none;font-weight:600">← Zum Portal</a><br>Saarland<br><span data-stand>Stand 09/2026 · v40</span><br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right"><a class="portal-link" id="brandPortal" href="index.html"></a><br>Saarland<br><span data-stand>Stand 09/2026 · v41</span><br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -218,14 +231,30 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
     Kartenmodus: LfS-Straßennetz, SVZ 2021, Radverkehrsplan Saarland 2025 – © GDI-SL 2026, <a href="https://creativecommons.org/licenses/by/4.0/deed.de" target="_blank" rel="noopener">CC BY 4.0</a> · Karte: © GeoBasis-DE/BKG (dl-de/by-2-0) · Adresse: © OpenStreetMap-Mitwirkende (ODbL).
     <br>
     <strong style="color:var(--gray)">Entwickelt und gepflegt von 2Rat</strong> – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
-    <br><span style="display:inline-block;margin-top:5px;opacity:.85"><span data-lizenz></span> · Lizenziert zur Nutzung durch die oben genannte Organisation. Weitergabe an Dritte nicht gestattet.</span>
+    <br><span style="display:inline-block;margin-top:5px;opacity:.85" id="brandFoot"></span>
   </footer>
 </main>
 
 <script>
-const LOGO='data:image/jpeg;base64,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';
-(function(){var l=document.getElementById('logo');l.alt='2Rat – Büro für Radverkehrsplanung';l.onerror=function(){l.style.display='none';};l.src=LOGO;})();
-const STAND='Stand 09/2026 · v40';
+/* ══ BRAND – alles Markenspezifische an einer Stelle (Muster: Projekt-Check) ══ */
+const LOGO_2RAT='data:image/jpeg;base64,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';
+const BRANDS={
+  agfk:{lizenzOrg:'AGFK-SL',sub:'Arbeitsgemeinschaft fahrradfreundlicher Kommunen im Saarland',portal:'← Übersicht',portalHref:'index.html',
+        logo:'agfk-logo.png',logoAlt:'AGFK-SL',
+        foot:'Lizenziert an die AGFK-SL · Bereitgestellt über die Arbeitsgemeinschaft fahrradfreundlicher Kommunen im Saarland e.V.'},
+  '2rat':{lizenzOrg:'2Rat',sub:'Büro für Radverkehrsplanung',portal:'← Zum Portal',portalHref:'../index.html',
+        logo:LOGO_2RAT,logoAlt:'2Rat – Büro für Radverkehrsplanung',
+        foot:'<span data-lizenz></span> · Lizenziert zur Nutzung durch die oben genannte Organisation. Weitergabe an Dritte nicht gestattet.'}
+};
+const BRAND=BRANDS[document.documentElement.getAttribute('data-brand')]||BRANDS.agfk;
+(function(){
+  var l=document.getElementById('logo');l.alt=BRAND.logoAlt;l.onerror=function(){l.style.display='none';};l.src=BRAND.logo;
+  document.getElementById('brandSub').textContent=BRAND.sub;
+  var p=document.getElementById('brandPortal');p.textContent=BRAND.portal;p.href=BRAND.portalHref;
+  document.getElementById('brandFoot').innerHTML=BRAND.foot;
+  lizenzInit();
+})();
+const STAND='Stand 09/2026 · v41';
 document.querySelectorAll('[data-stand]').forEach(function(n){n.textContent=STAND;});
 
 const MEASURES=[
@@ -257,7 +286,7 @@ const MEASURES=[
 
 const STREETS=[
 {id:"bundeslandstrasse",label:"Bundes- oder Landstraße",icon:"B/L",color:"#dc2626"},
-{id:"gemeindestrasse",label:"Gemeindestraße",icon:"G",color:"#14AB9B"},
+{id:"gemeindestrasse",label:"Gemeindestraße",icon:"G",color:"var(--green)",bg:"rgba(var(--green-rgb),.08)"},
 {id:"sonstige",label:"Sonstige öffentliche Straße",icon:"S",color:"#8a8a8a"}
 ];
 /* Unterauswahl, wenn Bundes-/Landstraße gewählt wird – hält die Rechtslogik exakt */
@@ -889,9 +918,9 @@ function render(){
 
     let h=`<button class="btn-back" onclick="goStep(${back})">← Zurück</button>
     <div class="badges">
-      <span class="badge" style="background:rgba(22,120,169,.09);color:#114B7D">${r.measure.label}</span>
-      <span class="badge" style="background:${s.color}15;color:${s.color}">${s.label}</span>
-      ${loc?`<span class="badge" style="background:rgba(20,171,155,.12);color:#14AB9B">${loc.label}</span>`:''}
+      <span class="badge" style="background:rgba(22,120,169,.09);color:var(--blue-dark)">${r.measure.label}</span>
+      <span class="badge" style="background:${s.bg||s.color+'15'};color:${s.color}">${s.label}</span>
+      ${loc?`<span class="badge" style="background:rgba(var(--green-rgb),.12);color:var(--green)">${loc.label}</span>`:''}
       ${state.kommune?`<span class="badge" style="background:rgba(62,64,63,.08);color:#3E403F">${state.kommune}</span>`:''}
     </div>
     <div class="result-card">
@@ -933,7 +962,7 @@ function render(){
           boxTitle='Falls eine verkehrsrechtliche Anordnung dazukommt \u2013 '+kk.name;
           vorspann='F\u00fcr den Bau selbst brauchen Sie diese Beh\u00f6rde nicht. Sie wird erst zust\u00e4ndig, wenn daf\u00fcr Kfz-Stellpl\u00e4tze entfallen oder Beschilderung bzw. Markierung ge\u00e4ndert wird.<br>Landkreis / Regionalverband: '+kk.kreis+'<br>';
         }
-        h+='<div class="info-box" style="background:var(--green-light);border-color:rgba(20,171,155,.35)"><div class="info-title" style="color:var(--green-dark)">'+boxTitle+'</div><div class="info-body">'+vorspann+kontaktHtml+'</div></div>';
+        h+='<div class="info-box" style="background:var(--green-light);border-color:rgba(var(--green-rgb),.35)"><div class="info-title" style="color:var(--green-dark)">'+boxTitle+'</div><div class="info-body">'+vorspann+kontaktHtml+'</div></div>';
       }
     }
     if(sEff==="bundesstrasse"||sEff==="landesstrasse1"||sEff==="landesstrasse2"){
@@ -951,7 +980,7 @@ function render(){
       <strong>Eigene Behörden:</strong> Landeshauptstadt Saarbrücken sowie die Mittelstädte Völklingen und St. Ingbert (StVO-Befugnisse übertragen, § 1 Abs. 1 Nr. 8 Mittelstadtverordnung)<br>
       <strong>Oberste Behörde:</strong> Ministerium für Umwelt, Klima, Mobilität, Agrar und Verbraucherschutz (MUKMAV)
     </div></div>`;
-    h+=`<div class="agfk-contact" style="margin-top:16px;background:#E3F5F2;border:1px solid rgba(20,171,155,.35);border-radius:8px;padding:13px 16px;font-size:12.5px;line-height:1.6">Fragen offen geblieben? Die <strong style="color:#0C7A6C">Geschäftsstelle der AGFK-SL</strong> hilft weiter.<br>Europaallee 27, 66113 Saarbrücken<br>Tel.: +49 (0)681 4109 6482 · E-Mail: geschaeftstelle@agfk-sl.de</div>`;
+    h+=`<div class="agfk-contact" style="margin-top:16px;background:#E3F5F2;border:1px solid rgba(var(--green-rgb),.35);border-radius:8px;padding:13px 16px;font-size:12.5px;line-height:1.6">Fragen offen geblieben? Die <strong style="color:var(--green-dark)">Geschäftsstelle der AGFK-SL</strong> hilft weiter.<br>Europaallee 27, 66113 Saarbrücken<br>Tel.: +49 (0)681 4109 6482 · E-Mail: geschaeftstelle@agfk-sl.de</div>`;
     h+=`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-outline" style="width:auto;flex:1;min-width:160px" onclick="window.print()">🖨️ Drucken</button><button class="btn btn-outline" style="width:auto;flex:1;min-width:160px" onclick="resetAll()">Neue Abfrage starten</button></div>`;
     el.innerHTML=h;
   }
