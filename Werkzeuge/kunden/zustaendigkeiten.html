@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Zuständigkeiten Radverkehr Saarland – 2Rat</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="stylesheet" href="https://2rat.org/agfk-werkzeuge/vendor/leaflet/leaflet.css">
+<!-- Karte und Geodaten: einzige Quelle ist das Repo agfk-werkzeuge (2rat.org/agfk-werkzeuge/, gleiche Origin). Zieht es um, die drei Pfade anpassen. -->
+<script src="https://2rat.org/agfk-werkzeuge/vendor/leaflet/leaflet.js"></script>
+<script src="https://2rat.org/agfk-werkzeuge/rp-geo.js"></script>
+<script src="https://2rat.org/agfk-werkzeuge/rp-unfaelle.js"></script><!-- Unfallatlas Saarland 2023–2025 (dl-de/by-2.0), hängt sich an RPGeo -->
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -77,14 +80,14 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .zwarn-item:last-child{margin-bottom:0}
 .notes-item{font-size:12px;color:#6b5900;line-height:1.5;margin-bottom:5px}
 .notes-item:last-child{margin-bottom:0}
-.praxis-box{margin-top:12px;background:var(--green-light);border:1px solid rgba(101,148,68,.25);border-radius:7px;padding:12px 14px}
+.praxis-box{margin-top:12px;background:var(--green-light);border:1px solid rgba(20,171,155,.3);border-radius:7px;padding:12px 14px}
 .praxis-title{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-dark);margin-bottom:5px}
 .praxis-item{font-size:12px;color:#3a5a1f;line-height:1.5;margin-bottom:5px}
 .qbadge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.05em;line-height:1.4;padding:1px 5px;border-radius:3px;margin-right:6px;vertical-align:1px;white-space:nowrap}
 .q-g{background:#1e4f7a;color:#fff}
-.q-sl{background:#659444;color:#fff}
+.q-sl{background:#0C7A6C;color:#fff}
 .q-bw{background:#e3e3e3;color:#555}.q-al{background:#f0e6d2;color:#7a5c1e}
-.praxis-legend{margin-top:9px;padding-top:7px;border-top:1px solid rgba(101,148,68,.25);font-size:10px;line-height:1.45;color:#5d7a45}
+.praxis-legend{margin-top:9px;padding-top:7px;border-top:1px solid rgba(20,171,155,.3);font-size:10px;line-height:1.45;color:#0C7A6C}
 .lernbox{margin:0 0 16px;border:1px solid rgba(22,120,169,.30);border-radius:8px;background:var(--blue-light);overflow:hidden}
 .lernbox.inresult{margin:14px 0 0}
 .lernbox>summary{cursor:pointer;list-style:none;padding:12px 15px;color:var(--blue-dark)}
@@ -119,10 +122,14 @@ h3{font-size:14px;font-weight:700;margin:0 0 8px}
 .map-status.show{display:block;margin-top:10px}
 .map-tip{display:none;font-size:11.5px;color:var(--gray-light);margin-top:8px;line-height:1.5}
 .mapwrap.open .map-tip{display:block}
-.map-status .ok{background:var(--green-light);border:1px solid rgba(101,148,68,.3);border-radius:8px;padding:11px 14px;font-size:12.5px;line-height:1.55}
+.map-status .ok{background:var(--green-light);border:1px solid rgba(20,171,155,.35);border-radius:8px;padding:11px 14px;font-size:12.5px;line-height:1.55}
 .map-status .ok b{color:var(--green-dark)}
 .map-status .warn{background:#fef9ec;border:1px solid #f0e0b0;border-radius:8px;padding:11px 14px;font-size:12.5px;line-height:1.55;color:#7a6420}
 .map-status .warn b{color:#7a6420}
+.geo-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:4px;padding:1px 6px;margin-right:6px;vertical-align:middle}
+.geo-badge.amtlich{background:var(--green-light);color:var(--green-dark)}
+.geo-badge.rvp{background:var(--blue-light);color:var(--blue-dark)}
+.geo-badge.vermutet{background:#fef9ec;color:#7a6420;border:1px solid #f0e0b0}
 .copy-box{margin-top:16px;background:var(--white);border:1.5px solid var(--gray-border);border-radius:10px;overflow:hidden}
 .copy-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;background:var(--blue-light);border-bottom:1px solid var(--gray-border)}
 .copy-head-title{font-size:12px;font-weight:700;color:var(--blue-dark);text-transform:uppercase;letter-spacing:.05em}
@@ -177,19 +184,19 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
     <div class="header-left">
       <img class="header-logo" id="logo" alt="2Rat – Büro für Radverkehrsplanung" src="">
       <div>
-        <div class="header-sub">Büro für Radverkehrsplanung</div>
+        <div class="header-sub">Arbeitsgemeinschaft fahrradfreundlicher Kommunen im Saarland</div>
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right">Saarland<br><span data-stand>Stand 09/2026 · v35</span><br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right"><a href="../index.html" style="color:var(--blue-dark);text-decoration:none;font-weight:600">← Zum Portal</a><br>Saarland<br><span data-stand>Stand 09/2026 · v40</span><br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
 <main class="main">
   <div class="mapwrap" id="mapwrap">
-    <button class="map-toggle" id="mapToggle" aria-expanded="false" onclick="toggleMap()">🗺 Auf der Karte klicken (optional) – Kommune, Straße und Lage werden automatisch erkannt</button>
+    <button class="map-toggle" id="mapToggle" aria-expanded="false" onclick="toggleMap()">🗺 Auf der Karte klicken (optional) – Kommune, Straße, Lage und Baulast aus amtlichen Geodaten vorschlagen lassen</button>
     <div id="zmap"></div>
-    <div class="map-tip">💡 Tipp: möglichst <b>mittig auf die Fahrbahn</b> klicken – dann werden Straße und Lage am zuverlässigsten erkannt. Ein direkt daneben liegender Geh-/Radweg wird zusätzlich als „begleitende Radinfrastruktur" angezeigt.</div>
+    <div class="map-tip">💡 Tipp: möglichst <b>mittig auf die Fahrbahn</b> klicken – Straße und Klasse kommen aus dem amtlichen Straßennetz des LfS (Bundes- und Landesstraßen), Lage und Verkehr aus der Straßenverkehrszählung 2021, Baulast und Netzbezug aus dem Radverkehrsplan Saarland 2025. Jeder Wert zeigt seine Herkunft und ist nur ein Vorschlag.</div>
     <div class="map-status" id="mapStatus"></div>
   </div>
   <div class="kommune-bar" id="kommuneBar"></div>
@@ -208,6 +215,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
     Grundlagen: StVZustG Saarland, StVO, VwV-StVO 2025, SaarlStrG, FStrG, ERA 2010 sowie die Landesvorgabe „Maßgaben und Richtlinien beim Ausbau von Radverkehrsanlagen“ (MUKMAV, Stand 05/2023).
     Ergänzend die Musterlösungen für Radverkehrsanlagen Baden-Württemberg (Stand 10/2025): im Saarland nicht eingeführt und damit nicht verbindlich, fachlich aber der aktuellste verfügbare Stand – sie nehmen die laufende ERA-Fortschreibung (Veröffentlichung ab 2026 erwartet) in Systematik und Maßen weitgehend vorweg. Empfehlung 2Rat: bei Neu- und Umbauten als Zielwert ansetzen.
     Im Einzelfall bitte Zuständigkeit mit der jeweiligen Behörde prüfen.
+    Kartenmodus: LfS-Straßennetz, SVZ 2021, Radverkehrsplan Saarland 2025 – © GDI-SL 2026, <a href="https://creativecommons.org/licenses/by/4.0/deed.de" target="_blank" rel="noopener">CC BY 4.0</a> · Karte: © GeoBasis-DE/BKG (dl-de/by-2-0) · Adresse: © OpenStreetMap-Mitwirkende (ODbL).
     <br>
     <strong style="color:var(--gray)">Entwickelt und gepflegt von 2Rat</strong> – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
     <br><span style="display:inline-block;margin-top:5px;opacity:.85"><span data-lizenz></span> · Lizenziert zur Nutzung durch die oben genannte Organisation. Weitergabe an Dritte nicht gestattet.</span>
@@ -216,8 +224,8 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
 
 <script>
 const LOGO='data:image/jpeg;base64,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';
-document.getElementById('logo').src=LOGO;
-const STAND='Stand 09/2026 · v35';
+(function(){var l=document.getElementById('logo');l.alt='2Rat – Büro für Radverkehrsplanung';l.onerror=function(){l.style.display='none';};l.src=LOGO;})();
+const STAND='Stand 09/2026 · v40';
 document.querySelectorAll('[data-stand]').forEach(function(n){n.textContent=STAND;});
 
 const MEASURES=[
@@ -249,7 +257,7 @@ const MEASURES=[
 
 const STREETS=[
 {id:"bundeslandstrasse",label:"Bundes- oder Landstraße",icon:"B/L",color:"#dc2626"},
-{id:"gemeindestrasse",label:"Gemeindestraße",icon:"G",color:"#659444"},
+{id:"gemeindestrasse",label:"Gemeindestraße",icon:"G",color:"#14AB9B"},
 {id:"sonstige",label:"Sonstige öffentliche Straße",icon:"S",color:"#8a8a8a"}
 ];
 /* Unterauswahl, wenn Bundes-/Landstraße gewählt wird – hält die Rechtslogik exakt */
@@ -300,8 +308,7 @@ function normK(s){return (s||'').replace(/^Sankt\s+/i,'St. ').replace(/\s*\(\s*S
 const NORM_LOOKUP={};
 KREISE.forEach(function(kr){kr.kommunen.forEach(function(n){NORM_LOOKUP[normK(n)]=n;});});
 function matchKommuneName(name){return NORM_LOOKUP[normK(name)]||null;}
-const OVERPASS=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter','https://overpass.openstreetmap.fr/api/interpreter'];
-function queryOverpass(q){let i=0;function tryNext(){if(i>=OVERPASS.length)return Promise.reject(new Error('Overpass'));return fetch(OVERPASS[i++]+'?data='+encodeURIComponent(q)).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).catch(function(){return tryNext();});}return tryNext();}
+/* Overpass: Direktzugriff auf overpass-api.de sperrt Browser (406) – nur noch freie Spiegel, siehe OVERPASS_FREI */
 function segDist(plat,plon,alat,alon,blat,blon){const kx=111320*Math.cos(plat*Math.PI/180),ky=110540;const px=plon*kx,py=plat*ky,ax=alon*kx,ay=alat*ky,bx=blon*kx,by=blat*ky;const dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy;let t=l2?((px-ax)*dx+(py-ay)*dy)/l2:0;t=Math.max(0,Math.min(1,t));const x=ax+t*dx,y=ay+t*dy;return Math.hypot(px-x,py-y);}
 function nearestWay(ways,lat,lon){let best=null,bestD=Infinity;ways.forEach(function(w){const g=w.geometry||[];for(let i=0;i+1<g.length;i++){const dd=segDist(lat,lon,g[i].lat,g[i].lon,g[i+1].lat,g[i+1].lon);if(dd<bestD){bestD=dd;best=w;}}});return best?{way:best,dist:bestD}:null;}
 var ROAD_RE=/^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street|road|service|track)(_link)?$/;
@@ -316,13 +323,121 @@ let zmap=null,zmarker=null;
 function escH(s){return String(s).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
 function setMapStatus(html){const el=document.getElementById('mapStatus');if(el){el.innerHTML=html;el.classList.add('show');}}
 function toggleMap(){const w=document.getElementById('mapwrap');const open=w.classList.toggle('open');const b=document.getElementById('mapToggle');if(b)b.setAttribute('aria-expanded',String(open));if(open){initZmap();setTimeout(function(){if(zmap)zmap.invalidateSize();},150);}}
-function initZmap(){if(zmap)return;if(typeof L==='undefined'){setMapStatus('<div class="warn"><b>Karte nicht verfügbar.</b> Die Kartenbibliothek konnte nicht geladen werden – in manchen Behördennetzen sind externe Skripte gesperrt. Kommune, Straße und Lage bitte über die Auswahl darunter festlegen; das Ergebnis ist davon nicht betroffen.</div>');return;}zmap=L.map('zmap').setView([49.38,6.95],9);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap-Mitwirkende'}).on('tileerror',function(){if(!zmap._tileWarned){zmap._tileWarned=true;setMapStatus('<div class="warn"><b>Kartenkacheln laden nicht.</b> Vermutlich ist der Zugriff auf openstreetmap.org gesperrt. Die Auswahl über die Listen darunter funktioniert unabhängig davon.</div>');}}).addTo(zmap);zmap.on('click',zmapClick);}
-function zmapClick(ev){const lat=ev.latlng.lat.toFixed(6),lon=ev.latlng.lng.toFixed(6);if(zmarker)zmarker.setLatLng(ev.latlng);else zmarker=L.marker(ev.latlng).addTo(zmap);setMapStatus('<div class="ok">⏳ Stelle wird ausgewertet …</div>');const q='[out:json][timeout:25];is_in('+lat+','+lon+');out tags;way(around:60,'+lat+','+lon+')["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road|track|service|cycleway|path|footway)$"];out geom;way(around:100,'+lat+','+lon+')["highway"];rel(bw)["route"~"^(bicycle|mtb)$"];out geom;';queryOverpass(q).then(function(d){applyMap(d,parseFloat(lat),parseFloat(lon));}).catch(function(){setMapStatus('<div class="ok" style="background:#fef3cd;border-color:#e0c067;color:#7a5b00">Abfrage nicht erreichbar – die Karte braucht Internet und läuft nur über einen Webserver / GitHub Pages (nicht per Doppelklick als lokale Datei). Bitte unten manuell wählen.</div>');});}
-function applyMap(d,lat,lon){const els=(d&&d.elements)||[];const areas=els.filter(function(e){return e.type==='area'&&e.tags;});const ways=els.filter(function(e){return e.type==='way'&&e.tags&&e.geometry;});const inRes=areas.some(function(e){return e.tags.landuse==='residential';});const gem=areas.find(function(e){return e.tags.boundary==='administrative'&&e.tags.admin_level==='8';});const gemName=gem?(gem.tags['name:de']||gem.tags.name||''):'';const km=gemName?matchKommuneName(gemName):null;const nw=pickMainWay(ways,lat,lon);if(km)state.kommune=km;let cls=null,lg=null;if(nw){cls=strKlasseMap(nw.way.tags);lg=lageGuessMap(nw.way.tags,inRes);if(!cls.autobahn){state.street=cls.street;state.blsub=cls.blsub;state.location=lg;}}const ROUTE_LABELS={bicycle:'Radroute',mtb:'MTB-Route'};function routeMinDist(r){let md=Infinity;(r.members||[]).forEach(function(m){const g=m.geometry||[];for(let i=0;i+1<g.length;i++){const dd=segDist(lat,lon,g[i].lat,g[i].lon,g[i+1].lat,g[i+1].lon);if(dd<md)md=dd;}});return md;}const rels=els.filter(function(e){return e.type==='relation'&&e.tags&&ROUTE_LABELS[e.tags.route];}).map(function(r){return {r:r,d:routeMinDist(r)};}).filter(function(o){return o.d<=60;}).sort(function(a,b){return a.d-b.d;});let routeHtml='';if(rels.length){routeHtml='<br><b>Route(n):</b><br>'+rels.map(function(o){var r=o.r;var lbl=(r.tags.name||r.tags.ref||'Route')+' ('+ROUTE_LABELS[r.tags.route]+')'+(r.tags.network?(' ['+r.tags.network+']'):'');var prox=o.d<=20?'an dieser Stelle':('in der Nähe (~'+Math.round(o.d)+' m)');return '🚴 '+escH(lbl)+' – <span style="color:var(--gray-light)">'+prox+'</span>';}).join('<br>');}var rtc=nw?radwegTyp(nw.way.tags||{}):null;var wegLine;if(cls){if(rtc){var showRi=/Radweg/.test(rtc);wegLine='Straße/Weg: '+rtc+(showRi?((nw.way.tags.oneway==='yes')?' · Einrichtungsverkehr':' · Zweirichtungsverkehr'):'')+' <span style="color:var(--gray-light);font-size:11.5px">(lt. OSM)</span>';}else{wegLine='Straße/Weg: '+cls.klasse;if(cls.autobahn)wegLine+='<br><span style="color:#b5722a;font-weight:600">⚠️ Autobahnen dürfen mit dem Rad nicht befahren werden (§ 18 Abs. 1 StVO) – für Radverkehrsmaßnahmen bitte die parallele Straße oder den Weg anklicken.</span>';if(cls.kraftfahrstrasse)wegLine+='<br><span style="color:#b5722a">Kraftfahrstraße – Radverkehr unzulässig (§ 18 Abs. 1 StVO). Klassifikation und Baulast bitte prüfen.</span>';if(cls.kreisRef)wegLine+='<br><span style="color:var(--gray-light);font-size:11.5px">K-Nummer aus OSM – im Saarland gibt es keine Kreisstraßen (§ 3 Abs. 1 SaarlStrG). Bitte Einstufung prüfen.</span>';}}else{wegLine='Straße: — (keine in der Nähe gefunden)';}var radHint='';var clickedIsPath=nw?/^(cycleway|path|footway)$/.test(nw.way.tags.highway||''):false;if(!rtc&&!clickedIsPath){var chosenId=nw?nw.way.id:null;var bestRad=null,bestRadD=Infinity,bestRadTyp=null;ways.forEach(function(w){if(chosenId&&w.id===chosenId)return;var typ=begleitTyp(w.tags||{});if(!typ)return;var g=w.geometry||[];var md=Infinity;for(var i=0;i+1<g.length;i++){var dd=segDist(lat,lon,g[i].lat,g[i].lon,g[i+1].lat,g[i+1].lon);if(dd<md)md=dd;}if(md<bestRadD){bestRadD=md;bestRad=w;bestRadTyp=typ;}});if(bestRad&&bestRadD<=50){var showRi2=/Radweg/.test(bestRadTyp);var ri=showRi2?((bestRad.tags.oneway==='yes')?' · Einrichtungsverkehr':' · Zweirichtungsverkehr'):'';radHint='<br><b>Begleitende Radinfrastruktur:</b><br>🚲 '+escH(bestRadTyp)+' – '+(bestRadD<=20?'an dieser Stelle':('in der Nähe (~'+Math.round(bestRadD)+' m)'))+ri+' <span style="color:var(--gray-light)">(lt. OSM)</span>';}if(!radHint&&nw){var rc=roadCycleway(nw.way.tags||{});if(rc){radHint='<br><b>Begleitende Radinfrastruktur:</b><br>🚲 '+escH(rc)+' – an dieser Straße <span style="color:var(--gray-light)">(lt. OSM)</span>';}}}state.mapPrefill=true;state.step=0;state.category=null;state.measure=null;renderKommuneBar();setMapStatus('<div class="ok"><b>Aus Karte übernommen</b><br>Kommune: '+(km||'— (nicht erkannt – bitte unten wählen)')+'<br>'+wegLine+'<br>Lage: '+(lg?(lg==='innerorts'?'innerorts':'außerorts'):'unbekannt (wird abgefragt)')+routeHtml+radHint+'<br><span style="color:var(--gray-light);font-size:11.5px">Kommune, Straße und Lage sind schon eingetragen – Sie wählen nur noch die Maßnahme (alles änderbar).</span></div>');render();}
+function initZmap(){if(zmap)return;if(typeof L==='undefined'){setMapStatus('<div class="warn"><b>Karte nicht verfügbar.</b> Die Kartenbibliothek konnte nicht geladen werden – in manchen Behördennetzen sind externe Skripte gesperrt. Kommune, Straße und Lage bitte über die Auswahl darunter festlegen; das Ergebnis ist davon nicht betroffen.</div>');return;}zmap=L.map('zmap').setView([49.38,6.95],9);var tileErr=0;var bm=L.tileLayer('https://sgx.geodatenzentrum.de/wmts_basemapde/tile/1.0.0/de_basemapde_web_raster_farbe/default/GLOBAL_WEBMERCATOR/{z}/{y}/{x}.png',{maxZoom:19,attribution:'© GeoBasis-DE / BKG (2026) <a href="https://www.govdata.de/dl-de/by-2-0" target="_blank" rel="noopener">dl-de/by-2-0</a>',referrerPolicy:'strict-origin-when-cross-origin'});bm.on('tileerror',function(){if(++tileErr===4){zmap.removeLayer(bm);L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap-Mitwirkende',referrerPolicy:'strict-origin-when-cross-origin'}).on('tileerror',function(){if(!zmap._tileWarned){zmap._tileWarned=true;setMapStatus('<div class="warn"><b>Kartenkacheln laden nicht.</b> Vermutlich sind externe Kartendienste gesperrt. Die Auswahl über die Listen darunter funktioniert unabhängig davon.</div>');}}).addTo(zmap);}});bm.addTo(zmap);zmap.on('click',zmapClick);}
+/* ===== Karten-Modus: amtliche Geodaten zuerst (LfS-Netz, SVZ 2021, RVP 2025 über rp-geo.js), Adresse/Kommune über Nominatim,
+   OpenStreetMap nur noch für begleitende Radinfrastruktur und Routen (freie Spiegel, nicht blockierend). Jeder Wert trägt seine Herkunft. ===== */
+const GEO_OK=typeof RPGeo!=='undefined';
+const NOMI='https://nominatim.openstreetmap.org';
+async function nomi(pfad){const c=new AbortController();const to=setTimeout(function(){c.abort();},8000);
+  try{const r=await fetch(NOMI+pfad+'&accept-language=de',{headers:{'Accept':'application/json'},referrerPolicy:'strict-origin-when-cross-origin',signal:c.signal});clearTimeout(to);if(!r.ok)throw new Error('HTTP '+r.status);return await r.json();}
+  catch(e){clearTimeout(to);throw e;}}
+async function geoAdresse(lat,lon){
+  const j=await nomi('/reverse?format=jsonv2&zoom=17&addressdetails=1&lat='+lat+'&lon='+lon);const a=j.address||{};
+  const strasse=a.road||a.pedestrian||a.footway||a.path||null;const ort=a.village||a.suburb||a.hamlet||a.town||a.city||null;
+  let km=null;[a.municipality,a.town,a.city,a.village].filter(Boolean).some(function(n){km=matchKommuneName(n);return !!km;});
+  if(!km&&a.state==='Saarland'){await new Promise(function(r){setTimeout(r,1100);});
+    const g=await nomi('/reverse?format=jsonv2&zoom=10&addressdetails=1&lat='+lat+'&lon='+lon);const b=g.address||{};
+    [b.municipality,b.town,b.city,b.village,g.name].filter(Boolean).some(function(n){km=matchKommuneName(n);return !!km;});}
+  return {strasse:strasse,ort:ort,hausnr:a.house_number||null,land:a.state||null,kommune:km,text:[strasse,a.house_number].filter(Boolean).join(' ')+(ort?', '+ort:'')};
+}
+const OVERPASS_FREI=['https://overpass.private.coffee/api/interpreter','https://overpass.kumi.systems/api/interpreter'];
+function queryOverpassFrei(q){let i=0;function tryNext(){if(i>=OVERPASS_FREI.length)return Promise.reject(new Error('Overpass'));const c=new AbortController();const to=setTimeout(function(){c.abort();},8000);
+  return fetch(OVERPASS_FREI[i++]+'?data='+encodeURIComponent(q),{signal:c.signal}).then(function(r){clearTimeout(to);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).catch(function(){clearTimeout(to);return tryNext();});}return tryNext();}
+const HERK={amtlich:'<span class="geo-badge amtlich">amtlich</span>',rvp:'<span class="geo-badge rvp">lt. RVP 2025</span>',vermutet:'<span class="geo-badge vermutet">vermutet</span>',osm:'<span class="geo-badge vermutet">lt. OSM</span>'};
+function zmapClick(ev){
+  const lat=+ev.latlng.lat.toFixed(6),lon=+ev.latlng.lng.toFixed(6);
+  if(zmarker)zmarker.setLatLng(ev.latlng);else zmarker=L.marker(ev.latlng).addTo(zmap);
+  setMapStatus('<div class="ok">⏳ Stelle wird ausgewertet – amtliches Straßennetz, Zählstellen, Radverkehrsplan und Adresse …</div>');
+  const g={lat:lat,lon:lon,amt:null,dtv:null,rvp:[],rvpFehler:null,adr:null,lage:null,lageArt:null,lageQuelle:null,baulastRvp:null,netz:null,dtvText:null,osm:null,unfall:null,unfallStrecke:null};
+  if(GEO_OK){try{g.amt=RPGeo.strasseAmStandort(lat,lon);g.dtv=RPGeo.dtvFuer(g.amt,lat,lon);}catch(e){}}
+  if(GEO_OK&&typeof RPGeo.unfaelleImUmkreis==='function'){try{g.unfall=RPGeo.unfaelleImUmkreis(lat,lon,100);}catch(e){}}
+  if(GEO_OK&&g.amt&&typeof RPGeo.unfaelleEntlang==='function'){try{g.unfallStrecke=RPGeo.unfaelleEntlang(g.amt,lat,lon,1000);}catch(e){}}
+  const jobs=[];
+  if(GEO_OK)jobs.push(RPGeo.rvpAbfrage(lat,lon).then(function(r){if(r.fehler)g.rvpFehler=r.fehler;else g.rvp=r.eintraege||[];}).catch(function(e){g.rvpFehler=e.message;}));
+  jobs.push(geoAdresse(lat,lon).then(function(a){g.adr=a;}).catch(function(){}));
+  const q='[out:json][timeout:8];way(around:60,'+lat+','+lon+')["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road|track|service|cycleway|path|footway)$"];out geom;way(around:100,'+lat+','+lon+')["highway"];rel(bw)["route"~"^(bicycle|mtb)$"];out geom;';
+  jobs.push(queryOverpassFrei(q).then(function(d){g.osm=d;}).catch(function(){}));
+  Promise.all(jobs).then(function(){applyGeo(g);});
+}
+function applyGeo(g){
+  const lat=g.lat,lon=g.lon;
+  const els=(g.osm&&g.osm.elements)||[];const ways=els.filter(function(e){return e.type==='way'&&e.tags&&e.geometry;});
+  const nw=ways.length?pickMainWay(ways,lat,lon):null;const osmCls=nw?strKlasseMap(nw.way.tags):null;
+  /* Straße: amtlich vor OSM */
+  let strasseHtml,strasseArt;
+  if(g.amt){state.street='bundeslandstrasse';state.blsub=g.amt.klasseCode==='B'?'bundesstrasse':(g.amt.klasseCode==='L1'?'landesstrasse1':'landesstrasse2');
+    strasseHtml=escH(g.amt.strasse)+' · '+escH(g.amt.klasse)+' <span style="color:var(--gray-light);font-size:11.5px">(LfS-Straßennetz, Abstand '+Math.round(g.amt.dist)+' m)</span>';strasseArt='amtlich';}
+  else if(osmCls&&!osmCls.autobahn&&osmCls.street!=='bundeslandstrasse'){state.street=osmCls.street;state.blsub=null;strasseHtml=escH(osmCls.klasse)+' – keine Bundes-/Landesstraße im Umkreis von 40 m';strasseArt='osm';}
+  else if(osmCls&&osmCls.autobahn){state.street=null;state.blsub=null;strasseHtml=escH(osmCls.klasse)+'<br><span style="color:#b5722a;font-weight:600">⚠️ Autobahnen dürfen mit dem Rad nicht befahren werden (§ 18 Abs. 1 StVO) – bitte die parallele Straße anklicken.</span>';strasseArt='osm';}
+  else{state.street=null;state.blsub=null;strasseHtml='keine Bundes-/Landesstraße im Umkreis von 40 m – vermutlich Gemeindestraße oder sonstiger Weg (bitte unten wählen)';strasseArt='vermutet';}
+  /* Lage: Zählstelle gleicher Abschnitt (amtlich) → OSM → Adresse → offen */
+  if(g.dtv&&g.dtv.modus==='abschnitt'&&g.dtv.zst.f){g.lage=g.dtv.zst.f==='FS'?'ausserorts':'innerorts';g.lageArt='amtlich';g.lageQuelle='SVZ 2021, Zählstelle '+g.dtv.zst.z+', gleicher Abschnitt';}
+  else if(nw){const inRes=els.some(function(e){return e.type==='area'&&e.tags&&e.tags.landuse==='residential';});const lg=lageGuessMap(nw.way.tags,inRes);if(lg){g.lage=lg;g.lageArt='osm';g.lageQuelle='Tempo/Zone lt. OSM';}}
+  if(!g.lage&&g.adr&&g.adr.strasse){const istRef=/^[ABLK]\s?\d+/i.test(g.adr.strasse.trim());if(!istRef&&g.adr.ort){g.lage='innerorts';g.lageArt='vermutet';g.lageQuelle='benannte Straße im Ort (Adresse)';}else if(istRef&&!g.adr.hausnr){g.lage='ausserorts';g.lageArt='vermutet';g.lageQuelle='nur Straßennummer, kein Straßenname (Adresse)';}}
+  state.location=g.lage;
+  /* Kommune */
+  if(g.adr&&g.adr.kommune)state.kommune=g.adr.kommune;
+  /* Radverkehrsplan über RPGeo.rvpKompakt() – Wortlaut aus dem Bündel (RadPlan Pro führt) */
+  if(g.rvp.length){const k=RPGeo.rvpKompakt(g.rvp);
+    if(k&&k.baulastLfS!==null){const srl=!!(k.saarradland||(k.routen&&k.routen.length));
+      g.baulastRvp={text:k.baulast+(k.baulastLfS===false&&srl?'. Touristische SaarRadland-Route: selbstständiger Weg – Kosten und Unterhaltung beim jeweiligen Flächeneigentümer (Gemeinde, Forst, Privat), nicht beim LfS (LfS 09/2026)':''),lfs:k.baulastLfS,sonder:k.sonder||null};}
+    if(k&&(k.netz||k.routen.length||k.saarradland))g.netz={text:[k.netz,k.routen.length?'SaarRadland-Route: '+k.routen.join(', '):(k.saarradland?'SaarRadland: ja':'')].filter(Boolean).join(' · '),fuehrung:k.fuehrung||null,prio:k.prio||null};}
+  if(g.dtv&&g.dtv.modus==='abschnitt'&&g.dtv.zst.dtv>0){const z=g.dtv.zst;g.dtvText='DTV '+Number(z.dtv).toLocaleString('de-DE')+' Kfz/Tag, Schwerverkehr '+Number(z.sv).toLocaleString('de-DE')+' (SVZ 2021, Zählstelle '+z.z+')';}
+  /* OSM-Zusatz: begleitende Radinfrastruktur und Routen (nur Anzeige) */
+  let radHint='',routeHtml='';
+  if(nw){const ROUTE_LABELS={bicycle:'Radroute',mtb:'MTB-Route'};
+    function routeMinDist(r){let md=Infinity;(r.members||[]).forEach(function(m){const gg=m.geometry||[];for(let i=0;i+1<gg.length;i++){const dd=segDist(lat,lon,gg[i].lat,gg[i].lon,gg[i+1].lat,gg[i+1].lon);if(dd<md)md=dd;}});return md;}
+    const rels=els.filter(function(e){return e.type==='relation'&&e.tags&&ROUTE_LABELS[e.tags.route];}).map(function(r){return {r:r,d:routeMinDist(r)};}).filter(function(o){return o.d<=60;}).sort(function(a,b){return a.d-b.d;});
+    if(rels.length)routeHtml='<br><b>Route(n) lt. OSM:</b> '+rels.map(function(o){const r=o.r;return escH((r.tags.name||r.tags.ref||'Route')+' ('+ROUTE_LABELS[r.tags.route]+')');}).join(', ');
+    const rtc=radwegTyp(nw.way.tags||{});const clickedIsPath=/^(cycleway|path|footway)$/.test(nw.way.tags.highway||'');
+    if(rtc)radHint='<br><b>Angeklickter Weg lt. OSM:</b> '+escH(rtc)+(/Radweg/.test(rtc)?((nw.way.tags.oneway==='yes')?' · Einrichtungsverkehr':' · Zweirichtungsverkehr'):'');
+    else if(!clickedIsPath){let bestRad=null,bestD=Infinity,bestTyp=null;ways.forEach(function(w){if(w.id===nw.way.id)return;const typ=begleitTyp(w.tags||{});if(!typ)return;const md=wayMinDist(w,lat,lon);if(md<bestD){bestD=md;bestRad=w;bestTyp=typ;}});
+      if(bestRad&&bestD<=50)radHint='<br><b>Begleitende Radinfrastruktur lt. OSM:</b> 🚲 '+escH(bestTyp)+' – '+(bestD<=20?'an dieser Stelle':('in der Nähe (~'+Math.round(bestD)+' m)'));
+      else{const rc=roadCycleway(nw.way.tags||{});if(rc)radHint='<br><b>Begleitende Radinfrastruktur lt. OSM:</b> 🚲 '+escH(rc);}}}
+  state.geo={amt:g.amt?{strasse:g.amt.strasse,klasse:g.amt.klasse}:null,lage:g.lage,lageArt:g.lageArt,lageQuelle:g.lageQuelle,baulastRvp:g.baulastRvp,netz:g.netz,dtvText:g.dtvText,unfall:g.unfall,unfallStrecke:g.unfallStrecke,adresse:g.adr?g.adr.text:null,lat:lat,lon:lon};
+  state.mapPrefill=true;state.step=0;state.category=null;state.measure=null;renderKommuneBar();
+  const LT={innerorts:'innerorts',ausserorts:'außerorts'};
+  let h='<div class="ok"><b>Aus Geodaten ermittelt</b> <span style="color:var(--gray-light);font-size:11.5px">– Vorschlag, alles unten änderbar</span>';
+  h+='<br>Adresse: '+(g.adr&&g.adr.text?escH(g.adr.text):'—')+(g.adr&&g.adr.land&&g.adr.land!=='Saarland'?' <span style="color:#b5722a">– außerhalb des Saarlands, Geodaten decken nur das Saarland ab</span>':'');
+  h+='<br>Kommune: '+(state.kommune?escH(state.kommune):'— (nicht erkannt – bitte unten wählen)');
+  h+='<br>Straße: '+HERK[strasseArt]+strasseHtml;
+  h+='<br>Lage: '+(g.lage?HERK[g.lageArt]+LT[g.lage]+' <span style="color:var(--gray-light);font-size:11.5px">('+escH(g.lageQuelle)+')</span>':'unbekannt (wird abgefragt)');
+  if(g.baulastRvp)h+='<br>Baulast: '+HERK.rvp+escH(g.baulastRvp.text)+(g.baulastRvp.sonder?' · Sonderregelung: '+escH(g.baulastRvp.sonder):'');
+  if(g.netz)h+='<br>Netzbezug: '+HERK.rvp+escH(g.netz.text)+(g.netz.fuehrung?' <span style="color:var(--gray-light);font-size:11.5px">(Führung im Bestand: '+escH(g.netz.fuehrung)+(g.netz.prio?' · '+escH(g.netz.prio):'')+')</span>':'');
+  else if(g.rvpFehler)h+='<br>Netzbezug: Radverkehrsplan nicht erreichbar';
+  if(g.dtvText)h+='<br>Verkehr: '+HERK.amtlich+escH(g.dtvText);
+  if(g.unfall){const u=g.unfall;h+='<br>Unfallgeschehen (Punkt): '+HERK.amtlich+escH(unfallKurz(u));
+    if(g.unfallStrecke)h+='<br>Unfallgeschehen (Strecke): '+HERK.amtlich+escH(RPGeo.unfallTextStrecke(g.unfallStrecke));
+    if(unfallAuffaellig(u)||unfallStreckeAuffaellig(g.unfallStrecke))h+='<br><span style="color:#b5722a;font-weight:600">⚠️ Auffälliges Unfallgeschehen – Unfallkommission einbinden (1- und 3-Jahres-Karte der Polizei anfordern). Der Unfallatlas zeigt nur Unfälle mit Personenschaden, Sachschadensunfälle fehlen.</span>';}
+  h+=routeHtml+radHint;
+  h+='<br><span style="color:var(--gray-light);font-size:11.5px">Kommune, Straße und Lage sind eingetragen – Sie wählen nur noch die Maßnahme. '+GEO_QUELLE+'</span></div>';
+  setMapStatus(h);render();
+}
+const GEO_QUELLE='Geodaten: LfS-Straßennetz, SVZ 2021, Radverkehrsplan Saarland 2025 – © GDI-SL 2026, CC BY 4.0 · Unfälle: Unfallatlas 2023–2025, Statistische Ämter des Bundes und der Länder (dl-de/by-2.0) · Adresse: © OpenStreetMap-Mitwirkende (ODbL)';
+/* Unfallatlas: Kurztext und Auffälligkeitsschwelle (Umkreis 100 m, 3 Jahre). Schwelle orientiert sich an der 3-Jahres-Karte der Unfallkommission (≥ 3 Unfälle mit Personenschaden) bzw. an Rad-/Fußbeteiligung. */
+function unfallKurz(u){if(!u.gesamt)return 'keine Unfälle mit Personenschaden 2023–2025 im Umkreis von 100 m (Unfallatlas)';
+  const f=[];if(u.getoetet)f.push(u.getoetet+' mit Getöteten');if(u.schwer)f.push(u.schwer+' mit Schwerverletzten');if(u.leicht)f.push(u.leicht+' mit Leichtverletzten');
+  return u.gesamt+' Unfälle mit Personenschaden 2023–2025 im Umkreis von 100 m ('+f.join(', ')+'; '+u.rad+' mit Rad-, '+u.fuss+' mit Fußgängerbeteiligung)';}
+function unfallAuffaellig(u){return !!u&&(u.gesamt>=3||u.getoetet>0||u.schwer>0||(u.rad+u.fuss)>=2);}
+/* Strecke (±1 km entlang der LfS-Achse, nur Bundes-/Landstraßen): auffällig bei Getöteten, ≥ 2 Schwerverletzten, ≥ 3 Rad-/Fußunfällen oder einer 100-m-Häufung ≥ 3 */
+function unfallStreckeAuffaellig(r){return !!r&&(r.getoetet>0||r.schwer>=2||(r.rad+r.fuss)>=3||(r.schwerpunkt&&r.schwerpunkt.n>=3));}
+function geoVermerk(){const g=state.geo;if(!g)return '';let t='';
+  t+='Standort: '+(g.adresse?g.adresse+' ':'')+'('+String(g.lat).replace('.',',')+', '+String(g.lon).replace('.',',')+')\n';
+  t+='Straße lt. Geodaten: '+(g.amt?g.amt.strasse+' – '+g.amt.klasse+' (amtlich, LfS-Straßennetz)':'keine Bundes-/Landesstraße im Umkreis von 40 m')+'\n';
+  if(g.lage)t+='Lage lt. Geodaten: '+(g.lage==='innerorts'?'innerorts':'außerorts')+' ('+g.lageQuelle+', '+g.lageArt+')\n';
+  if(g.baulastRvp)t+='Baulast lt. Radverkehrsplan 2025: '+g.baulastRvp.text+(g.baulastRvp.sonder?' – Sonderregelung: '+g.baulastRvp.sonder:'')+'\n';
+  if(g.netz)t+='Netzbezug (Radverkehrsplan 2025): '+g.netz.text+(g.netz.fuehrung?' · Führung im Bestand: '+g.netz.fuehrung:'')+'\n';
+  if(g.dtvText)t+='Verkehrsbelastung: '+g.dtvText+'\n';
+  if(g.unfall)t+='Unfallgeschehen Punkt (Unfallatlas): '+unfallKurz(g.unfall)+(unfallAuffaellig(g.unfall)?' – auffällig, Unfallkommission einbinden':'')+'\n';
+  if(g.unfallStrecke)t+='Unfallgeschehen Strecke (Unfallatlas): '+RPGeo.unfallTextStrecke(g.unfallStrecke)+(unfallStreckeAuffaellig(g.unfallStrecke)?' – auffällig, Unfallkommission einbinden':'')+'\n';
+  return t;}
+
 
 /* Praxishinweise: primär ERA 2010; ergänzend Qualitätsstandards und Musterlösungen BW (Stand Okt. 2025, Ausgabe 02/2026; im Saarland nicht verbindlich – Vorgriff auf die ERA-Neufassung) */
 const PRAXIS={
   schutzstreifen:[
+    "SL|Kosten und Unterhaltung: Der Schutzstreifen ist Bestandteil der Fahrbahn – beides trägt der Baulastträger der Straße, an Bundes- und Landstraßen also der LfS. Erforderlich ist immer eine verkehrsrechtliche Anordnung (LfS, Vortrag AGFK-SL 02.09.2026)",
+    "SL|Auf dem Schutzstreifen darf nicht gehalten werden (StVO Anlage 3 lfd. Nr. 22). Der LfS empfiehlt deshalb, Anwohner und Gewerbetreibende vorab einzubinden und die Maßnahme durch einen Gemeinderatsbeschluss zu tragen – sonst scheitert sie erfahrungsgemäß am Parkdruck (LfS, Vortrag AGFK-SL 02.09.2026)",
     "G|Ein Schutzstreifen ist in der Regel 1,50 m breit, mindestens 1,25 m (ERA 2010, Kap. 3.2). Anders als beim Radfahrstreifen sagt die ERA hier nicht, dass die Markierung mitzählt","G|Diese Maße sind zu vergrößern, wenn die nutzbare Breite eingeschränkt ist – etwa durch eine Rinne, die sich schlecht befahren lässt. Die Rinne zählt also faktisch nicht zum Schutzstreifen",
     "G|Schutzstreifen sind Fahrbahnmarkierungen – sie erhöhen nicht die Gesamtfahrbahnbreite","G|Der Schutzstreifen ist Teil der Fahrbahn. Lkw dürfen ihn im Bedarfsfall überfahren, parken darf dort niemand. Genau deshalb soll er bei hohem Schwerverkehr vermieden werden – die ERA nennt als Grenze mehr als 1.000 Schwerverkehrsfahrzeuge am Tag (ERA 2010, Kap. 3.2)","G|An Mittelinseln endet der Schutzstreifen etwa 20 m vorher, wenn neben der Insel weniger als 2,25 m Restfahrbahn bleiben (ERA 2010, Kap. 3.2)",
     "G|Kein Einsatz bei zulässiger Höchstgeschwindigkeit über 50 km/h oder mehr als 15.000 Kfz in 24 h (DTV)",
@@ -335,6 +450,7 @@ const PRAXIS={
     "BW|Verbleibende Kernfahrbahn ≥ 4,50 m bei Gegenverkehr (ohne Parken)"
   ],
   radfahrstreifen:[
+    "SL|Kosten und Unterhaltung: Der Radfahrstreifen ist Bestandteil der Fahrbahn – beides trägt der Baulastträger der Straße, an Bundes- und Landstraßen der LfS. Verkehrsrechtliche Anordnung erforderlich. LfS-Maße innerorts: Breite ≥ 1,85 m, Restfahrbahn ≥ 5,50 m, Sicherheitstrennstreifen zu Längsparkständen 0,50–0,75 m (LfS, Vortrag AGFK-SL 02.09.2026)",
     "G|Radfahrstreifen sollen 1,85 m breit sein – einschließlich der Breitstrichmarkierung, die also mitzählt (ERA 2010, Kap. 3.3). Bestätigt am Originaltext",
     "G|Bei hohen Kfz- oder Radverkehrsstärken, Vzul über 50 km/h oder häufigem Anhängerverkehr mindestens 2,00 m (ERA 2010, Kap. 3.3)",
     "G|Ein Maß unterhalb von 1,85 m sieht die ERA 2010 nicht vor – es gibt kein Klammer-Mindestmaß für Radfahrstreifen",
@@ -382,6 +498,7 @@ const PRAXIS={
     "SL|Zeichen 244.3 als Sinnbild in regelmäßigen Abständen auf der Fahrbahn aufbringen"
   ],
   gehweg_frei:[
+    "SL|LfS-Vorgabe: Breite ≥ 2,50 m, keine Benutzungspflicht, Schrittgeschwindigkeit, Vorrang Fußverkehr (LfS, Vortrag AGFK-SL 02.09.2026)",
     "G|Auf dem freigegebenen Gehweg gilt Schrittgeschwindigkeit (StVO Anlage 2, Erläuterung zu Z 239 Nr. 2)",
     "G|Unter 2,50 m nutzbarer Wegbreite ist die gemeinsame Führung generell ausgeschlossen (ERA 2010, Abschnitt 3.6, Bild 15)",
     "G|Einsatzgrenze Fußgänger + Radfahrer je Spitzenstunde (ERA 2010, Bild 15, Näherungswerte): rund 70 bei 2,50 m, rund 100 bei 3,00 m, rund 130 bei 3,50 m, rund 155 bei 4,00 m",
@@ -391,6 +508,10 @@ const PRAXIS={
     "G|§ 2 Abs. 5 StVO: Kinder bis zum vollendeten 8. Lebensjahr müssen den Gehweg benutzen, bis zum vollendeten 10. Lebensjahr dürfen sie. Eine geeignete Aufsichtsperson ab 16 Jahren darf sie dabei auf dem Gehweg begleiten. Die Freigabe ändert daran nichts – sie richtet sich an alle übrigen Radfahrenden"
   ],
   radweg_bau:[
+    "SL|Kosten und Unterhaltung innerorts: Baulastträger der Straße – an Bundes- und Landstraßen der LfS. Besonderheit im Saarland: Die Unterhaltung wird häufig gegen eine Ablösesumme an die Kommune übertragen. Vor dem Bau klären, ob das gewollt ist (LfS, Vortrag AGFK-SL 02.09.2026)",
+    "SL|Außerorts sind straßenbegleitende Rad- und Gehwege Bestandteil der Straße – Kosten und Unterhaltung beim Baulastträger der Straße. LfS-Maße: Breite ≥ 2,50 m, Sicherheitstrennstreifen zur Fahrbahn 1,75 m (LfS, Vortrag AGFK-SL 02.09.2026)",
+    "SL|Selbstständige und touristische Radwege (auch SaarRadland-Routen): Kosten und Unterhaltung liegen beim jeweiligen Flächeneigentümer – Gemeinde, Forst, Privat –, nicht beim LfS. Das gilt auch dort, wo der LfS punktuell Instandsetzungen übernimmt (LfS, Vortrag AGFK-SL 02.09.2026)",
+    "SL|LfS-Maße innerorts: Einrichtungsradweg 2,00 m, beidseitiger Zweirichtungsradweg 2,50 m, einseitiger Zweirichtungsradweg 3,00 m; Sicherheitstrennstreifen zur Fahrbahn 0,50–0,75 m, zu Längsparkständen 0,75 m (LfS, Vortrag AGFK-SL 02.09.2026)",
     "G|Ein Radweg für eine Fahrtrichtung ist im Regelfall 2,00 m breit. Nur bei geringem Radverkehr sind 1,60 m zulässig – das ist kein allgemeines Mindestmaß, sondern an diese Bedingung geknüpft. Die 2,00 m ermöglichen das Überholen (ERA 2010, Kap. 3.4)","G|Breiter als 2,00 m sollte der Radweg werden bei Hauptverbindungen des Radverkehrs, bei hoher Nutzung des Seitenraums, bei häufigen Belastungsspitzen (Fahrradpulks) und bei starkem Gefälle (ERA 2010, Kap. 3.4)","G|Zweirichtungsradweg: 2,50 m im Regelfall bei beidseitiger Führung, 3,00 m bei einseitiger. Das Mindestmaß von 2,00 m gilt nur bei geringem Radverkehr und nur dann, wenn im Begegnungsfall zweier Gespanne mit Anhänger der Sicherheitstrennstreifen mitbenutzt werden kann (ERA 2010, Kap. 3.5)","G|Am Radwegende gehört eine Verflechtungsstrecke von 10 bis 20 m dazu, ausgeführt als Radfahrstreifen oder Schutzstreifen. Ohne sie endet der Radweg an der Bordkante und die Einfädelung bleibt dem Zufall überlassen (ERA 2010, Kap. 3.4)",
     "G|Innerorts nur Radverkehr einschließlich Elektrokleinstfahrzeuge; außerorts dürfen zusätzlich Mofas Radwege benutzen. Pedelecs bis 25 km/h gelten als Fahrrad und sind damit ohnehin erfasst; S-Pedelecs sind Kleinkrafträder und dürfen Radwege nicht benutzen. Der Begriff »E-Bike« ist in der StVO nicht definiert und sollte in Anordnungen vermieden werden",
     "SL|Breite 2,00 m, gemeinsamer Geh- und Radweg 2,50 m",
@@ -398,7 +519,7 @@ const PRAXIS={
     "SL|Radverkehr an Radwegeenden baulich getrennt auf die Fahrbahn führen (Bordführung oder Schutzinsel)",
     "BW|Sicherheitstrennstreifen zur Fahrbahn ≥ 0,75 m","BW|Einrichtungsradweg ≥ 2,00 m zzgl. Sicherheitstrennstreifen (Basisstandard) – die ERA-Regelbreite von 2,00 m wird damit zum Mindestmaß, der Klammerwert 1,60 m entfällt","BW|Bei beengten Verhältnissen und geringer Radverkehrsnachfrage ausnahmsweise geringere Breite, aber nicht unter 1,60 m","BW|Zweirichtungsradweg ≥ 2,50 m (beidseitig) bzw. ≥ 3,00 m (einseitig), jeweils zzgl. Sicherheitstrennstreifen; straßenbegleitend nur im Ausnahmefall","BW|Zweirichtungsradwege innerorts sind als Neuanlage nur ausnahmsweise und nach sorgfältiger Einzelfallprüfung möglich – erhöhtes Unfallrisiko an Knotenpunkten und Grundstückszufahrten","BW|Zweirichtungsradwege an Einmündungen ca. 4,00–5,00 m von der Hauptfahrbahn absetzen; Sichtfelder nach RASt einhalten","BW|In Steigungs- und Gefällestrecken sowie in Kurvenbereichen ist eine Aufweitung des Radweges anzustreben","BW|Seitentrennstreifen außerorts ≥ 1,75 m; Unterschreitung nur in begründeten Ausnahmefällen und auf kurze Abschnitte begrenzt, dann Hochbord und Sicherheitstrennstreifen ≥ 0,75 m"
   ],
-  gemeinsamer_geh_radweg:["G|Vor jeder Breitendiskussion zuerst die acht Ausschlusskriterien der ERA 2010, Kap. 3.6 prüfen – sie stehen ausführlich bei »Gehweg – Radfahrer frei«. Greift eines davon, ist die gemeinsame Führung unabhängig von der Breite ausgeschlossen. Besonders häufig übersehen: Hauptverbindungen des Radverkehrs sind ausgenommen","BW|Die gemeinsame Führung mit dem Fußverkehr kommt nur in Ausnahmefällen in Betracht, wenn keine andere Führungsform in Frage kommt","BW|Außerorts bei 10 bis ca. 25 Fußgängern in der Spitzenstunde des Radverkehrs: ≥ 4,00 m im Einrichtungs-, ≥ 5,00 m im Zweirichtungsverkehr; unter 10 Fußgängern keine Verbreiterung nötig","BW|Nur auf Streckenabschnitten ohne starke Längsneigung; bei fahrbahnparalleler Führung zusätzlich der reguläre Sicherheitstrennstreifen","BW|Im Haltestellenbereich gemeinsamer Geh- und Radweg ≥ 3,00 m",
+  gemeinsamer_geh_radweg:["SL|Geteilte Zuständigkeit an Bundes- und Landstraßen innerorts: Kosten und Unterhaltung werden 50/50 zwischen Straßenbaulastträger und Gehweg-Baulastträger geteilt – der LfS baut, die Kommune unterhält. Das vor Planungsbeginn schriftlich festhalten. Breite ≥ 2,50 m, Sicherheitstrennstreifen zur Fahrbahn 0,50–0,75 m (LfS, Vortrag AGFK-SL 02.09.2026)","G|Vor jeder Breitendiskussion zuerst die acht Ausschlusskriterien der ERA 2010, Kap. 3.6 prüfen – sie stehen ausführlich bei »Gehweg – Radfahrer frei«. Greift eines davon, ist die gemeinsame Führung unabhängig von der Breite ausgeschlossen. Besonders häufig übersehen: Hauptverbindungen des Radverkehrs sind ausgenommen","BW|Die gemeinsame Führung mit dem Fußverkehr kommt nur in Ausnahmefällen in Betracht, wenn keine andere Führungsform in Frage kommt","BW|Außerorts bei 10 bis ca. 25 Fußgängern in der Spitzenstunde des Radverkehrs: ≥ 4,00 m im Einrichtungs-, ≥ 5,00 m im Zweirichtungsverkehr; unter 10 Fußgängern keine Verbreiterung nötig","BW|Nur auf Streckenabschnitten ohne starke Längsneigung; bei fahrbahnparalleler Führung zusätzlich der reguläre Sicherheitstrennstreifen","BW|Im Haltestellenbereich gemeinsamer Geh- und Radweg ≥ 3,00 m",
     "G|Regelbreite 2,50 m (ERA 2010)",
     "G|Mindestbreite 2,00 m (nur bei geringem Fußgänger- und Radverkehr)",
     "G|Nur bei geringem Fußgängeraufkommen zulässig (VwV-StVO zu Z 240)",
@@ -460,6 +581,7 @@ const PRAXIS={
     "SL|Kommunengrenzen früh adressieren: Radschnellverbindungen verlaufen fast immer über mehrere Baulastträger. Trägerschaft, Unterhaltung und Winterdienst vor der Förderantragstellung schriftlich regeln – die FRL NMOB-Rad-Fuß verlangt die gesicherte Unterhaltung inklusive Winterdienst als Zuwendungsvoraussetzung"
   ],
   rotmarkierung:[
+    "SL|Piktogrammketten (Fahrradsinnbilder in Folge auf der Fahrbahn) sind im Saarland nicht anordnungsfähig: Die StVO sieht sie nicht vor, und die Oberste Straßenverkehrsbehörde hat eine Regelung per Erlass abgelehnt – anders als etwa Baden-Württemberg. Wer sie markiert, tut das ohne Rechtsgrundlage (LfS, Vortrag AGFK-SL 02.09.2026)",
     "G|Wichtig zu unterscheiden: Die weiße Furt aus unterbrochenen Querstrichen ist die eigentliche Markierung und muss angeordnet werden. Die rote Fläche darunter ist rechtlich keine Markierung – nach § 39 Abs. 5 StVO sind Markierungen grundsätzlich weiß. Sie zählt als Gestaltung der Fahrbahnoberfläche",
     "G|Daraus folgt für die Zuständigkeit: Über die Roteinfärbung entscheidet der Baulastträger, nicht die Straßenverkehrsbehörde. Eine Anordnung braucht es dafür nicht. Das erklärt, warum sie mal gemacht wird und mal nicht – es gibt keinen Anspruch darauf, sondern eine Ermessens- und Kostenentscheidung",
     "G|Trotzdem sollte die Straßenverkehrsbehörde eingebunden werden, üblicherweise zusammen mit der Polizei. Die Einfärbung verändert, wie die Vorfahrtsituation wahrgenommen wird – das gehört abgestimmt, auch wenn es formal nicht vorgeschrieben ist",
@@ -489,6 +611,8 @@ const PRAXIS={
     "SL|Ohne bauliche Sperre wird die Beschilderung erfahrungsgemäß missachtet. Wenn eine Wirkung gewollt ist, gehört ein physisches Element dazu"
   ],
   wegweisung:[
+    "SL|Das Land plant die wegweisende Beschilderung des gesamten Landesradverkehrsnetzes bis 2030 neu, nach dem Merkblatt M WBR (FGSV 2024). Konzept, Demontage der alten und Erstmontage der neuen Wegweiser zahlt das Land; die Abstimmung mit den Kommunen läuft ab 2027 regional. Eigene Wegweisungsprojekte deshalb vorher mit dem LfS abstimmen, sonst wird doppelt montiert (LfS, Vortrag AGFK-SL 02.09.2026)",
+    "SL|Der bisherige saarländische Wegweisungsstandard weicht vom bundesweiten ab – Folge: keine Fördermittel dafür und höchstens 4 statt 5 Sterne bei ADFC-Qualitätsradrouten. Die Neubeschilderung behebt das (LfS, Vortrag AGFK-SL 02.09.2026)",
     "G|Fahrradwegweiser sind keine Verkehrszeichen der StVO, sondern wegweisende Beschilderung nach dem FGSV-Regelwerk (Merkblatt 1998, heute HBR). Trotzdem läuft die Aufstellung über eine Anordnungsbehörde – vor der Beauftragung der Montagefirma klären, wer im konkreten Fall anordnet und wer die Standorte festlegt",
     "G|Grundlage ist immer eine Netzplanung, nicht die einzelne Schilderstelle. Sie legt fest, welche Ziele aufgenommen werden und über welche Wege der Radverkehr geführt wird. Ohne dieses Grundgerüst entstehen Insellösungen, die an der Gemeindegrenze enden",
     "G|Zwei Systeme, die zusammengehören: Die zielorientierte Wegweisung mit Ziel- und Kilometerangaben ist das Grundgerüst und für Alltag wie Freizeit erforderlich. Die routenorientierte Wegweisung mit Logos für Themenrouten wird als Zusatzplakette daran gehängt – sie ist kein eigenes System und darf keines werden",
@@ -537,7 +661,7 @@ function sortPraxis(a){return a.map(splitQ).map((o,i)=>({o,i})).sort((x,y)=>{con
 const LERNBOX_MASSE=`<details class="lernbox inresult"><summary><span class="lernbox-t">Was die Zahlen bedeuten: Regelmaß, Mindestmaß, Klammerwert</span><span class="lernbox-sub">Warum die Regelbreite kein Idealwert ist und wann ein Mindestmaß überhaupt zulässig ist</span></summary><div class="lernbox-body">    <p><b>Regelmaß</b> ist der Wert, der zu planen ist – nicht der Idealwert, sondern der Normalfall.</p>    <p><b>Mindestmaß</b> gilt nur bei nachweislich beengten Verhältnissen und ist zu begründen. Mehrere Mindestmaße im selben Querschnitt zu kombinieren, ist nach ERA ausdrücklich zu vermeiden.</p>    <p><b>Klammerwerte</b> in ERA und RASt sind reduzierte Ausnahmewerte. Nach den E Klima 2022 sind sie nicht mehr anzuwenden; die Regelmaße gelten dort als Mindestwerte.</p>    <p>Nicht jede Anlage hat ein Mindestmaß: Für Radfahrstreifen nennt die ERA 2010 nur 1,85 m und eine Vergrößerung nach oben – kein Maß darunter.</p>  </div></details>`;
 const QLEGENDE="GESETZ = StVO und VwV-StVO i. d. F. vom 03.04.2025 (in Kraft seit 10.04.2025) einschließlich der dort in Bezug genommenen Regelwerke (ERA 2010, RASt 06, RiLSA, RMS) · SAARLAND = Maßgaben und Richtlinien beim Ausbau von Radverkehrsanlagen, MUKMAV, Stand 05/2023 – Landesvorgabe der Bewilligungsbehörde; in der FRL NMOB-Rad-Fuß nicht ausdrücklich benannt, im Förderverfahren aber regelmäßig herangezogen. Bei Widerspruch gilt die GESETZ-Ebene · BW · ERA-VORGRIFF = Musterlösungen für Radverkehrsanlagen Baden-Württemberg, Stand 10/2025 – im Saarland nicht eingeführt und damit nicht verbindlich, fachlich aber der aktuellste verfügbare Stand: Systematik (Basisstandard) und Maße nehmen die laufende Fortschreibung der ERA (Veröffentlichung ab 2026 erwartet) weitgehend vorweg. Empfehlung 2Rat: bei Neu- und Umbauten als Zielwert ansetzen und ein Abweichen von der ERA 2010 in der Planung kurz begründen. · ANDERES BUNDESLAND = Leitfäden anderer Länder, im Saarland nicht verbindlich, als fachliche Argumentationshilfe zitiert";
 
-let state={step:0,category:null,measure:null,street:null,blsub:null,location:null,kommune:null,mapPrefill:false};
+let state={step:0,category:null,measure:null,street:null,blsub:null,location:null,kommune:null,mapPrefill:false,geo:null};
 
 function cardKey(e){if(e.key==='Enter'||e.key===' '||e.key==='Spacebar'){e.preventDefault();e.currentTarget.click();}}
 
@@ -599,12 +723,13 @@ function getResult(){
 
   /* Zuständige Behörde (verkehrsrechtliche Anordnung) */
   if(m.type==="anordnung"||m.type==="anordnung_bau"){
-    if(s==="gemeindestrasse"||s==="sonstige"){authority="Gemeinde (eigene Zuständigkeit nach § 12 StVZustG)";authorityDetail="§ 12 Abs. 1 StVZustG Saarland";notes.push("Auf Gemeindestraßen und sonstigen öffentlichen Straßen sind die Gemeinden selbst zuständig für: Verkehrsbeschränkungen aller Art (§ 45 Abs. 1 bis 1d StVO – damit auch Fahrradstraßen, Tempo-30-Zonen und Maßnahmen der Flächenbereitstellung nach § 45 Abs. 1 S. 2 Nr. 7), Fußgängerüberwege, Vorfahrtsregelungen und Spielstraßen (§ 12 Abs. 1 Nr. 1–4 StVZustG). Nicht übertragen sind Maßnahmen nach § 45 Abs. 1e ff. StVO – insbesondere Fahrradzonen (Abs. 1i).");}
+    if(s==="gemeindestrasse"||s==="sonstige"){authority="Gemeinde als Ortspolizeibehörde (eigene Zuständigkeit nach § 12 StVZustG)";authorityDetail="§ 12 Abs. 1 StVZustG Saarland";notes.push("Auf Gemeindestraßen und sonstigen öffentlichen Straßen sind die Gemeinden selbst zuständig für: Verkehrsbeschränkungen aller Art (§ 45 Abs. 1 bis 1d StVO – damit auch Fahrradstraßen, Tempo-30-Zonen und Maßnahmen der Flächenbereitstellung nach § 45 Abs. 1 S. 2 Nr. 7), Fußgängerüberwege, Vorfahrtsregelungen und Spielstraßen (§ 12 Abs. 1 Nr. 1–4 StVZustG). Nicht übertragen sind Maßnahmen nach § 45 Abs. 1e ff. StVO – insbesondere Fahrradzonen (Abs. 1i).");}
     else{
       if(k&&k.eigeneStVB){authority="Stadt "+k.name+" – eigene Straßenverkehrsbehörde";authorityDetail="§ 1 Abs. 1 Nr. 8 Mittelstadtverordnung bzw. § 7 Abs. 1 StVZustG – "+k.name+" ordnet auch auf Bundes- und Landstraßen im Stadtgebiet selbst an";}
       else if(k){authority="Untere Straßenverkehrsbehörde: "+k.kreis;authorityDetail="§ 7 Abs. 1 StVZustG Saarland";}
       else{authority="Straßenverkehrsbehörde (Landkreis / Regionalverband Saarbrücken)";authorityDetail="§ 7 Abs. 1 StVZustG Saarland";notes.push("Eigene Straßenverkehrsbehörden haben: die Landeshauptstadt Saarbrücken (§ 7 Abs. 1 StVZustG) sowie die Mittelstädte Völklingen und St. Ingbert. Den Mittelstädten sind die Befugnisse nach der StVO vollumfänglich als Auftragsangelegenheit übertragen (§ 1 Abs. 1 Nr. 8 Mittelstadtverordnung i. V. m. § 7 KSVG) – sie ordnen in ihrem Stadtgebiet daher auch auf Bundes- und Landstraßen selbst an. Tipp: Kommune oben auswählen für ein konkretes Ergebnis.");}
-      if(loc==="innerorts"||loc==="ortsdurchfahrt")notes.push("Bei Maßnahmen in Ortsdurchfahrten ist Einvernehmen mit der Gemeinde und dem Baulastträger herzustellen (§ 45 Abs. 1b StVO).");}
+      if(loc==="innerorts"||loc==="ortsdurchfahrt")notes.push("Bei Maßnahmen in Ortsdurchfahrten ist Einvernehmen mit der Gemeinde und dem Baulastträger herzustellen (§ 45 Abs. 1b StVO).");
+      notes.push("Ablauf beim LfS: Vor jeder Anordnung hört die Straßenverkehrsbehörde den LfS als Baulastträger und die Polizei an, innerorts bei Gehwegen und ruhendem Verkehr auch die Gemeinde. Ansprechstelle im LfS ist der Fachbereich 13 (Verkehrsverwaltung), der den Markierungs- und Beschilderungsplan vorprüft. Die Anordnung geht an den LfS zur Umsetzung, danach Vollzugsmeldung an die Behörde (LfS, Vortrag AGFK-SL 02.09.2026).");}
 
     /* VwV-StVO 2025: Tempo 30 */
     if(m.id==="tempo30_strecke"&&(s==="bundesstrasse"||s.startsWith("landesstrasse")))
@@ -644,6 +769,7 @@ function getResult(){
     if(m.id==="abstellanlage"){ba="Gemeinde (oder privater Grundstückseigentümer)";if(isBL)notes.push("Sondernutzung an Bundes-/Landstraßen: Die Erlaubnis erteilt der Träger der Straßenbaulast (Bund bzw. Land – Landesbetrieb für Straßenbau), nicht die Gemeinde (§ 8 FStrG bzw. § 18 SaarlStrG).");else{notes.push("Außerhalb des öffentlichen Verkehrsraums (Schulhof, Rathausvorplatz, Bauhofgelände, privates Grundstück): keine Beteiligung der Straßenverkehrsbehörde – es gilt Bauordnungsrecht, ggf. die kommunale Stellplatzsatzung.");notes.push("Im öffentlichen Straßenraum, errichtet durch die Gemeinde selbst: keine Sondernutzungserlaubnis erforderlich – die Gemeinde ist selbst Trägerin der Straßenbaulast.");notes.push("Aber: Entfallen dafür Kfz-Stellplätze oder ändert sich Beschilderung bzw. Markierung, ist zusätzlich eine verkehrsrechtliche Anordnung nötig (§ 45 StVO) – dann ist die Straßenverkehrsbehörde einzubinden.");notes.push("Errichtet ein Dritter (Gewerbe, Verein) die Anlage auf öffentlichem Straßengrund, braucht er eine Sondernutzungserlaubnis der Gemeinde (§ 18 SaarlStrG).");}}
     else if(m.id==="radschnellweg"){ba="Land Saarland / ggf. interkommunale Zusammenarbeit";notes.push("Fördermöglichkeiten über Bundes- und Landesprogramme prüfen (u. a. FRL-NMOB-Rad-Fuß).");}
     if(m.type==="bau"){authority=ba+(/\)\s*$/.test(ba)?"":" (als Baulastträger)");authorityDetail=baulastDetail;}
+    if(isBL&&m.id!=="abstellanlage"&&m.id!=="radschnellweg")notes.push("Planungsvereinbarung: Der LfS setzt Radprojekte an Bundes- und Landstraßen auch so um, dass die Gemeinde die Planung federführend betreibt und der LfS sich an den Kosten beteiligt oder sie trägt – das nutzt kommunale Personalkapazität und einfachere Vergabewege. Früh ansprechen (LfS, Vortrag AGFK-SL 02.09.2026).");
     if(m.type==="anordnung_bau")notes.push("Erfordert sowohl bauliche Umsetzung (Baulastträger) als auch verkehrsrechtliche Anordnung (Straßenverkehrsbehörde).");
     if(m.id!=="abstellanlage"&&m.id!=="radschnellweg")notes.push("Abstimmung zwischen Baulastträger und Straßenverkehrsbehörde erforderlich.");
   }
@@ -698,7 +824,7 @@ function render(){
     let h='';
     if(state.mapPrefill){
       const stLabel=state.street==='bundeslandstrasse'?((BL_SUB.find(b=>b.id===state.blsub)||{label:'Bundes-/Landstraße'}).label):(state.street?((STREETS.find(x=>x.id===state.street)||{label:state.street}).label):'—');
-      h+=`<div class="info-box" style="background:var(--blue-light);border-color:rgba(22,120,169,.3);margin-top:0"><div class="info-title" style="color:var(--blue-dark)">Automatisch aus der Karte erkannt</div><div class="info-body">Kommune: <b>${state.kommune||'—'}</b> · Straße/Weg: <b>${stLabel}</b> · Lage: <b>${state.location?(state.location==='innerorts'?'innerorts':'außerorts'):'wird abgefragt'}</b><br>Kommune, Straße und Lage sind schon eingetragen – Sie wählen nur noch die Maßnahme (alles änderbar).</div></div>`;
+      h+=`<div class="info-box" style="background:var(--blue-light);border-color:rgba(22,120,169,.3);margin-top:0"><div class="info-title" style="color:var(--blue-dark)">Automatisch aus der Karte erkannt</div><div class="info-body">Kommune: <b>${state.kommune||'—'}</b> · Straße/Weg: <b>${stLabel}</b> · Lage: <b>${state.location?(state.location==='innerorts'?'innerorts':'außerorts'):'wird abgefragt'}</b>${state.geo&&state.geo.lageArt&&state.geo.lageArt!=='amtlich'?' <span style="color:var(--gray-light);font-size:11.5px">(Lage nur vermutet – bitte prüfen)</span>':''}${state.geo&&state.geo.baulastRvp?'<br>Baulast lt. Radverkehrsplan: '+escH(state.geo.baulastRvp.text):''}${state.geo&&state.geo.netz?'<br>Netzbezug lt. Radverkehrsplan: '+escH(state.geo.netz.text):''}${state.geo&&state.geo.dtvText?'<br>Verkehr: '+escH(state.geo.dtvText):''}<br>Kommune, Straße und Lage sind schon eingetragen – Sie wählen nur noch die Maßnahme (alles änderbar).</div></div>`;
     }
     h+=`<h2>Welche Art von Maßnahme planen Sie?</h2>
     <p class="subtitle">Wählen Sie zunächst die Kategorie, dann die konkrete Maßnahme.</p>`;
@@ -763,9 +889,9 @@ function render(){
 
     let h=`<button class="btn-back" onclick="goStep(${back})">← Zurück</button>
     <div class="badges">
-      <span class="badge" style="background:rgba(22,120,169,.09);color:#1678A9">${r.measure.label}</span>
+      <span class="badge" style="background:rgba(22,120,169,.09);color:#114B7D">${r.measure.label}</span>
       <span class="badge" style="background:${s.color}15;color:${s.color}">${s.label}</span>
-      ${loc?`<span class="badge" style="background:rgba(101,148,68,.09);color:#659444">${loc.label}</span>`:''}
+      ${loc?`<span class="badge" style="background:rgba(20,171,155,.12);color:#14AB9B">${loc.label}</span>`:''}
       ${state.kommune?`<span class="badge" style="background:rgba(62,64,63,.08);color:#3E403F">${state.kommune}</span>`:''}
     </div>
     <div class="result-card">
@@ -807,7 +933,7 @@ function render(){
           boxTitle='Falls eine verkehrsrechtliche Anordnung dazukommt \u2013 '+kk.name;
           vorspann='F\u00fcr den Bau selbst brauchen Sie diese Beh\u00f6rde nicht. Sie wird erst zust\u00e4ndig, wenn daf\u00fcr Kfz-Stellpl\u00e4tze entfallen oder Beschilderung bzw. Markierung ge\u00e4ndert wird.<br>Landkreis / Regionalverband: '+kk.kreis+'<br>';
         }
-        h+='<div class="info-box" style="background:var(--green-light);border-color:rgba(101,148,68,.3)"><div class="info-title" style="color:var(--green-dark)">'+boxTitle+'</div><div class="info-body">'+vorspann+kontaktHtml+'</div></div>';
+        h+='<div class="info-box" style="background:var(--green-light);border-color:rgba(20,171,155,.35)"><div class="info-title" style="color:var(--green-dark)">'+boxTitle+'</div><div class="info-body">'+vorspann+kontaktHtml+'</div></div>';
       }
     }
     if(sEff==="bundesstrasse"||sEff==="landesstrasse1"||sEff==="landesstrasse2"){
@@ -825,7 +951,7 @@ function render(){
       <strong>Eigene Behörden:</strong> Landeshauptstadt Saarbrücken sowie die Mittelstädte Völklingen und St. Ingbert (StVO-Befugnisse übertragen, § 1 Abs. 1 Nr. 8 Mittelstadtverordnung)<br>
       <strong>Oberste Behörde:</strong> Ministerium für Umwelt, Klima, Mobilität, Agrar und Verbraucherschutz (MUKMAV)
     </div></div>`;
-    h+=`<div class="agfk-contact" style="margin-top:16px;background:#eef5e6;border:1px solid rgba(101,148,68,.3);border-radius:8px;padding:13px 16px;font-size:12.5px;line-height:1.6">Fragen offen geblieben? Die <strong style="color:#4a7332">Geschäftsstelle der AGFK-SL</strong> hilft weiter.<br>Europaallee 27, 66113 Saarbrücken<br>Tel.: +49 (0)681 4109 6482 · E-Mail: geschaeftstelle@agfk-sl.de</div>`;
+    h+=`<div class="agfk-contact" style="margin-top:16px;background:#E3F5F2;border:1px solid rgba(20,171,155,.35);border-radius:8px;padding:13px 16px;font-size:12.5px;line-height:1.6">Fragen offen geblieben? Die <strong style="color:#0C7A6C">Geschäftsstelle der AGFK-SL</strong> hilft weiter.<br>Europaallee 27, 66113 Saarbrücken<br>Tel.: +49 (0)681 4109 6482 · E-Mail: geschaeftstelle@agfk-sl.de</div>`;
     h+=`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-outline" style="width:auto;flex:1;min-width:160px" onclick="window.print()">🖨️ Drucken</button><button class="btn btn-outline" style="width:auto;flex:1;min-width:160px" onclick="resetAll()">Neue Abfrage starten</button></div>`;
     el.innerHTML=h;
   }
@@ -837,7 +963,7 @@ function selectStreet(id){state.street=id;state.blsub=null;state.location=null;r
 function selectBlsub(id){state.blsub=id;render();}
 function selectLocation(id){state.location=id;render();}
 function goStep(n){state.step=n;render();}
-function resetAll(){const km=state.kommune;state={step:0,category:null,measure:null,street:null,blsub:null,location:null,kommune:km,mapPrefill:false};render();}
+function resetAll(){const km=state.kommune;state={step:0,category:null,measure:null,street:null,blsub:null,location:null,kommune:km,mapPrefill:false,geo:null};render();}
 
 /* ===== Ergebnis-Vermerk (für E-Mail / Akte) ===== */
 function buildZVermerk(){
@@ -852,6 +978,7 @@ function buildZVermerk(){
   t+='Erstellt am: '+new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})+'\n';
   t+='Maßnahme: '+r.measure.label+'\n';
   t+='Straße: '+sLabel+(loc?(' · '+loc.label):'')+'\n';
+  t+=geoVermerk();
   if((sEff==='bundesstrasse'||sEff==='landesstrasse1'||sEff==='landesstrasse2'))t+='Baulastträger: LfS – Fachbereich 42 Straßenplanung, Peter-Neuber-Allee 1, 66538 Neunkirchen · radwege@lfs.saarland.de · Tel. 06821 100-0\n';
   if(state.kommune){t+='Kommune: '+state.kommune+'\n';const kk=findKommune(state.kommune);const kt=kontaktFor(kk);if(kt){t+='Kontakt StVB: '+kt.name+(kt.tel?(' · Tel. '+kt.tel):'')+(kt.mail?(' · '+kt.mail):'')+' · www.'+kt.web+'\n';}}
   t+='\n'+(r.measure.type==='bau'?'Zuständiger Baulastträger':'Zuständige Behörde (verkehrsrechtliche Anordnung)')+':\n'+r.authority+'\n('+r.authorityDetail+')\n';
@@ -861,7 +988,7 @@ function buildZVermerk(){
   if(r.warnings.length){t+='\nACHTUNG – in dieser Lage nicht vorgesehen:\n';r.warnings.forEach(w=>{t+='- '+w+'\n';});}
   if(r.notes.length){t+='\nRechtliche Hinweise & Praxistipps:\n';r.notes.forEach(n=>{t+='- '+n+'\n';});}
   if(r.praxis.length){t+='\nMaße & Planungshinweise:\n';sortPraxis(r.praxis).forEach(p=>{t+='- '+(p.q?'['+QGRP[p.q].txt+'] ':'')+p.t+'\n';});t+='('+QLEGENDE+')\n';}
-  t+='\nOrientierungshilfe, keine Rechts- oder Fachberatung – Zuständigkeit im Einzelfall mit der Behörde klären.\nQuelle: Zuständigkeiten Radverkehr Saarland\n'+lizenzVermerkZeile();
+  t+='\nOrientierungshilfe, keine Rechts- oder Fachberatung – Zuständigkeit im Einzelfall mit der Behörde klären.\nQuelle: Zuständigkeiten Radverkehr Saarland\n'+(state.geo?GEO_QUELLE+'\n':'')+lizenzVermerkZeile();
   return t;
 }
 function copyZVermerk(){const text=buildZVermerk();const done=()=>{const b=document.getElementById('copyBtn');if(!b)return;b.textContent='Kopiert ✓';b.classList.add('copied');setTimeout(()=>{b.textContent='Kopieren';b.classList.remove('copied');},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>zfb(text,done));}else{zfb(text,done);}}
