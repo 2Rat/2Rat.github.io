@@ -1,9 +1,9 @@
 2Rat – Büro für Radverkehrsplanung
 Armin Jung · Radverkehrsplaner EIPOS · www.2rat.org
 2Rat – Gesamt-Projektverzeichnis
-Stand: 21.09.2026
+Stand: 22.09.2026
 Anzahl Vorhaben (konsolidiert): 40
-Quellen: Fassung 05.05.2026 · fortgeschrieben über 📮-Meldungen aus den Werkstatt-Projekten (Historie je Vorhaben) · letzte Meldung 21.09.2026 (Geodaten-Lizenz durch MUKMAV bestätigt · Unfallatlas-Modul · Zuständigkeiten v41, Projekt-Check v9, VwV-StVO v9 · beide Repos gleichauf) · davor 17.09.2026 (Projekt-Check v8 mit Geodatenabgleich und Konfliktprüfung · eine Quelldatei für AGFK- und 2Rat-Fassung · LfS-Inhalte AGFK-SL 02.09.) · davor 13.09.2026 (RadPlan Pro: Neubau Modell 7.1 als Branch-Deploy · Architekturentscheidung Felderfassung/Google Drive · neues Kundenprojekt Stadt Lebach) · Aufräumdurchlauf 02.09.2026 (Historie eingedampft, Widersprüche bereinigt)
+Quellen: Fassung 05.05.2026 · fortgeschrieben über 📮-Meldungen aus den Werkstatt-Projekten (Historie je Vorhaben) · letzte Meldungen 22.09.2026 (AGFK-SL: Angebot und Nutzungsvereinbarung versendet · RadPlan Pro `neubau` mit Unfallatlas live, erster Echtfall L 114) · davor 21.09.2026 (Geodaten-Lizenz durch MUKMAV bestätigt · Unfallatlas-Modul · Zuständigkeiten v41, Projekt-Check v9, VwV-StVO v9 · beide Repos gleichauf) · davor 17.09.2026 (Projekt-Check v8 mit Geodatenabgleich und Konfliktprüfung · eine Quelldatei für AGFK- und 2Rat-Fassung · LfS-Inhalte AGFK-SL 02.09.) · davor 13.09.2026 (RadPlan Pro: Neubau Modell 7.1 als Branch-Deploy · Architekturentscheidung Felderfassung/Google Drive · neues Kundenprojekt Stadt Lebach) · Aufräumdurchlauf 02.09.2026 (Historie eingedampft, Widersprüche bereinigt)
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Claude liefert die komplette Datei neu → Armin committet. Fertig.
 ---
 🔥 AKUT – Das zählt jetzt
@@ -11,7 +11,7 @@ Wann	Was	Wo
 30.09.2026	FRL-NMOB Jahres-Stichtag + AGFK-Kennenlern-Zugänge laufen ab (vorher Gespräch führen) + RAD-Lab-Testrunde endet → Lizenzzeile aus `Werkzeuge/index.html` entfernen, vorher Feedback einsammeln	Förderung / Tool-Portal
 prüfen	Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den Passwortmanager übertragen, bevor die 30-Tage-Session abläuft	Tool-Portal / RadPlan
 offen / jetzt	Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe und Abrechnung · parallel Freigabe für Referenznennung + Zitate einholen – aus der RAD-Lab-Runde und aus der Aktion „Kritischer Blick“ (Zitate liegen vor, Freigabe der Zitierenden steht aus)	Tool-Portal
-jetzt	AGFK-SL: Anschreiben an Irene liegt fertig vor, Anhänge bereit (Angebot v2 · Nutzungsvereinbarung v3) – Versand steht aus, Termin weiterhin zu vereinbaren. Angebot jetzt gültig bis 31.10.2026 · parallel Anfrage an Nicole: Freigabe der Logo-Verwendung (Logodatei liegt vor, → 2.15)	Tool-Portal / BÜRO 2Rat
+läuft	AGFK-SL: Angebot raus (22.09.) – Rückmeldung und Behördenanschriften abwarten · 05.10. Eingang Anschriften prüfen · 13.10. nachfassen · 31.10. Angebotsgültigkeit endet · parallel Anfrage an Nicole: Freigabe der Logo-Verwendung (→ 2.15)	Tool-Portal / BÜRO 2Rat
 überfällig	Zuständigkeiten: St. Ingbert als eigene Straßenverkehrsbehörde telefonisch klären (§ 7 Abs. 1 StVZustG nennt sie nicht, Regionalverband bestätigt Völklingen als Mittelstadt mit eigener Behörde) – Recherche als Kommentar an der Todoist-Aufgabe	Tool-Portal
 jetzt	Projekt-Check v9 / Zuständigkeiten v41 (beide Repos live): Browsertest Unfallzeile und Konfliktprüfung durch Armin · Quellenvermerk „© GDI-SL 2026, CC BY 4.0“ in den AGFK-Fassungen einspielen (geliefert 21.09.) · danach Freigabe an die AGFK-Tester (→ 2.11, 2.16)	Tool-Portal
 offen	Geodaten: Verkehrsmengen L1/L2 noch nicht freigegeben – Rückmeldung LfS abwarten · Live-Test Overpass/Nominatim im VwV-Tool v9 (Einrichtungen, Querungen, Adresssuche)	Tool-Portal
@@ -57,7 +57,7 @@ Details (Strategie, Material, Rechtliches): → Claude-Projekt „BÜRO 2Rat" (S
 Kunde / Partner: AGFK-SL (geschaeftstelle@agfk-sl.de)
 Zweck: Erste kommerzielle Tool-Lizenzierung. Beauftragt ist ausschließlich der Projekt-Check – Abrechnung: Pauschale bei Übergabe, Abrechnung offen. Die fachliche Letztabnahme erfolgt durch einen externen Prüfer, beauftragt durch die AGFK-SL (→ Lizenz „AGFK Honorarkraft"). Die übrigen 4 Tools (Fördermittel-Finder, Zuständigkeiten, VwV-StVO 2025, Vergabe-Assistent) sind kein Auftrag, sondern Kennenlern-Zugang befristet bis 30.09.2026.
 Lizenzen im Portal: „AGFK Saarland" bis 15.05.2027 · „AGFK Honorarkraft" (externer Prüfer) bis 27.05.2027 (5-Tool-Suite)
-Status: läuft (Auftrag Projekt-Check; Übergabe und Abrechnung offen)
+Status: läuft (Auftrag Projekt-Check; Übergabe und Abrechnung offen) · Angebot 2026-AGFK-03 und Nutzungsvereinbarung am 22.09.2026 versendet, Rückmeldung offen
 Offen (Stand 02.08.2026): Nutzungsrechte am Projekt-Check noch zu regeln – Werkzeug von 2Rat entwickelt (Idee, Konzeption und Umsetzung); die AGFK-SL hat zu Projektbeginn eine Zuständigkeitslandkarte als Datengrundlage beigestellt, seither kein weiterer Fachbeitrag. Einordnung und Belege → Projekt „BÜRO 2Rat“ · Freigabe für Referenznennung und Zitate aus der Testrunde steht aus · Abgrenzung Mängelbeseitigung / Weiterentwicklung noch nicht schriftlich · Entscheidung Beistellung oder Lizenzierung der übrigen Werkzeuge
 Achtung Vertriebsargument: Der erhöhte Fördersatz von 90 % taugt nicht als Argument für eine AGFK-Mitgliedschaft – er hängt an der Finanzschwäche der Kommune, nicht an der Mitgliedschaft (→ 2.3). Falls das gegenüber Geschäftsstelle oder Mitgliedern schon so angeklungen ist, beiläufig geraderücken, bevor es in eine Präsentation oder ein Rundschreiben wandert.
 Grundlage: Eckpunktepapier „Eckpunkte zur vertraglichen Regelung" (27.07.2026) erstellt – Leistungsarten, Rechte, Referenz, Pflege · Gesprächsleitfaden für den Termin mit Irene (06.08.2026) erstellt und geliefert: fünf Gesprächsschritte (Abrechnung Projekt-Check → Paket-Logik → vier Klärungsfragen → Preisvorschlag je Szenario → Nutzungsvereinbarung / Logo / Mitgliederbereich), dazu Zugeständnis-Reihenfolge und vorbereitete Antworten auf Rückfragen · Inhalte, Beträge und Verhandlungslinie → Projekt „BÜRO 2Rat"
@@ -65,11 +65,12 @@ Angebotspaket 06.08.2026 fertig: Nach mehreren Iterationen liegt ein finales Ang
 Fortschreibung 11.08.2026: Angebot 2026-AGFK-03 neu erstellt (zwei Positionen: Entwicklung und dauerhaftes Nutzungsrecht am Projekt-Check einmalig · Bereitstellung und Pflege der drei Werkzeuge jährlich). Nutzungsvereinbarung überarbeitet – Kleinunternehmerhinweis ergänzt, Widerspruch zwischen zwei Paragrafen zur öffentlichen Zugänglichkeit aufgelöst; Angebot und Nutzungsvereinbarung sind damit deckungsgleich. Die Vorfassung des Angebots war nie versendet und ist zurückgezogen. Konditionen wurden angepasst und sind gegenüber der AGFK-SL noch nicht kommuniziert. Alle Beträge, Laufzeiten, Klauseln und die Verhandlungslinie → Projekt „BÜRO 2Rat“.
 Bereitstellungsvarianten (11.08.2026): Dokument `2Rat_Bereitstellungsvarianten_AGFK-SL.docx` erstellt – sechs mögliche Bereitstellungswege der Werkzeuge auf Seiten der AGFK-SL gegenübergestellt und bewertet; Empfehlung: eigene Subdomain per CNAME (`werkzeuge.agfk-sl.de`). Aufwandsschätzung und kaufmännische Bewertung → Projekt „BÜRO 2Rat“.
 Vertragsunterlagen fortgeschrieben (24.08.2026): Nutzungsvereinbarung v3 und Angebot 2026-AGFK-03 v2 überarbeitet und aufeinander abgestimmt; der Vergabe-Assistent ist jetzt ausdrücklich mitgeregelt (→ 2.9), ebenso die Regelung für die Zeit nach Vertragsende. Gültigkeit des Angebots von 30.09. auf 31.10.2026 verlängert – damit fällt sie nicht mehr mit dem Auslaufen der Kennenlern-Zugänge zusammen. Inhalte, Klauseln, Beträge und Begründungen → Projekt „BÜRO 2Rat“.
-Anschreiben an Irene (24.08.2026): fertig erstellt, Versand steht aus. Anhänge: Angebot v2 und Nutzungsvereinbarung v3; das interne Entscheidungspapier bleibt zurück. Vorgehen und Formulierungslinie → Projekt „BÜRO 2Rat“.
+Versand 22.09.2026 ✓: Angebot 2026-AGFK-03 und Nutzungsvereinbarung (gekürzte Fassung, fünf Paragraphen) an Irene versendet. Angebot gültig bis 31.10.2026 · Laufzeit befristet bis 31.12.2027 mit Verlängerungsklausel (Kündigung bis 31.08.). Inhalte, Beträge und Klauseln → Projekt „BÜRO 2Rat“.
+Offen (22.09.2026): Behördenanschriften der verkehrsanordnenden Behörden von der AGFK-SL – Voraussetzung für die Fertigstellung des Projekt-Checks (→ 2.11); danach Übergabemeldung und Abrechnung.
 Vergabe-Assistent im Paket: Nach Variante B ist der Vergabe-Assistent (→ 2.9) im ersten Vertragsjahr Bestandteil des AGFK-Pakets. Konditionen und Beträge → Projekt „BÜRO 2Rat“.
 AGFK-Vorschau live (24.08.2026): Die vier Werkzeuge stehen als AGFK-Fassung unter `2rat.org/agfk-werkzeuge/` zur Ansicht bereit – vollständig in den AGFK-Hausfarben, mit Logo und korrekter Verbandsbezeichnung (→ 2.15). Grundlage fürs Gespräch, ersetzt keine Freigabe.
 Logo: derzeit die von der Verbandswebsite übernommene Fassung eingebunden – Originaldatei und Freigabe der Verwendung bei Nicole anfragen.
-Nächster Schritt: Anschreiben an Irene versenden (Anhänge liegen bereit), Termin vereinbaren; Logo-Originaldatei und Freigabe bei Nicole anfragen; Bereitstellungsweg im Gespräch klären (Empfehlung Subdomain/CNAME, → 2.15); Referenzfreigabe kurzfristig einholen; vor 30.09.2026 Gespräch über die Fortsetzung der Kennenlern-Zugänge
+Nächster Schritt: 05.10.2026 Eingang der Behördenanschriften prüfen · 13.10.2026 Angebot nachfassen · Termin vereinbaren; Logo-Originaldatei und Freigabe bei Nicole anfragen; Bereitstellungsweg im Gespräch klären (Empfehlung Subdomain/CNAME, → 2.15); Referenzfreigabe kurzfristig einholen; vor 30.09.2026 Gespräch über die Fortsetzung der Kennenlern-Zugänge
 1.6 Thalexweiler Netto (L 304)
 Kunde / Partner: Stadt Lebach
 Zweck: Begutachtung einer Radverkehrssituation an der L 304 (Einmündungs-/Zufahrtsbereich Netto Thalexweiler) mit Ortstermin und schriftlicher Auswertung – erster Kundenauftrag, der vollständig über RadPlan Pro und den Skill `radplan-bericht` läuft.
@@ -168,7 +169,7 @@ LfS-Inhalte (17.09.2026, aus dem LfS-Vortrag bei der AGFK-SL am 02.09.2026, Date
 Entscheidung 16.09.2026: Der Geodatenabgleich kommt als Vollversion in beide Fassungen, AGFK zuerst. Nur noch eine Quelldatei für AGFK und 2Rat, Marke über `data-brand` (agfk/2rat); Quelle bleibt das AGFK-Repo (→ 2.15).
 v9 (20./21.09.2026, AGFK-Repo, live bestätigt) und als 2Rat-Fassung nach `kunden/` nachgezogen (vorher v7) ✓ – Unfallzeile in der Standortprüfung (Punkt 100 m + Strecke ±1 km, → 2.16), zwei Hinweiskarten „Unfallkommission einbinden“. Beide Repos damit erstmals gleichauf.
 Geodaten-Lizenz geklärt (21.09.2026) ✓: Das MUKMAV Geodatenzentrum hat die Nutzung bestätigt – RVP 2025, LfS-Straßennetz und SVZ unter CC BY 4.0, © GDI-SL, gebührenfrei. Quellenvermerk in Projekt-Check und Zuständigkeiten auf „© GDI-SL 2026, CC BY 4.0“ umgestellt, zum Einspielen geliefert. Noch nicht freigegeben: Verkehrsmengen L1/L2 – Rückmeldung LfS offen.
-Offen: Quellenvermerk-Patch einspielen · Browsertest v9 durch Armin · danach Freigabe an die AGFK-Tester · Lizenzsatz fürs Angebot → Projekt „BÜRO 2Rat“
+Offen: Behördenanschriften der verkehrsanordnenden Behörden von der AGFK-SL (angefragt 22.09.2026, → 1.5) – Voraussetzung für die Fertigstellung · Quellenvermerk-Patch einspielen · Browsertest v9 durch Armin · danach Freigabe an die AGFK-Tester · Lizenzsatz fürs Angebot → Projekt „BÜRO 2Rat“
 Urheberschaft: Werkzeug von 2Rat entwickelt – der Auftrag lautete auf eine Verschriftlichung, das Werkzeug war ein eigener Vorschlag von 2Rat. Der 2Rat-Hinweis in der Fußzeile bleibt in allen Fassungen erhalten.
 Soll Referenzprojekt werden – dafür nötig: Freigabe zur Nennung der AGFK-SL, Bildschirmfotos, Zitate aus der Testrunde, Fortbestand des 2Rat-Hinweises in der Fußzeile
 Version-2-Themen: Kartenansicht und Standortprüfung sind mit v8 umgesetzt (→ oben) · weiterhin geparkt: Freitextfeld „Vorhaben / Standort" für den Projektvermerk · Verknüpfung mit dem GeoPortal Saarland beim Zusatzfaktor „fremde Grundstücke". Ausgeschlossen: ZORA (Login, räumlich begrenzter Nutzungsvertrag, personenbezogene Daten) und eingebettete Google-Maps-Ansicht (Datenschutz)
@@ -228,8 +229,8 @@ Nächster Schritt: Unfallatlas-Aktualisierung ab Juli 2027 einplanen · Unfallda
 3.1 QGIS-Plugin „Radverkehrsplaner ANALYSE"
 Kunde / Partner: intern (Eigenentwicklung)
 Zweck: Maßnahmenblatt-Generator. VwV-StVO-2025-Update vorbereitet – beide Anordnungswege werden automatisch je nach Straßentyp erzeugt.
-Status: stabil (Update vorbereitet)
-Nächster Schritt: Beim nächsten QGIS-Auftrag: VwV-Begründungslogik integrieren + ERA-Konsistenz-Check (Abgleich mit RadPlan v3.3 / Zuständigkeiten v35)
+Status: stabil (Update vorbereitet) · Offen (22.09.2026): QGIS-Test v5.9
+Nächster Schritt: QGIS-Test v5.9 durchführen · beim nächsten QGIS-Auftrag: VwV-Begründungslogik integrieren + ERA-Konsistenz-Check (Abgleich mit RadPlan Neubau 7.1 / Zuständigkeiten v41) · Unfalldaten als GeoPackage übernehmen (→ 2.16, 4.2)
 3.2 QAD-basierte Entwurfsplanung
 Kunde / Partner: intern (LP2-Werkzeug)
 Zweck: Detail- und Markierungspläne mit QAD-Plugin auf WMS-Grundlagen Saarland (DOP20rgb, DGK).
@@ -283,7 +284,8 @@ Entscheidung 02.09.2026: Service Worker / Offline-Modus bleibt aus, solange das 
 Neubau Modell 7.1 – Pakete 3–6 geliefert (10.–13.09.2026), Branch-Deploy `neubau--radplan-pro.netlify.app`, Testphase: Regelbefunde rechnen bei jeder Änderung automatisch nach · Dezimalkomma durchgängig · Pflichtmaß-Hinweise über eine Sammelabfrage · Streckenlinien mit Seitenversatz auf der Karte · PWA mit Offline-Betrieb und versioniertem Cache · Projektverwaltung in IndexedDB (mehrere Projekte nebeneinander, die 5-MB-Grenze des localStorage entfällt) · Google-Drive-Abgleich mit Hochladen, Holen und Konfliktschutz. Tests: 61 Unit- und 64 Smoke-Tests grün.
 Damit überholt: die Entscheidung vom 02.09.2026 gegen einen Service Worker (Offline-Betrieb ist im Neubau enthalten) und die Zurückstellung der Import-Funktion (über den Drive-Abgleich abgedeckt).
 Architekturentscheidung 13.09.2026: RadPlan Pro bleibt Felderfassungswerkzeug und tritt nicht gegen QField an. Zentraler Speicher ist Google Drive mit dem nicht-sensiblen Scope `drive.file` (Zugriff nur auf die von der App selbst angelegten Dateien), kein Dauerabgleich im Hintergrund. Dafür ein eigenes Google-Cloud-Projekt „RadPlan Pro" angelegt, derzeit im Testmodus.
-Nächster Schritt: Testphase des Neubaus abschließen, dann Zusammenführung mit `main` entscheiden · nächstes Paket: basemap.de als zweite Kartenquelle – OSM erzwingt seit März 2026 eine Referer-Pflicht, lokales Testen geht deshalb nur noch über `http.server`, nicht mehr per Doppelklick · Google-Cloud-Projekt aus dem Testmodus holen, bevor es in den Regelbetrieb geht · Karten-Workflow klären; Vergleichstest gegen die drei bekannten Fehlinterpretationen aus dem letzten Feldtest · Unfalldaten (→ 2.16) in Ortstermin-Bericht, GeoPackage fürs QGIS-Plugin und App übernehmen
+Stand 22.09.2026: `neubau` mit Unfallatlas-Modul (→ 2.16) live unter `neubau--radplan-pro.netlify.app`; erster Echtfall (L 114, Altstadt) erfolgreich durchgeführt ✓. `main` bleibt bewusst der stabile Strang (v3.3), keine Zusammenführung vorerst.
+Nächster Schritt: Testphase des Neubaus fortführen, Zusammenführung mit `main` später entscheiden · nächstes Paket: basemap.de als zweite Kartenquelle – OSM erzwingt seit März 2026 eine Referer-Pflicht, lokales Testen geht deshalb nur noch über `http.server`, nicht mehr per Doppelklick · Google-Cloud-Projekt aus dem Testmodus holen, bevor es in den Regelbetrieb geht · Karten-Workflow klären; Vergleichstest gegen die drei bekannten Fehlinterpretationen aus dem letzten Feldtest · Unfalldaten (→ 2.16) in Ortstermin-Bericht und GeoPackage fürs QGIS-Plugin übernehmen (App: erledigt ✓ im `neubau`-Strang)
 4.3 Schulweg-Detektive
 Kunde / Partner: Jugendpflege Kirkel + 2Rat (Technik)
 Zweck: Gesamtwerk – DSGVO-konforme PWA + Play-Store-App (v1.2.1.0), Web-Auswertungskarte v2, Erklärfilm, Info-Doku, Begleitmaterial.
@@ -400,7 +402,7 @@ Kommandozentrale	www.2rat.org/cmd
 Radwegemelder-Ergebnisse	www.2rat.org/cockpit.html
 Velomeld (Bürger-App)	2rat.org/velomeld/#home
 RadPlan Pro (Live, `main`)	radplan-pro.netlify.app
-RadPlan Pro Neubau (Branch-Deploy, Test)	neubau--radplan-pro.netlify.app
+RadPlan Pro Neubau (Branch-Deploy, Test · mit Unfallatlas)	neubau--radplan-pro.netlify.app
 Bauhof-App	bauhof-2rat.netlify.app
 Schulweg-Detektive (PWA)	009aj.github.io/schulweg-check/
 Schulweg-Detektive (Play Store)	play.google.com/store/apps/details?id=de.zweirat.schulwegdetektive
@@ -415,7 +417,10 @@ Datum	Kontext	Aktion
 15.07. / 31.07.2026	Förderung (JGF FL1 / FL2)	Fristen verstrichen – Ausgang nachtragen (eingereicht ja/nein?), danach Zeile raus
 30.09.2026	Förderung (FRL-NMOB)	Jahres-Stichtag
 30.09.2026	1.5 AGFK-SL	Kennenlern-Tools laufen ab (`toolExpires`) → vorher Gespräch über die Fortsetzung
-31.10.2026	1.5 AGFK-SL	Gültigkeit des Angebots 2026-AGFK-03 v2 endet (von 30.09. verlängert)
+05.10.2026	1.5 AGFK-SL	Eingang der Behördenanschriften prüfen (Voraussetzung Projekt-Check-Fertigstellung)
+13.10.2026	1.5 AGFK-SL	Angebot 2026-AGFK-03 nachfassen
+31.10.2026	1.5 AGFK-SL	Gültigkeit des Angebots 2026-AGFK-03 endet (versendet 22.09.)
+31.08.2027	1.5 AGFK-SL	Kündigungsstichtag der Nutzungsvereinbarung (Laufzeit bis 31.12.2027, Verlängerungsklausel) – nur relevant bei Zusage
 30.09.2026	2.1 Tool-Portal	RAD-Lab-Testrunde endet (→ 2.13) – Lizenz-Zeile entfernen
 30.09.2026	2.13 Tool-Portal	Testzugang der Aktion „Kritischer Blick“ läuft ab – Lizenz-Zeile entfernen
 03.09.2026	2.2 Zuständigkeiten	St. Ingbert als eigene Straßenverkehrsbehörde telefonisch klären (Todoist-Aufgabe mit Recherche-Kommentar)
@@ -424,6 +429,7 @@ Sep 2026	4.3 Schulweg-Detektive	Android-Entwicklerbestätigung für PWA-APK prü
 27.05.2027	1.5 AGFK-SL	Lizenz „AGFK Honorarkraft" läuft ab
 Anfang 2028	2.9 Vergabe-Assistent	Neue EU-Schwellenwerte einpflegen (aktuelle Werte gelten bis 31.12.2027)
 Entfallen 11.08.: Alle Radherbst-Fristen (Versand · Rückmeldung 25.08. · Aktionszeitraum 01.09.–15.10.) – die Aktion findet nicht statt (→ 1.4)
+Geklärt 22.09.: AGFK-SL – Angebot 2026-AGFK-03 und Nutzungsvereinbarung versendet · RadPlan Pro `neubau` mit Unfallatlas live, erster Echtfall L 114 Altstadt erfolgreich, `main` bleibt stabiler Strang
 Geklärt 20./21.09.: Geodaten-Lizenz durch MUKMAV Geodatenzentrum bestätigt (CC BY 4.0, © GDI-SL) · Unfallatlas-Modul v2 · Zuständigkeiten v41, Projekt-Check v9, VwV-StVO 2025 v9 live · AGFK- und 2Rat-Repo gleichauf · Quellenvermerk-Patch geliefert
 Geklärt 16./17.09.: Projekt-Check v8 mit Geodatenabgleich und Konfliktprüfung im AGFK-Repo eingespielt · CORS-Fähigkeit von RVP-WMS, Nominatim und basemap.de belegt · eine Quelldatei für AGFK- und 2Rat-Fassung (`data-brand`) · LfS-Inhalte vom 02.09. eingearbeitet · Netlify-Kontingent zurückgesetzt (14.09.)
 Geklärt 13.09.: Architektur RadPlan Pro (Felderfassung statt QField, Google Drive als zentraler Speicher mit Scope `drive.file`, kein Dauerabgleich) · Pakete 3–6 des Neubaus geliefert und als Branch-Deploy in Test
@@ -431,7 +437,7 @@ Geklärt 02.09.: Live-Prüfung aller Werkzeuge (Zuständigkeiten v35 · Förderm
 Geklärt 24.08.: Zuständigkeiten v34 (ERA-2010-Verifikation, 195 Praxishinweise, sieben Sachfehler behoben) · Projekt-Check v6 · VwV-StVO 2025 v7 (drei Rechtsfehler) · Portal-Badges – alles deployed und gegengeprüft
 Geklärt 13.08.: Google-Play-Ziel-API-Level der Schulweg-Detektive (Frist 31.08.2026) erledigt · Missbrauchsschutz Stufe 1–3 umgesetzt · Schriftlizenzen `fonts/` geklärt
 Geklärt 27.07.: Kontaktdaten der Straßenverkehrsbehörden geprüft (Neunkirchen korrigiert) · EU-Schwellenwerte 2026/27 im Vergabe-Assistenten bereits aktuell · Kartenwunsch aus der Testrunde eingeordnet (ZORA und Google-Maps-Embed ausgeschlossen, GeoPortal Saarland als Ersatz)
-Ohne festes Datum: Gespräch mit der AGFK-SL (Irene) – Nutzungsrechte Projekt-Check, Pflegevereinbarung, Lizenzmodell übrige Werkzeuge. Grundlage: Angebot 2026-AGFK-03 v2 und Nutzungsvereinbarung v3 (Stand 24.08.2026) auf Basis des Eckpunktepapiers vom 27.07.2026. Anschreiben liegt fertig vor, Versand und Termin stehen aus.
+Ohne festes Datum: Gespräch mit der AGFK-SL (Irene) – Nutzungsrechte Projekt-Check, Pflegevereinbarung, Lizenzmodell übrige Werkzeuge. Grundlage: Angebot 2026-AGFK-03 und gekürzte Nutzungsvereinbarung, versendet 22.09.2026 (Basis: Eckpunktepapier vom 27.07.2026). Termin steht aus.
 1️⃣2️⃣ Statusverteilung
 Status	Anzahl	Vorhaben
 läuft / live / produktiv / stabil / aktiv	25	1.5, 1.6, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.11, 2.13, 2.14, 2.15, 2.16, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1
@@ -461,4 +467,4 @@ Eine Datei, eine Wahrheit – und die liegt auf GitHub. `Werkzeuge/privat/projek
 Updates immer über Claude, immer komplett. „Claude, Vorhaben X ist jetzt Y" → Claude holt die Live-Version, patcht, liefert die komplette Datei → Armin committet. Auch 📮-Meldungen aus anderen Claude-Projekten laufen so ein – dieses Dokument ist der zentrale Ablageplatz, die anderen Projekte sind Werkstätten.
 Wöchentlicher Blick auf 🔥 AKUT. Der Block oben ist das Erste, was man sieht. Fristen erledigt → raus. Neues Dringendes → rein. Wenn AKUT länger als 8 Zeilen wird: aufräumen. Keine Klartext-Codes in diese Datei – das Repo ist öffentlich.
 Geschäftsinterna bleiben draußen – auch in der Formulierung. Preise, Vertriebsstrategie, Rechtliches, Kundeninterna → nur im Projekt „BÜRO 2Rat". Ins zentrale Verzeichnis wandern ausschließlich Status + Fristen + Verweis – nie Inhalte. Diese Datei ist über die raw-URL ohne Anmeldung öffentlich lesbar (der Ordnername `privat` schützt nichts). Deshalb auch keine Angaben zum Zahlungsstand, zu Verhandlungsabsichten oder zur Finanzlage einer Kommune – Kunden können hier mitlesen. Neutral formulieren: „Abrechnung offen" statt „Zahlung ausstehend", „Gespräch über Fortsetzung" statt „Upsell".
-2Rat – Büro für Radverkehrsplanung · Stand: 21.09.2026
+2Rat – Büro für Radverkehrsplanung · Stand: 22.09.2026
