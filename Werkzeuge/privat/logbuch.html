@@ -108,6 +108,7 @@ details summary{cursor:pointer;font-size:.9rem;font-weight:600;padding:4px 0}
 
     <label for="f-datum">Datum</label>
     <input type="date" id="f-datum">
+    <div class="info hint" id="f-datuminfo" style="margin:-6px 0 10px"></div>
 
     <label for="f-notiz">Notiz (optional)</label>
     <textarea id="f-notiz"></textarea>
@@ -151,8 +152,14 @@ details summary{cursor:pointer;font-size:.9rem;font-weight:600;padding:4px 0}
 
   function todayISO(){var d=new Date(),p=function(n){return String(n).padStart(2,"0")};
     return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())}
-  function num(v){if(v==null)return NaN;var s=String(v).trim().replace(/\s/g,"").replace(",",".");
-    return s===""?NaN:parseFloat(s)}
+  function num(v){
+    if(v==null)return NaN;
+    var s=String(v).trim().replace(/\s/g,"");
+    if(s==="")return NaN;
+    if(s.indexOf(",")>=0){ s=s.replace(/\./g,"").replace(",","."); }
+    else if((s.match(/\./g)||[]).length>1){ s=s.replace(/\./g,""); }
+    return parseFloat(s);
+  }
   function fmt(n,d){d=d===undefined?1:d;return isFinite(n)?n.toLocaleString("de-DE",
     {minimumFractionDigits:d,maximumFractionDigits:d}):"–"}
   function dmy(iso){var p=(iso||"").split("-");return p.length===3?p[2]+"."+p[1]+"."+p[0].slice(2):iso}
@@ -182,8 +189,55 @@ details summary{cursor:pointer;font-size:.9rem;font-weight:600;padding:4px 0}
   $("f-datum").value=todayISO();
 
   // ---- Foto ----
+  // Aufnahmedatum aus EXIF (DateTimeOriginal), sonst Dateidatum
+  function exifDatum(buf){
+    try{
+      var d=new DataView(buf); if(d.getUint16(0)!==0xFFD8)return null;
+      var off=2, len=d.byteLength;
+      while(off<len-4){
+        var marker=d.getUint16(off); off+=2;
+        if(marker===0xFFDA||marker===0xFFD9)break;
+        var segLen=d.getUint16(off);
+        if(marker===0xFFE1 && d.getUint32(off+2)===0x45786966){ // "Exif"
+          var t=off+8; // TIFF-Header
+          var le=d.getUint16(t)===0x4949;
+          var g16=function(p){return d.getUint16(p,le)}, g32=function(p){return d.getUint32(p,le)};
+          var ifd0=t+g32(t+4);
+          var readIFD=function(p,tagWanted){
+            var n=g16(p);
+            for(var i=0;i<n;i++){
+              var e=p+2+i*12, tag=g16(e), type=g16(e+2), cnt=g32(e+4);
+              if(tag===tagWanted){
+                if(type===4||type===3) return {ptr:type===4?g32(e+8):g16(e+8)};
+                if(type===2){ var vo=cnt>4?t+g32(e+8):e+8, str="";
+                  for(var k=0;k<cnt-1;k++)str+=String.fromCharCode(d.getUint8(vo+k));
+                  return {str:str}; }
+              }
+            }
+            return null;
+          };
+          var ex=readIFD(ifd0,0x8769), res=null;
+          if(ex&&ex.ptr) res=readIFD(t+ex.ptr,0x9003);
+          if(!res) res=readIFD(ifd0,0x0132);
+          if(res&&res.str){ var m=res.str.match(/^(\d{4}):(\d{2}):(\d{2})/); if(m)return m[1]+"-"+m[2]+"-"+m[3]; }
+          return null;
+        }
+        off+=segLen;
+      }
+    }catch(e){}
+    return null;
+  }
+
   $("f-foto").addEventListener("change",function(e){
     var f=e.target.files&&e.target.files[0]; if(!f)return;
+    var rb=new FileReader();
+    rb.onload=function(){
+      var iso=exifDatum(rb.result);
+      if(!iso&&f.lastModified){var dd=new Date(f.lastModified),p=function(n){return String(n).padStart(2,"0")};
+        iso=dd.getFullYear()+"-"+p(dd.getMonth()+1)+"-"+p(dd.getDate())}
+      if(iso){$("f-datum").value=iso;$("f-datuminfo").textContent="Datum aus dem Foto: "+dmy(iso)}
+    };
+    rb.readAsArrayBuffer(f);
     var r=new FileReader();
     r.onload=function(){
       var img=new Image();
@@ -237,7 +291,7 @@ details summary{cursor:pointer;font-size:.9rem;font-weight:600;padding:4px 0}
       var t=(j.content||[]).map(function(b){return b.text||""}).join(" ");
       var m=t.match(/(\d{4,7})\s*[.,]\s*(\d)\b/), v=m?parseFloat(m[1]+"."+m[2]):NaN;
       if(!isFinite(v)){var m2=t.match(/\b\d{5,7}\b/);v=m2?parseFloat(m2[0]):NaN}
-      if(isFinite(v)){feld.value=fmt(v,1);feld.classList.add("ok");info.textContent="Gelesen – bitte kurz prüfen."}
+      if(isFinite(v)){feld.value=v.toFixed(1).replace(".",",");feld.classList.add("ok");info.textContent="Gelesen – bitte kurz prüfen."}
       else info.textContent="Nicht erkannt ("+t.slice(0,50)+") – Stand bitte eintippen.";
     }catch(err){
       info.textContent="Verbindung fehlgeschlagen – Stand bitte eintippen.";
@@ -260,7 +314,7 @@ details summary{cursor:pointer;font-size:.9rem;font-weight:600;padding:4px 0}
       ir:isFinite(ir)?ir:null,notiz:$("f-notiz").value.trim(),erstellt:Date.now()});
     sichern(); render();
     $("f-stand").value="";$("f-temp").value="";$("f-ir").value="";$("f-notiz").value="";
-    $("f-datum").value=todayISO(); clearFoto();
+    $("f-datum").value=todayISO(); $("f-datuminfo").textContent=""; clearFoto();
     info.textContent="Gespeichert.";
     setTimeout(function(){if(info.textContent==="Gespeichert.")info.textContent=""},2500);
   });
