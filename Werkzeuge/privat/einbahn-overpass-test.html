@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="de" data-brand="2rat">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Einbahnstraßen-Scan · Overpass-Test (2Rat, privat)</title>
+<style>
+:root{--blau:#1678A9;--gruen:#659444;--grau:#525353;--hell:#f3f6f8;--rand:#d5dde2;--gelb:#b98900}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#1d2a30;background:#fff;line-height:1.45;font-size:16px}
+header{background:var(--blau);color:#fff;padding:14px 16px}
+header b{font-size:1.05rem}header span{display:block;font-size:.85rem;opacity:.9}
+main{max-width:860px;margin:0 auto;padding:14px 16px 40px}
+h2{font-size:1.05rem;margin:22px 0 8px;color:var(--blau)}
+.box{background:var(--hell);border:1px solid var(--rand);border-radius:8px;padding:12px;margin:10px 0}
+label{display:block;font-size:.85rem;color:var(--grau);margin:8px 0 3px}
+select,button,textarea,input{font:inherit;width:100%;padding:11px 10px;border:1px solid var(--rand);border-radius:8px;background:#fff;color:inherit}
+button{background:var(--blau);color:#fff;border-color:var(--blau);font-weight:600;margin-top:10px;cursor:pointer}
+button.sek{background:#fff;color:var(--blau)}
+button.treffer{background:#fff;color:inherit;font-weight:400;text-align:left;margin-top:6px}
+button.treffer b{color:var(--blau)}button.treffer small{display:block;color:var(--grau)}
+button:disabled{opacity:.5;cursor:default}
+.zeilen div{padding:5px 0;border-bottom:1px solid var(--rand);display:flex;justify-content:space-between;gap:12px}
+.zeilen div span:last-child{text-align:right;font-weight:600}
+.ok{color:var(--gruen)}.warn{color:var(--gelb)}.fehler{color:#b3261e}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:6px 6px;border-bottom:1px solid var(--rand);vertical-align:top}
+th{font-size:.8rem;color:var(--grau)}
+td small{display:block;color:var(--grau)}
+.st{font-weight:700;white-space:nowrap}.st.gruen{color:var(--gruen)}.st.gelb{color:var(--gelb)}.st.grau{color:var(--grau)}
+.scroll{overflow-x:auto}
+details{margin:8px 0}summary{cursor:pointer;color:var(--blau)}
+pre{white-space:pre-wrap;word-break:break-word;font-size:.8rem;background:#fff;border:1px solid var(--rand);border-radius:6px;padding:8px}
+textarea{height:170px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.78rem}
+footer{font-size:.78rem;color:var(--grau);margin-top:26px}
+</style>
+</head>
+<body>
+<header><b>2Rat – Einbahnstraßen-Scan · Overpass-Test</b><span>Büro für Radverkehrsplanung · interne Testseite · <span id="stand" style="display:inline"></span></span></header>
+<main>
+<div class="box">Diese Seite prüft, ob die Live-Abfrage für eine beliebige deutsche Gemeinde läuft und ob die Treffer stimmen. Sie ist kein Werkzeug für Kunden und rechnet noch ohne Unfälle und Radverkehrsplan.</div>
+
+<label for="suche">Gemeinde suchen</label>
+<input type="text" id="suche" placeholder="z. B. Lebach oder Trier" autocomplete="off">
+<button id="suchen">Suchen</button>
+<div id="treffer"></div>
+<label for="endpunkt">Overpass-Server</label>
+<select id="endpunkt"></select>
+<div id="status" class="box" hidden></div>
+
+<div id="ergebnis" hidden>
+  <h2 id="titel">Ergebnis</h2>
+  <div class="zeilen" id="kennzahlen"></div>
+  <h2>Kandidaten</h2>
+  <div id="liste"></div>
+  <h2>Rückmeldung</h2>
+  <textarea id="bericht" readonly></textarea>
+  <button id="kopieren">Ergebnis kopieren</button>
+  <button id="roh" class="sek">Rohdaten speichern (JSON)</button>
+</div>
+
+<details><summary>Abfrage anzeigen</summary><pre id="abfrage">Erst eine Gemeinde wählen.</pre></details>
+<footer>© OpenStreetMap-Mitwirkende (ODbL) · Suche über Nominatim, Abfrage über Overpass API · 2Rat – Büro für Radverkehrsplanung · www.2rat.org</footer>
+</main>
+
+<script>
+/* ══ Getestete Referenzlogik – unverändert aus einbahn-logik.mjs (nur „export" entfernt) ══ */
+const EL=(function(){
+// einbahn-logik.mjs – Referenzlogik zum Einbahnstraßen-Scan (2Rat, Stand 02.10.2026)
+// Reine Funktionen ohne DOM und ohne Netz. Grundlage: VwV-StVO zu Zeichen 220 Nr. IV.
+const MIN_LAENGE = 30;      // m, kürzere Straßenzüge sind Knotenarme
+const TEMPO_MAX = 30;       // km/h, VwV-StVO zu Z 220 Nr. IV 1
+const KLASSEN = ['living_street', 'residential', 'unclassified', 'tertiary', 'secondary', 'primary'];
+const VERBINDUNG = ['tertiary', 'secondary', 'primary'];
+
+function ausText(v) {
+  if (v == null) return null;
+  const s = String(v).trim().toLowerCase();
+  if (!s || s === 'none' || s.includes('mph')) return null;
+  if (s === 'walk' || s.includes('living_street')) return 7;
+  if (s.includes('bicycle_road')) return 30;
+  const z = s.match(/zone:?(\d+)/);
+  if (z) return parseInt(z[1], 10);
+  if (s.includes('urban')) return 50;
+  if (s.includes('rural')) return 100;
+  const m = s.match(/^(?:de:)?(\d+)$/);
+  return m ? parseInt(m[1], 10) : null;
+}
+
+// Zulässige Höchstgeschwindigkeit aus OSM-Tags: {wert, quelle}
+function tempo(t) {
+  if (t.highway === 'living_street') return { wert: 7, quelle: 'verkehrsberuhigter Bereich' };
+  for (const k of ['maxspeed', 'zone:maxspeed', 'maxspeed:type', 'source:maxspeed']) {
+    const w = ausText(t[k]);
+    if (w != null) return { wert: w, quelle: k };
+  }
+  if (t.bicycle_road === 'yes') return { wert: 30, quelle: 'Fahrradstraße' };
+  return { wert: null, quelle: 'fehlt' };
+}
+
+function istEinbahn(t) {
+  return ['yes', 'true', '1', '-1'].includes(String(t.oneway || '').toLowerCase());
+}
+
+// Radverkehr in Gegenrichtung laut OSM bereits zugelassen?
+function gegenrichtungFrei(t) {
+  if (t['oneway:bicycle'] === 'no') return true;
+  if (['yes', 'designated'].includes(t['bicycle:backward'])) return true;
+  for (const k of ['cycleway', 'cycleway:left', 'cycleway:right', 'cycleway:both']) {
+    if (String(t[k] || '').startsWith('opposite')) return true;
+  }
+  for (const k of ['cycleway:left:oneway', 'cycleway:right:oneway']) {
+    if (t[k] === '-1' || t[k] === 'no') return true;
+  }
+  return false;
+}
+
+// Grund, warum ein Weg kein Kandidat ist – oder null
+function ausschluss(t) {
+  if (!KLASSEN.includes(t.highway)) return 'Straßenklasse nicht relevant';
+  if (!istEinbahn(t)) return 'keine Einbahnstraße';
+  if (['roundabout', 'circular'].includes(t.junction)) return 'Kreisverkehr';
+  if (t.dual_carriageway === 'yes') return 'Richtungsfahrbahn';
+  if (t.area === 'yes') return 'Fläche';
+  if (['no', 'private'].includes(t.access)) return 'nicht öffentlich';
+  if (t.bicycle === 'no') return 'Radverkehr verboten';
+  if (gegenrichtungFrei(t)) return 'Gegenrichtung bereits frei';
+  return null;
+}
+
+// Ampel für einen Straßenzug. k = {tempo, tempoUnvollstaendig, bus, klasse, fahrstreifen, unfallAuffaellig}
+function ampel(k) {
+  if (k.tempo != null && k.tempo > TEMPO_MAX) {
+    return { stufe: 'grau', gruende: ['Tempo über 30 km/h – Nr. IV 1 greift erst nach Temporeduzierung'] };
+  }
+  const g = [];
+  if (k.tempo == null || k.tempoUnvollstaendig) g.push('Tempo in OSM nicht durchgehend erfasst');
+  if (k.bus) g.push('Linienbus – Begegnungsbreite mindestens 3,5 m');
+  if (VERBINDUNG.includes(k.klasse)) g.push('Straße mit Verbindungsfunktion – Verkehrsstärke und Lkw-Anteil prüfen');
+  if (k.fahrstreifen >= 2) g.push('mehrere Fahrstreifen – Richtungsfahrbahn ausschließen');
+  if (k.unfallAuffaellig) g.push('Unfallauffälligkeit – Unfallkommission einbinden');
+  return { stufe: g.length ? 'gelb' : 'gruen', gruende: g };
+}
+
+const R = 6371000, P = Math.PI / 180;
+function laenge(geom) { // geom = [{lat, lon}, …]
+  let s = 0;
+  for (let i = 1; i < geom.length; i++) {
+    const a = geom[i - 1], b = geom[i];
+    const x = Math.sin((b.lat - a.lat) * P / 2), y = Math.sin((b.lon - a.lon) * P / 2);
+    s += 2 * R * Math.asin(Math.sqrt(x * x + Math.cos(a.lat * P) * Math.cos(b.lat * P) * y * y));
+  }
+  return s;
+}
+
+// Wege gleichen Namens mit gemeinsamem Endknoten zu Straßenzügen zusammenfassen.
+// ways = [{id, tags, nodes:[…], geometry:[{lat,lon}…], bus:bool, busLinien:[…]}] – nur Kandidaten (ausschluss === null)
+function zuege(ways) {
+  const eltern = new Map(ways.map(w => [w.id, w.id]));
+  const wurzel = id => { while (eltern.get(id) !== id) id = eltern.get(id); return id; };
+  const anKnoten = new Map();
+  for (const w of ways) {
+    if (!w.tags.name) continue;
+    for (const n of [w.nodes[0], w.nodes[w.nodes.length - 1]]) {
+      const key = w.tags.name + '|' + n;
+      if (anKnoten.has(key)) eltern.set(wurzel(w.id), wurzel(anKnoten.get(key)));
+      else anKnoten.set(key, w.id);
+    }
+  }
+  const gruppen = new Map();
+  for (const w of ways) {
+    const r = wurzel(w.id);
+    if (!gruppen.has(r)) gruppen.set(r, []);
+    gruppen.get(r).push(w);
+  }
+  const out = [];
+  for (const teile of gruppen.values()) {
+    const tempi = teile.map(w => tempo(w.tags).wert);
+    const bekannt = tempi.filter(v => v != null);
+    const z = {
+      osmIds: teile.map(w => w.id),
+      name: teile[0].tags.name || null,
+      laenge: Math.round(teile.reduce((s, w) => s + laenge(w.geometry), 0)),
+      tempo: bekannt.length ? Math.max(...bekannt) : null,
+      tempoUnvollstaendig: bekannt.length > 0 && bekannt.length < tempi.length,
+      bus: teile.some(w => w.bus),
+      busLinien: [...new Set(teile.flatMap(w => w.busLinien || []))].sort(),
+      klasse: KLASSEN[Math.max(...teile.map(w => KLASSEN.indexOf(w.tags.highway)))],
+      fahrstreifen: Math.max(...teile.map(w => parseInt(w.tags.lanes, 10) || 1)),
+      teile
+    };
+    if (z.laenge < MIN_LAENGE) continue;
+    out.push(z);
+  }
+  return out;
+}
+
+// ---------- Unfälle an einer beliebigen Linie ----------
+// c = [[lat, lng], …]; umkreisFn = RPUnfall.unfaelleImUmkreis (rp-unfaelle.js, unverändert).
+// Holt Unfälle über Stützpunkte im Abstand `schritt` und filtert danach exakt auf `seitlich` m zur Linie.
+function abstandZurLinie(lat, lon, c) {
+  let best = Infinity; const s = Math.cos(lat * P);
+  for (let i = 0; i < c.length - 1; i++) {
+    const ax = (c[i][1] - lon) * s, ay = c[i][0] - lat, bx = (c[i + 1][1] - lon) * s, by = c[i + 1][0] - lat;
+    const dx = bx - ax, dy = by - ay;
+    const t = (dx === 0 && dy === 0) ? 0 : Math.max(0, Math.min(1, -(ax * dx + ay * dy) / (dx * dx + dy * dy)));
+    best = Math.min(best, Math.hypot(ax + t * dx, ay + t * dy) * 111320);
+  }
+  return best;
+}
+function unfaelleAnLinie(c, umkreisFn, seitlich = 15, schritt = 20) {
+  const punkte = [];
+  for (let i = 0; i < c.length - 1; i++) {
+    const l = laenge([{ lat: c[i][0], lon: c[i][1] }, { lat: c[i + 1][0], lon: c[i + 1][1] }]);
+    const n = Math.max(1, Math.ceil(l / schritt));
+    for (let k = 0; k < n; k++) punkte.push([c[i][0] + (c[i + 1][0] - c[i][0]) * k / n, c[i][1] + (c[i + 1][1] - c[i][1]) * k / n]);
+  }
+  punkte.push(c[c.length - 1]);
+  const radius = Math.hypot(seitlich, schritt / 2) + 1;
+  const gesehen = new Map();
+  for (const [lat, lon] of punkte) {
+    for (const u of umkreisFn(lat, lon, radius).liste) {
+      const key = [u.jahr, u.kat, u.lat, u.lon, u.typ, u.art].join('|');
+      if (!gesehen.has(key) && abstandZurLinie(u.lat, u.lon, c) <= seitlich) gesehen.set(key, u);
+    }
+  }
+  const liste = [...gesehen.values()];
+  const res = { gesamt: liste.length, rad: 0, fuss: 0, radfuss: 0, getoetet: 0, schwer: 0, leicht: 0, liste };
+  for (const u of liste) {
+    if (u.rad) res.rad++; if (u.fuss) res.fuss++; if (u.rad || u.fuss) res.radfuss++;
+    if (u.kat === 1) res.getoetet++; else if (u.kat === 2) res.schwer++; else res.leicht++;
+  }
+  return res;
+}
+// Streckenregel wie unfallAuffaellig() im Projekt-Check
+function unfallAuffaellig(r) {
+  return !!r && (r.getoetet > 0 || r.schwer >= 2 || r.radfuss >= 3);
+}
+
+return {MIN_LAENGE,TEMPO_MAX,KLASSEN,tempo,istEinbahn,gegenrichtungFrei,ausschluss,ampel,laenge,zuege,unfaelleAnLinie,unfallAuffaellig};
+})();
+
+/* ══ Testseite ══ */
+const STAND='Test 02.10.2026 · v2';
+const ENDPUNKTE=[
+  {url:'https://overpass.private.coffee/api/interpreter',name:'overpass.private.coffee (wie Projekt-Check)'},
+  {url:'https://overpass-api.de/api/interpreter',name:'overpass-api.de (Vergleich)'}
+];
+const NOMINATIM='https://nominatim.openstreetmap.org';
+const ZEITLIMIT_S=120;
+const ART={city:'Stadt',town:'Stadt',village:'Gemeinde',municipality:'Gemeinde',suburb:'Stadtteil',borough:'Stadtbezirk',city_district:'Stadtbezirk',county:'Kreis',hamlet:'Ortsteil',quarter:'Ortsteil'};
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const ganz=v=>Number(v).toLocaleString('de-DE',{maximumFractionDigits:0});
+const komma=(v,n)=>Number(v).toLocaleString('de-DE',{minimumFractionDigits:n,maximumFractionDigits:n});
+const STUFE_WORT={gruen:'Grün',gelb:'Gelb',grau:'Grau'},STUFE_RANG={gruen:0,gelb:1,grau:2};
+
+function abfrage(relId){
+  return '[out:json][timeout:90];\n'+
+  'rel('+relId+')->.r;\n'+
+  '.r out tags;\n'+
+  '.r map_to_area->.g;\n'+
+  'way(area.g)["highway"~"^(living_street|residential|unclassified|tertiary|secondary|primary)$"]["oneway"~"^(yes|true|1|-1)$"]->.w;\n'+
+  '.w out body geom;\n'+
+  'rel(bw.w)["type"="route"]["route"~"^(bus|trolleybus)$"];\n'+
+  'out body;';
+}
+
+/* Overpass-Antwort → Gemeinde mit Wegen und Buslinien */
+function gliedern(data,relId){
+  const g={ags:'',osmName:'',level:'',gefunden:false,ways:[],bus:new Map()};const gesehen=new Set();
+  for(const e of (data.elements||[])){
+    if(e.type==='relation'&&e.id===relId){
+      const t=e.tags||{};g.gefunden=true;g.ags=t['de:amtlicher_gemeindeschluessel']||'';g.osmName=t.name||'';g.level=t.admin_level||'';
+    }else if(e.type==='way'){
+      if(gesehen.has(e.id))continue;gesehen.add(e.id);
+      g.ways.push({id:e.id,tags:e.tags||{},nodes:e.nodes||[],geometry:e.geometry||[]});
+    }else if(e.type==='relation'){
+      const ref=(e.tags&&(e.tags.ref||e.tags.name))||'?';
+      for(const m of (e.members||[]))if(m.type==='way'){if(!g.bus.has(m.ref))g.bus.set(m.ref,new Set());g.bus.get(m.ref).add(ref);}
+    }
+  }
+  return g;
+}
+
+/* Filter, Zusammenfassung und Vorab-Ampel (ohne Unfälle) */
+function rechnen(g){
+  g.gruende={};g.schonFrei=new Set();const kand=[];
+  for(const w of g.ways){
+    const grund=EL.ausschluss(w.tags);
+    if(grund){g.gruende[grund]=(g.gruende[grund]||0)+1;if(grund==='Gegenrichtung bereits frei')g.schonFrei.add(w.tags.name||'ohne Namen');continue;}
+    const linien=g.bus.get(w.id);w.bus=!!linien;w.busLinien=linien?[...linien]:[];kand.push(w);
+  }
+  g.kandWege=kand.length;
+  g.zuege=EL.zuege(kand).map(z=>{
+    const a=EL.ampel({tempo:z.tempo,tempoUnvollstaendig:z.tempoUnvollstaendig,bus:z.bus,klasse:z.klasse,fahrstreifen:z.fahrstreifen,unfallAuffaellig:false});
+    return Object.assign(z,{stufe:a.stufe,gruende:a.gruende});
+  }).sort((a,b)=>STUFE_RANG[a.stufe]-STUFE_RANG[b.stufe]||b.laenge-a.laenge);
+  g.st={gruen:0,gelb:0,grau:0};for(const z of g.zuege)g.st[z.stufe]++;
+}
+
+let LAUF=null,TREFFER=[],laeuft=false;
+function zeile(l,w,kl){return '<div><span>'+esc(l)+'</span><span'+(kl?' class="'+kl+'"':'')+'>'+w+'</span></div>';}
+function status(html,kl){const s=$('status');s.hidden=false;s.className='box'+(kl?' '+kl:'');s.innerHTML=html;}
+
+function zeigen(){
+  const L=LAUF,g=L.g;
+  $('titel').textContent='Ergebnis: '+(g.osmName||L.ort.name);
+  $('kennzahlen').innerHTML=
+    zeile('Dauer',komma(L.sek,1)+' s')+
+    zeile('Antwortgröße',komma(L.bytes/1048576,2)+' MB')+
+    (L.remark?zeile('Meldung des Servers',esc(L.remark),'fehler'):'')+
+    zeile('Gebiet in OSM',g.gefunden?esc(g.osmName)+' ✓':'nicht geliefert',g.gefunden?'ok':'fehler')+
+    zeile('Gemeindeschlüssel',g.ags?esc(g.ags):'keiner (Ebene '+esc(g.level||'?')+')',g.ags?'':'warn')+
+    zeile('Zusatz Unfälle und Radverkehrsplan',L.saarland?'ja, Saarland':'nein, außerhalb des Saarlands')+
+    zeile('Einbahn-Wege gesamt',ganz(g.ways.length))+
+    zeile('davon Kandidaten-Wege',ganz(g.kandWege))+
+    Object.keys(g.gruende).sort((a,b)=>g.gruende[b]-g.gruende[a]).map(k=>zeile('Ausschluss: '+k,ganz(g.gruende[k]))).join('')+
+    zeile('Straßenzüge ab '+EL.MIN_LAENGE+' m',ganz(g.zuege.length))+
+    zeile('Vorab-Ampel (ohne Unfälle)','Grün '+g.st.gruen+' · Gelb '+g.st.gelb+' · Grau '+g.st.grau);
+  let h='';
+  if(!g.zuege.length)h+='<div class="box">Keine Kandidaten im Ergebnis. Einbahnstraßen können in OSM fehlen.</div>';
+  else h+='<div class="scroll"><table><tr><th>Stufe</th><th>Straße</th><th>Länge</th><th>Tempo</th></tr>'+
+    g.zuege.map(z=>'<tr><td class="st '+z.stufe+'">'+STUFE_WORT[z.stufe]+'</td><td>'+esc(z.name||'ohne Namen')+
+      (z.bus?'<small>Bus: '+esc(z.busLinien.join(', '))+'</small>':'')+
+      (z.gruende.length?'<small>'+esc(z.gruende.join('; '))+'</small>':'')+
+      '</td><td>'+ganz(z.laenge)+' m</td><td>'+(z.tempo==null?'–':z.tempo)+'</td></tr>').join('')+'</table></div>';
+  const frei=[...g.schonFrei].sort((a,b)=>a.localeCompare(b,'de'));
+  h+='<div class="box"><b>Laut OSM bereits für Radverkehr in Gegenrichtung frei ('+frei.length+'):</b><br>'+(frei.length?esc(frei.join(', ')):'keine')+'</div>';
+  $('liste').innerHTML=h;
+  $('bericht').value=bericht();
+  $('ergebnis').hidden=false;
+}
+
+function bericht(){
+  const L=LAUF,g=L.g;
+  return ['Einbahn-Overpass-Test · '+STAND,
+    'Gemeinde: '+(g.osmName||L.ort.name)+' · '+L.ort.zusatz+' · Relation '+L.ort.id+' · Schlüssel '+(g.ags||'–')+' · Ebene '+(g.level||'–'),
+    'Abruf '+L.zeit+' · '+L.endpunkt.replace('https://','').replace('/api/interpreter',''),
+    'Dauer '+komma(L.sek,1)+' s · Antwort '+komma(L.bytes/1048576,2)+' MB'+(L.remark?' · Meldung: '+L.remark:''),
+    'Einbahn-Wege '+g.ways.length+' · Kandidaten-Wege '+g.kandWege+' · Straßenzüge '+g.zuege.length,
+    'Ausschlüsse: '+(Object.keys(g.gruende).map(k=>k+' '+g.gruende[k]).join('; ')||'–'),
+    'Vorab-Ampel: Grün '+g.st.gruen+' · Gelb '+g.st.gelb+' · Grau '+g.st.grau,
+    'Bereits frei laut OSM: '+([...g.schonFrei].sort((a,b)=>a.localeCompare(b,'de')).join(', ')||'–'),
+    'Kandidaten (Stufe;Straße;Länge m;Tempo;Bus):',
+    ...g.zuege.map(z=>STUFE_WORT[z.stufe]+';'+(z.name||'ohne Namen')+';'+z.laenge+';'+(z.tempo==null?'–':z.tempo)+';'+(z.busLinien.join(',')||'–'))
+  ].join('\n');
+}
+
+/* ---------- Schritt 1: Gemeinde über Nominatim suchen ---------- */
+async function suchen(){
+  const q=$('suche').value.trim();if(!q||laeuft)return;
+  $('treffer').innerHTML='';$('ergebnis').hidden=true;status('Suche läuft …');
+  try{
+    const res=await fetch(NOMINATIM+'/search?format=jsonv2&countrycodes=de&limit=10&addressdetails=1&accept-language=de&q='+encodeURIComponent(q),
+      {headers:{'Accept':'application/json'},referrerPolicy:'strict-origin-when-cross-origin'});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const alle=await res.json();
+    TREFFER=alle.filter(r=>r.osm_type==='relation'&&r.category==='boundary'&&r.type==='administrative'&&!['state','country'].includes(r.addresstype))
+      .map(r=>{const a=r.address||{};
+        return {id:Number(r.osm_id),name:r.name||String(r.display_name||'').split(',')[0],
+          zusatz:[ART[r.addresstype]||r.addresstype,a.county,a.state].filter(Boolean).join(' · '),saarland:a.state==='Saarland'};});
+    if(!TREFFER.length){status('Kein Verwaltungsgebiet mit diesem Namen gefunden. Bitte Schreibweise prüfen.','warn');return;}
+    $('treffer').innerHTML=TREFFER.map((t,i)=>'<button class="treffer" data-i="'+i+'"><b>'+esc(t.name)+'</b><small>'+esc(t.zusatz)+'</small></button>').join('');
+    status(TREFFER.length+' Treffer. Antippen startet die Abfrage.');
+  }catch(e){status('<b>Suche fehlgeschlagen:</b> '+esc(e.message),'fehler');}
+}
+
+/* ---------- Schritt 2: Einbahnstraßen der Gemeinde über Overpass ---------- */
+async function abfragen(ort){
+  if(laeuft)return;laeuft=true;
+  const endpunkt=$('endpunkt').value,q=abfrage(ort.id);$('abfrage').textContent=q;
+  $('ergebnis').hidden=true;$('suchen').disabled=true;
+  const t0=Date.now();
+  const uhr=setInterval(()=>status(esc(ort.name)+': Abfrage läuft … '+Math.round((Date.now()-t0)/1000)+' s (Zeitlimit '+ZEITLIMIT_S+' s).'),1000);
+  const ctrl=new AbortController();const stopp=setTimeout(()=>ctrl.abort(),ZEITLIMIT_S*1000);
+  try{
+    const res=await fetch(endpunkt+'?data='+encodeURIComponent(q),{signal:ctrl.signal});
+    const text=await res.text();
+    if(!res.ok)throw new Error('HTTP '+res.status+(res.status===429?' – Server ausgelastet, später erneut versuchen':res.status===504?' – Zeitüberschreitung beim Server':''));
+    let data;try{data=JSON.parse(text);}catch(e){throw new Error('Antwort ist kein JSON: '+text.slice(0,160));}
+    const g=gliedern(data,ort.id);rechnen(g);
+    LAUF={g,ort,saarland:g.ags?g.ags.startsWith('10'):ort.saarland,sek:(Date.now()-t0)/1000,bytes:new Blob([text]).size,remark:data.remark||'',roh:text,endpunkt,
+      zeit:new Date().toLocaleString('de-DE',{dateStyle:'short',timeStyle:'short'})};
+    zeigen();
+    if(LAUF.remark)status('Der Server meldet: '+esc(LAUF.remark)+'<br>Das Ergebnis ist dann meist unvollständig.','fehler');
+    else status('Fertig nach '+komma(LAUF.sek,1)+' s.','ok');
+  }catch(e){
+    status('<b>Abfrage fehlgeschlagen:</b> '+esc(e.name==='AbortError'?'Zeitlimit von '+ZEITLIMIT_S+' s überschritten':e.message)+
+      '<br>Bitte den anderen Server wählen und die Gemeinde erneut antippen.','fehler');
+  }finally{clearInterval(uhr);clearTimeout(stopp);laeuft=false;$('suchen').disabled=false;}
+}
+
+function kopieren(){
+  const t=$('bericht');const fertig=()=>{$('kopieren').textContent='Kopiert ✓';setTimeout(()=>$('kopieren').textContent='Ergebnis kopieren',2000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t.value).then(fertig,()=>{t.select();document.execCommand('copy');fertig();});
+  else{t.select();document.execCommand('copy');fertig();}
+}
+function rohSpeichern(){
+  if(!LAUF)return;
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([LAUF.roh],{type:'application/json'}));
+  a.download='einbahn-overpass-roh_'+(LAUF.g.osmName||LAUF.ort.name).replace(/[^\wäöüÄÖÜß-]+/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+}
+
+(function(){
+  $('stand').textContent=STAND;
+  $('endpunkt').innerHTML=ENDPUNKTE.map(e=>'<option value="'+e.url+'">'+esc(e.name)+'</option>').join('');
+  $('suchen').onclick=suchen;$('kopieren').onclick=kopieren;$('roh').onclick=rohSpeichern;
+  $('suche').onkeydown=e=>{if(e.key==='Enter')suchen();};
+  $('treffer').onclick=e=>{const b=e.target.closest('button.treffer');if(b)abfragen(TREFFER[Number(b.dataset.i)]);};
+})();
+</script>
+</body>
+</html>
