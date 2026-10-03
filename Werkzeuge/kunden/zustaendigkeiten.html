@@ -201,7 +201,7 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right"><a class="portal-link" id="brandPortal" href="index.html"></a><br>Saarland<br><span data-stand>Stand 09/2026 · v41</span><br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right"><a class="portal-link" id="brandPortal" href="index.html"></a><br>Saarland<br><span data-stand>Stand 10/2026 · v42</span><br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
@@ -254,7 +254,7 @@ const BRAND=BRANDS[document.documentElement.getAttribute('data-brand')]||BRANDS.
   document.getElementById('brandFoot').innerHTML=BRAND.foot;
   lizenzInit();
 })();
-const STAND='Stand 09/2026 · v41';
+const STAND='Stand 10/2026 · v42';
 document.querySelectorAll('[data-stand]').forEach(function(n){n.textContent=STAND;});
 
 const MEASURES=[
@@ -980,7 +980,7 @@ function render(){
       <strong>Eigene Behörden:</strong> Landeshauptstadt Saarbrücken sowie die Mittelstädte Völklingen und St. Ingbert (StVO-Befugnisse übertragen, § 1 Abs. 1 Nr. 8 Mittelstadtverordnung)<br>
       <strong>Oberste Behörde:</strong> Ministerium für Umwelt, Klima, Mobilität, Agrar und Verbraucherschutz (MUKMAV)
     </div></div>`;
-    h+=`<div class="agfk-contact" style="margin-top:16px;background:#E3F5F2;border:1px solid rgba(var(--green-rgb),.35);border-radius:8px;padding:13px 16px;font-size:12.5px;line-height:1.6">Fragen offen geblieben? Die <strong style="color:var(--green-dark)">Geschäftsstelle der AGFK-SL</strong> hilft weiter.<br>Europaallee 27, 66113 Saarbrücken<br>Tel.: +49 (0)681 4109 6482 · E-Mail: geschaeftstelle@agfk-sl.de</div>`;
+    h+=`<div class="agfk-contact" style="margin-top:16px;background:#E3F5F2;border:1px solid rgba(var(--green-rgb),.35);border-radius:8px;padding:13px 16px;font-size:12.5px;line-height:1.6">Fragen offen geblieben? Die <strong style="color:var(--green-dark)">Geschäftsstelle der AGFK-SL</strong> hilft weiter.<br>Europaallee 27, 66113 Saarbrücken<br>Tel.: +49 (0)681 4109 6482 · E-Mail: geschaeftsstelle@agfk-sl.de</div>`;
     h+=`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-outline" style="width:auto;flex:1;min-width:160px" onclick="window.print()">🖨️ Drucken</button><button class="btn btn-outline" style="width:auto;flex:1;min-width:160px" onclick="resetAll()">Neue Abfrage starten</button></div>`;
     el.innerHTML=h;
   }
