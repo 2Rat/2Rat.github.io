@@ -201,13 +201,14 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
         <div class="header-title">Zuständigkeiten <span>Radverkehr Saarland</span></div>
       </div>
     </div>
-    <div class="header-right"><a class="portal-link" id="brandPortal" href="index.html"></a><br>Saarland<br><span data-stand>Stand 10/2026 · v42</span><br><span data-lizenz style="font-weight:600"></span></div>
+    <div class="header-right"><a class="portal-link" id="brandPortal" href="index.html"></a><br>Saarland<br><span data-stand>Stand 10/2026 · v43</span><br><span data-lizenz style="font-weight:600"></span></div>
   </div>
 </div>
 
 <main class="main">
   <div class="mapwrap" id="mapwrap">
     <button class="map-toggle" id="mapToggle" aria-expanded="false" onclick="toggleMap()">🗺 Auf der Karte klicken (optional) – Kommune, Straße, Lage und Baulast aus amtlichen Geodaten vorschlagen lassen</button>
+    <div class="map-datenhinweis" style="font-size:11.5px;color:var(--gray-light);margin-top:6px;line-height:1.5">Beim Öffnen der Karte werden Kartendienste abgerufen (basemap.de/BKG, OpenStreetMap, Geoportal Saarland, Overpass); dabei wird Ihre IP-Adresse an diese Dienste übertragen. Ohne Karte ist das Werkzeug vollständig nutzbar. <a href="../datenschutz.html" target="_blank" rel="noopener">Datenschutz</a></div>
     <div id="zmap"></div>
     <div class="map-tip">💡 Tipp: möglichst <b>mittig auf die Fahrbahn</b> klicken – Straße und Klasse kommen aus dem amtlichen Straßennetz des LfS (Bundes- und Landesstraßen), Lage und Verkehr aus der Straßenverkehrszählung 2021, Baulast und Netzbezug aus dem Radverkehrsplan Saarland 2025. Jeder Wert zeigt seine Herkunft und ist nur ein Vorschlag.</div>
     <div class="map-status" id="mapStatus"></div>
@@ -229,8 +230,9 @@ else { document.addEventListener('DOMContentLoaded', lizenzInit); }
     Ergänzend die Musterlösungen für Radverkehrsanlagen Baden-Württemberg (Stand 10/2025): im Saarland nicht eingeführt und damit nicht verbindlich, fachlich aber der aktuellste verfügbare Stand – sie nehmen die laufende ERA-Fortschreibung (Veröffentlichung ab 2026 erwartet) in Systematik und Maßen weitgehend vorweg. Empfehlung 2Rat: bei Neu- und Umbauten als Zielwert ansetzen.
     Im Einzelfall bitte Zuständigkeit mit der jeweiligen Behörde prüfen.
     Kartenmodus: LfS-Straßennetz, SVZ 2021, Radverkehrsplan Saarland 2025 – © GDI-SL 2026, <a href="https://creativecommons.org/licenses/by/4.0/deed.de" target="_blank" rel="noopener">CC BY 4.0</a> · Karte: © GeoBasis-DE/BKG (dl-de/by-2-0) · Adresse: © OpenStreetMap-Mitwirkende (ODbL).
+    Angaben zu ERA, RASt und weiteren FGSV-Regelwerken sind eigene Zusammenfassungen von 2Rat mit Quellenangabe – keine Wiedergabe von Texten, Tabellen oder Abbildungen; maßgeblich ist das jeweilige Regelwerk im Original (FGSV Verlag).
     <br>
-    <strong style="color:var(--gray)">Entwickelt und gepflegt von 2Rat</strong> – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a>
+    <strong style="color:var(--gray)">Entwickelt und gepflegt von 2Rat</strong> – Büro für Radverkehrsplanung · Armin Jung · Radverkehrsplaner EIPOS · <a href="https://www.2rat.org">www.2rat.org</a> · <a href="../impressum.html">Impressum</a> · <a href="../datenschutz.html">Datenschutz</a>
     <br><span style="display:inline-block;margin-top:5px;opacity:.85" id="brandFoot"></span>
   </footer>
 </main>
@@ -254,7 +256,7 @@ const BRAND=BRANDS[document.documentElement.getAttribute('data-brand')]||BRANDS.
   document.getElementById('brandFoot').innerHTML=BRAND.foot;
   lizenzInit();
 })();
-const STAND='Stand 10/2026 · v42';
+const STAND='Stand 10/2026 · v43';
 document.querySelectorAll('[data-stand]').forEach(function(n){n.textContent=STAND;});
 
 const MEASURES=[
