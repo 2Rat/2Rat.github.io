@@ -1,17 +1,17 @@
 2Rat – Büro für Radverkehrsplanung
 Armin Jung · Radverkehrsplaner EIPOS · www.2rat.org
 2Rat – Gesamt-Projektverzeichnis
-Stand: 03.10.2026
+Stand: 13.10.2026
 Anzahl Vorhaben (konsolidiert): 41
-Quellen: Fassung 05.05.2026 · fortgeschrieben über 📮-Meldungen aus den Werkstatt-Projekten (Historie je Vorhaben) · letzte Meldungen 03.10.2026 (AGFK-Übersichtsseite: neue Symbol-Kacheln, index.html Stand 10/2026 geliefert) · davor 02.10.2026 (Einbahnstraßen-Scan: Entscheidung bundesweit mit Live-Abfrage je Gemeinde · Overpass-Testseite v2 geliefert) · davor 30.09.2026 (AGFK-Kennenlern-Zugänge im Portal abgelaufen · AGFK-Vorschau für drei Werkzeuge bis 31.10.2026 befristet · AGFK-SL: Stichproben-Durchsicht im Oktober, Freischaltung unter eigener AGFK-Subdomain geplant 02.11.2026) · davor 22.09.2026 (AGFK-SL: Angebot und Nutzungsvereinbarung versendet · RadPlan Pro `neubau` mit Unfallatlas live, erster Echtfall L 114) · davor 21.09.2026 (Geodaten-Lizenz durch MUKMAV bestätigt · Unfallatlas-Modul · Zuständigkeiten v41, Projekt-Check v9, VwV-StVO v9 · beide Repos gleichauf) · davor 17.09.2026 (Projekt-Check v8 mit Geodatenabgleich und Konfliktprüfung · eine Quelldatei für AGFK- und 2Rat-Fassung · LfS-Inhalte AGFK-SL 02.09.) · davor 13.09.2026 (RadPlan Pro: Neubau Modell 7.1 als Branch-Deploy · Architekturentscheidung Felderfassung/Google Drive · neues Kundenprojekt Stadt Lebach) · Aufräumdurchlauf 02.09.2026 (Historie eingedampft, Widersprüche bereinigt)
-> **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Claude liefert die komplette Datei neu → Armin committet. Fertig.
+Quellen: Fassung 05.05.2026 · fortgeschrieben über 📮-Meldungen aus den Werkstatt-Projekten (Historie je Vorhaben) · HUB-Durchlauf 13.10.2026 (abgelaufene 30.09.-Fristen bereinigt, Repo-Abgleich Lizenzblock Portal · Eingangskorb `meldungen-eingang.md` eingeführt) · davor 03.10.2026 (AGFK-Übersichtsseite: neue Symbol-Kacheln, index.html Stand 10/2026 geliefert) · davor 02.10.2026 (Einbahnstraßen-Scan: Entscheidung bundesweit mit Live-Abfrage je Gemeinde · Overpass-Testseite v2 geliefert) · davor 30.09.2026 (AGFK-Kennenlern-Zugänge im Portal abgelaufen · AGFK-Vorschau für drei Werkzeuge bis 31.10.2026 befristet · AGFK-SL: Stichproben-Durchsicht im Oktober, Freischaltung unter eigener AGFK-Subdomain geplant 02.11.2026) · davor 22.09.2026 (AGFK-SL: Angebot und Nutzungsvereinbarung versendet · RadPlan Pro `neubau` mit Unfallatlas live, erster Echtfall L 114) · davor 21.09.2026 (Geodaten-Lizenz durch MUKMAV bestätigt · Unfallatlas-Modul · Zuständigkeiten v41, Projekt-Check v9, VwV-StVO v9 · beide Repos gleichauf) · davor 17.09.2026 (Projekt-Check v8 mit Geodatenabgleich und Konfliktprüfung · eine Quelldatei für AGFK- und 2Rat-Fassung · LfS-Inhalte AGFK-SL 02.09.) · davor 13.09.2026 (RadPlan Pro: Neubau Modell 7.1 als Branch-Deploy · Architekturentscheidung Felderfassung/Google Drive · neues Kundenprojekt Stadt Lebach) · Aufräumdurchlauf 02.09.2026 (Historie eingedampft, Widersprüche bereinigt)
+> **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Werkstatt-Projekte schreiben 📮-Meldungen in den Eingangskorb `Werkzeuge/privat/meldungen-eingang.md` (Rückfall: Block in den HUB kopieren) → der HUB „Projektübersicht 2Rat“ arbeitet sie hier ein und leert den Korb.
 ---
 🔥 AKUT – Das zählt jetzt
 Wann	Was	Wo
-30.09.2026	FRL-NMOB Jahres-Stichtag + RAD-Lab-Testrunde endet → Lizenzzeile aus `Werkzeuge/index.html` entfernen, vorher Feedback einsammeln	Förderung / Tool-Portal
+überfällig	RAD-Lab-Lizenzzeile aus `Werkzeuge/index.html` entfernen (seit 30.09. abgelaufen, Login gesperrt – nur Aufräumen; „Kritischer Blick“ bereits entfernt ✓) · Feedback-Stand der Testrunde nachtragen	Tool-Portal
 prüfen	Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den Passwortmanager übertragen, bevor die 30-Tage-Session abläuft	Tool-Portal / RadPlan
 offen / jetzt	Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe und Abrechnung · parallel Freigabe für Referenznennung + Zitate einholen – aus der RAD-Lab-Runde und aus der Aktion „Kritischer Blick“ (Zitate liegen vor, Freigabe der Zitierenden steht aus)	Tool-Portal
-läuft	AGFK-SL: Angebot raus (22.09.) – Rückmeldung und Behördenanschriften abwarten · 05.10. Eingang Anschriften prüfen · Oktober: Stichproben-Durchsicht durch die AGFK · 13.10. nachfassen · 31.10. Angebotsgültigkeit endet – am selben Tag endet automatisch die AGFK-Vorschau für Zuständigkeiten, Fördermittel-Finder und Vergabe-Assistent (Befristungsblock committen, → 2.15) · 02.11. Freischaltung unter eigener AGFK-Subdomain geplant (→ 2.15) · parallel Anfrage an Nicole: Freigabe der Logo-Verwendung (→ 2.15)	Tool-Portal / BÜRO 2Rat
+läuft	AGFK-SL: Angebot raus (22.09.) – Rückmeldung abwarten · **heute 13.10. nachfassen** · Eingang Behördenanschriften (fällig 05.10.) – Ergebnis nachtragen · Oktober: Stichproben-Durchsicht durch die AGFK · 31.10. Angebotsgültigkeit endet – am selben Tag endet automatisch die AGFK-Vorschau für Zuständigkeiten, Fördermittel-Finder und Vergabe-Assistent (Befristungsblock committen, → 2.15) · 02.11. Freischaltung unter eigener AGFK-Subdomain geplant (→ 2.15) · parallel Anfrage an Nicole: Freigabe der Logo-Verwendung (→ 2.15)	Tool-Portal / BÜRO 2Rat
 überfällig	Zuständigkeiten: St. Ingbert als eigene Straßenverkehrsbehörde telefonisch klären (§ 7 Abs. 1 StVZustG nennt sie nicht, Regionalverband bestätigt Völklingen als Mittelstadt mit eigener Behörde) – Recherche als Kommentar an der Todoist-Aufgabe	Tool-Portal
 jetzt	Projekt-Check v9 / Zuständigkeiten v41 (beide Repos live): Browsertest Unfallzeile und Konfliktprüfung durch Armin · Quellenvermerk „© GDI-SL 2026, CC BY 4.0“ in den AGFK-Fassungen einspielen (geliefert 21.09.) · danach Freigabe an die AGFK-Tester (→ 2.11, 2.16)	Tool-Portal
 offen	Geodaten: Verkehrsmengen L1/L2 noch nicht freigegeben – Rückmeldung LfS abwarten · Live-Test Overpass/Nominatim im VwV-Tool v9 (Einrichtungen, Querungen, Adresssuche)	Tool-Portal
@@ -427,20 +427,18 @@ AGFK-SL	geschaeftstelle@agfk-sl.de
 1️⃣1️⃣ Fristen
 Datum	Kontext	Aktion
 15.07. / 31.07.2026	Förderung (JGF FL1 / FL2)	Fristen verstrichen – Ausgang nachtragen (eingereicht ja/nein?), danach Zeile raus
-30.09.2026	Förderung (FRL-NMOB)	Jahres-Stichtag
-30.09.2026	1.5 AGFK-SL	Kennenlern-Tools laufen ab (`toolExpires`) → vorher Gespräch über die Fortsetzung
-05.10.2026	1.5 AGFK-SL	Eingang der Behördenanschriften prüfen (Voraussetzung Projekt-Check-Fertigstellung)
+05.10.2026 ⚠️	1.5 AGFK-SL	Eingang der Behördenanschriften prüfen – überfällig, Ergebnis nachtragen (Voraussetzung Projekt-Check-Fertigstellung)
 Okt 2026	1.5 AGFK-SL	Stichproben-Durchsicht der Werkzeuge durch die AGFK
 13.10.2026	1.5 AGFK-SL	Angebot 2026-AGFK-03 nachfassen
 31.10.2026	1.5 AGFK-SL	Gültigkeit des Angebots 2026-AGFK-03 endet (versendet 22.09.)
 02.11.2026	1.5 / 2.15 AGFK-SL	Freischaltung unter eigener AGFK-Subdomain geplant (Repo `agfk-werkzeuge`) – vorher DNS, Pages-Domain, `noindex` raus, `kunden/`-Pfade (→ 2.16)
 31.08.2027	1.5 AGFK-SL	Kündigungsstichtag der Nutzungsvereinbarung (Laufzeit bis 31.12.2027, Verlängerungsklausel) – nur relevant bei Zusage
-30.09.2026	2.1 Tool-Portal	RAD-Lab-Testrunde endet (→ 2.13) – Lizenz-Zeile entfernen
-30.09.2026	2.13 Tool-Portal	Testzugang der Aktion „Kritischer Blick“ läuft ab – Lizenz-Zeile entfernen
+30.09.2026 ⚠️	2.1 Tool-Portal	RAD-Lab-Testrunde beendet (→ 2.13) – Lizenz-Zeile noch entfernen
 03.09.2026	2.2 Zuständigkeiten	St. Ingbert als eigene Straßenverkehrsbehörde telefonisch klären (Todoist-Aufgabe mit Recherche-Kommentar)
 Sep 2026	4.3 Schulweg-Detektive	Android-Entwicklerbestätigung für PWA-APK prüfen
 15.05.2027	1.5 AGFK-SL	Lizenz „AGFK Saarland" läuft ab → Verlängerung
 27.05.2027	1.5 AGFK-SL	Lizenz „AGFK Honorarkraft" läuft ab
+30.09.2027	Förderung (FRL-NMOB)	Nächster Jahres-Stichtag
 Anfang 2028	2.9 Vergabe-Assistent	Neue EU-Schwellenwerte einpflegen (aktuelle Werte gelten bis 31.12.2027)
 Entfallen 11.08.: Alle Radherbst-Fristen (Versand · Rückmeldung 25.08. · Aktionszeitraum 01.09.–15.10.) – die Aktion findet nicht statt (→ 1.4)
 Geklärt 22.09.: AGFK-SL – Angebot 2026-AGFK-03 und Nutzungsvereinbarung versendet · RadPlan Pro `neubau` mit Unfallatlas live, erster Echtfall L 114 Altstadt erfolgreich, `main` bleibt stabiler Strang
@@ -468,10 +466,10 @@ Diese Datei liegt im öffentlichen Repo – deshalb hier keine Klartext-Codes. A
 Zugang	Code-Wert	Gültig bis / Status
 Kommandozentrale (`2rat.org/cmd`)	→ Passwortmanager (Wert vermutlich im Chat des Tool-Portal-Projekts – übertragen!)	rotiert 19.07.2026 (alter Code ungültig)
 „2Rat intern" (Portal, Vollzugang)	→ Passwortmanager (= Admin-Code aus 05/2026)	im Array bis 2099 · aktiv ✓
-AGFK Saarland (Portal)	→ Passwortmanager	15.05.2027 · Projekt-Check dauerhaft, übrige 4 Tools bis 30.09.2026
+AGFK Saarland (Portal)	→ Passwortmanager	15.05.2027 · Projekt-Check dauerhaft, übrige 4 Tools seit 30.09.2026 ausgeblendet ✓
 AGFK Honorarkraft (Portal)	→ Passwortmanager	27.05.2027 · 5-Tool-Suite
-RAD-Lab (Portal, Beta-Test → 2.13)	→ Passwortmanager (Wert dort noch nachtragen!)	30.09.2026 · danach Lizenz-Zeile entfernen
-„Kritischer Blick“ (Portal, Testaktion → 2.13)	→ Passwortmanager (Wert dort noch nachtragen!)	30.09.2026 · danach Lizenz-Zeile entfernen
+RAD-Lab (Portal, Beta-Test → 2.13)	→ Passwortmanager (Wert dort noch nachtragen!)	abgelaufen 30.09.2026 · Lizenz-Zeile noch entfernen
+„Kritischer Blick“ (Portal, Testaktion → 2.13)	→ Passwortmanager (Wert dort noch nachtragen!)	abgelaufen 30.09.2026 · Lizenz-Zeile entfernt ✓ (Repo-Abgleich 13.10.)
 Demo Tool-Portal	(deaktiviert)	am 24.06.2026 auskommentiert (Altlast ohne `tools`-Filter)
 Cockpit (`cockpit.html`)	→ Passwortmanager	—
 RadPlan Pro	→ Passwortmanager (Wert vermutlich im Chat des RadPlan-Pro-Projekts – übertragen!)	rotiert 19.07.2026
@@ -481,4 +479,4 @@ Eine Datei, eine Wahrheit – und die liegt auf GitHub. `Werkzeuge/privat/projek
 Updates immer über Claude, immer komplett. „Claude, Vorhaben X ist jetzt Y" → Claude holt die Live-Version, patcht, liefert die komplette Datei → Armin committet. Auch 📮-Meldungen aus anderen Claude-Projekten laufen so ein – dieses Dokument ist der zentrale Ablageplatz, die anderen Projekte sind Werkstätten.
 Wöchentlicher Blick auf 🔥 AKUT. Der Block oben ist das Erste, was man sieht. Fristen erledigt → raus. Neues Dringendes → rein. Wenn AKUT länger als 8 Zeilen wird: aufräumen. Keine Klartext-Codes in diese Datei – das Repo ist öffentlich.
 Geschäftsinterna bleiben draußen – auch in der Formulierung. Preise, Vertriebsstrategie, Rechtliches, Kundeninterna → nur im Projekt „BÜRO 2Rat". Ins zentrale Verzeichnis wandern ausschließlich Status + Fristen + Verweis – nie Inhalte. Diese Datei ist über die raw-URL ohne Anmeldung öffentlich lesbar (der Ordnername `privat` schützt nichts). Deshalb auch keine Angaben zum Zahlungsstand, zu Verhandlungsabsichten oder zur Finanzlage einer Kommune – Kunden können hier mitlesen. Neutral formulieren: „Abrechnung offen" statt „Zahlung ausstehend", „Gespräch über Fortsetzung" statt „Upsell".
-2Rat – Büro für Radverkehrsplanung · Stand: 30.09.2026
+2Rat – Büro für Radverkehrsplanung · Stand: 13.10.2026
