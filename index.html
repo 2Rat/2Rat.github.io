@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>2Rat – Büro für Radverkehrsplanung | Saarland</title>
-  <meta name="description" content="Radverkehrsplanung für saarländische Kommunen: Bürgerbeteiligung, Prüfung bestehender Radverkehrskonzepte und Maßnahmenplanung bis zur Ausschreibungsreife.">
+  <meta name="description" content="Radverkehrsplanung für saarländische Kommunen: Radverkehrskonzepte, Bürgerbeteiligung, Prüfung bestehender Konzepte, Fahrradstraßen, Beschilderung und Markierung bis zur Ausschreibungsreife.">
   <meta name="author" content="2Rat – Büro für Radverkehrsplanung, Armin Jung">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.2rat.org/">
   <meta property="og:title" content="2Rat – Büro für Radverkehrsplanung | Saarland">
-  <meta property="og:description" content="Radverkehrsplanung für saarländische Kommunen: Bürgerbeteiligung, Prüfung bestehender Radverkehrskonzepte und Maßnahmenplanung bis zur Ausschreibungsreife.">
+  <meta property="og:description" content="Radverkehrsplanung für saarländische Kommunen: Radverkehrskonzepte, Bürgerbeteiligung, Prüfung bestehender Konzepte, Fahrradstraßen, Beschilderung und Markierung bis zur Ausschreibungsreife.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.2rat.org/">
   <meta property="og:image" content="https://www.2rat.org/Logo_2Rat_clean.png">
@@ -44,7 +44,7 @@
       "@type": "AdministrativeArea",
       "name": "Saarland"
     },
-    "knowsAbout": ["Radverkehrsplanung", "Radverkehrskonzept", "Bürgerbeteiligung", "Radinfrastruktur", "Fördermittelberatung"],
+    "knowsAbout": ["Radverkehrsplanung", "Radverkehrskonzept", "Radverkehrsnetz", "Fahrradstraße", "Radwegebenutzungspflicht", "Fahrradparken", "Radwegweisung", "Bürgerbeteiligung", "Fördermittelberatung"],
     "priceRange": "€€"
   }
   </script>
@@ -170,6 +170,13 @@
     .tag--frei{color:var(--green-dark);border-color:#C9DEB9}
     .nachsatz{margin:26px 0 0;font-size:16px;color:var(--text-light);max-width:40em}
 
+    /* Planungsthemen */
+    .planung{margin-top:76px;padding-top:56px;border-top:1px solid var(--line)}
+    .plan{display:grid;grid-template-columns:repeat(4,1fr);gap:38px 34px}
+    .plan h3{font-size:18.5px;margin:0 0 8px}
+    .plan p{margin:0;font-size:15.5px;line-height:1.55}
+    .plan .ico{width:28px;height:28px;margin-bottom:14px}
+
     /* Referenz / Zahlen */
     .ref{display:grid;grid-template-columns:1.05fr 1fr;gap:68px;align-items:center}
     .zahlen{display:flex;gap:44px;margin:32px 0 0;flex-wrap:wrap}
@@ -216,6 +223,8 @@
       .hero{padding:48px 0 44px}
       .hero__grid,.ref,.person,.kontakt{grid-template-columns:1fr;gap:38px}
       .drei,.zwei{grid-template-columns:1fr;gap:42px}
+      .plan{grid-template-columns:repeat(2,1fr);gap:32px 28px}
+      .planung{margin-top:56px;padding-top:44px}
       section{padding:60px 0}
       .cta-sub{display:block;margin:20px 0 0}
       .zahlen{gap:28px}
@@ -223,6 +232,7 @@
       .tool__meta{flex-direction:row;align-items:center;gap:16px}
       .person img{max-width:300px}
     }
+    @media(max-width:560px){.plan{grid-template-columns:1fr;gap:28px}}
     @media(prefers-reduced-motion:reduce){
       *{animation:none!important;transition:none!important}
       .pin{opacity:1;transform:none}
@@ -260,7 +270,7 @@
             <span class="q">Ich bringe es in die Umsetzung.</span></h1>
           <p class="lead">Bürgermeldungen einsammeln, mit Ihrem bestehenden Konzept
             abgleichen, priorisieren – und die ersten Maßnahmen so weit planen, dass
-            Sie ausschreiben können.</p>
+            Sie ausschreiben können. Noch kein Konzept? Dann erstelle ich es.</p>
           <a href="#kontakt" class="cta">Erstberatung anfragen</a>
           <a href="#referenz" class="cta-sub">So lief es in Wadgassen</a>
         </div>
@@ -338,6 +348,65 @@
           <a href="#umsetzung" class="link">Umfang und Grenzen</a>
         </div>
 
+      </div>
+
+      <!-- Planungsthemen -->
+      <div class="planung" id="planung">
+        <p class="eyebrow">Planungsthemen</p>
+        <h2>Was ich plane</h2>
+        <p class="sec__intro">Vom Gesamtnetz bis zur einzelnen Engstelle, mit fertigen
+          Unterlagen für Verwaltung und Rat.</p>
+        <div class="plan">
+
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6.2 7.7l4.6 8.6M17.8 7.7l-4.6 8.6"/></svg>
+            <h3>Radverkehrskonzept und Netzplanung</h3>
+            <p>Alltagsnetz für Ihre Kommune, Lückenanalyse, Maßnahmenliste mit Prioritäten. Auf Wunsch mit Konzept für die Wegweisung.</p>
+          </div>
+
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M7 17L17 7"/></svg>
+            <h3>Benutzungspflicht prüfen</h3>
+            <p>Ich prüfe die Beschilderung auf Ihren Radwegen nach StVO und VwV-StVO 2025. Wo die Pflicht nicht mehr zulässig ist, bereite ich die Aufhebung vor.</p>
+          </div>
+
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21V3M16 21V3"/><path d="M12 5v3M12 11v3M12 17v3"/></svg>
+            <h3>Fahrradstraßen und Fahrradzonen</h3>
+            <p>Eignungsprüfung, Entwurf der Anordnung, Plan für Beschilderung und Markierung.</p>
+          </div>
+
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13M13 4l4 4-4 4"/><path d="M20 16H7M11 12l-4 4 4 4"/></svg>
+            <h3>Einbahnstraßen öffnen</h3>
+            <p>Welche Einbahnstraßen sich für den Radverkehr in Gegenrichtung freigeben lassen und wie sie beschildert werden.</p>
+          </div>
+
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21L8 3M19 21L16 3"/><path d="M12 4v2.5M12 9.5V12M12 15v2.5M12 20.5V21"/></svg>
+            <h3>Schutzstreifen und Markierung</h3>
+            <p>Von der Bestandsaufnahme bis zum Leistungsverzeichnis.</p>
+          </div>
+
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V11a4 4 0 0 1 8 0v9"/><path d="M12 20V11a4 4 0 0 1 8 0v9"/><path d="M2 20h20"/></svg>
+            <h3>Fahrradparken und Bike+Ride</h3>
+            <p>Bedarf, Standorte und Aufstellplanung nach DIN 79008.</p>
+          </div>
+
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.5"/><path d="M8 6l1.5-2.5h5L16 6"/></svg>
+            <h3>Befahrung und Mängelkataster</h3>
+            <p>Ich fahre Ihr Netz ab und dokumentiere jede Stelle mit Fotos. Am Ende haben Sie ein Maßnahmenblatt je Stelle.</p>
+          </div>
+
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5"/><path d="M8 12.5h8M8 16h5"/></svg>
+            <h3>Fördermittel und Stellungnahmen</h3>
+            <p>Zuordnung zur Landesförderung, Unterstützung beim Antrag, fachliche Stellungnahme zu Straßen- und Bebauungsplänen.</p>
+          </div>
+
+        </div>
       </div>
     </div>
   </section>
