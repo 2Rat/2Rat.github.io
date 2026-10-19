@@ -26,8 +26,3 @@ Format je Meldung:
 ## Offen
 
 
-### 2026-10-15 · 2Rat Radwegemelder und Webseite und Dashbord · 2rat.org
-- Was: Zertifikatsfehler auf www.2rat.org (ERR_CERT_COMMON_NAME_INVALID) behoben – Zertifikatserneuerung bei GitHub Pages hing am DNS-Check; Custom Domain entfernt und neu eingetragen. DNS-Einträge waren korrekt.
-- Status neu: HTTPS läuft wieder
-- Frist: —
-- AKUT: nein
