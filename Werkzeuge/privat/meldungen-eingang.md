@@ -38,3 +38,9 @@ Format je Meldung:
 - Status neu: live; nächste Schritte Netlify Pro, Probepasswort, Prüfung durch AGFK-SL.
 - Frist: Repo privat 27.10. · Freischaltung 02.11.
 - AKUT: nein
+
+### 2026-10-19 · Tools Zuständigkeit/Fördermittel (AGFK-Werkzeuge) · 2.15
+- Was: Paket 3 geliefert (noch nicht deployed): Projekt-Check v15 (Standort-Hinweise oben in der Ergebniskarte, kein Sprung beim Laden), Zuständigkeiten v46 (Abstellanlagen-Hinweise beginnen mit „Handlungsempfehlung AGFK-SL“), Fördermittel-Finder v10, Vergabe-Assistent v8, so-gehts/impressum/datenschutz – auf allen Seiten blauer Button „← Zur Übersicht“. Prüflisten für Armin und AGFK-SL beigelegt.
+- Status neu: Paket 3 wartet auf Deploy durch Armin; danach zweite Prüfung durch AGFK-SL.
+- Frist: Repo privat 27.10. · Freischaltung 02.11.
+- AKUT: nein
