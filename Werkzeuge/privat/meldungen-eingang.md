@@ -32,3 +32,9 @@ Format je Meldung:
 - Status neu: Paket 2 geliefert, Deployment durch Armin ausstehend; danach Netlify Pro + Probepasswort; AGFK-SL prüft noch einmal.
 - Frist: Deploy bis 23.10. · Repo privat 27.10. · Freischaltung 02.11.
 - AKUT: nein
+
+### 2026-10-19 · Tools Zuständigkeit/Fördermittel (AGFK-Werkzeuge) · 2.15
+- Was: Paket 2 ist live auf werkzeuge.agfk-sl.de und durch Armin abgenommen (Projekt-Check v14, Zuständigkeiten v45, Fördermittel-Finder v9, Vergabe-Assistent v7, index, datenschutz, Hilfe-Bilder). Befund für Paket 3: Konflikt-Hinweise auch im Ergebnis-Kasten anzeigen.
+- Status neu: live; nächste Schritte Netlify Pro, Probepasswort, Prüfung durch AGFK-SL.
+- Frist: Repo privat 27.10. · Freischaltung 02.11.
+- AKUT: nein
