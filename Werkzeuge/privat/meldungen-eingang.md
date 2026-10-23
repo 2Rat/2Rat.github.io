@@ -56,3 +56,9 @@ Format je Meldung:
 - Status neu: Paket 4 wartet auf Deploy durch Armin. Offen: Auftragsannahme + Nutzungsvereinbarung (bis 26.10.), Passwort + Repo privat 27.10., Rücklink AGFK-Website, Freischaltung 02.11.
 - Frist: Auftragsannahme 26.10. · Repo privat 27.10. · Freischaltung 02.11.
 - AKUT: nein
+
+### 2026-10-23 · Tools Zuständigkeit/Fördermittel (AGFK-Werkzeuge) · 2.15
+- Was: Paket 4 ist live (PC v16, ZU v47, FF v11, VA v9); Vorschau-Sperre weg, Browser-Titel AGFK-SL. Werkzeuge damit fertig und von der AGFK-SL gegengeprüft. Mails an Yannick (Abschluss) und Geschäftsstelle (Passwort + Adresse für Rücklink) vorbereitet.
+- Status neu: fertig, wartet auf Passwort (Nicole/Irene), Rücklink-Adresse, Auftragsannahme; 27.10. Passwort + Repo privat; 02.11. Freischaltung + Rechnung.
+- Frist: Auftragsannahme 26.10. · Repo privat 27.10. · Freischaltung 02.11.
+- AKUT: nein
