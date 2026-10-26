@@ -25,3 +25,9 @@ Format je Meldung:
 
 ## Offen
 
+
+### 2026-10-26 · Tools Zuständigkeit/Fördermittel (AGFK-Werkzeuge) · 2.15
+- Was: Nicole (AGFK-SL) hat geantwortet: Link-Seite ist https://agfk-sl.de/arbeitshilfen-fachinformationen/ (neuer Tab), Passwort kommt per WhatsApp. Rücklink „Zurück zur AGFK-SL" in index.html eingebaut, Datei zum Hochladen geliefert. Geprüft: VwV-StVO-Tool im Hauptrepo (v11) lädt Karte/Geodaten lokal – Repo agfk-werkzeuge kann privat werden.
+- Status neu: Rücklink geliefert, Upload durch Armin offen; Auftragsannahme steht noch aus (Angebot gültig bis 31.10.); 27.10. Netlify Pro + Passwort + Repo privat; 02.11. Freischaltung + Rechnung.
+- Frist: Repo privat 27.10. · Freischaltung 02.11.
+- AKUT: nein
