@@ -43,3 +43,9 @@ Format je Meldung:
 - Status neu: live, Vorführung 03.11. Eigene Domain (vwv.2rat.org) und Zielgruppe (AGFK-Erweiterung 2027 / andere Länder) offen – Entscheidung nach der Konferenz.
 - Frist: 03.11.2026 Konferenz
 - AKUT: nein
+
+### 2026-10-27 · VwV-StVO 2Rat (App) · Zugang
+- Was: Entscheidung Armin: App nicht offen, sondern personalisierter, befristeter Zugang per signiertem Link (v13 live). Lokaler Generator vwv-zugang-generator.html (privater Schlüssel, nur bei Armin) erzeugt Link + QR + WhatsApp, Standard-Ablauf 30.11.2026, Liste mit CSV-Export. Ohne/abgelaufenen Link nur Hinweis mit Kontakt. Armin hat Dauerzugang.
+- Status neu: Vorführung 03.11. Düsseldorf mit Links für Interessenten; Nachfassen bis 30.11. Cloudflare Access als Dauerlösung nach der Konferenz prüfen.
+- Frist: 30.11.2026 Ablauf Konferenz-Links
+- AKUT: nein
