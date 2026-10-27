@@ -37,3 +37,9 @@ Format je Meldung:
 - Status neu: Seite läuft passwortgeschützt unter werkzeuge.agfk-sl.de. Offen: Cookie-Satz in datenschutz.html, claude.md aus dem Deploy nehmen, Auftragsannahme Irene (Angebot bis 31.10.), 02.11. Freischaltung + Rechnung.
 - Frist: Freischaltung 02.11.
 - AKUT: nein
+
+### 2026-10-27 · VwV-StVO 2Rat (App) · neues Vorhaben
+- Was: VwV-StVO-Tool (v12) als installierbare Web-App (PWA) für die Fahrradkommunalkonferenz Düsseldorf am 03.11.2026. Eigenes privates Repo 2Rat/vwv-stvo, Netlify-Site vwv-stvo-2rat.netlify.app (kein Passwort, Vorführfassung „Beispiel Saarland“), offline nutzbar außer Karte. Auf Android getestet: Installation, Offline, Karte laufen.
+- Status neu: live, Vorführung 03.11. Eigene Domain (vwv.2rat.org) und Zielgruppe (AGFK-Erweiterung 2027 / andere Länder) offen – Entscheidung nach der Konferenz.
+- Frist: 03.11.2026 Konferenz
+- AKUT: nein
