@@ -1,17 +1,17 @@
 2Rat – Büro für Radverkehrsplanung
 Armin Jung · Radverkehrsplaner EIPOS · www.2rat.org
 2Rat – Gesamt-Projektverzeichnis
-Stand: 26.10.2026
-Anzahl Vorhaben (konsolidiert): 41
-Quellen: Fassung 05.05.2026 · fortgeschrieben über 📮-Meldungen aus den Werkstatt-Projekten (Historie je Vorhaben) · letzte Meldungen 19.–23.10.2026 (AGFK-Werkzeuge: Pakete 2–4 live auf werkzeuge.agfk-sl.de · zweite Prüfung AGFK-SL abgeschlossen · Vorschau-Sperre entfernt) · davor 19.10.2026 (2rat.org: Zertifikatsfehler behoben, HTTPS läuft wieder) · davor 03.10.2026 (AGFK-Übersichtsseite: neue Symbol-Kacheln, index.html Stand 10/2026 geliefert) · davor 02.10.2026 (Einbahnstraßen-Scan: Entscheidung bundesweit mit Live-Abfrage je Gemeinde · Overpass-Testseite v2 geliefert) · davor 30.09.2026 (AGFK-Kennenlern-Zugänge im Portal abgelaufen · AGFK-Vorschau für drei Werkzeuge bis 31.10.2026 befristet · AGFK-SL: Stichproben-Durchsicht im Oktober, Freischaltung unter eigener AGFK-Subdomain geplant 02.11.2026) · davor 22.09.2026 (AGFK-SL: Angebot und Nutzungsvereinbarung versendet · RadPlan Pro `neubau` mit Unfallatlas live, erster Echtfall L 114) · davor 21.09.2026 (Geodaten-Lizenz durch MUKMAV bestätigt · Unfallatlas-Modul · Zuständigkeiten v41, Projekt-Check v9, VwV-StVO v9 · beide Repos gleichauf) · davor 17.09.2026 (Projekt-Check v8 mit Geodatenabgleich und Konfliktprüfung · eine Quelldatei für AGFK- und 2Rat-Fassung · LfS-Inhalte AGFK-SL 02.09.) · davor 13.09.2026 (RadPlan Pro: Neubau Modell 7.1 als Branch-Deploy · Architekturentscheidung Felderfassung/Google Drive · neues Kundenprojekt Stadt Lebach) · Aufräumdurchlauf 02.09.2026 (Historie eingedampft, Widersprüche bereinigt)
+Stand: 02.11.2026
+Anzahl Vorhaben (konsolidiert): 42
+Quellen: Fassung 05.05.2026 · fortgeschrieben über 📮-Meldungen aus den Werkstatt-Projekten (Historie je Vorhaben) · letzte Meldungen 26.–27.10.2026 (AGFK-Werkzeuge: Rücklink live, Zugangsschutz aktiv, Repo privat, GitHub-Pages-Adresse beendet · neues Vorhaben 4.5 VwV-StVO-App, Vorführung 03.11., Zugang per befristetem Link) · davor 19.–23.10.2026 (AGFK-Werkzeuge: Pakete 2–4 live auf werkzeuge.agfk-sl.de · zweite Prüfung AGFK-SL abgeschlossen · Vorschau-Sperre entfernt) · davor 19.10.2026 (2rat.org: Zertifikatsfehler behoben, HTTPS läuft wieder) · davor 03.10.2026 (AGFK-Übersichtsseite: neue Symbol-Kacheln, index.html Stand 10/2026 geliefert) · davor 02.10.2026 (Einbahnstraßen-Scan: Entscheidung bundesweit mit Live-Abfrage je Gemeinde · Overpass-Testseite v2 geliefert) · davor 30.09.2026 (AGFK-Kennenlern-Zugänge im Portal abgelaufen · AGFK-Vorschau für drei Werkzeuge bis 31.10.2026 befristet · AGFK-SL: Stichproben-Durchsicht im Oktober, Freischaltung unter eigener AGFK-Subdomain geplant 02.11.2026) · davor 22.09.2026 (AGFK-SL: Angebot und Nutzungsvereinbarung versendet · RadPlan Pro `neubau` mit Unfallatlas live, erster Echtfall L 114) · davor 21.09.2026 (Geodaten-Lizenz durch MUKMAV bestätigt · Unfallatlas-Modul · Zuständigkeiten v41, Projekt-Check v9, VwV-StVO v9 · beide Repos gleichauf) · davor 17.09.2026 (Projekt-Check v8 mit Geodatenabgleich und Konfliktprüfung · eine Quelldatei für AGFK- und 2Rat-Fassung · LfS-Inhalte AGFK-SL 02.09.) · davor 13.09.2026 (RadPlan Pro: Neubau Modell 7.1 als Branch-Deploy · Architekturentscheidung Felderfassung/Google Drive · neues Kundenprojekt Stadt Lebach) · Aufräumdurchlauf 02.09.2026 (Historie eingedampft, Widersprüche bereinigt)
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Werkstatt-Projekte melden in `Werkzeuge/privat/meldungen-eingang.md` → montags 7:04 automatische Einarbeitung ins Verzeichnis (geplante Aufgabe „2Rat Eingangskorb einarbeiten“, Commit direkt auf `main`). Manuell jederzeit im HUB „Projektübersicht 2Rat“ möglich.
 ---
 🔥 AKUT – Das zählt jetzt
 Wann	Was	Wo
-26.10. / 27.10.2026	AGFK-Werkzeuge (→ 2.15): 26.10. Auftragsannahme + Nutzungsvereinbarung · 27.10. Zugangsschutz aktivieren + Repo privat (⚠️ vorher Geodaten-Pfade der `kunden/`-Werkzeuge prüfen, → 2.16) · 02.11. Freischaltung	Tool-Portal / BÜRO 2Rat
+02.11.2026	AGFK-Werkzeuge (→ 2.15): Freischaltung + Abrechnung · Zugangsschutz + Repo privat erledigt ✓ (26.10.) · Restpunkte: Cookie-Satz in `datenschutz.html`, `claude.md` aus dem Deploy nehmen · ⚠️ `kunden/`-Fassungen von Projekt-Check und Zuständigkeiten laden laut Repo-Prüfung 02.11. noch über die beendete Adresse `2rat.org/agfk-werkzeuge/` – Pfade umstellen (→ 2.16)	Tool-Portal / BÜRO 2Rat
 prüfen	Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den Passwortmanager übertragen, bevor die 30-Tage-Session abläuft	Tool-Portal / RadPlan
 offen / jetzt	Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe und Abrechnung · parallel Freigabe für Referenznennung + Zitate einholen – aus der RAD-Lab-Runde und aus der Aktion „Kritischer Blick“ (Zitate liegen vor, Freigabe der Zitierenden steht aus)	Tool-Portal
-läuft	AGFK-SL: Angebot raus (22.09.) – Auftragsannahme abwarten · Behördenanschriften abwarten · zweite Prüfung der Werkzeuge abgeschlossen (23.10.) ✓ · 31.10. Angebotsgültigkeit endet · Rücklink-Adresse AGFK-Website und Zugangsschutz mit der Geschäftsstelle abstimmen · parallel Anfrage an Nicole: Freigabe der Logo-Verwendung (→ 2.15)	Tool-Portal / BÜRO 2Rat
+läuft	AGFK-SL: Auftragsannahme + Nutzungsvereinbarung laut letzter Meldung (26.10.) offen, Angebotsgültigkeit 31.10. verstrichen – klären · Behördenanschriften abwarten · parallel Freigabe der Logo-Verwendung bei der Geschäftsstelle anfragen (→ 2.15)	Tool-Portal / BÜRO 2Rat
 überfällig	Zuständigkeiten: St. Ingbert als eigene Straßenverkehrsbehörde telefonisch klären (§ 7 Abs. 1 StVZustG nennt sie nicht, Regionalverband bestätigt Völklingen als Mittelstadt mit eigener Behörde) – Recherche als Kommentar an der Todoist-Aufgabe	Tool-Portal
 jetzt	Projekt-Check v9 / Zuständigkeiten v41 (beide Repos live): Browsertest Unfallzeile und Konfliktprüfung durch Armin · Quellenvermerk „© GDI-SL 2026, CC BY 4.0“ in den AGFK-Fassungen einspielen (geliefert 21.09.) · danach Freigabe an die AGFK-Tester (→ 2.11, 2.16)	Tool-Portal
 offen	Geodaten: Verkehrsmengen L1/L2 noch nicht freigegeben – Rückmeldung LfS abwarten · Live-Test Overpass/Nominatim im VwV-Tool v9 (Einrichtungen, Querungen, Adresssuche)	Tool-Portal
@@ -71,7 +71,7 @@ Vergabe-Assistent im Paket: Nach Variante B ist der Vergabe-Assistent (→ 2.9) 
 AGFK-Vorschau live (24.08.2026): Die vier Werkzeuge stehen als AGFK-Fassung unter `2rat.org/agfk-werkzeuge/` zur Ansicht bereit – vollständig in den AGFK-Hausfarben, mit Logo und korrekter Verbandsbezeichnung (→ 2.15). Grundlage fürs Gespräch, ersetzt keine Freigabe.
 Stand 30.09.2026: Stichproben-Durchsicht der Werkzeuge durch die AGFK-SL im Oktober · Bereitstellung unter eigener AGFK-Subdomain geplant (Repo `agfk-werkzeuge`, → 2.15), Freischaltung geplant 02.11.2026 · Angebot 2026-AGFK-03 gültig bis 31.10.2026. Einzelheiten → Projekt „BÜRO 2Rat“.
 Logo: derzeit die von der Verbandswebsite übernommene Fassung eingebunden – Originaldatei und Freigabe der Verwendung bei Nicole anfragen.
-Nächster Schritt: (23.10.2026) Werkzeuge von der AGFK-SL zum zweiten Mal geprüft und fertig – Auftragsannahme + Nutzungsvereinbarung bis 26.10. offen, Freischaltung 02.11. (→ 2.15) · 05.10.2026 Eingang der Behördenanschriften prüfen · 13.10.2026 Angebot nachfassen · Termin vereinbaren; Logo-Originaldatei und Freigabe bei Nicole anfragen; Bereitstellungsweg im Gespräch klären (Empfehlung Subdomain/CNAME, → 2.15); Referenzfreigabe kurzfristig einholen; vor 30.09.2026 Gespräch über die Fortsetzung der Kennenlern-Zugänge
+Nächster Schritt: (26.10.2026) Auftragsannahme + Nutzungsvereinbarung offen, Angebotsgültigkeit 31.10. verstrichen – klären · 02.11. Freischaltung + Abrechnung (→ 2.15) · 05.10.2026 Eingang der Behördenanschriften prüfen · 13.10.2026 Angebot nachfassen · Termin vereinbaren; Logo-Originaldatei und Freigabe bei der Geschäftsstelle anfragen; Bereitstellungsweg im Gespräch klären (Empfehlung Subdomain/CNAME, → 2.15); Referenzfreigabe kurzfristig einholen; vor 30.09.2026 Gespräch über die Fortsetzung der Kennenlern-Zugänge
 1.6 Thalexweiler Netto (L 304)
 Kunde / Partner: Stadt Lebach
 Zweck: Begutachtung einer Radverkehrssituation an der L 304 (Einmündungs-/Zufahrtsbereich Netto Thalexweiler) mit Ortstermin und schriftlicher Auswertung – erster Kundenauftrag, der vollständig über RadPlan Pro und den Skill `radplan-bericht` läuft.
@@ -206,31 +206,32 @@ Nächster Schritt: Werkzeugdokumentation als PDF neben das Werkzeug legen oder v
 Kunde / Partner: eigen (Vorschauzugang für die AGFK-SL)
 Claude-Projekt: fachlich „2Rat Werkzeuge / Tool-Portal“
 Zweck: Vorschau der AGFK-Fassungen für die AGFK-SL – Projekt-Check, Zuständigkeiten, Fördermittel-Finder und Vergabe-Assistent ohne Zugangscode erreichbar, Kopfzeile auf die AGFK abgestellt, 2Rat-Vermerk in der Fußzeile nach § 6 der Nutzungsvereinbarung. Dazu eine eigene AGFK-Portalseite (Kacheln mit Schrittziffern 1–4, „Werkzeug öffnen“, Hover-Farbkante, sichtbarer Tastaturfokus; behoben: Kacheln liefen auf schmalen Bildschirmen aus dem Bild, leeres `src`-Attribut).
-Repo: github.com/2Rat/agfk-werkzeuge (öffentlich, GitHub Pages aktiv) · Live: `2rat.org/agfk-werkzeuge/`
+Repo: github.com/2Rat/agfk-werkzeuge (privat seit 26.10.2026, GitHub Pages beendet) · Live: `werkzeuge.agfk-sl.de` (Netlify, zugangsgeschützt)
 Warum eigenes Repo: GitHub Pages bindet eine eigene Domain immer an ein Repository; die des Hauptrepos ist mit `2rat.org` belegt. Eine spätere AGFK-Subdomain wäre aus einem Unterordner heraus nicht möglich gewesen. Die zuvor im Hauptrepo abgelegten Dateien sind dort entfernt.
-Status: live (24.08.2026) · `noindex, nofollow` auf der AGFK-Portalseite gesetzt, damit die Vorschauadresse nicht in den Suchindex gerät (Hinweis steht im Quelltext)
+Status: live, zugangsgeschützt (26.10.2026) · `noindex, nofollow` auf der AGFK-Portalseite gesetzt, damit die Vorschauadresse nicht in den Suchindex gerät (Hinweis steht im Quelltext)
 Prüfung der vier Fassungen (24.08.2026): gegen die Live-Stände in `Werkzeuge/kunden/` gediffed – sauber abgeleitet, je nur vier bis fünf gezielte Branding-Abweichungen, keine Altbestände. Grundlage: Zuständigkeiten v34, Projekt-Check v6, Fördermittel-Finder v5, Vergabe-Assistent v3. Behoben: abweichende Versionsangabe im Projekt-Check (statischer Fallback v5 gegen Versionskonstante v6), ungenutzte Base64-Logokonstante in allen vier Dateien, fehlende Verlinkung von `www.2rat.org` im Vergabe-Assistenten, doppelte Kopfzeile „Lizenz: AGFK-SL“ entfernt (Exportvermerke und Fußzeile unverändert).
 Farbgebung (Entscheidung 24.08.2026): Die AGFK-Fassung läuft in den Hausfarben der AGFK (Petrol `#14AB9B`, Dunkelblau `#114B7D`), das 2Rat-Grün bleibt den eigenen Fassungen unter `kunden/` vorbehalten – Trennung von Produktoberfläche und eigener Marke, zugleich Beleg der Einkleidbarkeit für weitere Landes-AGFKs. Für farbigen Text ein abgedunkeltes Petrol (`#0C7A6C`), da der Markenton auf Weiß die Kontrastschwelle unterschreitet. Semantische Farben ausgenommen: Ampellogik im Vergabe-Assistenten und Erfolgsmeldung im Fördermittel-Finder. Nebenbei zwei Kontrastmängel behoben (Quellen-Badge „SL“, Praxis-Legende in den Zuständigkeiten).
 Logo und Bezeichnung: AGFK-Logo als `agfk-logo.png` im Repo eingebunden (echte Logodatei, transparenter Rand beschnitten) – offen ist nur noch die Freigabe der Verwendung durch die AGFK-SL (Anfrage an Nicole). Verbandsbezeichnung nach Impressum: „Arbeitsgemeinschaft fahrradfreundlicher Kommunen im Saarland e.V. (AGFK-SL)“; Fußzeile in allen Dateien angepasst, Kopfzeile bleibt ohne „e.V.“ (dort in Versalien gesetzt).
 Stand 02.09.2026: Alle vier AGFK-Fassungen auf den neuen Stand gebracht und live bestätigt (Zuständigkeiten v35, Fördermittel-Finder v6, Projekt-Check v7, Vergabe-Assistent v5) – inhaltlich wieder deckungsgleich mit `Werkzeuge/kunden/`, der Unterschied ist reines Branding. Stand 21.09.2026: Zuständigkeiten v41 und Projekt-Check v9 hier und in `kunden/` gleichauf (→ 2.2, 2.11). Umfang bleibt bei vier Werkzeugen, VwV-StVO 2025 gehört nicht dazu (→ 3.4).
 Infrastruktur bestätigt (02.09.2026): Pages läuft auf `main`/root, HTTPS wird erzwungen, die Domain `2rat.org/agfk-werkzeuge/` wird über das Hauptrepo vererbt – kein eigener CNAME nötig. `robots.txt` ist optional, das Meta-`noindex` genügt. Korrektur einer früheren Notiz: Einen `master`-Branch gab es nie (Fehldeutung einer raw-URL) – Punkt gestrichen.
 ⚠️ Doppelpflege – Entscheidung 02.09.2026, fortgeschrieben 21.09.2026: Das AGFK-Repo war eine physische Branding-Kopie von `kunden/`. Für Projekt-Check (seit v8) und Zuständigkeiten (seit v41) gilt das Runtime-Branding: eine Quelldatei, Marke über `data-brand` (agfk/2rat); die `kunden/`-Fassungen unterscheiden sich nur in `data-brand` und den Skriptpfaden. Für Fördermittel-Finder und Vergabe-Assistent steht die Zusammenführung nach Testende weiterhin aus.
-Architektur Geodaten (21.09.2026): `rp-geo.js`, `rp-unfaelle.js` und Leaflet liegen nur im AGFK-Repo; die `kunden/`-Werkzeuge laden sie absolut über `2rat.org/agfk-werkzeuge/` (gleiche Origin). Abhängigkeit: Zieht das AGFK-Repo um (Subdomain), sind drei Pfade in drei `kunden/`-Dateien nachzuziehen (→ 2.16).
+Architektur Geodaten (21.09.2026): `rp-geo.js`, `rp-unfaelle.js` und Leaflet liegen nur im AGFK-Repo; die `kunden/`-Werkzeuge laden sie absolut über `2rat.org/agfk-werkzeuge/` (gleiche Origin). ⚠️ Repo-Prüfung 02.11.2026: VwV-StVO lädt inzwischen lokal, Projekt-Check und Zuständigkeiten in `kunden/` noch über die seit 26.10. beendete Adresse – nachziehen (→ 2.16).
 Planung 30.09.2026: Bereitstellung unter eigener AGFK-Subdomain aus diesem Repo, Freischaltung geplant 02.11.2026; im Oktober Stichproben-Durchsicht durch die AGFK-SL (→ 1.5). ⚠️ Die Befristung der Vorschau greift am 01.11. – ein Tag Lücke bis zur Freischaltung, ggf. Befristung bei Zusage vorher entfernen. → erledigt 23.10.2026: Vorschau-Sperre entfernt ✓
 Vorschau-Befristung (30.09.2026): Die Vorschau lief ohne Code und ohne Ablauf am Portal vorbei – die Portal-Befristung der Kennenlern-Tools (→ 1.5) griff hier nicht. Neu: Befristungsblock `VORSCHAU_BIS` im Kopf von Zuständigkeiten, Fördermittel-Finder und Vergabe-Assistent – ab 01.11.2026 erscheint statt des Werkzeugs ein Hinweis „Vorschau beendet“ mit 2Rat-Kontakt. Reine Browserprüfung (umgehbar, für eine Vorschau ausreichend). Greift nicht bei `data-brand="2rat"`, die `kunden/`-Fassungen bleiben unberührt. Projekt-Check (beauftragt), Portalseite und Geodaten-Bündel ohne Befristung. Im Browser mit simuliertem Datum getestet ✓.
 Übersichtsseite (Entscheidung 03.10.2026): neue Kachel-Gestaltung „Symbol-Kacheln“ – Symbol, Schritt-Angabe und Knopf statt Randbalken. `index.html` (Stand 10/2026) am 03.10.2026 fürs Repo geliefert, Deployment offen.
 Stand 23.10.2026: Bereitstellung auf `werkzeuge.agfk-sl.de` (Hosting Netlify, Zugangs-Cookie). Pakete 2–4 live und von Armin abgenommen – zuletzt Projekt-Check v16, Zuständigkeiten v47, Fördermittel-Finder v11, Vergabe-Assistent v9; Quellenetiketten RECHT/REGELWERK/SAARLAND/ANDERE LÄNDER, Maße nach ERA 2010 + E Klima 2022 + Ad-hoc-Arbeitspapier RASt 2024; Button „← Zur Übersicht“ auf allen Seiten. Vorschau-Sperre (31.10.) entfernt, Browser-Titel AGFK-SL. Zweite Prüfung AGFK-SL abgeschlossen (23.10.) – Werkzeuge fertig. Status: fertig, wartet auf Zugangsschutz, Rücklink-Adresse und Auftragsannahme (→ 1.5).
-Nächster Schritt (23.10.2026): 26.10. Auftragsannahme + Nutzungsvereinbarung · 27.10. Zugangsschutz aktivieren + Repo privat – ⚠️ vorher prüfen, ob die `kunden/`-Werkzeuge ihre Geodaten noch über `2rat.org/agfk-werkzeuge/` laden (→ 2.16) · Rücklink auf der AGFK-Website · 02.11. Freischaltung
-Ältere Punkte: neue Übersichtsseite `index.html` (Symbol-Kacheln) deployen und live prüfen · Quellenvermerk „© GDI-SL 2026, CC BY 4.0“ einspielen (→ 2.11) · nach Testende Runtime-Branding auch für Fördermittel-Finder und Vergabe-Assistent einführen · Freigabe der Logo-Verwendung bei Nicole anfragen · Beim Umzug auf eine AGFK-Subdomain: DNS-Eintrag durch die AGFK, Domain in den Pages-Einstellungen des neuen Repos, `noindex` entfernen – danach ist `2rat.org/agfk-werkzeuge/` nicht mehr erreichbar, in der Mitgliederkommunikation deshalb nur die endgültige Adresse verbreiten
+Stand 26.10.2026: Umstellung vorgezogen und erledigt ✓ – Rücklink „Zurück zur AGFK-SL“ live (Ziel: `agfk-sl.de/arbeitshilfen-fachinformationen/`), Zugangsschutz in Netlify aktiv (Production + Previews), Repo privat, Test-Deploy erfolgreich, `2rat.org/agfk-werkzeuge/` beendet.
+Nächster Schritt (26.10.2026): 02.11. Freischaltung + Abrechnung · Cookie-Satz in `datenschutz.html` · `claude.md` aus dem Deploy nehmen · Auftragsannahme klären (→ 1.5)
+Ältere Punkte: neue Übersichtsseite `index.html` (Symbol-Kacheln) deployen und live prüfen · Quellenvermerk „© GDI-SL 2026, CC BY 4.0“ einspielen (→ 2.11) · nach Testende Runtime-Branding auch für Fördermittel-Finder und Vergabe-Assistent einführen · Freigabe der Logo-Verwendung bei der Geschäftsstelle anfragen
 2.16 Geodaten-Module (`rp-geo.js` · Unfallatlas `rp-unfaelle.js`)
 Kunde / Partner: eigen (gemeinsamer Baustein für Projekt-Check, Zuständigkeiten, VwV-StVO 2025 und RadPlan Pro)
 Claude-Projekt: fachlich „2Rat Werkzeuge / Tool-Portal“
 Zweck: Wiederverwendbare Geodaten-Bündel im AGFK-Repo. `rp-geo.js` (aus RadPlan Pro 7.1): LfS-Straßennetz, SVZ, RVP 2025, Nominatim, basemap.de (→ 2.11). `rp-unfaelle.js` (neu 20./21.09.2026): Saarland-Auszug des Unfallatlas 2023–2025, 9.157 Unfälle mit Personenschaden; Quelle Statistische Ämter des Bundes und der Länder, dl-de/by-2.0; Bezug über den NRW-Spiegel (opengeodata.nrw.de), Aktualisierung jährlich ab Juli. v2: Punktauswertung 100 m plus Streckenauswertung ±1 km entlang der LfS-Achse (Nachbarabschnitte über Netzknoten verkettet, nur an Bundes- und Landstraßen).
-Repo: github.com/2Rat/agfk-werkzeuge · geladen von `kunden/` absolut über `2rat.org/agfk-werkzeuge/` (→ 2.15)
+Repo: github.com/2Rat/agfk-werkzeuge (privat) · Kopien in `Werkzeuge/kunden/` (`rp-geo.js`, `rp-unfaelle.js`, `vendor/leaflet/`) · Einbindung laut Repo-Prüfung 02.11.2026: VwV-StVO lokal ✓, Projekt-Check und Zuständigkeiten noch absolut über `2rat.org/agfk-werkzeuge/` (seit 26.10. beendet, → 2.15)
 Lizenz: RVP 2025, LfS-Straßennetz, SVZ – CC BY 4.0, © GDI-SL, gebührenfrei (bestätigt durch MUKMAV Geodatenzentrum, 21.09.2026) · Unfallatlas dl-de/by-2.0 · Verkehrsmengen L1/L2 noch nicht freigegeben (Rückmeldung LfS offen)
 Status: live (in Zuständigkeiten v41, Projekt-Check v9, VwV-StVO 2025 v9)
 Offen: weitere Quellen prüfen – Lärmkarte, Schulstandorte, DGM (Geoportal, CORS-Test)
-Nächster Schritt: Unfallatlas-Aktualisierung ab Juli 2027 einplanen · Unfalldaten in RadPlan Pro (Ortstermin-Bericht, GeoPackage fürs QGIS-Plugin, App; → 4.2) · Freigabe L1/L2 nachhalten
+Nächster Schritt: ⚠️ Pfade in `kunden/projekt-check.html` und `kunden/zustaendigkeiten.html` auf die lokalen Kopien umstellen, Karte und Standortprüfung im Browser testen · Unfallatlas-Aktualisierung ab Juli 2027 einplanen · Unfalldaten in RadPlan Pro (Ortstermin-Bericht, GeoPackage fürs QGIS-Plugin, App; → 4.2) · Freigabe L1/L2 nachhalten
 2.17 Einbahnstraßen-Scan
 Kunde / Partner: eigen (Tool)
 Claude-Projekt: fachlich „2Rat Werkzeuge / Tool-Portal“
@@ -265,6 +266,7 @@ VwV-StVO-Datierung präzisiert (24.08.2026, auch in 2.2): Fassung vom 03.04.2025
 v8 (02.09.2026) deployed & live bestätigt, byteidentisch ✓ – `STAND`-Konstante und Schreibweise „Landstraße“ vereinheitlicht
 Entscheidung 02.09.2026: Das Werkzeug ist nicht Teil des AGFK-Pakets und wird eigenständig vermarktet – im Portal aus beiden AGFK-Lizenzen entfernt (→ 2.1), im AGFK-Repo nicht enthalten (→ 2.15).
 v9 (20./21.09.2026, `kunden/`, live bestätigt) ✓ – Standort-Check mit Karte und sieben Tatbeständen (Zuständigkeit, T30-Zone, Nr. 6 Einrichtungen/Querungen, Nr. 4 Lückenschluss, Unfallgeschehen, Nr. 7), Basisdaten-Übernahme, Aktenvermerk, Platzhalter-Füllung; Lückenschluss-Argument korrigiert (Nr. 4 statt Nr. 6). Geodaten über die Module aus dem AGFK-Repo (→ 2.16); das Werkzeug selbst bleibt außerhalb des AGFK-Angebots.
+Stand 26.10.2026: v11 in `kunden/` lädt Karte und Geodaten lokal, unabhängig vom AGFK-Repo. App-Fassung als eigenes Vorhaben → 4.5.
 Offen: Live-Test Overpass/Nominatim (Einrichtungen, Querungen, Adresssuche)
 Offen (optional): Schulstraßen als Praxishinweis beim Verkehrsversuch – es gibt kein eigenes Verkehrszeichen, Umsetzung läuft über zeitlich begrenzte Durchfahrtverbote
 Nächster Schritt: Pflege bei VwV-Änderungen
@@ -313,6 +315,14 @@ Zweck: Standalone-PWA für Inventar- und Aufgabenverwaltung im Bauhof.
 Repo: github.com/2Rat/bauhof-inventar · Live: bauhof-2rat.netlify.app
 Status: live (funktional ruhend)
 Nächster Schritt: —
+4.5 VwV-StVO 2Rat (App)
+Kunde / Partner: eigen (Vorführfassung)
+Claude-Projekt: eigene Werkstatt „VwV-StVO 2Rat (App)“
+Zweck: VwV-StVO-Werkzeug (→ 3.4) als installierbare Web-App (PWA) für die Fahrradkommunalkonferenz Düsseldorf am 03.11.2026 – Vorführfassung „Beispiel Saarland“, offline nutzbar außer Karte.
+Repo: github.com/2Rat/vwv-stvo (privat) · Live: vwv-stvo-2rat.netlify.app
+Zugang: personalisierter, befristeter Link (signiert, Erzeugung nur lokal bei Armin); ohne oder mit abgelaufenem Link nur Hinweis mit Kontakt.
+Status: live · v13 (27.10.2026) · auf Android getestet: Installation, Offline, Karte ✓
+Nächster Schritt: 03.11. Vorführung mit Links · Nachfassen bis 30.11. (Links laufen ab) · nach der Konferenz entscheiden: eigene Domain (`vwv.2rat.org`), Zielgruppe, Cloudflare Access als Dauerlösung
 5️⃣ Marketing & Website
 5.1 2rat.org Website
 Kunde / Partner: eigen
@@ -357,7 +367,8 @@ Repository	Sichtbarkeit	Bezug
 5	`2Rat/bauhof-inventar`	–	4.4 Bauhof-App
 6	`2Rat/schulweg-check`	–	4.3 Schulweg-Detektive
 7	`2Rat/umzugsplan`	–	(privat/Test)
-8	`2Rat/agfk-werkzeuge`	öffentlich	2.15 AGFK-Vorschau (Pages aktiv)
+8	`2Rat/agfk-werkzeuge`	privat (seit 26.10.2026)	2.15 AGFK-Werkzeuge (Netlify)
+9	`2Rat/vwv-stvo`	privat	4.5 VwV-StVO 2Rat (App)
 7️⃣ Büro-intern & Behörden
 7.1 2Rat Büroverwaltung / Stammdatendokument
 Kunde / Partner: intern
@@ -394,6 +405,7 @@ Schulweg-Detektive	4.3	Kooperation Kirkel
 Plugin-Entwicklung (ANALYSE)	3.1 · 3.3 Begründungsgenerator	Werkzeugentwicklung
 2Rat Werkzeuge / Tool-Portal	2.1–2.13 · 2.15–2.17 · 3.4 · 1.5 AGFK	Tool-Vertrieb
 Bügelplaner	2.14 Bügelplaner	Werkzeugentwicklung
+VwV-StVO 2Rat (App)	4.5 VwV-StVO-App	App-Entwicklung
 2Rat Förderung Radverkehr (Claude-Projekt ggf. umbenennen)	Förder-Wissensbasis · JGF-Fristen · Zuarbeit zu 2.10	Förderberatung
 2rat.org Website	5.1 · 5.2 · 5.3 · 5.4	Marketing
 Mobilitätsstationen Wadgassen	eigenes Kundenprojekt	Kundenprojekt
@@ -410,7 +422,7 @@ Website – Radwegemelder	www.2rat.org/radwegemelder.html
 Website – Planungswerkzeuge	www.2rat.org/planungswerkzeuge.html
 Werkzeuge-Portal (Login)	www.2rat.org/Werkzeuge
 Tool-Dateien (Vollversionen)	www.2rat.org/Werkzeuge/kunden/ (6 Tools + Karten-Prototyp)
-AGFK-Vorschau (ohne Code)	www.2rat.org/agfk-werkzeuge/ (Repo `agfk-werkzeuge`, → 2.15)
+AGFK-Werkzeuge (zugangsgeschützt)	werkzeuge.agfk-sl.de (Netlify, Repo `agfk-werkzeuge`, → 2.15) · `2rat.org/agfk-werkzeuge/` beendet 26.10.2026
 Freemium-Demos (ohne Code)	www.2rat.org/demo/
 Bügelplaner (frei, ohne Code)	www.2rat.org/buegelplaner/
 Kommandozentrale	www.2rat.org/cmd
@@ -418,6 +430,7 @@ Radwegemelder-Ergebnisse	www.2rat.org/cockpit.html
 Velomeld (Bürger-App)	2rat.org/velomeld/#home
 RadPlan Pro (Live, `main`)	radplan-pro.netlify.app
 RadPlan Pro Neubau (Branch-Deploy, Test · mit Unfallatlas)	neubau--radplan-pro.netlify.app
+VwV-StVO-App (nur mit Link, → 4.5)	vwv-stvo-2rat.netlify.app
 Bauhof-App	bauhof-2rat.netlify.app
 Schulweg-Detektive (PWA)	009aj.github.io/schulweg-check/
 Schulweg-Detektive (Play Store)	play.google.com/store/apps/details?id=de.zweirat.schulwegdetektive
@@ -434,10 +447,10 @@ Datum	Kontext	Aktion
 30.09.2026	1.5 AGFK-SL	Kennenlern-Tools laufen ab (`toolExpires`) → vorher Gespräch über die Fortsetzung
 05.10.2026	1.5 AGFK-SL	Eingang der Behördenanschriften prüfen (Voraussetzung Projekt-Check-Fertigstellung)
 13.10.2026	1.5 AGFK-SL	Angebot 2026-AGFK-03 nachfassen
-26.10.2026	1.5 / 2.15 AGFK-SL	Auftragsannahme + Nutzungsvereinbarung
-27.10.2026	2.15 AGFK-Werkzeuge	Zugangsschutz aktivieren + Repo privat – vorher `kunden/`-Geodaten-Pfade prüfen (→ 2.16)
-31.10.2026	1.5 AGFK-SL	Gültigkeit des Angebots 2026-AGFK-03 endet (versendet 22.09.)
-02.11.2026	1.5 / 2.15 AGFK-SL	Freischaltung auf `werkzeuge.agfk-sl.de` (Netlify) – vorher Rücklink AGFK-Website, `noindex` raus, `kunden/`-Pfade (→ 2.16)
+31.10.2026	1.5 AGFK-SL	Gültigkeit des Angebots 2026-AGFK-03 verstrichen – Auftragsannahme laut letzter Meldung (26.10.) offen, klären
+02.11.2026	1.5 / 2.15 AGFK-SL	Freischaltung auf `werkzeuge.agfk-sl.de` (Netlify) + Abrechnung – vorher Cookie-Satz, `claude.md` aus dem Deploy
+03.11.2026	4.5 VwV-StVO-App	Fahrradkommunalkonferenz Düsseldorf – Vorführung
+30.11.2026	4.5 VwV-StVO-App	Konferenz-Links laufen ab – Nachfassen bis dahin
 31.08.2027	1.5 AGFK-SL	Kündigungsstichtag der Nutzungsvereinbarung (Laufzeit bis 31.12.2027, Verlängerungsklausel) – nur relevant bei Zusage
 30.09.2026	2.1 Tool-Portal	RAD-Lab-Testrunde endet (→ 2.13) – Lizenz-Zeile entfernen
 30.09.2026	2.13 Tool-Portal	Testzugang der Aktion „Kritischer Blick“ läuft ab – Lizenz-Zeile entfernen
@@ -447,6 +460,7 @@ Sep 2026	4.3 Schulweg-Detektive	Android-Entwicklerbestätigung für PWA-APK prü
 27.05.2027	1.5 AGFK-SL	Lizenz „AGFK Honorarkraft" läuft ab
 Anfang 2028	2.9 Vergabe-Assistent	Neue EU-Schwellenwerte einpflegen (aktuelle Werte gelten bis 31.12.2027)
 Entfallen 11.08.: Alle Radherbst-Fristen (Versand · Rückmeldung 25.08. · Aktionszeitraum 01.09.–15.10.) – die Aktion findet nicht statt (→ 1.4)
+Geklärt 26.10.: AGFK-Werkzeuge – Rücklink live, Zugangsschutz aktiv, Repo `agfk-werkzeuge` privat, GitHub-Pages-Adresse beendet
 Geklärt 19.–23.10.: AGFK-Werkzeuge Pakete 2–4 live (PC v16 · ZU v47 · FF v11 · VA v9) · Stichproben-/zweite Prüfung durch AGFK-SL abgeschlossen · Vorschau-Sperre 31.10. entfernt
 Geklärt 22.09.: AGFK-SL – Angebot 2026-AGFK-03 und Nutzungsvereinbarung versendet · RadPlan Pro `neubau` mit Unfallatlas live, erster Echtfall L 114 Altstadt erfolgreich, `main` bleibt stabiler Strang
 Geklärt 20./21.09.: Geodaten-Lizenz durch MUKMAV Geodatenzentrum bestätigt (CC BY 4.0, © GDI-SL) · Unfallatlas-Modul v2 · Zuständigkeiten v41, Projekt-Check v9, VwV-StVO 2025 v9 live · AGFK- und 2Rat-Repo gleichauf · Quellenvermerk-Patch geliefert
@@ -459,7 +473,7 @@ Geklärt 27.07.: Kontaktdaten der Straßenverkehrsbehörden geprüft (Neunkirche
 Ohne festes Datum: Gespräch mit der AGFK-SL (Irene) – Nutzungsrechte Projekt-Check, Pflegevereinbarung, Lizenzmodell übrige Werkzeuge. Grundlage: Angebot 2026-AGFK-03 und gekürzte Nutzungsvereinbarung, versendet 22.09.2026 (Basis: Eckpunktepapier vom 27.07.2026). Termin steht aus.
 1️⃣2️⃣ Statusverteilung
 Status	Anzahl	Vorhaben
-läuft / live / produktiv / stabil / aktiv	25	1.5, 1.6, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.11, 2.13, 2.14, 2.15, 2.16, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 6.1
+läuft / live / produktiv / stabil / aktiv	26	1.5, 1.6, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.11, 2.13, 2.14, 2.15, 2.16, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 4.5, 5.1, 5.2, 5.3, 5.4, 6.1
 teils läuft	1	1.1 (LP1 abgeschlossen ✓ · LP2 offen)
 abgeschlossen	4	1.2, 2.8, 3.5, 7.3
 vorbereitet	2	2.6 (Demo-Konzept), 3.2
