@@ -31,3 +31,9 @@ Format je Meldung:
 - Status neu: AGFK-Werkzeugsatz = 5 Werkzeuge (Stand 11/2026)
 - Frist: Online-Vorstellung AGFK-Werkzeuge 25.11.2026 nachmittags; Fahrradpreis-Bewerbung voraussichtlich bis Jan. 2027
 - AKUT: nein
+
+### 2026-11-05 · Werkzeuge / Tool-Portal (AGFK) · 3.4
+- Was: VwV-StVO-Kachel auf werkzeuge.agfk-sl.de von Armin am Handy geprüft – läuft hinter dem Zugangsschutz. Mail an Irene (AGFK-SL) mit Werkzeug-Beschreibung (5 Werkzeuge), Bewerbungsentwurf Fahrradpreis 2027 und Nominierten-Übersicht 2026 versandt; die drei Dokumente liegen als Google Docs im Drive-Ordner „AGFK SL Werkzeuge", für Irene freigegeben.
+- Status neu: VwV-StVO als fünftes AGFK-Werkzeug live und abgenommen
+- Frist: —
+- AKUT: nein
