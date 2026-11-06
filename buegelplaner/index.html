@@ -247,7 +247,7 @@
 </div>
 
 <footer>
-  <div id="foot">2Rat – Büro für Radverkehrsplanung · www.2rat.org · Bügelplaner. Alle Angaben ohne Gewähr; Maße vor Ort prüfen.</div>
+  <div id="foot">2Rat – Büro für Radverkehrsplanung · www.2rat.org · Bügelplaner · Stand 11/2026. Alle Angaben ohne Gewähr; Maße vor Ort prüfen.</div>
   <div style="margin-top:6px">Die Nutzung des Werkzeugs ist kostenfrei. Weitergabe, Veränderung und der Betrieb eigener Instanzen sind nicht gestattet; Lizenzanfragen an fahr2rat@gmail.com.
     · <a href="https://2rat.org/velomeld/datenschutz.html">Impressum &amp; Datenschutz</a></div>
 </footer>
@@ -265,6 +265,9 @@ const REGELN = {
   wandabstand:     {label:"Abstand zu Wand/Zaun",val:0.80, hint:"hinten zur festen Kante"},
   randabstand:     {label:"Seitlicher Rand",     val:0.30, hint:"links/rechts zur Begrenzung"}
 };
+/* Stand des Werkzeugs — bei jeder inhaltlichen Änderung anpassen */
+const STAND = "Stand 11/2026";
+
 /* Harte Untergrenzen — gelten auch im Dicht-Modus */
 const MIN_SPB = 0.75, MIN_GANG = 1.60, MIN_PITCH_DOPPEL = 1.20;
 /* Überstand: Räder dürfen je Seite höchstens so weit über die Fläche ragen (m) */
@@ -617,6 +620,7 @@ function zeichne(r){
   const titel=(document.body.classList.contains('neutral')?'':'2Rat · ')+'Aufstellskizze';
   p.push(`<text x="20" y="24" font-size="13" font-weight="bold" fill="${ak}">${titel}</text>`);
   p.push(`<text x="20" y="42" font-size="11" fill="#666">${r.buegel} Bügel · ${r.stell} Stellplätze · Aufstellung ${r.ori==='quer'?'vertikal':'horizontal'}</text>`);
+  p.push(`<text x="${W-20}" y="24" font-size="10" fill="#999" text-anchor="end">Bügelplaner · ${STAND}</text>`);
 
   p.push(`<rect x="${ox}" y="${oy}" width="${fw}" height="${fh}" rx="5" fill="none" stroke="${ak}" stroke-width="1.3" stroke-dasharray="6 5"/>`);
   p.push(`<text x="${ox+fw/2}" y="${yb+30}" font-size="12" fill="#444" text-anchor="middle">Breite ${fmt(r.B)} m</text>`);
@@ -723,12 +727,12 @@ function setMode(m){
     document.body.classList.add('neutral');bn.classList.add('active');b2.classList.remove('active');
     document.getElementById('brandsub').textContent='Planungswerkzeug';
     document.querySelector('.brand .logo').innerHTML='Bügelplaner';
-    document.getElementById('foot').textContent='Aufstellplanung Fahrradabstellanlagen · Alle Angaben ohne Gewähr; Maße vor Ort prüfen.';
+    document.getElementById('foot').textContent='Aufstellplanung Fahrradabstellanlagen · Bügelplaner · '+STAND+'. Alle Angaben ohne Gewähr; Maße vor Ort prüfen.';
   } else {
     document.body.classList.remove('neutral');b2.classList.add('active');bn.classList.remove('active');
     document.getElementById('brandsub').textContent='Büro für Radverkehrsplanung';
     document.querySelector('.brand .logo').innerHTML='<span class="b">2</span><span class="r">Rat</span>';
-    document.getElementById('foot').textContent='2Rat – Büro für Radverkehrsplanung · www.2rat.org · Bügelplaner. Alle Angaben ohne Gewähr; Maße vor Ort prüfen.';
+    document.getElementById('foot').textContent='2Rat – Büro für Radverkehrsplanung · www.2rat.org · Bügelplaner · '+STAND+'. Alle Angaben ohne Gewähr; Maße vor Ort prüfen.';
   }
   rechne();
 }
