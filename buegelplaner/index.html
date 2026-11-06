@@ -171,11 +171,30 @@
         <button data-v="dicht" onclick="setSeg('dichte',this)">Dicht (max. Plätze)</button>
       </div>
 
+      <label>Räder dürfen über die Fläche hinausragen? <span class="hint">(z. B. Bügel im Parkstreifen, Räder ragen in Gehweg/Freifläche)</span></label>
+      <div class="seg" id="seg-ueber">
+        <button class="active" data-v="nein" onclick="setSeg('ueber',this)">Nein, alles innerhalb</button>
+        <button data-v="ja" onclick="setSeg('ueber',this)">Ja, Überstand erlaubt</button>
+      </div>
+
+      <label>Gelände</label>
+      <div class="seg" id="seg-hang">
+        <button class="active" data-v="eben" onclick="setSeg('hang',this)">Eben</button>
+        <button data-v="hang" onclick="setSeg('hang',this)">Hanglage</button>
+      </div>
+
+      <label>Sonderfahrräder <span class="hint">(zusätzliche Stellplätze)</span></label>
+      <div class="row2">
+        <div><select id="sonder-typ" onchange="rechne()"></select></div>
+        <div><input type="number" id="sonder-n" value="0" min="0" max="20" step="1" autocomplete="off" oninput="rechne()" placeholder="Anzahl"></div>
+      </div>
+      <div class="hint" style="margin-top:4px">Fahrzeugmaße nach EAR 23. Sonderstellplätze werden einseitig an einem Ende der Reihen angeordnet; je Platz ein Bügel.</div>
+
       <details class="adv">
         <summary>Für Profis: Maße anpassen</summary>
         <div id="rulebox"></div>
         <div class="note info" style="margin-top:6px;font-size:12px">
-          Werte nach DIN 79008 / ADFC TR 6102 und Leitfaden Nahmobilität Hessen. Richtwerte — vor Ort prüfen.
+          Werte nach DIN 79008 / ADFC TR 6102, Leitfaden Nahmobilität Hessen und EAR 23 (Sonderfahrräder). Richtwerte — vor Ort prüfen.
           Rad zu Rad mindestens 0,75 m, Gang mindestens 1,60 m; beide Grenzen gelten auch bei Packdichte „Dicht".
         </div>
       </details>
@@ -216,6 +235,7 @@
       <div class="legende">
         <span><span class="lg-buegel"></span> Anlehnbügel</span>
         <span><span class="lg-rad"></span> Fahrrad (angelehnt)</span>
+        <span><span class="lg-buegel" style="background:var(--akzent);opacity:.6"></span> Sonderrad-Zone</span>
       </div>
       <div class="btnbar">
         <button class="btn btn-primary" onclick="downloadSVG()">Skizze speichern (SVG)</button>
@@ -247,6 +267,8 @@ const REGELN = {
 };
 /* Harte Untergrenzen — gelten auch im Dicht-Modus */
 const MIN_SPB = 0.75, MIN_GANG = 1.60, MIN_PITCH_DOPPEL = 1.20;
+/* Überstand: Räder dürfen je Seite höchstens so weit über die Fläche ragen (m) */
+const UEBER_MAX = 1.00;
 /* Merker: Nutzer hat einen Wert unter dem Mindestmaß eingegeben */
 let spbUnterschritten = false, gangUnterschritten = false;
 /* Hinweise je Nutzung — Fallgruppen nach ADFC TR 6102 und FGSV */
@@ -264,8 +286,21 @@ const REF = {
   kostMaterial:[125,310],   // €/Bügel, Marktpreis 2025/26
   kostVoll:[210,305]        // €/Stellplatz inkl. Montage (indexiert)
 };
+/* Sonderfahrräder — Fahrzeugmaße Breite × Länge nach EAR 23 (Tab. Abmessungen).
+   Stellplatz: Breite + 0,40 m Bewegungsraum, Länge + 0,10 m (Hessen: Lastenrad mind. 0,90 × 2,75 m). */
+const SONDER = {
+  lastenrad_mehr: {label:"Lastenrad mehrspurig", b:1.00, l:2.30},
+  lastenrad_ein:  {label:"Lastenrad einspurig",  b:0.60, l:2.65},
+  tandem:         {label:"Tandem",               b:0.65, l:2.60},
+  liegerad:       {label:"Liegerad",             b:0.60, l:2.35},
+  anhaenger:      {label:"Rad mit Anhänger",     b:1.00, l:3.60}
+};
+const SONDER_ZUSCHLAG_B = 0.40, SONDER_ZUSCHLAG_L = 0.10, SONDER_TRENN = 0.30;
+/* Förder-Check — FRL NMOB Rad-Fuß Saarland (Stand 11/2026): mind. 6 Stellplätze,
+   Bagatellgrenze 5.000 € Zuwendung, Quote 75 % (90 % finanzschwache Kommunen). */
+const FOERDER = { minStell:6, bagatelle:5000, quote:0.75, quoteSchwach:0.90, stand:"FRL NMOB Rad-Fuß, Stand 11/2026" };
 
-let state = { besch:'doppel', dichte:'standard', nutzung:'lang', wahl:null };
+let state = { besch:'doppel', dichte:'standard', nutzung:'lang', hang:'eben', ueber:'nein', wahl:null };
 
 /* Ausgangszustand sichern, damit sich das Werkzeug bei jedem Aufruf
    sauber zurücksetzt — Browser stellen Formularwerte sonst wieder her. */
@@ -273,7 +308,9 @@ const START = {
   regeln: Object.fromEntries(Object.entries(REGELN).map(([k,r])=>[k,r.val])),
   state:  Object.assign({},state),
   breite: '',
-  tiefe:  ''
+  tiefe:  '',
+  sonderN: 0,
+  sonderTyp: 'lastenrad_mehr'
 };
 
 function segAktiv(id,v){
@@ -289,12 +326,31 @@ function resetAlles(){
   setz('breite',START.breite); setz('tiefe',START.tiefe);
   setz('spb-main',REGELN.stellplatzbreite.val);
   setz('gang-main',REGELN.gangbreite.val);
+  renderSonder();
+  setz('sonder-n',START.sonderN); setz('sonder-typ',START.sonderTyp);
   renderRules();
   segAktiv('seg-besch',state.besch);
   segAktiv('seg-dichte',state.dichte);
   segAktiv('seg-nutzung',state.nutzung);
+  segAktiv('seg-hang',state.hang);
+  segAktiv('seg-ueber',state.ueber);
   const d=document.querySelector('details.adv'); if(d) d.open=false;
   rechne();
+}
+
+function renderSonder(){
+  const s=document.getElementById('sonder-typ'); if(!s || s.options.length) return;
+  for(const k in SONDER){const t=SONDER[k];
+    const o=document.createElement('option'); o.value=k;
+    o.textContent=t.label; s.appendChild(o);
+  }
+}
+/* Aktuelle Sonderrad-Vorgabe: Anzahl, Typ, Stellplatzmaße */
+function sonderVorgabe(){
+  const n=Math.max(0,Math.min(20,parseInt(document.getElementById('sonder-n').value)||0));
+  const k=document.getElementById('sonder-typ').value || 'lastenrad_mehr';
+  const t=SONDER[k]||SONDER.lastenrad_mehr;
+  return {n, typ:t, pitch:t.b+SONDER_ZUSCHLAG_B, laenge:t.l+SONDER_ZUSCHLAG_L};
 }
 
 function renderRules(){
@@ -370,25 +426,47 @@ function calc(ori){
   const saum  = dicht ? 0.10 : 0.20;
   const modul = (doppel ? 2*R.radlaenge.val : R.radlaenge.val);
 
+  const ueber = state.ueber==='ja';
+  /* Reihen quer zur Reihenachse. Ohne Überstand müssen alle Räder samt
+     Rand-/Wandabstand in der Fläche liegen. Mit Überstand zählt nur die
+     Bügelreihe selbst; die Räder dürfen je Seite bis zu einer Radlänge
+     hinausragen, höchstens UEBER_MAX (einseitig: nur die belegte Seite). */
   function reihenIn(mass,vorne,hinten){
+    const allow = ueber ? (doppel ? 2 : 1)*Math.min(UEBER_MAX, R.radlaenge.val) : 0;
     let n=0;
-    while(((n+1)*modul + n*gang + vorne + hinten) <= mass + 1e-9) n++;
-    return n;
+    while((ueber ? ((n+1)*modul + n*gang - allow) : ((n+1)*modul + n*gang + vorne + hinten)) <= mass + 1e-9) n++;
+    const total = n>0 ? n*modul + (n-1)*gang : 0;
+    const off = ueber ? (mass-total)/2 : vorne;
+    return {n, off, ueberBack:Math.max(0,-off), ueberFront:Math.max(0,total-mass-Math.max(0,-off))};
   }
+  /* Sonderfahrräder: Zone an einem Ende der Reihenachse, über die volle Querrichtung.
+     Je Sonderplatz ein Bügel (einseitig). Die Zone verkürzt die Reihen. */
+  const sv = sonderVorgabe();
+  const quer = ori==='quer';
+  const rowLen  = quer ? (T - wandW - saum) : (B - 2*randW);   // Länge der Reihenachse
+  const across  = (quer ? (B - 2*randW) : (T - wandW - saum)) + (ueber ? R.radlaenge.val : 0);   // Querrichtung (Radlänge)
+  let sonderN=0, sonderZone=0, sonderZuKurz=false, sonderZuWenig=false;
+  if(sv.n>0){
+    if(across + 1e-9 < sv.laenge){ sonderZuKurz=true; }
+    else {
+      sonderN = Math.min(sv.n, Math.max(0, Math.floor((rowLen + 1e-9)/sv.pitch)));
+      sonderZuWenig = sonderN < sv.n;
+      if(sonderN>0) sonderZone = sonderN*sv.pitch + SONDER_TRENN;
+    }
+  }
+
   let proReihe=0, reihen=0, laengsFrei=0;
-  if(ori==='quer'){
-    laengsFrei = T - wandW - saum;
-    proReihe   = laengsFrei>=0 ? Math.floor(laengsFrei/pitch)+1 : 0;
-    reihen     = reihenIn(B, randW, randW);
-  } else {
-    laengsFrei = B - 2*randW;
-    proReihe   = laengsFrei>=0 ? Math.floor(laengsFrei/pitch)+1 : 0;
-    reihen     = reihenIn(T, wandW, saum);
-  }
+  laengsFrei = rowLen - sonderZone;
+  proReihe   = laengsFrei>=0 ? Math.floor(laengsFrei/pitch)+1 : 0;
+  const lay  = quer ? reihenIn(B, randW, randW) : reihenIn(T, wandW, saum);
+  reihen     = lay.n;
   if(proReihe<1 || reihen<1){ proReihe=0; reihen=0; }
 
-  const buegel=proReihe*reihen, stell=buegel*(doppel?2:1);
+  const stdBuegel=proReihe*reihen, stdStell=stdBuegel*(doppel?2:1);
+  const buegel=stdBuegel+sonderN, stell=stdStell+sonderN;
   return {ori,buegel,reihen,proReihe,stell,B,T,doppel,
+          stdBuegel,stdStell,sonderN,sonderZone,sonderZuKurz,sonderZuWenig,sonder:sv,rowLen,across,
+          ueber,off:lay.off,ueberBack:lay.ueberBack,ueberFront:lay.ueberFront,
           spb,pitch,gang,modul,randW,wandW,saum,versatz,
           pitchAngehoben: doppel && (2*spb - versatz) < MIN_PITCH_DOPPEL - 1e-9,
           spbAngehoben:  spb  > R.stellplatzbreite.val + 1e-9,
@@ -423,16 +501,20 @@ function rechne(){
   // Specs
   const matMin=r.buegel*REF.kostMaterial[0], matMax=r.buegel*REF.kostMaterial[1];
   const vMin=r.stell*REF.kostVoll[0], vMax=r.stell*REF.kostVoll[1];
-  const flaeche=r.B*r.T, proStell=r.stell>0?flaeche/r.stell:0;
+  // Flächenbilanz inkl. Überstand der Räder (sonst würde der Überhang die Kennzahl schönen)
+  const ueB=r.B+((r.ori==='quer')?(r.ueberBack+r.ueberFront):0), ueT=r.T+((r.ori==='quer')?0:(r.ueberBack+r.ueberFront));
+  const flaeche=ueB*ueT, proStell=r.stell>0?flaeche/r.stell:0;
   document.getElementById('specs').innerHTML=`
     <tr><td>Fläche</td><td>${fmt(r.B)} × ${fmt(r.T)} m</td></tr>
     <tr><td>Gewählte Aufstellung</td><td>${aktiv==='quer'?'vertikal':'horizontal'}</td></tr>
     <tr><td>Reihen</td><td>${r.reihen}${r.reihen>1?' · Gang '+fmt(r.gang)+' m':' · kein Gang nötig'}</td></tr>
-    <tr><td>Bügel</td><td>${r.buegel}${r.reihen>1?' ('+r.reihen+' × '+r.proReihe+')':''}</td></tr>
+    ${r.ueber&&(r.ueberBack>0||r.ueberFront>0)?`<tr><td>Überstand der Räder</td><td>je Seite ${fmt(Math.max(r.ueberBack,r.ueberFront))} m</td></tr>`:''}
+    <tr><td>Bügel</td><td>${r.buegel}${r.reihen>1?' ('+r.reihen+' × '+r.proReihe+(r.sonderN?' + '+r.sonderN:'')+')':(r.sonderN?' (davon '+r.sonderN+' Sonderrad)':'')}</td></tr>
     <tr><td>Abstand Rad zu Rad</td><td>${fmt(r.spb)} m</td></tr>
     <tr><td>Bügelabstand (rechnerisch)</td><td>${fmt(r.pitch)} m${r.doppel?' · Versatz '+fmt(r.versatz)+' m':''}</td></tr>
-    <tr><td>Stellplätze</td><td>${r.stell}</td></tr>
-    <tr><td>Fläche je Stellplatz</td><td>${proStell>0?fmt(proStell)+' m²':'–'}</td></tr>
+    ${r.sonderN?`<tr><td>Sonderrad-Stellplätze</td><td>${r.sonderN} × ${r.sonder.typ.label} · ${fmt(r.sonder.pitch)} × ${fmt(r.sonder.laenge)} m</td></tr>`:''}
+    <tr><td>Stellplätze</td><td>${r.stell}${r.sonderN?' ('+r.stdStell+' + '+r.sonderN+')':''}</td></tr>
+    <tr><td>Fläche je Stellplatz${(r.ueber&&flaeche>r.B*r.T+1e-9)?' (inkl. Überstand)':''}</td><td>${proStell>0?fmt(proStell)+' m²':'–'}</td></tr>
     <tr><td>Materialkosten Bügel*</td><td>${matMin.toLocaleString('de')}–${matMax.toLocaleString('de')} €</td></tr>
     <tr><td>Vollkosten inkl. Montage*</td><td>${vMin.toLocaleString('de')}–${vMax.toLocaleString('de')} €</td></tr>`;
 
@@ -449,6 +531,14 @@ function rechne(){
     addNote(notes,'warn',`Der Bügelabstand wurde auf <b>${fmt(MIN_PITCH_DOPPEL)} m</b> angehoben — darunter lassen sich zwei Räder auch gegenläufig nicht mehr sauber einstellen.`);
   if(r.gangAngehoben || gangUnterschritten)
     addNote(notes,'warn',`Die Gangbreite wurde auf <b>${fmt(MIN_GANG)} m</b> angehoben — das ist der Mindestwert für die Bewegungsfläche bei Queraufstellung.`);
+  if(r.sonderZuKurz)
+    addNote(notes,'warn',`<b>Sonderfahrräder passen nicht:</b> Für „${r.sonder.typ.label}" braucht die Fläche quer zur Reihe mindestens <b>${fmt(r.sonder.laenge)} m</b> (vorhanden ${fmt(Math.max(0,r.across))} m). Andere Aufstellung wählen oder Typ ändern.`);
+  else if(r.sonderZuWenig)
+    addNote(notes,'warn',`Nur <b>${r.sonderN}</b> von ${r.sonder.n} Sonderrad-Stellplätzen passen in die Reihenlänge (je ${fmt(r.sonder.pitch)} m).`);
+  if(r.ueber && (r.ueberBack>0||r.ueberFront>0))
+    addNote(notes,'info',`<b>Überstand:</b> Die Räder ragen je Seite rund <b>${fmt(Math.max(r.ueberBack,r.ueberFront))} m</b> über die Fläche hinaus. Die angrenzende Fläche muss das zulassen — auf dem Gehweg mindestens 1,80 m Restbreite freihalten, zur Fahrbahn 0,50–0,75 m Sicherheitsabstand.`);
+  if(state.hang==='hang')
+    addNote(notes,'warn',`<b>Hanglage:</b> Anlehnbügel immer parallel zur Höhenlinie setzen — die Räder stehen dann quer zum Gefälle und können nicht wegrollen. Die Aufstellrichtung richtet sich damit nach dem Gelände, nicht nach der Platzausbeute; ggf. die andere Aufstellung wählen.`);
   addNote(notes,'info',`<b>Überdachung:</b> ${NUTZUNG[state.nutzung].hinweis}`);
   if(r.stell===0){
     addNote(notes,'warn','Mit diesen Maßen passt keine vollständige Reihe — Fläche, Radlänge oder Gangbreite prüfen.');
@@ -457,6 +547,8 @@ function rechne(){
     addNote(notes,'info',`🚲 vs 🚗 — Auf der Fläche eines Pkw-Stellplatzes stehen hier rund <b>${raeder} Fahrräder</b>.`);
     if(aktiv==='laengs' && q.stell>l.stell)
       addNote(notes,'warn',`Tipp: vertikal aufgestellt passen ${q.stell} statt ${l.stell} Plätze auf dieselbe Fläche.`);
+    const fc=foerderCheck(r.stell, vMin, vMax);
+    addNote(notes, fc.cls, fc.html);
   }
 
   zeichne(r);
@@ -479,6 +571,26 @@ function leerzustand(){
 }
 
 function fmt(n){return (isFinite(n)?n:0).toFixed(2).replace('.',',');}
+function eur(n){return Math.round(n).toLocaleString('de')+' €';}
+
+/* Förder-Check NMOB Rad-Fuß Saarland: Mindestzahl Stellplätze und Bagatellgrenze.
+   Die Bagatellgrenze gilt für die Zuwendung; zuwendungsfähige Ausgaben müssen
+   daher mindestens Bagatelle / Förderquote erreichen. */
+function foerderCheck(stell, vMin, vMax){
+  const F=FOERDER;
+  const schwelle = F.bagatelle/F.quote, schwelleSchwach = F.bagatelle/F.quoteSchwach;
+  const genug = stell >= F.minStell;
+  let bag, cls='info';
+  if(vMin >= schwelle) bag = `Bagatellgrenze erreicht: Vollkosten ab ${eur(vMin)} liegen über den nötigen ca. ${eur(schwelle)} zuwendungsfähigen Ausgaben.`;
+  else if(vMax >= schwelleSchwach) { bag = `Bagatellgrenze knapp: nötig sind ca. ${eur(schwelle)} zuwendungsfähige Ausgaben (${eur(schwelleSchwach)} bei 90 % für finanzschwache Kommunen), geschätzt ${eur(vMin)}–${eur(vMax)}. Mit weiteren Standorten im Sammelantrag absichern.`; cls='warn'; }
+  else { bag = `Bagatellgrenze nicht erreicht: nötig sind ca. ${eur(schwelle)} zuwendungsfähige Ausgaben (5.000 € Zuwendung bei 75 %), geschätzt nur ${eur(vMin)}–${eur(vMax)}. Mehrere Standorte in einem Sammelantrag bündeln.`; cls='warn'; }
+  if(!genug) cls='warn';
+  const html = `<b>Förder-Check Saarland</b> (${F.stand}) — `
+    + (genug ? `✓ mind. ${F.minStell} Stellplätze erfüllt (${stell}). ` : `✗ mind. ${F.minStell} Stellplätze nötig, geplant ${stell}. `)
+    + bag
+    + ` <span class="hint">Überschlag mit den Richtkosten dieses Werkzeugs; maßgeblich sind Richtlinie und Zuwendungsbescheid.</span>`;
+  return {cls, html};
+}
 function addNote(parent,cls,html){const d=document.createElement('div');d.className='note '+cls;d.innerHTML=html;parent.appendChild(d);}
 
 /* ====== SKIZZE mit Reihen und Gängen ====== */
@@ -492,8 +604,12 @@ function zeichne(r){
     window._lastSVG=leer.replace('class="skizze" ','');
     return;
   }
-  const sc=Math.min((W-2*pad)/r.B,(H-2*pad)/r.T);
-  const fw=r.B*sc, fh=r.T*sc, ox=(W-fw)/2, oy=64;
+  // Überstand: Platz für hinausragende Räder quer zur Reihenachse einplanen
+  const eb=r.ueberBack||0, ef=r.ueberFront||0, quer=r.ori==='quer';
+  const sc=Math.min((W-2*pad)/(r.B+(quer?eb+ef:0)),(H-2*pad)/(r.T+(quer?0:eb+ef)));
+  const fw=r.B*sc, fh=r.T*sc;
+  const ox=(W-(r.B+(quer?eb+ef:0))*sc)/2+(quer?eb*sc:0), oy=64+(quer?0:eb*sc);
+  const yb=oy+fh+(quer?0:ef*sc);   // Unterkante inkl. Überstand
   const ak=getComputedStyle(document.body).getPropertyValue('--akzent').trim();
   const ak2=getComputedStyle(document.body).getPropertyValue('--akzent2').trim();
   const R=REGELN; let p=[];
@@ -503,10 +619,18 @@ function zeichne(r){
   p.push(`<text x="20" y="42" font-size="11" fill="#666">${r.buegel} Bügel · ${r.stell} Stellplätze · Aufstellung ${r.ori==='quer'?'vertikal':'horizontal'}</text>`);
 
   p.push(`<rect x="${ox}" y="${oy}" width="${fw}" height="${fh}" rx="5" fill="none" stroke="${ak}" stroke-width="1.3" stroke-dasharray="6 5"/>`);
-  p.push(`<text x="${ox+fw/2}" y="${oy+fh+30}" font-size="12" fill="#444" text-anchor="middle">Breite ${fmt(r.B)} m</text>`);
-  p.push(`<text x="${ox+fw+26}" y="${oy+fh/2}" font-size="12" fill="#444" text-anchor="middle" transform="rotate(90 ${ox+fw+26} ${oy+fh/2})">Tiefe ${fmt(r.T)} m</text>`);
-  p.push(`<line x1="${ox+5}" y1="${oy}" x2="${ox+fw-5}" y2="${oy}" stroke="#555" stroke-width="2"/>`);
-  p.push(`<text x="${ox+fw/2}" y="${oy-7}" font-size="10" fill="#777" text-anchor="middle">Wand / Zaun (Rückkante)</text>`);
+  p.push(`<text x="${ox+fw/2}" y="${yb+30}" font-size="12" fill="#444" text-anchor="middle">Breite ${fmt(r.B)} m</text>`);
+  const xr=ox+fw+(quer?ef*sc:0)+26;
+  p.push(`<text x="${xr}" y="${oy+fh/2}" font-size="12" fill="#444" text-anchor="middle" transform="rotate(90 ${xr} ${oy+fh/2})">Tiefe ${fmt(r.T)} m</text>`);
+  if(r.ueber){
+    p.push(`<text x="${ox+fw/2}" y="${oy-7-(quer?0:eb*sc)}" font-size="10" fill="#777" text-anchor="middle">offene Kante${(!quer&&eb>0)?' · Räder ragen '+fmt(eb)+' m hinaus':''}</text>`);
+    if(quer&&eb>0) p.push(`<text x="${ox-eb*sc-6}" y="${oy+fh/2}" font-size="10" fill="#777" text-anchor="middle" transform="rotate(-90 ${ox-eb*sc-6} ${oy+fh/2})">Überstand ${fmt(eb)} m</text>`);
+    if(quer&&ef>0) p.push(`<text x="${ox+fw+ef*sc+6}" y="${oy+fh/2}" font-size="10" fill="#777" text-anchor="middle" transform="rotate(90 ${ox+fw+ef*sc+6} ${oy+fh/2})">Überstand ${fmt(ef)} m</text>`);
+    if(!quer&&ef>0) p.push(`<text x="${ox+fw/2}" y="${yb+12}" font-size="10" fill="#777" text-anchor="middle">Räder ragen ${fmt(ef)} m hinaus</text>`);
+  } else {
+    p.push(`<line x1="${ox+5}" y1="${oy}" x2="${ox+fw-5}" y2="${oy}" stroke="#555" stroke-width="2"/>`);
+    p.push(`<text x="${ox+fw/2}" y="${oy-7}" font-size="10" fill="#777" text-anchor="middle">Wand / Zaun (Rückkante)</text>`);
+  }
 
   if(r.buegel>0){
     const rl=R.radlaenge.val*sc, halb=r.modul*sc/2;
@@ -515,8 +639,9 @@ function zeichne(r){
 
     for(let i=0;i<r.reihen;i++){
       if(r.ori==='quer'){
-        const cx=ox+(r.randW+r.modul/2+i*(r.modul+r.gang))*sc;
+        const cx=ox+(r.off+r.modul/2+i*(r.modul+r.gang))*sc;
         p.push(`<rect x="${cx-halb}" y="${oy+2}" width="${2*halb}" height="${fh-4}" rx="4" fill="${ak2}" opacity="0.10"/>`);
+        if(r.ueber && (cx-halb<ox || cx+halb>ox+fw)) p.push(`<rect x="${cx-halb}" y="${oy+2}" width="${2*halb}" height="${fh-4}" rx="4" fill="none" stroke="${ak2}" stroke-width="1" stroke-dasharray="2 3" opacity="0.6"/>`);
         if(i>0){
           const gx=cx-halb-r.gang*sc;
           p.push(`<rect x="${gx}" y="${oy+2}" width="${r.gang*sc}" height="${fh-4}" rx="4" fill="#999" opacity="0.13"/>`);
@@ -533,8 +658,9 @@ function zeichne(r){
           }
         }
       } else {
-        const cy=oy+(r.wandW+r.modul/2+i*(r.modul+r.gang))*sc;
+        const cy=oy+(r.off+r.modul/2+i*(r.modul+r.gang))*sc;
         p.push(`<rect x="${ox+2}" y="${cy-halb}" width="${fw-4}" height="${2*halb}" rx="4" fill="${ak2}" opacity="0.10"/>`);
+        if(r.ueber && (cy-halb<oy || cy+halb>oy+fh)) p.push(`<rect x="${ox+2}" y="${cy-halb}" width="${fw-4}" height="${2*halb}" rx="4" fill="none" stroke="${ak2}" stroke-width="1" stroke-dasharray="2 3" opacity="0.6"/>`);
         if(i>0){
           const gy=cy-halb-r.gang*sc;
           p.push(`<rect x="${ox+2}" y="${gy}" width="${fw-4}" height="${r.gang*sc}" rx="4" fill="#999" opacity="0.13"/>`);
@@ -552,8 +678,32 @@ function zeichne(r){
         }
       }
     }
+    /* Sonderrad-Zone am Ende der Reihenachse */
+    if(r.sonderN>0){
+      const sp=r.sonder.pitch*sc, sl=Math.min(r.sonder.laenge, r.across)*sc, zl=r.sonderN*sp;
+      if(r.ori==='quer'){
+        const y0=oy+(r.T-r.saum)*sc-zl, x0=ox+r.randW*sc, zw=(r.B-2*r.randW)*sc;
+        p.push(`<rect x="${x0}" y="${y0}" width="${zw}" height="${zl}" rx="4" fill="${ak}" opacity="0.08" stroke="${ak}" stroke-width="1" stroke-dasharray="3 3"/>`);
+        for(let i=0;i<r.sonderN;i++){
+          const cy=y0+(i+0.5)*sp, cx=x0+6;
+          p.push(`<ellipse cx="${cx}" cy="${cy}" rx="${Math.min(0.40*sc,26)}" ry="${bd}" fill="none" stroke="${ak}" stroke-width="2.6"/>`);
+          p.push(`<line x1="${cx+bq}" y1="${cy}" x2="${cx+sl}" y2="${cy}" stroke="#888" stroke-width="2.4"/>`);
+        }
+        p.push(`<text x="${x0+zw/2}" y="${y0+zl/2+4}" font-size="10" fill="${ak}" text-anchor="middle">${r.sonderN} × ${r.sonder.typ.label}</text>`);
+      } else {
+        const x0=ox+(r.B-r.randW)*sc-zl, y0=oy+r.wandW*sc, zh=(r.T-r.wandW-r.saum)*sc;
+        p.push(`<rect x="${x0}" y="${y0}" width="${zl}" height="${zh}" rx="4" fill="${ak}" opacity="0.08" stroke="${ak}" stroke-width="1" stroke-dasharray="3 3"/>`);
+        for(let i=0;i<r.sonderN;i++){
+          const cx=x0+(i+0.5)*sp, cy=y0+6;
+          p.push(`<ellipse cx="${cx}" cy="${cy}" rx="${bd}" ry="${Math.min(0.40*sc,26)}" fill="none" stroke="${ak}" stroke-width="2.6"/>`);
+          p.push(`<line x1="${cx}" y1="${cy+bq}" x2="${cx}" y2="${cy+sl}" stroke="#888" stroke-width="2.4"/>`);
+        }
+        p.push(`<text x="${x0+zl/2}" y="${y0+zh/2}" font-size="10" fill="${ak}" text-anchor="middle" transform="rotate(-90 ${x0+zl/2} ${y0+zh/2})">${r.sonderN} × ${r.sonder.typ.label}</text>`);
+      }
+    }
     const gtxt = r.reihen>1 ? ` · Gang ${fmt(r.gang)} m` : '';
-    p.push(`<text x="${ox+fw/2}" y="${oy+fh+46}" font-size="11" fill="${ak2}" text-anchor="middle">${r.reihen} Reihe${r.reihen>1?'n':''} à ${r.proReihe} Bügel${gtxt}</text>`);
+    const stxt = r.sonderN>0 ? ` + ${r.sonderN} Sonderrad` : '';
+    p.push(`<text x="${ox+fw/2}" y="${yb+46}" font-size="11" fill="${ak2}" text-anchor="middle">${r.reihen} Reihe${r.reihen>1?'n':''} à ${r.proReihe} Bügel${gtxt}${stxt}</text>`);
   }
 
   const svg=`<svg class="skizze" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" font-family="Arial,sans-serif">
