@@ -30,3 +30,9 @@ Format je Meldung:
 - Status neu: live auf main seit 10.11.2026 – Projekt-Check v21, Zuständigkeiten v55, Fördermittel-Finder v14, Vergabe-Assistent v11, VwV-StVO v35 (agfk-werkzeuge ba3ca6c, vwv-stvo 83607c9)
 - Frist: —
 - AKUT: nein
+
+### 2026-11-10 · Tools Zuständigkeit / Fördermittel-Finder (AGFK-Werkzeuge) · 2.15
+- Was: Konsistenz-Durchsicht aller fünf AGFK-Werkzeuge bis zum Ergebnis – Knopffarben, Knopfzeile, „Ergebnis-Vermerk“, Querverweise in Zuständigkeiten, Seitenbreite, Wortwahl „Werkzeug“; Beispielbilder in „So geht's“ neu
+- Status neu: live auf main seit 10.11.2026 – Projekt-Check v22, Zuständigkeiten v56, Fördermittel-Finder v15, Vergabe-Assistent v12, VwV-StVO v37 (agfk-werkzeuge 4d34525, vwv-stvo 6e3dd61); ersetzt die Stände der vorigen Meldung vom selben Tag
+- Frist: —
+- AKUT: nein
