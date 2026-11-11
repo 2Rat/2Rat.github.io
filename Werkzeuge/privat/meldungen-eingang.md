@@ -36,3 +36,9 @@ Format je Meldung:
 - Status neu: live auf main seit 10.11.2026 – Projekt-Check v22, Zuständigkeiten v56, Fördermittel-Finder v15, Vergabe-Assistent v12, VwV-StVO v37 (agfk-werkzeuge 4d34525, vwv-stvo 6e3dd61); ersetzt die Stände der vorigen Meldung vom selben Tag
 - Frist: —
 - AKUT: nein
+
+### 2026-11-11 · Tools Zuständigkeit / Fördermittel-Finder (AGFK-Werkzeuge) · 2.15
+- Was: Zuständigkeiten mit Adresssuche an der Karte · neuer Kasten „Was kommt hier in Frage?“ in Projekt-Check und VwV-StVO-Werkzeug (feste Regeln, gemeinsame Datei rp-empfehlung.js) · Unfallgeschehen in allen drei Karten-Werkzeugen einheitlich eingestuft · Standort, Kommune und Maßnahme werden beim Wechsel zu Zuständigkeiten übernommen · Bestandszeile aus einem Datensatz (rp-bestand.js entfällt) · Rückmelde-Link in allen Fußzeilen
+- Status neu: live auf main seit 11.11.2026 – Projekt-Check v24, Zuständigkeiten v59, Fördermittel-Finder v16, Vergabe-Assistent v13, VwV-StVO v39 (agfk-werkzeuge 3076d6b, vwv-stvo 05d4793); ersetzt die Stände der Meldungen vom 10.11.
+- Frist: —
+- AKUT: nein
