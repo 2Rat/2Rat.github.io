@@ -54,3 +54,9 @@ Format je Meldung:
 - Status neu: live auf main seit 12.11.2026 – Fördermittel-Finder v18, VwV-StVO v41, übrige Werkzeuge unverändert (agfk-werkzeuge 2358c46, vwv-stvo 629d612); ergänzt die Meldung vom selben Tag; offen: Stand der Bundesprogramme (BAFA E-Lastenfahrrad, „Junge Generation Fahrrad") nicht abschließend geklärt
 - Frist: —
 - AKUT: nein
+
+### 2026-11-12 · Tools Zuständigkeit / Fördermittel-Finder (AGFK-Werkzeuge) · 2.15
+- Was: Alle Werkzeuge fachlich gegen die Quellen durchgesehen und berichtigt – Projekt-Check v26, Zuständigkeiten v63, Vergabe-Assistent v15, VwV-StVO v43 (Fördermittel-Finder v18 unverändert). Wichtigste Berichtigung: Einvernehmen der Gemeinde in Ortsdurchfahrten (§ 45 Abs. 1b StVO) war zu weit gefasst.
+- Status neu: gepusht 12.11., Live-Stand von Armin zu prüfen
+- Frist: —
+- AKUT: nein
