@@ -48,3 +48,9 @@ Format je Meldung:
 - Status neu: live auf main seit 12.11.2026 – Projekt-Check v25, Zuständigkeiten v60, Fördermittel-Finder v17, Vergabe-Assistent v14, VwV-StVO v40 (agfk-werkzeuge aa11a86, vwv-stvo 3a723b3); ersetzt die Stände der Meldung vom 11.11.
 - Frist: —
 - AKUT: nein
+
+### 2026-11-12 · Tools Zuständigkeit / Fördermittel-Finder (AGFK-Werkzeuge) · 2.15
+- Was: Fördermittel-Finder v18 live – alle zwölf Fördergegenstände samt Beispielen und Praxistipps gegen FRL NMOB-Rad-Fuß und FAQ (Stand 08.05.2026) abgeglichen; Bagatellgrenze als Mindesthöhe der Zuwendung berichtigt. VwV-StVO v41 live – Lückenschluss in der Einzelprüfung nur noch im selben Straßenzug. „So geht's" um den Einstieg über die Karte („Was kommt hier in Frage?") ergänzt, neues Beispielbild.
+- Status neu: live auf main seit 12.11.2026 – Fördermittel-Finder v18, VwV-StVO v41, übrige Werkzeuge unverändert (agfk-werkzeuge 2358c46, vwv-stvo 629d612); ergänzt die Meldung vom selben Tag; offen: Stand der Bundesprogramme (BAFA E-Lastenfahrrad, „Junge Generation Fahrrad") nicht abschließend geklärt
+- Frist: —
+- AKUT: nein
