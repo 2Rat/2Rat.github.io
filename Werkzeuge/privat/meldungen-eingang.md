@@ -37,3 +37,9 @@ Format je Meldung:
 - Status neu: gepusht 12.11. – Projekt-Check v36, Zuständigkeiten v71, VwV-StVO v51, Fördermittel-Finder v19, Vergabe-Assistent v16; ersetzt die Stände der Meldungen vom selben Tag
 - Frist: 25.11.2026 Online-Einführung für die AGFK-Kommunen
 - AKUT: nein
+
+### 2026-11-12 · Tools Zuständigkeit / Fördermittel-Finder (AGFK-Werkzeuge) · 2.15
+- Was: „So geht's" nachgezogen – alle Beispielbilder neu, neue Abschnitte zu Luftbild und zu den Verweisen zwischen den Werkzeugen; Suchfeld-Beispiel neutral gefasst. Startfolie und Ablaufplan für die Online-Einführung liegen vor, Abstimmung mit der Geschäftsstelle läuft.
+- Status neu: gepusht 12.11. – Projekt-Check v38, Zuständigkeiten v72, VwV-StVO v51, Fördermittel-Finder v19, Vergabe-Assistent v16; bis zum 25.11. nur noch Fehlerbehebung vorgesehen
+- Frist: 25.11.2026 Online-Einführung für die AGFK-Kommunen
+- AKUT: nein
