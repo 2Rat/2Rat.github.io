@@ -31,3 +31,9 @@ Format je Meldung:
 - Status neu: gepusht 12.11.; Live-Test von Luftbild und Suche durch Armin offen; Quellenvermerk des Luftbilds noch gegenzuprüfen
 - Frist: 25.11.2026 Online-Einführung für die AGFK-Kommunen
 - AKUT: nein
+
+### 2026-11-12 · Tools Zuständigkeit / Fördermittel-Finder (AGFK-Werkzeuge) · 2.15
+- Was: Werkzeuge in alle Richtungen verknüpft – Maßnahme/Vorhaben, Kommune und Standort gehen zwischen Projekt-Check, Zuständigkeiten und VwV-StVO mit; Fördergegenstand wird im Finder vorausgewählt; Rückwege aus Finder und Vergabe-Assistent. Der laufende Fall bleibt beim Werkzeugwechsel erhalten (nur im Browser), Datenschutzseite ergänzt. Ergebnisse passen zum Standort aus der Karte (eigene Rollen an Bundes-/Landstraßen), Luftbild läuft, Spielplätze nur „zu prüfen“.
+- Status neu: gepusht 12.11. – Projekt-Check v36, Zuständigkeiten v71, VwV-StVO v51, Fördermittel-Finder v19, Vergabe-Assistent v16; ersetzt die Stände der Meldungen vom selben Tag
+- Frist: 25.11.2026 Online-Einführung für die AGFK-Kommunen
+- AKUT: nein
