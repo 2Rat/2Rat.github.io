@@ -42,3 +42,9 @@ Format je Meldung:
 - Status neu: live auf main seit 11.11.2026 – Projekt-Check v24, Zuständigkeiten v59, Fördermittel-Finder v16, Vergabe-Assistent v13, VwV-StVO v39 (agfk-werkzeuge 3076d6b, vwv-stvo 05d4793); ersetzt die Stände der Meldungen vom 10.11.
 - Frist: —
 - AKUT: nein
+
+### 2026-11-12 · Tools Zuständigkeit / Fördermittel-Finder (AGFK-Werkzeuge) · 2.15
+- Was: Fördermittel-Finder v17 – Abstellanlagen 2.2.1/2.2.2 nach FAQ berichtigt, Bike+Ride am Bahnhof als Bundesförderung klargestellt · kräftigere Ränder an Kacheln und Karten in Übersicht und allen Werkzeugen
+- Status neu: live auf main seit 12.11.2026 – Projekt-Check v25, Zuständigkeiten v60, Fördermittel-Finder v17, Vergabe-Assistent v14, VwV-StVO v40 (agfk-werkzeuge aa11a86, vwv-stvo 3a723b3); ersetzt die Stände der Meldung vom 11.11.
+- Frist: —
+- AKUT: nein
