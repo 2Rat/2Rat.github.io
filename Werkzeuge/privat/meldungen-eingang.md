@@ -43,3 +43,9 @@ Format je Meldung:
 - Status neu: gepusht 12.11. – Projekt-Check v38, Zuständigkeiten v72, VwV-StVO v51, Fördermittel-Finder v19, Vergabe-Assistent v16; bis zum 25.11. nur noch Fehlerbehebung vorgesehen
 - Frist: 25.11.2026 Online-Einführung für die AGFK-Kommunen
 - AKUT: nein
+
+### 2026-11-15 · Tools Zuständigkeit / Fördermittel-Finder (AGFK-Werkzeuge) · 2.15
+- Was: Durchsicht aller fünf Werkzeuge (Inhalte und Bedienung), Fehlerpaket eingespielt – Textbausteine der VwV-StVO-Übersicht mit eigenem Bürgertext je Maßnahme und Kommune als „Gemeinde/Stadt …“, Auswahlliste nur noch mit anordnungsfähigen Maßnahmen; Projekt-Check nennt bei Städten mit eigener Straßenverkehrsbehörde die Fahrradzone richtig; Anschrift der AGFK-SL einheitlich.
+- Status neu: gepusht 15.11. – Projekt-Check v39, Zuständigkeiten v73, VwV-StVO v52 (Fördermittel-Finder v19, Vergabe-Assistent v16 unverändert); weitere Punkte aus der Durchsicht (inhaltliche Lücken, Uneinheitlichkeiten, Kleinigkeiten) offen
+- Frist: 25.11.2026 Online-Einführung für die AGFK-Kommunen
+- AKUT: nein
