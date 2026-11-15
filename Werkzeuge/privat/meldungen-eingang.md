@@ -49,3 +49,9 @@ Format je Meldung:
 - Status neu: gepusht 15.11. – Projekt-Check v39, Zuständigkeiten v73, VwV-StVO v52 (Fördermittel-Finder v19, Vergabe-Assistent v16 unverändert); weitere Punkte aus der Durchsicht (inhaltliche Lücken, Uneinheitlichkeiten, Kleinigkeiten) offen
 - Frist: 25.11.2026 Online-Einführung für die AGFK-Kommunen
 - AKUT: nein
+
+### 2026-11-15 · Tools Zuständigkeit / Fördermittel-Finder (AGFK-Werkzeuge) · 2.15
+- Was: Restliste der Durchsicht eingespielt – passende Warnungen und Hinweise in Zuständigkeiten, Standardhinweise im Fördermittel-Finder je Fördergegenstand, Förderfrage bei Aktion/Kampagne im Projekt-Check, Betragseingabe im Vergabe-Assistent, einheitliche Begriffe und Quellenplaketten. Karte im Projekt-Check wertet die Stelle sofort aus (wie die beiden anderen Karten-Werkzeuge); „So geht's“ angepasst.
+- Status neu: gepusht 15.11. – Projekt-Check v41, Zuständigkeiten v74, Fördermittel-Finder v20, Vergabe-Assistent v17, VwV-StVO v53; ersetzt die Stände der Meldung vom selben Tag. Offen: Behördenkontakte dreier Straßenverkehrsbehörden
+- Frist: 25.11.2026 Online-Einführung für die AGFK-Kommunen · 01.03.2027 E-Scooter-Hinweise in Zuständigkeiten anpassen
+- AKUT: nein
