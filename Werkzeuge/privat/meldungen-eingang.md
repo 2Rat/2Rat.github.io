@@ -30,3 +30,9 @@ Format je Meldung:
 - Status neu: live seit 16.11.2026; offen: Zebrastreifen-Erkennung im Repo 2Rat/vwv-stvo
 - Frist: 25.11.2026 (Online-Einführung, 14 Uhr)
 - AKUT: nein
+
+### 2026-11-16 · Werkzeuge Radverkehr Saarland (AGFK-SL) · —
+- Was: Projekt-Check v43, Zuständigkeiten v76 und VwV-StVO v54 – ersetzt die Meldung von heute zu v42/v75. Die Ortslage (innerorts/außerorts) kommt jetzt aus Tempo und Bebauung an der Stelle statt aus der Zählstelle; in OSM markierte Querungen ohne Ampel werden als Zebrastreifen erkannt; der Lückenschluss zählt nur noch Tempo-30-Abschnitte der Hauptstraße selbst; außerhalb des Saarlands macht der Standort-Check keine saarländischen Zuständigkeitsaussagen mehr (agfk-werkzeuge 8d66c48, vwv-stvo 879fb12).
+- Status neu: live seit 16.11.2026; Zebrastreifen-Erkennung damit erledigt
+- Frist: 25.11.2026 (Online-Einführung, 14 Uhr)
+- AKUT: nein
