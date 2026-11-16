@@ -36,3 +36,9 @@ Format je Meldung:
 - Status neu: live seit 16.11.2026; Zebrastreifen-Erkennung damit erledigt
 - Frist: 25.11.2026 (Online-Einführung, 14 Uhr)
 - AKUT: nein
+
+### 2026-11-16 · Werkzeuge Radverkehr Saarland (AGFK-SL) · —
+- Was: Das Werkzeug „Zuständigkeiten“ heißt jetzt „Maßnahmen und Zuständigkeiten“ (Titel, Kachel, Verweise, Vermerk, So geht's, Datenschutz, Beispielbild); Dateiname zustaendigkeiten.html unverändert. Stände: Projekt-Check v44, Maßnahmen und Zuständigkeiten v77, Fördermittel-Finder v21, Vergabe-Assistent v18, VwV-StVO v55 (agfk-werkzeuge 4e458aa, vwv-stvo b070554).
+- Status neu: live seit 16.11.2026; offen: Name auf agfk-sl.de und im Entwurf zum Deutschen Fahrradpreis nachziehen
+- Frist: 25.11.2026 (Online-Einführung, 14 Uhr)
+- AKUT: nein
