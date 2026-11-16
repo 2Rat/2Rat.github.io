@@ -24,3 +24,9 @@ Format je Meldung:
 ---
 
 ## Offen
+
+### 2026-11-16 · Werkzeuge Radverkehr Saarland (AGFK-SL) · —
+- Was: Projekt-Check v42 und Zuständigkeiten v75 – die Lage aus der Zählstelle (innerorts/außerorts) wird nur noch als Vermutung angezeigt und nicht mehr vorausgewählt; auf benannten Hauptstraßen mit Tempo 50 oder weniger lautet der Vorschlag Ortsdurchfahrt. Anlass: falsche Angabe „außerorts, amtlich“ in einer Ortsdurchfahrt (agfk-werkzeuge 0ab91e5).
+- Status neu: live seit 16.11.2026; offen: Zebrastreifen-Erkennung im Repo 2Rat/vwv-stvo
+- Frist: 25.11.2026 (Online-Einführung, 14 Uhr)
+- AKUT: nein
