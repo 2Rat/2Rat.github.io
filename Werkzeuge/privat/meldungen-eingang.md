@@ -42,3 +42,9 @@ Format je Meldung:
 - Status neu: live seit 16.11.2026; offen: Name auf agfk-sl.de und im Entwurf zum Deutschen Fahrradpreis nachziehen
 - Frist: 25.11.2026 (Online-Einführung, 14 Uhr)
 - AKUT: nein
+
+### 2026-11-17 · BÜRO 2Rat · 7.2
+- Was: Vorhaben 7.2 heißt jetzt „Steuer / Gewerbe-Status“ (statt „Finanzamt-Status freiberuflich“). 2Rat ist Gewerbebetrieb; Gewerbe bei der Stadt Lebach angemeldet am 03.09.2026 (Beginn der Tätigkeit 01.01.2024, Nebenerwerb); IHK-Mitgliedschaft mit Schreiben vom 10.11.2026 bestätigt.
+- Status neu: abgeschlossen (bisher „offen“)
+- Frist: ca. 10.01.2027 (Rückmeldung an die IHK, Formulare)
+- AKUT: nein
