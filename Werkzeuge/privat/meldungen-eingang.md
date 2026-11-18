@@ -80,3 +80,10 @@ Format je Meldung:
 - Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
 - Frist: 25.11.2026 Online-Einführung
 - AKUT: nein
+
+### 2026-11-18 · Werkzeuge / Tool-Portal (AGFK) · Auslieferung
+- Was: Durchsicht des Drehbuchs für den 25.11. im echten Chrome, sechs Fehler behoben. Projekt-Check v47: Straße am Standort aus dem eingebauten OSM-Auszug, Haken nur am gewählten Vorschlag, Ergebnis und Vermerk nennen ihn. VwV-StVO v60/v61: Standort-Check ohne Doppelung (ein Knopf je Maßnahme), Behörde mit Kreisnamen, Antrag an Bundes-/Landstraßen im Namen der Gemeinde (§ 45 Abs. 1j StVO), Einrichtung richtig gebeugt. Ablaufplan 14:20 und 14:24 Uhr angepasst. Commits agfk-werkzeuge 9e95563, b0288c5, 5c920a8; vwv-stvo 5b043ea, b77e11c – gepusht.
+- Offen: Fall auf der Live-Seite einmal komplett durchklicken, dann Reserve-Screenshots; bis 25.11. keine weiteren Änderungen an den Werkzeugen.
+- Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
+- Frist: 25.11.2026 Online-Einführung
+- AKUT: nein
