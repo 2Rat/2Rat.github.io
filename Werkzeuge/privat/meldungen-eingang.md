@@ -61,3 +61,9 @@ Format je Meldung:
 - Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
 - Frist: 25.11.2026 Online-Einführung
 - AKUT: nein
+
+### 2026-11-18 · Werkzeuge / Tool-Portal (AGFK) · Auslieferung
+- Was: Maßnahmen und Zuständigkeiten v80 – Straßenart bei Wohn- und Nebenstraßen kommt immer aus dem eingebauten OSM-Auszug (wie im Projekt-Check); die Online-Abfrage ergänzt nur noch Radwege und Routen. Commit agfk-werkzeuge 1cb23a8 – gepusht.
+- Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
+- Frist: 25.11.2026 Online-Einführung
+- AKUT: nein
