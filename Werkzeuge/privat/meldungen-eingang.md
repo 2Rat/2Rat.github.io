@@ -74,3 +74,9 @@ Format je Meldung:
 - Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
 - Frist: 25.11.2026 Online-Einführung
 - AKUT: nein
+
+### 2026-11-18 · Werkzeuge / Tool-Portal (AGFK) · Auslieferung
+- Was: Übersicht und So geht's in der üblichen Reihenfolge (VwV-StVO als Schritt 3 · Begründung vor Finanzierung und Beauftragung). VwV-StVO v59: „Als Maßnahme wählen“ klappt die Maßnahmenkarte auf und springt dorthin; neuer Knopf von der Karte zu Antrag, Beschlussvorlage und Bürgerinformation; Übernahme aus dem Projekt-Check mit „Maßnahme anzeigen“. Luftbild- und VwV-Beispielbild in So geht's neu. Commits agfk-werkzeuge 36d857b, 349e8a8 und Folgecommit; vwv-stvo Folgecommit – gepusht.
+- Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
+- Frist: 25.11.2026 Online-Einführung
+- AKUT: nein
