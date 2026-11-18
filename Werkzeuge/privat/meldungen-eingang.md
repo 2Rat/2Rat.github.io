@@ -67,3 +67,10 @@ Format je Meldung:
 - Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
 - Frist: 25.11.2026 Online-Einführung
 - AKUT: nein
+
+### 2026-11-18 · Werkzeuge / Tool-Portal (AGFK) · Auslieferung
+- Was: Projekt-Check v46 (Zuständigkeit an Bundes-/Landstraßen im Ergebnis nur noch einmal), Maßnahmen und Zuständigkeiten v81, Fördermittel-Finder v22, VwV-StVO v58. In allen Werkzeugen: „Landstraße I./II. Ordnung“ statt „Landesstraße 1./2. Ordnung“; Broschüre des MUKMAV (05/2023) durchgehend als „Empfehlung des Landes“, keine Aussage mehr zur Bindung im Förderverfahren (Festlegung Armin 18.11.). So geht's: Beispielbild VwV-StVO neu. Commits agfk-werkzeuge 216513f, 81cd641, 60e3bd5, 7307765; vwv-stvo 9508be3, e64a14e und Folgecommit – gepusht.
+- Offen: übrige Beispielbilder in So geht's gegen den neuen Stand prüfen; Bezeichnung im Geodaten-Bündel von RadPlan Pro an der Quelle ändern.
+- Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
+- Frist: 25.11.2026 Online-Einführung
+- AKUT: nein
