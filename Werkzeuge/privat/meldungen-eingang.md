@@ -55,3 +55,9 @@ Format je Meldung:
 - Status neu: Bewerbung in Vorbereitung, Frist 16.12.2026
 - Frist: 16.12.2026 Bewerbung Fahrradpreis
 - AKUT: nein
+
+### 2026-11-18 · Werkzeuge / Tool-Portal (AGFK) · Auslieferung
+- Was: Maßnahmen und Zuständigkeiten v79 – Straßenart kommt aus dem eingebauten OSM-Auszug, wenn die Online-Abfrage ausbleibt (nur Wohn-/Nebenstraßen und Wege); Vermerk-Kopf trägt den neuen Namen. VwV-StVO v57 – Abmelde-Skript (sw.js) löscht alte Offline-Kopien aus der Zeit vor dem 08.11., damit alle den aktuellen Stand sehen. Commits: agfk-werkzeuge 6f91d7f, 2fdd949; vwv-stvo 61104a3 – gepusht.
+- Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
+- Frist: 25.11.2026 Online-Einführung
+- AKUT: nein
