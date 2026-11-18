@@ -48,3 +48,10 @@ Format je Meldung:
 - Status neu: abgeschlossen (bisher „offen“)
 - Frist: ca. 10.01.2027 (Rückmeldung an die IHK, Formulare)
 - AKUT: nein
+
+### 2026-11-18 · Werkzeuge / Tool-Portal (AGFK) · Fahrradpreis 2027
+- Was: Teilnahmebedingungen 2027 geprüft – AGFK-SL ist teilnahmeberechtigt (Einreicherin muss vom Verein ermächtigt sein). Frist 09.11.–16.12.2026, Verleihung nach dem NRVK Berlin, neue Pflichtangabe „Verwendung des Preisgelds", eingereichtes Material (Texte, Screenshots, Logos) wird unbefristet nutzbar und ist nicht vertraulich. Bewerbungsentwurf liegt vor; Armin füllt das Formular gemeinsam mit Irene aus. Offen: Jury-Zugang hinter dem Zugangsschutz, Ermächtigung.
+- Nachtrag 08.11.: AGFK-Fassung VwV-StVO ohne PWA (v23: kein Manifest, kein Service Worker, kein Installieren-Knopf); Kontaktzeile „Zugang oder Rückmeldung" an die Geschäftsstelle auf der Übersicht (ee8eb94). Netlify-Zugangsschutz bleibt; Wiedereingabe löst der Browser-Passwortspeicher.
+- Status neu: Bewerbung in Vorbereitung, Frist 16.12.2026
+- Frist: 16.12.2026 Bewerbung Fahrradpreis
+- AKUT: nein
