@@ -87,3 +87,10 @@ Format je Meldung:
 - Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
 - Frist: 25.11.2026 Online-Einführung
 - AKUT: nein
+
+### 2026-11-19 · Werkzeuge / Tool-Portal (AGFK) · Auslieferung
+- Was: Fördermittel-Finder v23 – Praxis-Hinweise zum Bündeln mehrerer Standorte und Teilmaßnahmen in einem Antrag (Abstellanlagen 2.2.1/2.2.2, Querungshilfen 2.4, Gesamtmaßnahme 2.1), Bagatellgrenze, Mindestzahl Stellplätze, Bügel = zwei Stellplätze; Grundlage: Auskunft der Bewilligungsbehörde 11/2026. Im Praxiswissen Saarland (Drive) nachgetragen. Commit agfk-werkzeuge 1181b6a – gepusht.
+- Offen: Antwort-Mail ans MUKMAV liegt als Entwurf (Bitte um Korrektur/Einverständnis) – noch nicht gesendet. Reserve-Screenshot 09 neu aufnehmen.
+- Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
+- Frist: 25.11.2026 Online-Einführung
+- AKUT: nein
