@@ -101,3 +101,11 @@ Format je Meldung:
 - Status neu: in Arbeit, noch nicht ausgeliefert
 - Frist: —
 - AKUT: nein
+
+### 2026-11-20 · 2Rat Radwegemelder und Webseite und Dashboard · Konzept-Check
+- Was: Konzept-Check Version 0.2.1 über Netlify ausgeliefert (Projekt konzept-check-2rat, passwortgeschützt, automatische Auslieferung aus 2Rat/konzept-check). Erster Lauf auf der Live-Seite in Ordnung. Commit konzept-check 6be8088 – gepusht.
+- Offen: API-Schlüssel für das PDF-Auslesen; Ergebnis in Handybreite; Wadern-Abschnitte auf der Karte setzen.
+- Status neu: live (intern, mit Zugangsschutz)
+- Frist: —
+- Codes: Zugang liegt bei Armin
+- AKUT: nein
