@@ -94,3 +94,10 @@ Format je Meldung:
 - Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
 - Frist: 25.11.2026 Online-Einführung
 - AKUT: nein
+
+### 2026-11-20 · 2Rat Radwegemelder und Webseite und Dashboard · Konzept-Check
+- Was: Konzept-Check (Repo 2Rat/konzept-check, privat) Version 0.2.0 auf main – fünf neue Maßnahmentypen, Abschnitte ohne Straßennamen lassen sich auf der Karte setzen. Erster Lauf mit einem zweiten Konzept (Wadern 2025); Konzept-Datei im Drive abgelegt. Commits konzept-check ac3d9d8, ede9e86 – gepusht.
+- Offen: Netlify-Seite einrichten (Passwortschutz und API-Schlüssel trägt Armin selbst ein); Ergebnistabellen in Handybreite.
+- Status neu: in Arbeit, noch nicht ausgeliefert
+- Frist: —
+- AKUT: nein
