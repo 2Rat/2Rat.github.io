@@ -1,14 +1,13 @@
 2Rat – Büro für Radverkehrsplanung
 Armin Jung · Radverkehrsplaner EIPOS · www.2rat.org
 2Rat – Gesamt-Projektverzeichnis
-Stand: 16.11.2026
+Stand: 23.11.2026
 Anzahl Vorhaben (konsolidiert): 42
-Quellen: Fassung 05.05.2026 · fortgeschrieben über 📮-Meldungen aus den Werkstatt-Projekten (Historie je Vorhaben) · letzte Meldungen 12.–15.11.2026 (AGFK-Werkzeuge: Luftbild-Umschalter und fehlertolerante Adresssuche · Werkzeuge in alle Richtungen verknüpft · Durchsicht aller fünf Werkzeuge mit zwei Fehlerpaketen · Online-Einführung 25.11. vorbereitet) · davor 10.–12.11.2026 (AGFK-Werkzeuge: einheitliches Erscheinungsbild und Konsistenz-Durchsicht · Kasten „Was kommt hier in Frage?“ · Fördermittel-Finder gegen FRL NMOB-Rad-Fuß abgeglichen · fachliche Quellendurchsicht aller Werkzeuge) · davor 05.11.2026 (AGFK-Werkzeuge: VwV-StVO 2025 als fünftes Werkzeug bestellt, live und abgenommen · Deutscher Fahrradpreis 2027 über die AGFK-SL · Online-Vorstellung 25.11.) · davor 26.–27.10.2026 (AGFK-Werkzeuge: Rücklink live, Zugangsschutz aktiv, Repo privat, GitHub-Pages-Adresse beendet · neues Vorhaben 4.5 VwV-StVO-App, Vorführung 03.11., Zugang per befristetem Link) · davor 19.–23.10.2026 (AGFK-Werkzeuge: Pakete 2–4 live auf werkzeuge.agfk-sl.de · zweite Prüfung AGFK-SL abgeschlossen · Vorschau-Sperre entfernt) · davor 19.10.2026 (2rat.org: Zertifikatsfehler behoben, HTTPS läuft wieder) · davor 03.10.2026 (AGFK-Übersichtsseite: neue Symbol-Kacheln, index.html Stand 10/2026 geliefert) · davor 02.10.2026 (Einbahnstraßen-Scan: Entscheidung bundesweit mit Live-Abfrage je Gemeinde · Overpass-Testseite v2 geliefert) · davor 30.09.2026 (AGFK-Kennenlern-Zugänge im Portal abgelaufen · AGFK-Vorschau für drei Werkzeuge bis 31.10.2026 befristet · AGFK-SL: Stichproben-Durchsicht im Oktober, Freischaltung unter eigener AGFK-Subdomain geplant 02.11.2026) · davor 22.09.2026 (AGFK-SL: Angebot und Nutzungsvereinbarung versendet · RadPlan Pro `neubau` mit Unfallatlas live, erster Echtfall L 114) · davor 21.09.2026 (Geodaten-Lizenz durch MUKMAV bestätigt · Unfallatlas-Modul · Zuständigkeiten v41, Projekt-Check v9, VwV-StVO v9 · beide Repos gleichauf) · davor 17.09.2026 (Projekt-Check v8 mit Geodatenabgleich und Konfliktprüfung · eine Quelldatei für AGFK- und 2Rat-Fassung · LfS-Inhalte AGFK-SL 02.09.) · davor 13.09.2026 (RadPlan Pro: Neubau Modell 7.1 als Branch-Deploy · Architekturentscheidung Felderfassung/Google Drive · neues Kundenprojekt Stadt Lebach) · Aufräumdurchlauf 02.09.2026 (Historie eingedampft, Widersprüche bereinigt)
+Quellen: Fassung 05.05.2026 · fortgeschrieben über 📮-Meldungen aus den Werkstatt-Projekten (Historie je Vorhaben) · letzte Meldungen 16.–20.11.2026 (AGFK-Werkzeuge: Ortslage aus Tempo und Bebauung, Zebrastreifen-Erkennung · „Zuständigkeiten“ heißt jetzt „Maßnahmen und Zuständigkeiten“ · Drehbuch-Durchsicht für den 25.11. mit sechs Fehlerkorrekturen · Fördermittel-Finder mit Bündelungs-Hinweisen · Fahrradpreis 2027: Frist 16.12.2026 · 7.2 Gewerbe angemeldet, IHK bestätigt · Konzept-Check v0.2.1 über Netlify live) · davor 12.–15.11.2026 (AGFK-Werkzeuge: Luftbild-Umschalter und fehlertolerante Adresssuche · Werkzeuge in alle Richtungen verknüpft · Durchsicht aller fünf Werkzeuge mit zwei Fehlerpaketen · Online-Einführung 25.11. vorbereitet) · davor 10.–12.11.2026 (AGFK-Werkzeuge: einheitliches Erscheinungsbild und Konsistenz-Durchsicht · Kasten „Was kommt hier in Frage?“ · Fördermittel-Finder gegen FRL NMOB-Rad-Fuß abgeglichen · fachliche Quellendurchsicht aller Werkzeuge) · davor 05.11.2026 (AGFK-Werkzeuge: VwV-StVO 2025 als fünftes Werkzeug bestellt, live und abgenommen · Deutscher Fahrradpreis 2027 über die AGFK-SL · Online-Vorstellung 25.11.) · davor 26.–27.10.2026 (AGFK-Werkzeuge: Rücklink live, Zugangsschutz aktiv, Repo privat, GitHub-Pages-Adresse beendet · neues Vorhaben 4.5 VwV-StVO-App, Vorführung 03.11., Zugang per befristetem Link) · davor 19.–23.10.2026 (AGFK-Werkzeuge: Pakete 2–4 live auf werkzeuge.agfk-sl.de · zweite Prüfung AGFK-SL abgeschlossen · Vorschau-Sperre entfernt) · davor 19.10.2026 (2rat.org: Zertifikatsfehler behoben, HTTPS läuft wieder) · davor 03.10.2026 (AGFK-Übersichtsseite: neue Symbol-Kacheln, index.html Stand 10/2026 geliefert) · davor 02.10.2026 (Einbahnstraßen-Scan: Entscheidung bundesweit mit Live-Abfrage je Gemeinde · Overpass-Testseite v2 geliefert) · davor 30.09.2026 (AGFK-Kennenlern-Zugänge im Portal abgelaufen · AGFK-Vorschau für drei Werkzeuge bis 31.10.2026 befristet · AGFK-SL: Stichproben-Durchsicht im Oktober, Freischaltung unter eigener AGFK-Subdomain geplant 02.11.2026) · davor 22.09.2026 (AGFK-SL: Angebot und Nutzungsvereinbarung versendet · RadPlan Pro `neubau` mit Unfallatlas live, erster Echtfall L 114) · davor 21.09.2026 (Geodaten-Lizenz durch MUKMAV bestätigt · Unfallatlas-Modul · Zuständigkeiten v41, Projekt-Check v9, VwV-StVO v9 · beide Repos gleichauf) · davor 17.09.2026 (Projekt-Check v8 mit Geodatenabgleich und Konfliktprüfung · eine Quelldatei für AGFK- und 2Rat-Fassung · LfS-Inhalte AGFK-SL 02.09.) · davor 13.09.2026 (RadPlan Pro: Neubau Modell 7.1 als Branch-Deploy · Architekturentscheidung Felderfassung/Google Drive · neues Kundenprojekt Stadt Lebach) · Aufräumdurchlauf 02.09.2026 (Historie eingedampft, Widersprüche bereinigt)
 > **Lebendiges Arbeitsdokument – EINZIGE gültige Fassung.** Diese Datei lebt im Repo **`2Rat/2Rat.github.io`** unter `Werkzeuge/privat/projektverzeichnis.md`. Claude holt sich zu Sitzungsbeginn die Live-Version von GitHub (raw-URL) – das Projektwissen enthält keine Kopie mehr. Update-Workflow: Werkstatt-Projekte melden in `Werkzeuge/privat/meldungen-eingang.md` → montags 7:04 automatische Einarbeitung ins Verzeichnis (geplante Aufgabe „2Rat Eingangskorb einarbeiten“, Commit direkt auf `main`). Manuell jederzeit im HUB „Projektübersicht 2Rat“ möglich.
 ---
 🔥 AKUT – Das zählt jetzt
 Wann	Was	Wo
-02.11.2026	AGFK-Werkzeuge (→ 2.15): Freischaltung + Abrechnung · Zugangsschutz + Repo privat erledigt ✓ (26.10.) · Restpunkte: Cookie-Satz in `datenschutz.html`, `claude.md` aus dem Deploy nehmen · ⚠️ `kunden/`-Fassungen von Projekt-Check und Zuständigkeiten laden laut Repo-Prüfung 02.11. noch über die beendete Adresse `2rat.org/agfk-werkzeuge/` – Pfade umstellen (→ 2.16)	Tool-Portal / BÜRO 2Rat
 prüfen	Rotierte Codes (Kommandozentrale + RadPlan): Werte stehen vermutlich in den Chats der jeweiligen Claude-Projekte (Tool-Portal / RadPlan Pro) → dort raussuchen und in den Passwortmanager übertragen, bevor die 30-Tage-Session abläuft	Tool-Portal / RadPlan
 offen / jetzt	Projekt-Check: fachliche Letztabnahme durch AGFK-Prüfer (§ 12 StVZustG) → danach Übergabe und Abrechnung · parallel Freigabe für Referenznennung + Zitate einholen – aus der RAD-Lab-Runde und aus der Aktion „Kritischer Blick“ (Zitate liegen vor, Freigabe der Zitierenden steht aus)	Tool-Portal
 läuft	AGFK-SL: Auftragsannahme + Nutzungsvereinbarung laut letzter Meldung (26.10.) offen, Angebotsgültigkeit 31.10. verstrichen – klären · Behördenanschriften abwarten · parallel Freigabe der Logo-Verwendung bei der Geschäftsstelle anfragen (→ 2.15)	Tool-Portal / BÜRO 2Rat
@@ -72,7 +71,8 @@ AGFK-Vorschau live (24.08.2026): Die vier Werkzeuge stehen als AGFK-Fassung unte
 Stand 30.09.2026: Stichproben-Durchsicht der Werkzeuge durch die AGFK-SL im Oktober · Bereitstellung unter eigener AGFK-Subdomain geplant (Repo `agfk-werkzeuge`, → 2.15), Freischaltung geplant 02.11.2026 · Angebot 2026-AGFK-03 gültig bis 31.10.2026. Einzelheiten → Projekt „BÜRO 2Rat“.
 Logo: derzeit die von der Verbandswebsite übernommene Fassung eingebunden – Originaldatei und Freigabe der Verwendung bei Nicole anfragen.
 Stand 05.11.2026: AGFK-SL hat die Nutzung von VwV-StVO 2025 als fünftes Werkzeug bestellt (→ 3.4, 2.15) · Deutscher Fahrradpreis 2027: Bewerbung über die AGFK-SL als Einreicherin, 2Rat als Entwickler – Bewerbungsentwurf, Beschreibung der fünf Werkzeuge und Nominierten-Übersicht 2026 an Irene versandt (Google Docs, Drive-Ordner „AGFK SL Werkzeuge“, freigegeben). Ausschreibung 2027 abwarten.
-Nächster Schritt: (05.11.2026) 25.11. Online-Vorstellung AGFK-Werkzeuge · Ausschreibung Fahrradpreis 2027 abwarten (Bewerbung voraussichtlich bis Jan. 2027) · (26.10.2026) Auftragsannahme + Nutzungsvereinbarung offen, Angebotsgültigkeit 31.10. verstrichen – klären · 02.11. Freischaltung + Abrechnung (→ 2.15) · 05.10.2026 Eingang der Behördenanschriften prüfen · 13.10.2026 Angebot nachfassen · Termin vereinbaren; Logo-Originaldatei und Freigabe bei der Geschäftsstelle anfragen; Bereitstellungsweg im Gespräch klären (Empfehlung Subdomain/CNAME, → 2.15); Referenzfreigabe kurzfristig einholen; vor 30.09.2026 Gespräch über die Fortsetzung der Kennenlern-Zugänge
+Stand 18.11.2026: Teilnahmebedingungen Fahrradpreis 2027 geprüft – AGFK-SL teilnahmeberechtigt (Einreicherin muss vom Verein ermächtigt sein) · Frist 09.11.–16.12.2026, Verleihung nach dem NRVK Berlin · neue Pflichtangabe „Verwendung des Preisgelds“ · eingereichtes Material wird unbefristet nutzbar und ist nicht vertraulich · Bewerbungsentwurf liegt vor, Formular füllt Armin mit Irene aus. Offen: Jury-Zugang hinter dem Zugangsschutz, Ermächtigung.
+Nächster Schritt: (05.11.2026) 25.11. Online-Vorstellung AGFK-Werkzeuge · Fahrradpreis 2027: Bewerbung bis 16.12.2026 (Jury-Zugang und Ermächtigung klären) · (26.10.2026) Auftragsannahme + Nutzungsvereinbarung offen, Angebotsgültigkeit 31.10. verstrichen – klären · 02.11. Freischaltung + Abrechnung (→ 2.15) · 05.10.2026 Eingang der Behördenanschriften prüfen · 13.10.2026 Angebot nachfassen · Termin vereinbaren; Logo-Originaldatei und Freigabe bei der Geschäftsstelle anfragen; Bereitstellungsweg im Gespräch klären (Empfehlung Subdomain/CNAME, → 2.15); Referenzfreigabe kurzfristig einholen; vor 30.09.2026 Gespräch über die Fortsetzung der Kennenlern-Zugänge
 1.6 Thalexweiler Netto (L 304)
 Kunde / Partner: Stadt Lebach
 Zweck: Begutachtung einer Radverkehrssituation an der L 304 (Einmündungs-/Zufahrtsbereich Netto Thalexweiler) mit Ortstermin und schriftlicher Auswertung – erster Kundenauftrag, der vollständig über RadPlan Pro und den Skill `radplan-bericht` läuft.
@@ -104,6 +104,7 @@ VwV-StVO-Datierung präzisiert (24.08.2026, auch in 3.4): Fassung vom 03.04.2025
 v35 (02.09.2026) deployed & live bestätigt, byteidentisch ✓ – Leaflet-Fallback ergänzt (Kartendarstellung bleibt nutzbar, wenn die Bibliothek nicht lädt), `STAND`-Konstante wie in den übrigen Werkzeugen, Schreibweise „Landstraße“ durchgängig
 Prüfbefunde abgearbeitet (02.09.2026): Der alte Befundstapel wurde gegen den Live-Stand geprüft – 7 von 11 Punkten waren bereits erledigt, das Projektwissen war massiv veraltet (Kenntnisstand v24 gegen live v34). Der Barrierefreiheits-Befund ist revidiert: die Auswahl-Chips haben `aria-pressed` und Tastaturbedienung, kein Handlungsbedarf. Restliche Punkte → Tool-Portal-Projekt.
 v39 → v41 (20./21.09.2026, AGFK-Repo, live bestätigt) und als 2Rat-Fassung nach `kunden/` nachgezogen (vorher v35) ✓ – Unfallzeile Punkt (100 m) und Strecke (±1 km entlang der LfS-Achse) aus dem Unfallatlas-Modul (→ 2.16), Hinweis „Unfallkommission einbinden“, Markenblock `data-brand` (agfk/2rat). Geodaten werden absolut aus `2rat.org/agfk-werkzeuge/` geladen (→ 2.15).
+Stand 16.11.2026: Werkzeug heißt jetzt „Maßnahmen und Zuständigkeiten“ (Titel, Kachel, Verweise, Vermerk; Dateiname `zustaendigkeiten.html` unverändert) – Versionen → 2.15
 Offen: St. Ingbert steht in `EIGENE_STVB` – telefonisch klären (Saarpfalz-Kreis / MWAEV)
 Nächster Schritt: ⏳ bis 03.09.2026: St. Ingbert als eigene Straßenverkehrsbehörde telefonisch klären – § 7 Abs. 1 StVZustG nennt sie nicht, der Regionalverband bestätigt aber Völklingen als Mittelstadt mit eigener Behörde (Recherche als Kommentar an der Todoist-Aufgabe) · Pflege bei VwV-Änderungen; Update als Pflege-Nachweis an AGFK-SL; Kontaktdaten Saarpfalz-Kreis noch unbestätigt
 2.3 Fördermittel-Finder (FRL-NMOB-Rad-Fuß)
@@ -120,8 +121,9 @@ Nächster Schritt: Aktualisierung bei neuer FRL-Fassung
 2.4 Konzept-Check
 Kunde / Partner: eigen (Service-Erweiterung)
 Zweck: Bürgermeldungen werden gegen kommunale RVK-Maßnahmen abgeglichen und liefern eine priorisierte Handlungsempfehlung.
-Status: läuft (Tool live) · Wadgassen-Pilot ist beendet → Auswertung kann starten
-Nächster Schritt: Auswertung Wadgassen seit Juli offen – Termin festlegen: PDF-Maßnahmentabellen importieren, Abgleich rechnen, Bericht für den Gemeinderat
+Repo: github.com/2Rat/konzept-check (privat) · Live: Netlify-Projekt `konzept-check-2rat` (passwortgeschützt, automatische Auslieferung aus `main`)
+Status: live (intern, mit Zugangsschutz) · v0.2.1 seit 20.11.2026, erster Lauf auf der Live-Seite in Ordnung · v0.2.0: fünf neue Maßnahmentypen, Abschnitte ohne Straßennamen auf der Karte setzbar · erster Lauf mit einem zweiten Konzept (Wadern 2025), Konzept-Datei im Drive · Wadgassen-Pilot ist beendet → Auswertung kann starten
+Nächster Schritt: (20.11.2026) API-Schlüssel fürs PDF-Auslesen eintragen (Armin) · Ergebnistabellen in Handybreite · Wadern-Abschnitte auf der Karte setzen · Auswertung Wadgassen seit Juli offen – Termin festlegen: PDF-Maßnahmentabellen importieren, Abgleich rechnen, Bericht für den Gemeinderat
 2.5 Mängelmelder
 Kunde / Partner: eigen (Tool-Portal)
 Zweck: Niederschwelliges Meldetool für Mängel an Radinfrastruktur, wird in Tool-Portal integriert.
@@ -225,9 +227,11 @@ Stand 26.10.2026: Umstellung vorgezogen und erledigt ✓ – Rücklink „Zurüc
 Stand 05.11.2026: Werkzeugsatz = 5 Werkzeuge – VwV-StVO 2025 als fünfte Kachel live und abgenommen ✓ (→ 3.4); „Umfang bleibt bei vier Werkzeugen“ (02.09.) überholt.
 Stand 10.–12.11.2026 (sechs Meldungen, zusammengefasst): Erscheinungsbild der fünf Werkzeuge vereinheitlicht (Kopfzeile mit „Zur Übersicht“, Kartenkasten „Standort prüfen“, Knopffarben und -zeile, „Ergebnis-Vermerk“, Seitenbreite, Wortwahl „Werkzeug“, kräftigere Ränder) · „So geht's“ mit fünf Stationen, Einstieg über die Karte und neuen Beispielbildern · Zuständigkeiten mit Adresssuche an der Karte; Standort, Kommune und Maßnahme werden beim Wechsel übernommen · neuer Kasten „Was kommt hier in Frage?“ in Projekt-Check und VwV-StVO (feste Regeln, → 2.16) · Unfallgeschehen in allen drei Karten-Werkzeugen einheitlich eingestuft · Rückmelde-Link in allen Fußzeilen · Fördermittel-Finder: alle zwölf Fördergegenstände gegen FRL NMOB-Rad-Fuß und FAQ (Stand 08.05.2026) abgeglichen, Abstellanlagen 2.2.1/2.2.2 und Bagatellgrenze berichtigt, Bike+Ride am Bahnhof als Bundesförderung klargestellt · VwV-StVO: Lückenschluss in der Einzelprüfung nur noch im selben Straßenzug · fachliche Quellendurchsicht aller Werkzeuge, wichtigste Berichtigung: Einvernehmen der Gemeinde in Ortsdurchfahrten (§ 45 Abs. 1b StVO) war zu weit gefasst.
 Stand 12.–15.11.2026 (fünf Meldungen, zusammengefasst): Karten-Umschalter Karte/Luftbild (Orthophotos 2023, Geoportal Saarland) in drei Werkzeugen, Adresssuche fängt Tippfehler ab · Werkzeuge in alle Richtungen verknüpft (Maßnahme, Kommune, Standort gehen mit; Fördergegenstand im Finder vorausgewählt; Rückwege aus Finder und Vergabe-Assistent; laufender Fall bleibt beim Wechsel im Browser erhalten), Datenschutzseite ergänzt · „So geht's“ mit neuen Bildern und Abschnitten zu Luftbild und Verweisen · Durchsicht aller fünf Werkzeuge mit zwei Fehlerpaketen (u. a. Bürgertext je Maßnahme in VwV-StVO, nur anordnungsfähige Maßnahmen, Fahrradzone bei Städten mit eigener Straßenverkehrsbehörde, Standardhinweise je Fördergegenstand, Betragseingabe im Vergabe-Assistent, Karte im Projekt-Check wertet sofort aus) · Startfolie und Ablaufplan für die Online-Einführung liegen vor, Abstimmung mit der Geschäftsstelle läuft.
-Versionen 15.11.2026: Projekt-Check v41 · Zuständigkeiten v74 · Fördermittel-Finder v20 · Vergabe-Assistent v17 · VwV-StVO v53 (→ 3.4) – gepusht; bis 25.11. nur noch Fehlerbehebung.
+Stand 16.–19.11.2026 (zehn Meldungen, zusammengefasst): Ortslage (innerorts/außerorts) aus Tempo und Bebauung an der Stelle statt aus der Zählstelle, nur noch als Vermutung · OSM-Querungen ohne Ampel als Zebrastreifen erkannt · Lückenschluss nur Tempo-30-Abschnitte der Hauptstraße selbst · außerhalb des Saarlands keine saarländischen Zuständigkeitsaussagen · „Zuständigkeiten“ heißt jetzt „Maßnahmen und Zuständigkeiten“ (→ 2.2) · Straßenart bei Wohn-/Nebenstraßen aus dem eingebauten OSM-Auszug · „Landstraße I./II. Ordnung“ durchgängig, MUKMAV-Broschüre (05/2023) als „Empfehlung des Landes“ · Übersicht und So geht's in üblicher Reihenfolge (VwV-StVO als Schritt 3), neue Beispielbilder · Drehbuch für den 25.11. im Browser durchgesehen, sechs Fehler behoben, Ablaufplan angepasst · Fördermittel-Finder: Praxis-Hinweise zum Bündeln mehrerer Standorte/Teilmaßnahmen in einem Antrag (Grundlage: Auskunft der Bewilligungsbehörde 11/2026, im Praxiswissen Saarland nachgetragen).
+Versionen 19.11.2026: Projekt-Check v47 · Maßnahmen und Zuständigkeiten v81 · Fördermittel-Finder v23 · Vergabe-Assistent v18 · VwV-StVO v61 (→ 3.4) – gepusht, Auslieferung über Netlify nicht gesondert nachgeprüft; bis 25.11. keine weiteren Änderungen.
+Offen (19.11.2026): Fall auf der Live-Seite einmal komplett durchklicken, dann Reserve-Screenshots (09 neu) · übrige Beispielbilder in So geht's prüfen · neuen Namen auf agfk-sl.de und im Fahrradpreis-Entwurf nachziehen · Bezeichnung im Geodaten-Bündel von RadPlan Pro an der Quelle ändern · Antwort-Mail ans MUKMAV (Entwurf) senden.
 Offen (15.11.2026): Live-Test Luftbild und Adresssuche durch Armin · Quellenvermerk des Luftbilds gegenprüfen · Behördenkontakte dreier Straßenverkehrsbehörden · Stand der Bundesprogramme (BAFA E-Lastenfahrrad, „Junge Generation Fahrrad“) im Fördermittel-Finder abschließend klären.
-Nächster Schritt (15.11.2026): 25.11. Online-Einführung für die AGFK-Kommunen (Beispielfall, Umfragen, Auswertung per Transkript) · 01.03.2027 E-Scooter-Hinweise in Zuständigkeiten anpassen · Deutscher Fahrradpreis 2027 (→ 1.5)
+Nächster Schritt (15.11.2026): 25.11. Online-Einführung für die AGFK-Kommunen (Beispielfall, Umfragen, Auswertung per Transkript) · 01.03.2027 E-Scooter-Hinweise in Zuständigkeiten anpassen · Deutscher Fahrradpreis 2027, Bewerbung bis 16.12.2026 (→ 1.5)
 Nächster Schritt (26.10.2026): 02.11. Freischaltung + Abrechnung · Cookie-Satz in `datenschutz.html` · `claude.md` aus dem Deploy nehmen · Auftragsannahme klären (→ 1.5)
 Ältere Punkte: neue Übersichtsseite `index.html` (Symbol-Kacheln) deployen und live prüfen · Quellenvermerk „© GDI-SL 2026, CC BY 4.0“ einspielen (→ 2.11) · nach Testende Runtime-Branding auch für Fördermittel-Finder und Vergabe-Assistent einführen · Freigabe der Logo-Verwendung bei der Geschäftsstelle anfragen
 2.16 Geodaten-Module (`rp-geo.js` · Unfallatlas `rp-unfaelle.js`)
@@ -276,6 +280,7 @@ Entscheidung 02.09.2026: Das Werkzeug ist nicht Teil des AGFK-Pakets und wird ei
 v9 (20./21.09.2026, `kunden/`, live bestätigt) ✓ – Standort-Check mit Karte und sieben Tatbeständen (Zuständigkeit, T30-Zone, Nr. 6 Einrichtungen/Querungen, Nr. 4 Lückenschluss, Unfallgeschehen, Nr. 7), Basisdaten-Übernahme, Aktenvermerk, Platzhalter-Füllung; Lückenschluss-Argument korrigiert (Nr. 4 statt Nr. 6). Geodaten über die Module aus dem AGFK-Repo (→ 2.16); das Werkzeug selbst bleibt außerhalb des AGFK-Angebots.
 Stand 26.10.2026: v11 in `kunden/` lädt Karte und Geodaten lokal, unabhängig vom AGFK-Repo. App-Fassung als eigenes Vorhaben → 4.5.
 Stand 05.11.2026: fünftes AGFK-Werkzeug – die AGFK-SL hat die Nutzung bestellt (nicht die Entwicklung); Entscheidung vom 02.09. damit überholt. AGFK-Fassung v22 aus `2Rat/vwv-stvo` per `build-agfk.mjs` nach `agfk-werkzeuge/vwv-stvo/` gebaut, fünfte Kachel, Datenschutz und „So geht's“ ergänzt (Commit 670c29e), live hinter AGFK-Zugangsschutz und von Armin am Handy abgenommen ✓. Pflege nur in `2Rat/vwv-stvo`, danach neu bauen (→ 2.15, 4.5).
+Stand 08.–19.11.2026: AGFK-Fassung ohne PWA (v23: kein Manifest, kein Service Worker, kein Installieren-Knopf) · v54–v61: Zebrastreifen-Erkennung aus OSM, außerhalb des Saarlands keine Zuständigkeitsaussagen, Abmelde-Skript `sw.js` löscht alte Offline-Kopien, „Als Maßnahme wählen“ springt zur Maßnahmenkarte, Knopf zu Antrag/Beschlussvorlage/Bürgerinformation, Standort-Check ohne Doppelung, Behörde mit Kreisnamen, Antrag an Bundes-/Landstraßen im Namen der Gemeinde (§ 45 Abs. 1j StVO) (→ 2.15)
 Offen: Live-Test Overpass/Nominatim (Einrichtungen, Querungen, Adresssuche)
 Offen (optional): Schulstraßen als Praxishinweis beim Verkehrsversuch – es gibt kein eigenes Verkehrszeichen, Umsetzung läuft über zeitlich begrenzte Durchfahrtverbote
 Nächster Schritt: Pflege bei VwV-Änderungen – nur in `2Rat/vwv-stvo`, danach AGFK-Fassung neu bauen
@@ -378,6 +383,7 @@ Repository	Sichtbarkeit	Bezug
 7	`2Rat/umzugsplan`	–	(privat/Test)
 8	`2Rat/agfk-werkzeuge`	privat (seit 26.10.2026)	2.15 AGFK-Werkzeuge (Netlify)
 9	`2Rat/vwv-stvo`	privat	4.5 VwV-StVO 2Rat (App)
+10	`2Rat/konzept-check`	privat	2.4 Konzept-Check (Netlify)
 7️⃣ Büro-intern & Behörden
 7.1 2Rat Büroverwaltung / Stammdatendokument
 Kunde / Partner: intern
@@ -388,11 +394,11 @@ Status: im Aufbau
 Briefkopf-Template (11.08.2026): fehlerhafter PNG-Content-Type im Logo-Einbau repariert – betrifft alle aus derselben Vorlage erzeugten Dokumente; bei älteren Dokumenten bei Gelegenheit gegenprüfen
 E-Mail-Signatur (11.08.2026): in eM Client korrigiert – veraltete Telefonnummer ersetzt, EIPOS-Zeile und Web-Adresse ergänzt
 Nächster Schritt: Steuernummer / IBAN eintragen; einheitliche Briefkopf-DOCX-Vorlage erstellen (offen)
-7.2 Steuer / Finanzamt-Status freiberuflich
-Kunde / Partner: Finanzamt
-Zweck: Bestätigung als freischaffender Planer (§ 18 EStG, ohne USt.).
-Status: offen
-Nächster Schritt: Freiberuflich-Bestätigung abwarten; Steuernummer eintragen
+7.2 Steuer / Gewerbe-Status
+Kunde / Partner: Finanzamt · Stadt Lebach · IHK
+Zweck: Steuerliche und gewerberechtliche Einordnung von 2Rat – 2Rat ist Gewerbebetrieb.
+Status: abgeschlossen ✓ (17.11.2026) – Gewerbe bei der Stadt Lebach angemeldet am 03.09.2026 (Beginn der Tätigkeit 01.01.2024, Nebenerwerb); IHK-Mitgliedschaft mit Schreiben vom 10.11.2026 bestätigt
+Nächster Schritt: ca. 10.01.2027 Rückmeldung an die IHK (Formulare); Steuernummer eintragen (→ 7.1)
 7.3 Rundfunkbeitrag Betriebsstätte
 Kunde / Partner: ARD/ZDF/DR – Az 651 028 117 5
 Zweck: Pflichtanmeldung; voraussichtlich beitragsfrei nach Ziff. 1.3 (Büro in Privatwohnung).
@@ -409,7 +415,7 @@ Claude-Projekt	Behandelte Vorhaben	Rolle
 Projektübersicht 2Rat	Pflege und Fortschreibung dieses Verzeichnisses – zentrale Statusübersicht aller Vorhaben. Hier laufen alle 📮-Meldungen aus den Werkstatt-Projekten ein.	HUB
 BÜRO 2Rat	Zentrales Büro- und Steuerungsprojekt: Stammdaten, Vorlagen, Steuer, Standardtexte · 1.4 Kommunen-Kampagne · Geschäftsinterna (Preise, Strategie, Rechtliches, Session-Notizen) – bleiben dort, nicht ins öffentliche Verzeichnis!	Büro & Vertrieb
 Hostenbach	1.1 · 3.2 QAD · 3.5 Planrahmen	Kundenprojekt
-2Rat Radwegemelder Webseite Dashboard	4.1 · 1.2 · Supabase	Produkt-Hauptprojekt
+2Rat Radwegemelder Webseite Dashboard	4.1 · 1.2 · 2.4 Konzept-Check · Supabase	Produkt-Hauptprojekt
 Schulweg-Detektive	4.3	Kooperation Kirkel
 Plugin-Entwicklung (ANALYSE)	3.1 · 3.3 Begründungsgenerator	Werkzeugentwicklung
 2Rat Werkzeuge / Tool-Portal	2.1–2.13 · 2.15–2.17 · 3.4 · 1.5 AGFK	Tool-Vertrieb
@@ -461,7 +467,8 @@ Datum	Kontext	Aktion
 03.11.2026	4.5 VwV-StVO-App	Fahrradkommunalkonferenz Düsseldorf – Vorführung
 25.11.2026	2.15 / 1.5 AGFK-SL	Online-Einführung der AGFK-Werkzeuge für die AGFK-Kommunen (nachmittags) – bis dahin nur Fehlerbehebung
 30.11.2026	4.5 VwV-StVO-App	Konferenz-Links laufen ab – Nachfassen bis dahin
-Jan. 2027 (vorauss.)	1.5 AGFK-SL	Deutscher Fahrradpreis 2027 – Bewerbung über die AGFK-SL; Ausschreibung abwarten (Vorjahr: Frist 23.01.)
+16.12.2026	1.5 AGFK-SL	Deutscher Fahrradpreis 2027 – Bewerbung über die AGFK-SL (Einreicherin ermächtigt, Jury-Zugang klären)
+ca. 10.01.2027	7.2 Steuer / Gewerbe	Rückmeldung an die IHK (Formulare)
 01.03.2027	2.15 Zuständigkeiten	E-Scooter-Hinweise anpassen
 31.08.2027	1.5 AGFK-SL	Kündigungsstichtag der Nutzungsvereinbarung (Laufzeit bis 31.12.2027, Verlängerungsklausel) – nur relevant bei Zusage
 30.09.2026	2.1 Tool-Portal	RAD-Lab-Testrunde endet (→ 2.13) – Lizenz-Zeile entfernen
@@ -472,6 +479,7 @@ Sep 2026	4.3 Schulweg-Detektive	Android-Entwicklerbestätigung für PWA-APK prü
 27.05.2027	1.5 AGFK-SL	Lizenz „AGFK Honorarkraft" läuft ab
 Anfang 2028	2.9 Vergabe-Assistent	Neue EU-Schwellenwerte einpflegen (aktuelle Werte gelten bis 31.12.2027)
 Entfallen 11.08.: Alle Radherbst-Fristen (Versand · Rückmeldung 25.08. · Aktionszeitraum 01.09.–15.10.) – die Aktion findet nicht statt (→ 1.4)
+Geklärt 16.–20.11.: Zebrastreifen-Erkennung in Projekt-Check/VwV-StVO umgesetzt · 7.2 Gewerbe angemeldet, IHK-Mitgliedschaft bestätigt · Konzept-Check v0.2.1 über Netlify ausgeliefert
 Geklärt 05.11.: VwV-StVO 2025 als fünftes AGFK-Werkzeug live hinter Zugangsschutz und abgenommen · Fahrradpreis-Unterlagen an AGFK-SL versandt
 Geklärt 26.10.: AGFK-Werkzeuge – Rücklink live, Zugangsschutz aktiv, Repo `agfk-werkzeuge` privat, GitHub-Pages-Adresse beendet
 Geklärt 19.–23.10.: AGFK-Werkzeuge Pakete 2–4 live (PC v16 · ZU v47 · FF v11 · VA v9) · Stichproben-/zweite Prüfung durch AGFK-SL abgeschlossen · Vorschau-Sperre 31.10. entfernt
@@ -488,12 +496,11 @@ Ohne festes Datum: Gespräch mit der AGFK-SL (Irene) – Nutzungsrechte Projekt-
 Status	Anzahl	Vorhaben
 läuft / live / produktiv / stabil / aktiv	26	1.5, 1.6, 2.1, 2.2, 2.3, 2.4, 2.7, 2.9, 2.11, 2.13, 2.14, 2.15, 2.16, 3.1, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 4.5, 5.1, 5.2, 5.3, 5.4, 6.1
 teils läuft	1	1.1 (LP1 abgeschlossen ✓ · LP2 offen)
-abgeschlossen	4	1.2, 2.8, 3.5, 7.3
+abgeschlossen	5	1.2, 2.8, 3.5, 7.2, 7.3
 vorbereitet	2	2.6 (Demo-Konzept), 3.2
 in Entwicklung / im Aufbau	4	2.5, 2.10, 2.17, 7.1
 Experiment / Prototyp	1	2.12
 ruht / ausgesetzt	2	1.3, 1.4
-offen	1	7.2
 verworfen	1	8.1
 1️⃣3️⃣ Zugänge & Codes
 Diese Datei liegt im öffentlichen Repo – deshalb hier keine Klartext-Codes. Alle Code-Werte: → Passwortmanager (KeePassXC/Bitwarden).
