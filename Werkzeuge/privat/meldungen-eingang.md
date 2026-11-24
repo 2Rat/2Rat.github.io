@@ -25,3 +25,10 @@ Format je Meldung:
 
 ## Offen
 
+
+### 2026-11-24 · Werkzeuge / Tool-Portal (AGFK) · Auslieferung
+- Was: Maßnahmen und Zuständigkeiten v82 – Kasten „Straßenverkehrsbehörden im Saarland“ nennt jetzt die Anschriften der neun Unteren Straßenverkehrsbehörden und verlinkt die Behördensuche des Landes für aktuelle Telefonnummern (Angabe MUKMAV über die AGFK-Geschäftsstelle, 11/2026). Ablaufplan und neuer Sprechzettel für den 25.11. überarbeitet (Einführung der fünf Werkzeuge in einfacher Sprache, Praxis-Hinweise). Commit agfk-werkzeuge siehe Log – gepusht.
+- Offen: Anschriften auch in die Kontaktkarte je Kommune (Projekt-Check, Zuständigkeiten) übernehmen – erst nach dem 25.11.; Antwort-Mail ans MUKMAV (Bündelung) liegt als Entwurf.
+- Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
+- Frist: 25.11.2026 Online-Einführung
+- AKUT: nein
