@@ -32,3 +32,11 @@ Format je Meldung:
 - Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
 - Frist: 25.11.2026 Online-Einführung
 - AKUT: nein
+
+### 2026-11-25 · Werkzeuge / Tool-Portal (AGFK) · Einführung + Fahrradpreis
+- Was: Online-Einführung der fünf Werkzeuge für die Mitgliedskommunen durchgeführt (rund 10 Teilnehmende von 37 Kommunen, 12 angemeldet); Resonanz durchweg positiv, besonders von Teilnehmenden ohne Radverkehrs-Hintergrund. Bewerbung Deutscher Fahrradpreis 2027 (Service & Kommunikation) als Claude-Doc fertig: Einreicherin AGFK-SL, 2Rat als Entwickler genannt, Kurztext 398 / Beschreibung 2.995 Zeichen, alle Formularfelder vorbereitet.
+- Offen: Jury-Zugang (Zugangsschutz – Armin klärt mit AGFK-Geschäftsstelle); Ermächtigung der Geschäftsstelle dokumentieren.
+- Geplant: QR-Code zu den Werkzeugen im AGFK-Jahreskalender 2027; Vorstellung beim Difu-Workshop „Die StVO in der Praxis“ am 15.12.2026, Rathaus Saarbrücken.
+- Status neu: live, Bekanntmachung läuft
+- Frist: 16.12.2026 Bewerbungsschluss Fahrradpreis (online, keine Zwischenspeicherung)
+- AKUT: nein
