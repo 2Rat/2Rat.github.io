@@ -40,3 +40,10 @@ Format je Meldung:
 - Status neu: live, Bekanntmachung läuft
 - Frist: 16.12.2026 Bewerbungsschluss Fahrradpreis (online, keine Zwischenspeicherung)
 - AKUT: nein
+
+### 2026-11-26 · Werkzeuge / Tool-Portal (AGFK) · Auslieferung
+- Was: Online-Einführung am 25.11.2026 gelaufen. Danach „Neue Abfrage starten“ vereinheitlicht: ein Name, ein Verhalten in allen Werkzeugen (Fall, Marker, Auswertung weg; Kommune bleibt; Karte bleibt offen). Projekt-Check v50, Maßnahmen und Zuständigkeiten v83 (grüner Knopf oben), Fördermittel-Finder v24, Vergabe-Assistent v19, VwV-StVO v62 („Standort verwerfen“). „Neu beginnen“ entfällt; So geht's und Datenschutz angepasst. Vorher am 25.11.: Projekt-Check v48/v49 (Knopf oben). Commits agfk-werkzeuge 7f4219b, vwv-stvo c7fd70d – gepusht.
+- Offen: Armin sieht es sich an und entscheidet, ob es bleibt (Vorstand davor: agfk-werkzeuge 2584a79, vwv-stvo b77e11c). Auswertung der Veranstaltung, sobald Chat-Export, Umfragen und Transkript vorliegen. Anschriften der StVB in die Kontaktkarte je Kommune.
+- Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
+- Frist: –
+- AKUT: nein
