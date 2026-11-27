@@ -47,3 +47,10 @@ Format je Meldung:
 - Status neu: live (Auslieferung über Netlify nicht gesondert nachgeprüft)
 - Frist: –
 - AKUT: nein
+
+### 2026-11-27 · Werkzeuge / Tool-Portal (AGFK) · Jury-Zugang Fahrradpreis
+- Was: Zweiter Zugang für die Jury des Deutschen Fahrradpreises 2027 eingerichtet – eigenes Netlify-Projekt `werkzeuge-fahrradpreis` aus demselben Repo `2Rat/agfk-werkzeuge` (Branch main, alle fünf Werkzeuge), mit eigenem Zugangsschutz. Der Zugang der Mitgliedskommunen bleibt unverändert. Deploy fertig, Schutz laut Netlify aktiv.
+- Offen: Armins Test im Browser; Info an die AGFK-Geschäftsstelle; Zugangsdaten ins Bewerbungsformular; Projekt nach der Jury-Phase löschen.
+- Status neu: eingerichtet
+- Frist: 16.12.2026 Bewerbungsschluss Fahrradpreis
+- AKUT: nein
